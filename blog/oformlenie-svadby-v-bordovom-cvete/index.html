@@ -36,7 +36,9 @@
 .nsg-mag .pq{position:relative}
 .nsg-mag .pq::before{content:"«";position:absolute;top:-24px;left:50%;transform:translateX(-50%);font-family:'SF Pro Display',Georgia,serif;font-size:56px;color:#ba8a48;line-height:1;opacity:.7}
 .site-hd{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(18px,5vw,48px);background:#9e2a2f;color:#ffe7c6}
-.site-hd .logo{font-family:'SF Pro Display',-apple-system,system-ui,sans-serif;font-weight:300;letter-spacing:.34em;font-size:15px;text-transform:uppercase;color:#ffe7c6;text-decoration:none}
+.site-hd .logo{display:inline-flex;align-items:center;text-decoration:none}
+.site-hd .logo img{height:32px;width:auto;display:block}
+@media(max-width:700px){.site-hd .logo img{height:24px}}
 .site-hd nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .site-hd nav a{color:rgba(255,231,198,.85);text-decoration:none;font-family:'TildaSans',system-ui,sans-serif;font-size:13px;letter-spacing:.04em;padding:8px 12px;text-transform:uppercase}
 .site-hd .cta-hd{background:#ba8a48;color:#4e0002;padding:10px 22px;border-radius:30px;font-weight:700;font-size:12px;letter-spacing:.14em}
@@ -58,7 +60,7 @@
 </head><body>
 <div class="progress-bar"><div class="progress-bar__fill" id="pbar"></div></div>
 <header class="site-hd">
-<a class="logo" href="https://navseg-da.agency/">НАВСЕГДА</a>
+<a class="logo" href="https://navseg-da.agency/" aria-label="НАВСЕГДА"><img src="https://navseg-da.agency/assets/logo-navsegda.svg" alt="НАВСЕГДА" height="32"></a>
 <nav>
   <a href="https://navseg-da.agency/">Наш сайт</a>
   <a href="https://navseg-da.agency/blog/">Журнал</a>
@@ -174,15 +176,15 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Article","headline":"Оформление свадьбы в бордовом цвете: идеи","author":{"@type":"Organization","name":"НАВСЕГДА"},"publisher":{"@type":"Organization","name":"НАВСЕГДА"},"inLanguage":"ru-RU","datePublished":"2026-01-01","dateModified":"2026-07-16"}
 </script>
-<section class="related"><h3>Читайте также</h3><div class="related-grid"><a class="related-card" href="https://navseg-da.agency/blog/timing-svadebnogo-dnya/">
-<img src="https://storage.vigbo.tech/p/w1440/gallery-photo/81b2ebe1-c193-42e4-b482-4c91bc2e5efc/fbba7447-e031-48e6-877e-2e703a066559/original/NevuJ3jbf7CBz_IxDVEtt.JPG" alt="" loading="lazy">
-<div class="rc-body"><div class="rc-k">Подготовка · тайминг</div><div class="rc-t">Тайминг свадебного дня: как выстроить программу</div></div>
-</a><a class="related-card" href="https://navseg-da.agency/blog/svadba-v-sochi-iz-moskvy/">
-<img src="https://i.wfolio.ru/x/23Q2n7kS-flJtGEKTA-UZuoJhg9IPs5Y/vOPf0Hc-kvd-Tf5Xw-IWA_xDr8NWmpnj/ShjY2u9jNa-T1FsIuSWem1-eE-4w_11g/BNrz5fXskRFpWWZ-2cQObmw_J_6x8Blf/4ugrsYydHcQvilmNobKhoGc8yOcv9vVb/EhAp5cZ7nqejRRLGOInNFWlGoG8OIiZD/pv2knmchNkvyd8BOwgX932nM6jeZK0Hp/B9kQWsknkMMGQheSjsrPyJm-xrsVVIoL/TnAtxliBzksaiw1wX4Zrcc_DayIFw1JQ/VBlSITZ6wyB_TUi39M2dTzLGnOnkPgDh/rWx1y8EGOUW8FsCuHiBlsdk0oZKyfeGj/5yAoYIG7pS1tYl3cgJaxADJDMYAF-k_Z/ITu4tkLNzbc-g-lItuy9ePNyEzbVRtpf/i7w-Eaf9OsciX3gzSXafBCa2Tk78iyJe/7K_eoGhwn-9yE72_gistHvqlhMO8RX5E/GbP1sleHMkWFwwXvWYpqC6G_Kif1YFw-/epOuAUqIXlWv3w8ntzJ0DVQwEQPSmneB/8UuIWDW1WQ8qfWfv0wEBHEGAOgExq1hh/X7A2FzCc4CEr5mUepyDz10wWaEB9RLA2/Y4BAeeUGwQZXjQW1TxdC2OkkdKVGv7l_.jpg" alt="" loading="lazy">
-<div class="rc-body"><div class="rc-k">Форматы · выездная свадьба</div><div class="rc-t">Свадьба в Сочи: как организовать из Москвы</div></div>
-</a><a class="related-card" href="https://navseg-da.agency/blog/kak-vybrat-svadebnogo-organizatora/">
-<img src="https://storage.vigbo.tech/p/w1440/gallery-photo/81b2ebe1-c193-42e4-b482-4c91bc2e5efc/fbba7447-e031-48e6-877e-2e703a066559/original/2FLA0gOEjW3AePDkV3qL5.JPG" alt="" loading="lazy">
-<div class="rc-body"><div class="rc-k">Подготовка · выбор команды</div><div class="rc-t">Как выбрать свадебного организатора: 12 вопросов</div></div>
+<section class="related"><h3>Читайте также</h3><div class="related-grid"><a class="related-card" href="https://navseg-da.agency/blog/kamernaya-svadba-na-40-gostey/">
+<img src="https://storage.vigbo.tech/p/w1440/gallery-photo/81b2ebe1-c193-42e4-b482-4c91bc2e5efc/fbba7447-e031-48e6-877e-2e703a066559/original/7D0K7nXqYWHuqHB27D1pS.JPG" alt="" loading="lazy">
+<div class="rc-body"><div class="rc-k">Форматы · камерная свадьба</div><div class="rc-t">Камерная свадьба на 40 гостей: организация и бюджет</div></div>
+</a><a class="related-card" href="https://navseg-da.agency/blog/svadba-v-usadbe-podmoskovye/">
+<img src="https://i.wfolio.ru/x/23Q2n7kS-flJtGEKTA-UZuoJhg9IPs5Y/vOPf0Hc-kvd-Tf5Xw-IWA_xDr8NWmpnj/ShjY2u9jNa-T1FsIuSWem1-eE-4w_11g/BNrz5fXskRFpWWZ-2cQObmw_J_6x8Blf/4ugrsYydHcQvilmNobKhoGc8yOcv9vVb/EhAp5cZ7nqcDG-tve5o_4T3xT8Ca5sHY/gW6Y7tCHDz1uWIlIaAdky2SMA3ziRFSb/o1X8BHIt6XgtBqcvO5CqNLQXFOSf8XjZ/9PNtdhVwZBaKINKrwDWvY9PGMROrUBmN/lhFrjFYrm3Xv8lmh0vmha4JujhObBShU/J0V7v6Q94hWwYp6agUR9gacU9Rf2OuTM/77OyLTl-Dq-mN1pmhV1yWEO0-pY3qptI/gijionULxbE-1lb4GB-YwcXrFTmt13Lk/CifWqlV2VZCbDo0pf8E6J3poVzJJTVkX/m5qqxUCYwjIlc8QQX2dwqxr3kEi5M6Cz/jBYeCCUgB5s1yv-PiY-eP8930e2DJR05/6RRRMrRyXoq93idF2-vavih4dLJkDUgb/4NaCs48u6LCGys97flBPhOihFBsxu8q5/vJZNf-RXmKwPgvmKgVY9UgYsSGzT6PFW/-3k6uMpY7W747ne3qq0ZwhW6ugB4hV-0.jpeg" alt="" loading="lazy">
+<div class="rc-body"><div class="rc-k">Форматы · загородная свадьба</div><div class="rc-t">Свадьба в усадьбе в Подмосковье: как выбрать и цена</div></div>
+</a><a class="related-card" href="https://navseg-da.agency/blog/svadebnyy-dekor-trendy-2026/">
+<img src="https://storage.vigbo.tech/p/w1440/gallery-photo/81b2ebe1-c193-42e4-b482-4c91bc2e5efc/fbba7447-e031-48e6-877e-2e703a066559/original/6eQnEdUHM0cEKDfLge8JB.JPG" alt="" loading="lazy">
+<div class="rc-body"><div class="rc-k">Декор · тренды</div><div class="rc-t">Свадебный декор: тренды 2026</div></div>
 </a></div></section>
 <script>
 // Reading progress

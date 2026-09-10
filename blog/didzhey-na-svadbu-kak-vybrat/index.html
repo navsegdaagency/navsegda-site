@@ -36,7 +36,9 @@
 .nsg-mag .pq{position:relative}
 .nsg-mag .pq::before{content:"«";position:absolute;top:-24px;left:50%;transform:translateX(-50%);font-family:'SF Pro Display',Georgia,serif;font-size:56px;color:#ba8a48;line-height:1;opacity:.7}
 .site-hd{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(18px,5vw,48px);background:#9e2a2f;color:#ffe7c6}
-.site-hd .logo{font-family:'SF Pro Display',-apple-system,system-ui,sans-serif;font-weight:300;letter-spacing:.34em;font-size:15px;text-transform:uppercase;color:#ffe7c6;text-decoration:none}
+.site-hd .logo{display:inline-flex;align-items:center;text-decoration:none}
+.site-hd .logo img{height:32px;width:auto;display:block}
+@media(max-width:700px){.site-hd .logo img{height:24px}}
 .site-hd nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .site-hd nav a{color:rgba(255,231,198,.85);text-decoration:none;font-family:'TildaSans',system-ui,sans-serif;font-size:13px;letter-spacing:.04em;padding:8px 12px;text-transform:uppercase}
 .site-hd .cta-hd{background:#ba8a48;color:#4e0002;padding:10px 22px;border-radius:30px;font-weight:700;font-size:12px;letter-spacing:.14em}
@@ -58,7 +60,7 @@
 </head><body>
 <div class="progress-bar"><div class="progress-bar__fill" id="pbar"></div></div>
 <header class="site-hd">
-<a class="logo" href="https://navseg-da.agency/">НАВСЕГДА</a>
+<a class="logo" href="https://navseg-da.agency/" aria-label="НАВСЕГДА"><img src="https://navseg-da.agency/assets/logo-navsegda.svg" alt="НАВСЕГДА" height="32"></a>
 <nav>
   <a href="https://navseg-da.agency/">Наш сайт</a>
   <a href="https://navseg-da.agency/blog/">Журнал</a>
@@ -187,15 +189,15 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Article","headline":"Диджей на свадьбу: как выбрать и сколько стоит","author":{"@type":"Organization","name":"НАВСЕГДА"},"publisher":{"@type":"Organization","name":"НАВСЕГДА"},"inLanguage":"ru-RU","datePublished":"2026-01-01","dateModified":"2026-09-10"}
 </script>
-<section class="related"><h3>Читайте также</h3><div class="related-grid"><a class="related-card" href="https://navseg-da.agency/blog/kak-vybrat-svadebnogo-florista/">
-<img src="https://storage.vigbo.tech/p/w1440/gallery-photo/81b2ebe1-c193-42e4-b482-4c91bc2e5efc/fbba7447-e031-48e6-877e-2e703a066559/original/6eQnEdUHM0cEKDfLge8JB.JPG" alt="" loading="lazy">
-<div class="rc-body"><div class="rc-k">Команда · флорист</div><div class="rc-t">Как выбрать флориста на свадьбу</div></div>
-</a><a class="related-card" href="https://navseg-da.agency/blog/kak-vybrat-svadebnogo-fotografa/">
-<img src="https://storage.vigbo.tech/p/w1440/gallery-photo/81b2ebe1-c193-42e4-b482-4c91bc2e5efc/fbba7447-e031-48e6-877e-2e703a066559/original/T7kz79ZpBBi_c2bgXDZ_K.JPG" alt="" loading="lazy">
-<div class="rc-body"><div class="rc-k">Команда · фотограф</div><div class="rc-t">Как выбрать свадебного фотографа: гид 2026</div></div>
-</a><a class="related-card" href="https://navseg-da.agency/blog/timing-svadebnogo-dnya/">
+<section class="related"><h3>Читайте также</h3><div class="related-grid"><a class="related-card" href="https://navseg-da.agency/blog/timing-svadebnogo-dnya/">
 <img src="https://storage.vigbo.tech/p/w1440/gallery-photo/81b2ebe1-c193-42e4-b482-4c91bc2e5efc/fbba7447-e031-48e6-877e-2e703a066559/original/NevuJ3jbf7CBz_IxDVEtt.JPG" alt="" loading="lazy">
 <div class="rc-body"><div class="rc-k">Подготовка · тайминг</div><div class="rc-t">Тайминг свадебного дня: как выстроить программу</div></div>
+</a><a class="related-card" href="https://navseg-da.agency/blog/kak-vybrat-videografa/">
+<img src="https://storage.vigbo.tech/p/w1440/gallery-photo/81b2ebe1-c193-42e4-b482-4c91bc2e5efc/fbba7447-e031-48e6-877e-2e703a066559/original/ESZJPRXAv-87dqvrp5wUw.JPG" alt="" loading="lazy">
+<div class="rc-body"><div class="rc-k">Команда · видеограф</div><div class="rc-t">Как выбрать видеографа на свадьбу</div></div>
+</a><a class="related-card" href="https://navseg-da.agency/blog/vyezdnoy-bar-na-svadbu/">
+<img src="https://storage.vigbo.tech/p/w1440/gallery-photo/81b2ebe1-c193-42e4-b482-4c91bc2e5efc/fbba7447-e031-48e6-877e-2e703a066559/original/NeW0l9q8u4ekBOKZbrAcs.JPG" alt="" loading="lazy">
+<div class="rc-body"><div class="rc-k">Детали · велком</div><div class="rc-t">Выездной бар на свадьбу: форматы и цена 2026</div></div>
 </a></div></section>
 <script>
 // Reading progress

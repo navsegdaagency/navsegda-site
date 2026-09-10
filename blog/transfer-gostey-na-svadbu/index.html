@@ -36,7 +36,9 @@
 .nsg-mag .pq{position:relative}
 .nsg-mag .pq::before{content:"«";position:absolute;top:-24px;left:50%;transform:translateX(-50%);font-family:'SF Pro Display',Georgia,serif;font-size:56px;color:#ba8a48;line-height:1;opacity:.7}
 .site-hd{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(18px,5vw,48px);background:#9e2a2f;color:#ffe7c6}
-.site-hd .logo{font-family:'SF Pro Display',-apple-system,system-ui,sans-serif;font-weight:300;letter-spacing:.34em;font-size:15px;text-transform:uppercase;color:#ffe7c6;text-decoration:none}
+.site-hd .logo{display:inline-flex;align-items:center;text-decoration:none}
+.site-hd .logo img{height:32px;width:auto;display:block}
+@media(max-width:700px){.site-hd .logo img{height:24px}}
 .site-hd nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .site-hd nav a{color:rgba(255,231,198,.85);text-decoration:none;font-family:'TildaSans',system-ui,sans-serif;font-size:13px;letter-spacing:.04em;padding:8px 12px;text-transform:uppercase}
 .site-hd .cta-hd{background:#ba8a48;color:#4e0002;padding:10px 22px;border-radius:30px;font-weight:700;font-size:12px;letter-spacing:.14em}
@@ -58,7 +60,7 @@
 </head><body>
 <div class="progress-bar"><div class="progress-bar__fill" id="pbar"></div></div>
 <header class="site-hd">
-<a class="logo" href="https://navseg-da.agency/">НАВСЕГДА</a>
+<a class="logo" href="https://navseg-da.agency/" aria-label="НАВСЕГДА"><img src="https://navseg-da.agency/assets/logo-navsegda.svg" alt="НАВСЕГДА" height="32"></a>
 <nav>
   <a href="https://navseg-da.agency/">Наш сайт</a>
   <a href="https://navseg-da.agency/blog/">Журнал</a>
@@ -174,15 +176,15 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Article","headline":"Трансфер гостей на свадьбу: как организовать","author":{"@type":"Organization","name":"НАВСЕГДА"},"publisher":{"@type":"Organization","name":"НАВСЕГДА"},"inLanguage":"ru-RU","datePublished":"2026-01-01","dateModified":"2026-07-16"}
 </script>
-<section class="related"><h3>Читайте также</h3><div class="related-grid"><a class="related-card" href="https://navseg-da.agency/blog/kamernaya-svadba-na-40-gostey/">
-<img src="https://storage.vigbo.tech/p/w1440/gallery-photo/81b2ebe1-c193-42e4-b482-4c91bc2e5efc/fbba7447-e031-48e6-877e-2e703a066559/original/7D0K7nXqYWHuqHB27D1pS.JPG" alt="" loading="lazy">
-<div class="rc-body"><div class="rc-k">Форматы · камерная свадьба</div><div class="rc-t">Камерная свадьба на 40 гостей: организация и бюджет</div></div>
-</a><a class="related-card" href="https://navseg-da.agency/blog/skolko-stoit-svadba-v-moskve/">
+<section class="related"><h3>Читайте также</h3><div class="related-grid"><a class="related-card" href="https://navseg-da.agency/blog/skolko-stoit-svadba-v-moskve/">
 <img src="https://storage.vigbo.tech/p/w1440/gallery-photo/19ab8853-20bf-49f8-8fc9-d9a60698f327/9963c619-4c8a-40fb-a686-95cc06701d96/original/zxBNxTa5JjbPmngYwOxTR.JPG" alt="" loading="lazy">
 <div class="rc-body"><div class="rc-k"></div><div class="rc-t">Сколько стоит свадьба в Москве в 2026 — реальные цифры</div></div>
-</a><a class="related-card" href="https://navseg-da.agency/blog/kak-vybrat-ploshchadku-dlya-svadby/">
-<img src="https://storage.vigbo.tech/p/w1440/gallery-photo/19ab8853-20bf-49f8-8fc9-d9a60698f327/9963c619-4c8a-40fb-a686-95cc06701d96/original/zxBNxTa5JjbPmngYwOxTR.JPG" alt="" loading="lazy">
-<div class="rc-body"><div class="rc-k"></div><div class="rc-t">Как выбрать площадку для свадьбы в Москве: гид 2026</div></div>
+</a><a class="related-card" href="https://navseg-da.agency/blog/svadba-v-usadbe-podmoskovye/">
+<img src="https://i.wfolio.ru/x/23Q2n7kS-flJtGEKTA-UZuoJhg9IPs5Y/vOPf0Hc-kvd-Tf5Xw-IWA_xDr8NWmpnj/ShjY2u9jNa-T1FsIuSWem1-eE-4w_11g/BNrz5fXskRFpWWZ-2cQObmw_J_6x8Blf/4ugrsYydHcQvilmNobKhoGc8yOcv9vVb/EhAp5cZ7nqcDG-tve5o_4T3xT8Ca5sHY/gW6Y7tCHDz1uWIlIaAdky2SMA3ziRFSb/o1X8BHIt6XgtBqcvO5CqNLQXFOSf8XjZ/9PNtdhVwZBaKINKrwDWvY9PGMROrUBmN/lhFrjFYrm3Xv8lmh0vmha4JujhObBShU/J0V7v6Q94hWwYp6agUR9gacU9Rf2OuTM/77OyLTl-Dq-mN1pmhV1yWEO0-pY3qptI/gijionULxbE-1lb4GB-YwcXrFTmt13Lk/CifWqlV2VZCbDo0pf8E6J3poVzJJTVkX/m5qqxUCYwjIlc8QQX2dwqxr3kEi5M6Cz/jBYeCCUgB5s1yv-PiY-eP8930e2DJR05/6RRRMrRyXoq93idF2-vavih4dLJkDUgb/4NaCs48u6LCGys97flBPhOihFBsxu8q5/vJZNf-RXmKwPgvmKgVY9UgYsSGzT6PFW/-3k6uMpY7W747ne3qq0ZwhW6ugB4hV-0.jpeg" alt="" loading="lazy">
+<div class="rc-body"><div class="rc-k">Форматы · загородная свадьба</div><div class="rc-t">Свадьба в усадьбе в Подмосковье: как выбрать и цена</div></div>
+</a><a class="related-card" href="https://navseg-da.agency/blog/vyezdnoy-bar-na-svadbu/">
+<img src="https://storage.vigbo.tech/p/w1440/gallery-photo/81b2ebe1-c193-42e4-b482-4c91bc2e5efc/fbba7447-e031-48e6-877e-2e703a066559/original/NeW0l9q8u4ekBOKZbrAcs.JPG" alt="" loading="lazy">
+<div class="rc-body"><div class="rc-k">Детали · велком</div><div class="rc-t">Выездной бар на свадьбу: форматы и цена 2026</div></div>
 </a></div></section>
 <script>
 // Reading progress

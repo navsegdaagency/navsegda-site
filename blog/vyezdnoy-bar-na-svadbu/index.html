@@ -36,7 +36,9 @@
 .nsg-mag .pq{position:relative}
 .nsg-mag .pq::before{content:"«";position:absolute;top:-24px;left:50%;transform:translateX(-50%);font-family:'SF Pro Display',Georgia,serif;font-size:56px;color:#ba8a48;line-height:1;opacity:.7}
 .site-hd{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(18px,5vw,48px);background:#9e2a2f;color:#ffe7c6}
-.site-hd .logo{font-family:'SF Pro Display',-apple-system,system-ui,sans-serif;font-weight:300;letter-spacing:.34em;font-size:15px;text-transform:uppercase;color:#ffe7c6;text-decoration:none}
+.site-hd .logo{display:inline-flex;align-items:center;text-decoration:none}
+.site-hd .logo img{height:32px;width:auto;display:block}
+@media(max-width:700px){.site-hd .logo img{height:24px}}
 .site-hd nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 .site-hd nav a{color:rgba(255,231,198,.85);text-decoration:none;font-family:'TildaSans',system-ui,sans-serif;font-size:13px;letter-spacing:.04em;padding:8px 12px;text-transform:uppercase}
 .site-hd .cta-hd{background:#ba8a48;color:#4e0002;padding:10px 22px;border-radius:30px;font-weight:700;font-size:12px;letter-spacing:.14em}
@@ -58,7 +60,7 @@
 </head><body>
 <div class="progress-bar"><div class="progress-bar__fill" id="pbar"></div></div>
 <header class="site-hd">
-<a class="logo" href="https://navseg-da.agency/">НАВСЕГДА</a>
+<a class="logo" href="https://navseg-da.agency/" aria-label="НАВСЕГДА"><img src="https://navseg-da.agency/assets/logo-navsegda.svg" alt="НАВСЕГДА" height="32"></a>
 <nav>
   <a href="https://navseg-da.agency/">Наш сайт</a>
   <a href="https://navseg-da.agency/blog/">Журнал</a>
@@ -175,15 +177,15 @@
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"Article","headline":"Выездной бар на свадьбу: форматы и цена","author":{"@type":"Organization","name":"НАВСЕГДА"},"publisher":{"@type":"Organization","name":"НАВСЕГДА"},"inLanguage":"ru-RU","datePublished":"2026-01-01","dateModified":"2026-07-16"}
 </script>
-<section class="related"><h3>Читайте также</h3><div class="related-grid"><a class="related-card" href="https://navseg-da.agency/blog/skolko-stoit-svadba-v-moskve/">
-<img src="https://storage.vigbo.tech/p/w1440/gallery-photo/19ab8853-20bf-49f8-8fc9-d9a60698f327/9963c619-4c8a-40fb-a686-95cc06701d96/original/zxBNxTa5JjbPmngYwOxTR.JPG" alt="" loading="lazy">
-<div class="rc-body"><div class="rc-k"></div><div class="rc-t">Сколько стоит свадьба в Москве в 2026 — реальные цифры</div></div>
-</a><a class="related-card" href="https://navseg-da.agency/blog/timing-svadebnogo-dnya/">
+<section class="related"><h3>Читайте также</h3><div class="related-grid"><a class="related-card" href="https://navseg-da.agency/blog/timing-svadebnogo-dnya/">
 <img src="https://storage.vigbo.tech/p/w1440/gallery-photo/81b2ebe1-c193-42e4-b482-4c91bc2e5efc/fbba7447-e031-48e6-877e-2e703a066559/original/NevuJ3jbf7CBz_IxDVEtt.JPG" alt="" loading="lazy">
 <div class="rc-body"><div class="rc-k">Подготовка · тайминг</div><div class="rc-t">Тайминг свадебного дня: как выстроить программу</div></div>
-</a><a class="related-card" href="https://navseg-da.agency/blog/velkom-zona-na-svadbe-idei/">
-<img src="https://i.wfolio.ru/x/23Q2n7kS-flJtGEKTA-UZuoJhg9IPs5Y/vOPf0Hc-kvd-Tf5Xw-IWA_xDr8NWmpnj/ShjY2u9jNa-T1FsIuSWem1-eE-4w_11g/BNrz5fXskRFpWWZ-2cQObmw_J_6x8Blf/4ugrsYydHcQvilmNobKhoGc8yOcv9vVb/EhAp5cZ7nqd2lHE037yTdK55eSpBAMbW/b8IIPvJsj05bXi4wO76eyHVO7zQG8Z8S/lot-l2r5qG2GBsmygAXv8QEWeFfmgE1t/SqscZVOgOyxI7uXYu9gqZCyRyHRv_Xe5/UCoe8sarNoJ7d46wbnv9ZmTeqDX8NZ7H/DuRdNHATT0jfGrvMPbjMhqn9emCh1VcP/OjyYY1uGY6NMd-xTl67smgJzGYbfPJUF/QK5tGQtD8dYm0AUogYAT3nhIVSeS2iYD/bEsuRoJC7VKbOp-hL4tQvmvvqX4-1ZHH/F7UpG8bGIirCNAq2pfxyqV94ekGJbZBA/3S1E6kcymEdhWpFSzi98JMV84xuogozC/GKOumgt8cLoVXLBPWMPwFKgHQ1wuQuS5/c6K5yCB_NdSaDnrkCPeLPU3J6lv313DH/DszbGfGvIFO80JMP7DivFBPkQYgSsRTU/14KK4p9ZvTVwfx7tcOqoJve7Pqf9ODUM.jpg" alt="" loading="lazy">
-<div class="rc-body"><div class="rc-k">Детали · первый час</div><div class="rc-t">Велком-зона на свадьбе: идеи, которые работают</div></div>
+</a><a class="related-card" href="https://navseg-da.agency/blog/svadebnyy-buket-nevesty/">
+<img src="https://storage.vigbo.tech/p/w1440/gallery-photo/19ab8853-20bf-49f8-8fc9-d9a60698f327/9963c619-4c8a-40fb-a686-95cc06701d96/original/1Z0XfuANnDb8bCbxifuCP.jpg" alt="" loading="lazy">
+<div class="rc-body"><div class="rc-k">Детали · букет</div><div class="rc-t">Свадебный букет невесты 2026: формы, цветы, цены</div></div>
+</a><a class="related-card" href="https://navseg-da.agency/blog/fotozona-na-svadbu-idei/">
+<img src="https://i.wfolio.ru/x/23Q2n7kS-flJtGEKTA-UZuoJhg9IPs5Y/vOPf0Hc-kvd-Tf5Xw-IWA_xDr8NWmpnj/ShjY2u9jNa-T1FsIuSWem1-eE-4w_11g/BNrz5fXskRFpWWZ-2cQObmw_J_6x8Blf/4ugrsYydHcQvilmNobKhoGc8yOcv9vVb/EhAp5cZ7nqejRRLGOInNFWlGoG8OIiZD/pv2knmchNkvyd8BOwgX932nM6jeZK0Hp/B9kQWsknkMMGQheSjsrPyJm-xrsVVIoL/TnAtxliBzksaiw1wX4Zrcc_DayIFw1JQ/VBlSITZ6wyB_TUi39M2dTzLGnOnkPgDh/rWx1y8EGOUW8FsCuHiBlsdk0oZKyfeGj/5yAoYIG7pS1tYl3cgJaxADJDMYAF-k_Z/ITu4tkLNzbc-g-lItuy9ePNyEzbVRtpf/i7w-Eaf9OsciX3gzSXafBCa2Tk78iyJe/7K_eoGhwn-9yE72_gistHvqlhMO8RX5E/GbP1sleHMkWFwwXvWYpqC6G_Kif1YFw-/epOuAUqIXlWv3w8ntzJ0DVQwEQPSmneB/8UuIWDW1WQ8qfWfv0wEBHEGAOgExq1hh/X7A2FzCc4CEr5mUepyDz10wWaEB9RLA2/Y4BAeeUGwQZXjQW1TxdC2OkkdKVGv7l_.jpg" alt="" loading="lazy">
+<div class="rc-body"><div class="rc-k">Детали · фотозона</div><div class="rc-t">Фотозона на свадьбу: идеи 2026</div></div>
 </a></div></section>
 <script>
 // Reading progress
