@@ -10,6 +10,31 @@
 <meta property="og:locale" content="ru_RU">
 <link rel="preconnect" href="https://storage.vigbo.tech">
 <style>*{box-sizing:border-box}body{margin:0;background:#ffe7c6;font-family:'TildaSans','SF Pro Text',-apple-system,system-ui,sans-serif;color:#2C2C2C}
+/* Reading progress bar */
+.progress-bar{position:fixed;top:0;left:0;right:0;height:3px;background:transparent;z-index:100;pointer-events:none}
+.progress-bar__fill{height:100%;background:linear-gradient(90deg,#ba8a48,#d6b07b);width:0;transition:width .15s ease-out}
+/* Reveal-on-scroll */
+.nsg-mag h2,.nsg-mag .lead,.nsg-mag figure,.nsg-mag .pq,.nsg-mag table,.nsg-mag .midcta,.nsg-mag ul,.related{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.22,.61,.36,1),transform .8s cubic-bezier(.22,.61,.36,1)}
+.nsg-mag h2.in,.nsg-mag .lead.in,.nsg-mag figure.in,.nsg-mag .pq.in,.nsg-mag table.in,.nsg-mag .midcta.in,.nsg-mag ul.in,.related.in{opacity:1;transform:none}
+/* Дроп-кэп в лиде */
+.nsg-mag .lead::first-letter{font-family:'SF Pro Display',Georgia,serif;font-weight:300;font-size:4.4em;line-height:.88;float:left;padding:6px 14px 0 0;color:#9e2a2f;background:linear-gradient(180deg,transparent 82%,rgba(186,138,72,.28) 82%);margin-top:-4px}
+/* Орнамент-разделитель между секциями */
+.nsg-mag h2{position:relative}
+.nsg-mag h2::before{content:"";display:block;width:52px;height:1px;background:linear-gradient(90deg,transparent,#ba8a48,transparent);margin:0 0 22px 0;opacity:.8}
+/* Full-bleed figure — на всю ширину экрана */
+.nsg-mag figure.wide{max-width:none;padding:0;margin:56px 0}
+.nsg-mag figure.wide img{border-radius:0;aspect-ratio:21/9}
+/* Hover на mid-CTA */
+.nsg-mag .midcta__box{transition:transform .3s,box-shadow .3s}
+.nsg-mag .midcta__box:hover{transform:translateY(-3px);box-shadow:0 30px 60px -20px rgba(158,42,47,.5)}
+.nsg-mag .midcta__btn{position:relative;overflow:hidden}
+.nsg-mag .midcta__btn::after{content:"";position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,231,198,.45),transparent);transition:.6s}
+.nsg-mag .midcta__btn:hover::after{left:100%}
+/* Стилизованные ссылки с золотым hover-фоном */
+.nsg-mag a:not(.midcta__btn):hover{background:linear-gradient(180deg,transparent 60%,rgba(186,138,72,.35) 60%)}
+/* Pull-quote — декоративная кавычка */
+.nsg-mag .pq{position:relative}
+.nsg-mag .pq::before{content:"«";position:absolute;top:-24px;left:50%;transform:translateX(-50%);font-family:'SF Pro Display',Georgia,serif;font-size:56px;color:#ba8a48;line-height:1;opacity:.7}
 .site-hd{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(18px,5vw,48px);background:#9e2a2f;color:#ffe7c6}
 .site-hd .logo{font-family:'SF Pro Display',-apple-system,system-ui,sans-serif;font-weight:300;letter-spacing:.34em;font-size:15px;text-transform:uppercase;color:#ffe7c6;text-decoration:none}
 .site-hd nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
@@ -31,6 +56,7 @@
 @media(max-width:700px){.related-grid{grid-template-columns:1fr;gap:12px}.related-card img{height:180px}}
 </style>
 </head><body>
+<div class="progress-bar"><div class="progress-bar__fill" id="pbar"></div></div>
 <header class="site-hd">
 <a class="logo" href="https://navseg-da.agency/">НАВСЕГДА</a>
 <nav>
@@ -176,16 +202,27 @@
 {"@type":"Question","name":"Можно ли зафиксировать цену заранее?","acceptedAnswer":{"@type":"Answer","text":"Да. Многие площадки и подрядчики закрепляют стоимость на момент брони, поэтому бронь в 2026 году часто означает цены 2026-го для свадьбы 2027-го."}},
 {"@type":"Question","name":"За сколько бронировать свадьбу на 2027 год?","acceptedAnswer":{"@type":"Answer","text":"Оптимально за 8–14 месяцев. Для востребованных площадок сезона 2027 — уже в 2026 году."}}]}
 </script>
-<section class="related"><h3>Читайте также</h3><div class="related-grid"><a class="related-card" href="https://navseg-da.agency/blog/byudzhet-svadby-na-100-gostey/">
-<img src="https://storage.vigbo.tech/p/w1440/gallery-photo/81b2ebe1-c193-42e4-b482-4c91bc2e5efc/fbba7447-e031-48e6-877e-2e703a066559/original/6xoKsA6kbv7bewyOQuiin.JPG" alt="" loading="lazy">
-<div class="rc-body"><div class="rc-k">Бюджет · большая свадьба</div><div class="rc-t">Бюджет свадьбы на 100 гостей: реальные цифры</div></div>
-</a><a class="related-card" href="https://navseg-da.agency/blog/kamernaya-svadba-na-40-gostey/">
-<img src="https://storage.vigbo.tech/p/w1440/gallery-photo/81b2ebe1-c193-42e4-b482-4c91bc2e5efc/fbba7447-e031-48e6-877e-2e703a066559/original/7D0K7nXqYWHuqHB27D1pS.JPG" alt="" loading="lazy">
-<div class="rc-body"><div class="rc-k">Форматы · камерная свадьба</div><div class="rc-t">Камерная свадьба на 40 гостей: организация и бюджет</div></div>
-</a><a class="related-card" href="https://navseg-da.agency/blog/kak-vybrat-svadebnogo-organizatora/">
+<section class="related"><h3>Читайте также</h3><div class="related-grid"><a class="related-card" href="https://navseg-da.agency/blog/kak-vybrat-svadebnogo-organizatora/">
 <img src="https://storage.vigbo.tech/p/w1440/gallery-photo/81b2ebe1-c193-42e4-b482-4c91bc2e5efc/fbba7447-e031-48e6-877e-2e703a066559/original/2FLA0gOEjW3AePDkV3qL5.JPG" alt="" loading="lazy">
 <div class="rc-body"><div class="rc-k">Подготовка · выбор команды</div><div class="rc-t">Как выбрать свадебного организатора: 12 вопросов</div></div>
+</a><a class="related-card" href="https://navseg-da.agency/blog/kak-ne-razduvat-byudzhet-svadby/">
+<img src="https://storage.vigbo.tech/p/w1440/gallery-photo/19ab8853-20bf-49f8-8fc9-d9a60698f327/9963c619-4c8a-40fb-a686-95cc06701d96/original/zxBNxTa5JjbPmngYwOxTR.JPG" alt="" loading="lazy">
+<div class="rc-body"><div class="rc-k">Бюджет · разумный подход</div><div class="rc-t">Как не раздувать бюджет свадьбы: 8 разумных решений</div></div>
+</a><a class="related-card" href="https://navseg-da.agency/blog/skolko-stoit-svadba-v-moskve/">
+<img src="https://storage.vigbo.tech/p/w1440/gallery-photo/19ab8853-20bf-49f8-8fc9-d9a60698f327/9963c619-4c8a-40fb-a686-95cc06701d96/original/zxBNxTa5JjbPmngYwOxTR.JPG" alt="" loading="lazy">
+<div class="rc-body"><div class="rc-k"></div><div class="rc-t">Сколько стоит свадьба в Москве в 2026 — реальные цифры</div></div>
 </a></div></section>
+<script>
+// Reading progress
+const pbar=document.getElementById('pbar');
+if(pbar){
+  const upd=()=>{const h=document.documentElement.scrollHeight-innerHeight;pbar.style.width=Math.min(100,scrollY/h*100)+'%'};
+  addEventListener('scroll',upd,{passive:true});upd();
+}
+// Reveal on scroll
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -80px 0px',threshold:.15});
+document.querySelectorAll('.nsg-mag h2,.nsg-mag .lead,.nsg-mag figure,.nsg-mag .pq,.nsg-mag table,.nsg-mag .midcta,.nsg-mag ul,.related').forEach(el=>io.observe(el));
+</script>
 <footer class="site-ft">
 <div><b>НАВСЕГДА</b> · агентство свадеб под ключ · 8 лет · оценка 4,9</div>
 <div style="margin-top:10px">📞 <a href="tel:+79150907290">+7 915 090-72-90</a> · Telegram <a href="https://t.me/navsegda_agency">@navsegda_agency</a></div>

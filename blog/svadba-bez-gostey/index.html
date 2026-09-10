@@ -10,6 +10,31 @@
 <meta property="og:locale" content="ru_RU">
 <link rel="preconnect" href="https://storage.vigbo.tech">
 <style>*{box-sizing:border-box}body{margin:0;background:#ffe7c6;font-family:'TildaSans','SF Pro Text',-apple-system,system-ui,sans-serif;color:#2C2C2C}
+/* Reading progress bar */
+.progress-bar{position:fixed;top:0;left:0;right:0;height:3px;background:transparent;z-index:100;pointer-events:none}
+.progress-bar__fill{height:100%;background:linear-gradient(90deg,#ba8a48,#d6b07b);width:0;transition:width .15s ease-out}
+/* Reveal-on-scroll */
+.nsg-mag h2,.nsg-mag .lead,.nsg-mag figure,.nsg-mag .pq,.nsg-mag table,.nsg-mag .midcta,.nsg-mag ul,.related{opacity:0;transform:translateY(24px);transition:opacity .8s cubic-bezier(.22,.61,.36,1),transform .8s cubic-bezier(.22,.61,.36,1)}
+.nsg-mag h2.in,.nsg-mag .lead.in,.nsg-mag figure.in,.nsg-mag .pq.in,.nsg-mag table.in,.nsg-mag .midcta.in,.nsg-mag ul.in,.related.in{opacity:1;transform:none}
+/* Дроп-кэп в лиде */
+.nsg-mag .lead::first-letter{font-family:'SF Pro Display',Georgia,serif;font-weight:300;font-size:4.4em;line-height:.88;float:left;padding:6px 14px 0 0;color:#9e2a2f;background:linear-gradient(180deg,transparent 82%,rgba(186,138,72,.28) 82%);margin-top:-4px}
+/* Орнамент-разделитель между секциями */
+.nsg-mag h2{position:relative}
+.nsg-mag h2::before{content:"";display:block;width:52px;height:1px;background:linear-gradient(90deg,transparent,#ba8a48,transparent);margin:0 0 22px 0;opacity:.8}
+/* Full-bleed figure — на всю ширину экрана */
+.nsg-mag figure.wide{max-width:none;padding:0;margin:56px 0}
+.nsg-mag figure.wide img{border-radius:0;aspect-ratio:21/9}
+/* Hover на mid-CTA */
+.nsg-mag .midcta__box{transition:transform .3s,box-shadow .3s}
+.nsg-mag .midcta__box:hover{transform:translateY(-3px);box-shadow:0 30px 60px -20px rgba(158,42,47,.5)}
+.nsg-mag .midcta__btn{position:relative;overflow:hidden}
+.nsg-mag .midcta__btn::after{content:"";position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,231,198,.45),transparent);transition:.6s}
+.nsg-mag .midcta__btn:hover::after{left:100%}
+/* Стилизованные ссылки с золотым hover-фоном */
+.nsg-mag a:not(.midcta__btn):hover{background:linear-gradient(180deg,transparent 60%,rgba(186,138,72,.35) 60%)}
+/* Pull-quote — декоративная кавычка */
+.nsg-mag .pq{position:relative}
+.nsg-mag .pq::before{content:"«";position:absolute;top:-24px;left:50%;transform:translateX(-50%);font-family:'SF Pro Display',Georgia,serif;font-size:56px;color:#ba8a48;line-height:1;opacity:.7}
 .site-hd{position:sticky;top:0;z-index:50;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:14px clamp(18px,5vw,48px);background:#9e2a2f;color:#ffe7c6}
 .site-hd .logo{font-family:'SF Pro Display',-apple-system,system-ui,sans-serif;font-weight:300;letter-spacing:.34em;font-size:15px;text-transform:uppercase;color:#ffe7c6;text-decoration:none}
 .site-hd nav{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
@@ -31,6 +56,7 @@
 @media(max-width:700px){.related-grid{grid-template-columns:1fr;gap:12px}.related-card img{height:180px}}
 </style>
 </head><body>
+<div class="progress-bar"><div class="progress-bar__fill" id="pbar"></div></div>
 <header class="site-hd">
 <a class="logo" href="https://navseg-da.agency/">НАВСЕГДА</a>
 <nav>
@@ -148,13 +174,24 @@
 <section class="related"><h3>Читайте также</h3><div class="related-grid"><a class="related-card" href="https://navseg-da.agency/blog/vyezdnoy-bar-na-svadbu/">
 <img src="https://storage.vigbo.tech/p/w1440/gallery-photo/81b2ebe1-c193-42e4-b482-4c91bc2e5efc/fbba7447-e031-48e6-877e-2e703a066559/original/NeW0l9q8u4ekBOKZbrAcs.JPG" alt="" loading="lazy">
 <div class="rc-body"><div class="rc-k">Детали · велком</div><div class="rc-t">Выездной бар на свадьбу: форматы и цена 2026</div></div>
-</a><a class="related-card" href="https://navseg-da.agency/blog/svadba-v-lofte-moskva/">
-<img src="https://i.wfolio.ru/x/KfN2JhbB89-m6UeUSQ-43b-4LTDPyZVn/q6sVLUvjujnOk6mXbO2srbIKpPlcOqy0/t7rVx8PT5NFW95R5iPfYgEbcz9T9DM03/mjHu5nb3MiY0pLaVSfnIEvvsgGTLYWd3/DB3ADSLxnrANMZCME7ysO3ROQRxv_IlB/C1hs5JOwIk9fROa4rK9rFfWc04YXrc8E/tqNcKmPvEJzIe1L2GAPvxvIvtiZLO8Hq/DTvXbFUYeeJs_sWoZ2eauNVzgMwFuhzD/F4qT90dJ_nHgGifyyeCcx4CGqzPYc44B/55KHwiYurNn4Mf1N1l18XtBWo4xiQwa0/9BjN5O67CgiDI5xliyWNELc3vU-OV3Us/6CCeVYQjQtUt0yLky9DKavqK7IuG0rM-/GlVNvKGeDkw1Calc9uFKLhCD7Zb1qeKE/6X8RV_Dy5XPX3UPeOt0a0JxYqXouU2nZ/sdfYLBFPvzfqy1nKlPqE_o1ndJCaEu0C/oCJeK50AvThoRIMbKclYz1qYkI7EdfvQ/RrqxNe-7W5aPB0gOPfoVWTY1dDwMzNdG/qe8-qRz88GM.jpg" alt="" loading="lazy">
-<div class="rc-body"><div class="rc-k">Формат · лофт</div><div class="rc-t">Свадьба в лофте в Москве: цены, форматы, топ-локаций 2026</div></div>
-</a><a class="related-card" href="https://navseg-da.agency/blog/kamernaya-svadba-na-40-gostey/">
-<img src="https://storage.vigbo.tech/p/w1440/gallery-photo/81b2ebe1-c193-42e4-b482-4c91bc2e5efc/fbba7447-e031-48e6-877e-2e703a066559/original/7D0K7nXqYWHuqHB27D1pS.JPG" alt="" loading="lazy">
-<div class="rc-body"><div class="rc-k">Форматы · камерная свадьба</div><div class="rc-t">Камерная свадьба на 40 гостей: организация и бюджет</div></div>
+</a><a class="related-card" href="https://navseg-da.agency/blog/kak-vybrat-svadebnogo-organizatora/">
+<img src="https://storage.vigbo.tech/p/w1440/gallery-photo/81b2ebe1-c193-42e4-b482-4c91bc2e5efc/fbba7447-e031-48e6-877e-2e703a066559/original/2FLA0gOEjW3AePDkV3qL5.JPG" alt="" loading="lazy">
+<div class="rc-body"><div class="rc-k">Подготовка · выбор команды</div><div class="rc-t">Как выбрать свадебного организатора: 12 вопросов</div></div>
+</a><a class="related-card" href="https://navseg-da.agency/blog/timing-svadebnogo-dnya/">
+<img src="https://storage.vigbo.tech/p/w1440/gallery-photo/81b2ebe1-c193-42e4-b482-4c91bc2e5efc/fbba7447-e031-48e6-877e-2e703a066559/original/NevuJ3jbf7CBz_IxDVEtt.JPG" alt="" loading="lazy">
+<div class="rc-body"><div class="rc-k">Подготовка · тайминг</div><div class="rc-t">Тайминг свадебного дня: как выстроить программу</div></div>
 </a></div></section>
+<script>
+// Reading progress
+const pbar=document.getElementById('pbar');
+if(pbar){
+  const upd=()=>{const h=document.documentElement.scrollHeight-innerHeight;pbar.style.width=Math.min(100,scrollY/h*100)+'%'};
+  addEventListener('scroll',upd,{passive:true});upd();
+}
+// Reveal on scroll
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -80px 0px',threshold:.15});
+document.querySelectorAll('.nsg-mag h2,.nsg-mag .lead,.nsg-mag figure,.nsg-mag .pq,.nsg-mag table,.nsg-mag .midcta,.nsg-mag ul,.related').forEach(el=>io.observe(el));
+</script>
 <footer class="site-ft">
 <div><b>НАВСЕГДА</b> · агентство свадеб под ключ · 8 лет · оценка 4,9</div>
 <div style="margin-top:10px">📞 <a href="tel:+79150907290">+7 915 090-72-90</a> · Telegram <a href="https://t.me/navsegda_agency">@navsegda_agency</a></div>
