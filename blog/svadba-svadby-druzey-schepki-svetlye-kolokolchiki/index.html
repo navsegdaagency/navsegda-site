@@ -226,12 +226,12 @@ ym(112491690,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",
 </div>
 </div>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Свадебная колыбельная 2026","author":{"@type":"Organization","name":"НАВСЕГДА"},"publisher":{"@type":"Organization","name":"НАВСЕГДА"},"inLanguage":"ru-RU","datePublished":"2026-01-01","dateModified":"2026-09-12"}</script>
-<section class="related"><h3>Читайте также</h3><div class="related-grid"><a class="related-card" href="https://navseg-da.agency/blog/svadba-tematicheskaya/">
-<img src="https://storage.vigbo.tech/p/w1440/gallery-photo/81b2ebe1-c193-42e4-b482-4c91bc2e5efc/fbba7447-e031-48e6-877e-2e703a066559/original/wGDB1a38ZB4xw6VwJI4mh.JPG" alt="" loading="lazy">
-<div class="rc-body"><div class="rc-k">Стиль · тема</div><div class="rc-t">Тематическая свадьба 2026: идеи и как реализовать</div></div>
-</a><a class="related-card" href="https://navseg-da.agency/blog/svadba-v-stile-boho/">
-<img src="https://storage.vigbo.tech/p/w1440/gallery-photo/81b2ebe1-c193-42e4-b482-4c91bc2e5efc/fbba7447-e031-48e6-877e-2e703a066559/original/NevuJ3jbf7CBz_IxDVEtt.JPG" alt="" loading="lazy">
-<div class="rc-body"><div class="rc-k">Стиль · бохо</div><div class="rc-t">Свадьба в стиле бохо 2026: декор, платье, площадки</div></div>
+<section class="related"><h3>Читайте также</h3><div class="related-grid"><a class="related-card" href="https://navseg-da.agency/blog/svadba-v-stile-garden-party/">
+<img src="https://storage.vigbo.tech/p/w1440/gallery-photo/81b2ebe1-c193-42e4-b482-4c91bc2e5efc/fbba7447-e031-48e6-877e-2e703a066559/original/2tVPCiFIFrAiXullTeo1S.JPG" alt="" loading="lazy">
+<div class="rc-body"><div class="rc-k">Стиль · garden party</div><div class="rc-t">Свадьба в стиле garden party 2026: формат и идеи</div></div>
+</a><a class="related-card" href="https://navseg-da.agency/blog/svadba-v-stile-minimalizm/">
+<img src="https://storage.vigbo.tech/p/w1440/gallery-photo/81b2ebe1-c193-42e4-b482-4c91bc2e5efc/fbba7447-e031-48e6-877e-2e703a066559/original/7-9d17wpN2an4jFtJNq14.JPG" alt="" loading="lazy">
+<div class="rc-body"><div class="rc-k">Стиль · минимализм</div><div class="rc-t">Свадьба в стиле минимализм 2026: идеи и реализация</div></div>
 </a><a class="related-card" href="https://navseg-da.agency/blog/svadba-v-stile-italiya/">
 <img src="https://storage.vigbo.tech/p/w1440/gallery-photo/19ab8853-20bf-49f8-8fc9-d9a60698f327/9963c619-4c8a-40fb-a686-95cc06701d96/original/1Z0XfuANnDb8bCbxifuCP.jpg" alt="" loading="lazy">
 <div class="rc-body"><div class="rc-k">Стиль · Италия</div><div class="rc-t">Свадьба в итальянском стиле 2026: La Dolce Vita</div></div>
@@ -264,7 +264,24 @@ ym(112491690,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",
         </select>
       </label>
       <label>Коротко о видении (необязательно)<textarea name="notes" rows="2" placeholder="Камерно, за городом, ужин на закате…"></textarea></label>
+
+      <!-- Мгновенная капча + honeypot -->
+      <div class="smeta-form__captcha">
+        <label class="smeta-form__cap-label">
+          <span id="capQ">Сколько будет 3 + 4?</span>
+          <input required name="_captcha" id="capA" placeholder="ответ цифрой" autocomplete="off" inputmode="numeric" pattern="[0-9]*" maxlength="3">
+        </label>
+        <!-- honeypot: скрыт от людей, боты заполняют -->
+        <label class="smeta-form__hp" aria-hidden="true" tabindex="-1"><input type="text" name="_website" autocomplete="off" tabindex="-1"></label>
+      </div>
+
+      <label class="smeta-form__consent">
+        <input required type="checkbox" name="_consent" id="_consent">
+        <span>Я согласен(-а) с <a href="/privacy" target="_blank" rel="noopener">политикой конфиденциальности</a> и обработкой персональных данных</span>
+      </label>
+
       <button type="submit" class="smeta-form__btn">Отправить и открыть Telegram</button>
+      <div id="smetaErr" class="smeta-form__err" role="alert"></div>
       <div class="smeta-form__alt">Или сразу:
         <a href="tel:+79150907290">📞 позвонить</a> ·
         <a href="https://t.me/navsegda_agency" target="_blank" rel="noopener">Telegram</a>
@@ -296,6 +313,15 @@ ym(112491690,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",
 .smeta-form__btn:hover{background:#4e0002;transform:translateY(-1px)}
 .smeta-form__alt{text-align:center;margin-top:14px;font-size:13px;color:#6a5a52}
 .smeta-form__alt a{color:#9e2a2f;text-decoration:none;font-weight:600;margin:0 4px}
+.smeta-form__captcha{background:#fdf4e5;border:1px solid #e8c9a1;border-radius:8px;padding:12px 14px;margin:8px 0 14px}
+.smeta-form__cap-label{display:block;font-size:13px;color:#4e0002;font-weight:600;margin:0}
+.smeta-form__cap-label span{display:block;margin-bottom:6px}
+.smeta-form__cap-label input{max-width:140px}
+.smeta-form__hp{position:absolute !important;left:-9999px !important;width:1px !important;height:1px !important;overflow:hidden !important;opacity:0 !important;pointer-events:none !important}
+.smeta-form__consent{display:flex !important;align-items:flex-start;gap:10px;font-size:13px !important;color:#6a5a52 !important;line-height:1.4;margin:14px 0 !important;font-weight:normal !important;cursor:pointer}
+.smeta-form__consent input[type=checkbox]{width:18px !important;height:18px;margin:2px 0 0 0 !important;padding:0 !important;accent-color:#9e2a2f;flex:none;cursor:pointer}
+.smeta-form__consent a{color:#9e2a2f;text-decoration:underline;text-underline-offset:2px}
+.smeta-form__err{color:#9e2a2f;font-size:13px;margin-top:8px;text-align:center;font-weight:600;min-height:18px}
 .smeta-ok{text-align:center;padding:10px 0}
 .smeta-ok__i{width:60px;height:60px;border-radius:50%;background:#9e2a2f;color:#ffe7c6;font-size:32px;line-height:60px;margin:0 auto 16px}
 .smeta-ok h3{margin:0 0 10px !important}
@@ -318,10 +344,26 @@ document.querySelectorAll('.nsg-mag h2,.nsg-mag .lead,.nsg-mag figure,.nsg-mag .
   const modal=document.getElementById('smeta-modal');
   const form=document.getElementById('smeta-form');
   const ok=document.getElementById('smeta-ok');
+  const errEl=document.getElementById('smetaErr');
+  const capQ=document.getElementById('capQ');
+  const capA=document.getElementById('capA');
   if(!modal||!form) return;
-  const open=()=>{modal.hidden=false;modal.setAttribute('aria-hidden','false');document.body.style.overflow='hidden';setTimeout(()=>{const n=form.querySelector('input[name=name]');n&&n.focus()},80)};
-  const close=()=>{modal.hidden=true;modal.setAttribute('aria-hidden','true');document.body.style.overflow='';form.hidden=false;ok.hidden=true;form.reset()};
-  // Trigger по всем ссылкам с data-smeta или href=#smeta или href="/#zeropopup"
+  let openedAt=0, capExpect=0;
+  const genCaptcha=()=>{
+    const a=Math.floor(Math.random()*8)+2, b=Math.floor(Math.random()*8)+2;
+    capExpect=a+b;
+    if(capQ) capQ.textContent='Сколько будет '+a+' + '+b+'?';
+    if(capA) capA.value='';
+  };
+  const open=()=>{
+    modal.hidden=false;modal.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+    openedAt=Date.now();
+    genCaptcha();
+    if(errEl) errEl.textContent='';
+    setTimeout(()=>{const n=form.querySelector('input[name=name]');n&&n.focus()},80);
+  };
+  const close=()=>{modal.hidden=true;modal.setAttribute('aria-hidden','true');document.body.style.overflow='';form.hidden=false;ok.hidden=true;form.reset();if(errEl) errEl.textContent='';};
   document.addEventListener('click',ev=>{
     const a=ev.target.closest('a');
     if(!a) return;
@@ -333,7 +375,18 @@ document.querySelectorAll('.nsg-mag h2,.nsg-mag .lead,.nsg-mag figure,.nsg-mag .
   document.addEventListener('keydown',ev=>{if(ev.key==='Escape'&&!modal.hidden) close()});
   form.addEventListener('submit',ev=>{
     ev.preventDefault();
+    if(errEl) errEl.textContent='';
     const d=new FormData(form);
+    // 1) honeypot — если заполнен, тихо блокируем
+    if((d.get('_website')||'').trim()){ if(errEl) errEl.textContent='Ошибка проверки. Обновите страницу.'; return; }
+    // 2) timing — форма отправлена слишком быстро (<1.5с) = бот
+    if(Date.now()-openedAt<1500){ if(errEl) errEl.textContent='Слишком быстро. Проверьте поля.'; return; }
+    // 3) капча
+    const ans=parseInt((d.get('_captcha')||'').trim(),10);
+    if(!Number.isFinite(ans)||ans!==capExpect){ if(errEl) errEl.textContent='Неверный ответ на вопрос. Попробуйте ещё раз.'; genCaptcha(); return; }
+    // 4) согласие
+    if(!d.get('_consent')){ if(errEl) errEl.textContent='Нужно согласиться с политикой конфиденциальности.'; return; }
+    // OK — собираем текст
     const url=location.pathname;
     const text=[
       '📩 Заявка на смету со статьи',
@@ -347,9 +400,7 @@ document.querySelectorAll('.nsg-mag h2,.nsg-mag .lead,.nsg-mag figure,.nsg-mag .
       '',
       'Со страницы: '+location.origin+url
     ].filter(Boolean).join('\n');
-    // Ya.Metrika goal
     try{typeof ym==='function' && ym(112491690,'reachGoal','smeta_submit')}catch(e){}
-    // Открываем Telegram с готовым текстом
     const tg='https://t.me/navsegda_agency?text='+encodeURIComponent(text);
     window.open(tg,'_blank','noopener');
     form.hidden=true;ok.hidden=false;
