@@ -14,14 +14,14 @@ img{max-width:100%}
 .site-hd .cta-hd{background:#ba8a48;color:#4e0002;padding:9px 18px;border-radius:30px}
 .hero-s{text-align:center;padding:clamp(40px,7vw,72px) 20px 6px}
 .hero-s .k{font:500 13px 'Oswald',sans-serif;letter-spacing:.34em;text-transform:uppercase;color:#ba8a48}
-.hero-s h1{font-family:'Playfair Display',Georgia,serif;font-weight:600;color:#4e0002;font-size:clamp(30px,6vw,52px);margin:12px 0 10px}
+.hero-s h1{font-family:'SF Pro Display','TildaSans',system-ui,sans-serif;font-weight:600;color:#4e0002;font-size:clamp(30px,6vw,52px);margin:12px 0 10px}
 .hero-s p{max-width:60ch;margin:0 auto;color:#9e2a2f;font-size:16px;line-height:1.6}
 .st-wrap{max-width:1160px;margin:0 auto;padding:clamp(24px,5vw,48px) clamp(18px,5vw,40px) 40px;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .st-card{text-decoration:none;background:#fff;border:1px solid rgba(158,42,47,.14);border-radius:16px;overflow:hidden;transition:transform .25s,box-shadow .25s}
 .st-card:hover{transform:translateY(-5px);box-shadow:0 20px 46px rgba(78,0,2,.14)}
 .st-img{aspect-ratio:3/4;background:#e7cfae center/cover no-repeat}
 .st-b{padding:18px 18px 20px}
-.st-n{font-family:'Playfair Display',serif;color:#4e0002;font-size:20px;font-weight:600}
+.st-n{font-family:'SF Pro Display','TildaSans',system-ui,sans-serif;color:#4e0002;font-size:20px;font-weight:600}
 .st-f{color:#9e2a2f;font-size:13.5px;margin:4px 0 10px}
 .st-s{color:#ba8a48;font-weight:700;font-size:15px}
 .st-go{margin-top:12px;font:600 11px 'Oswald',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#4e0002}
@@ -29,7 +29,14 @@ img{max-width:100%}
 .site-ft a{color:#ba8a48;text-decoration:none;margin:0 6px}
 @media(max-width:900px){.st-wrap{grid-template-columns:1fr 1fr}}
 @media(max-width:560px){.st-wrap{grid-template-columns:1fr}}
-</style></head><body>
+</style><style id="nsg-fonts">
+@font-face{font-family:'SF Pro Display';src:url('/assets/fonts/SFProDisplay-Light.otf') format('opentype');font-weight:300;font-display:swap}
+@font-face{font-family:'SF Pro Display';src:url('/assets/fonts/SFProDisplay-Regular.otf') format('opentype');font-weight:400;font-display:swap}
+@font-face{font-family:'SF Pro Display';src:url('/assets/fonts/SFProDisplay-Semibold.otf') format('opentype');font-weight:600;font-display:swap}
+@font-face{font-family:'Hello January';src:url('/assets/fonts/HelloJanuary.otf') format('opentype');font-display:swap}
+@font-face{font-family:'TildaSans';src:url('/assets/fonts/TildaSans-VF.woff2') format('woff2');font-weight:300 700;font-display:swap}
+</style>
+</head><body>
 <header class="site-hd"><a class="logo" href="https://navseg-da.agency/"><img src="https://navseg-da.agency/assets/logo-navsegda.svg" alt="НАВСЕГДА"></a>
 <nav><a href="https://navseg-da.agency/">Наш сайт</a><a href="https://navseg-da.agency/blog/">Журнал</a><a href="https://navseg-da.agency/istorii/">Истории</a><a class="cta-hd" href="https://navseg-da.agency/#zeropopup">Обсудить свадьбу</a></nav></header>
 <section class="hero-s"><div class="k">Истории наших пар</div><h1>Реальные свадьбы — фото и сметы</h1>

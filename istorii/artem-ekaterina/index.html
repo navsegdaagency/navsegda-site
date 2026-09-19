@@ -16,6 +16,17 @@
 .site-hd .cta-hd{background:#ba8a48;color:#4e0002;padding:10px 22px;border-radius:30px;font-weight:700;font-size:12px;letter-spacing:.14em}
 .site-ft{background:#4e0002;color:#ffe7c6;padding:56px clamp(18px,5vw,48px);margin-top:60px;text-align:center;font-size:15px;line-height:1.7}
 .site-ft a{color:#ba8a48;text-decoration:none;margin:0 8px}</style>
+<style id="nsg-fonts">
+@font-face{font-family:'SF Pro Display';src:url('/assets/fonts/SFProDisplay-Light.otf') format('opentype');font-weight:300;font-display:swap}
+@font-face{font-family:'SF Pro Display';src:url('/assets/fonts/SFProDisplay-Regular.otf') format('opentype');font-weight:400;font-display:swap}
+@font-face{font-family:'SF Pro Display';src:url('/assets/fonts/SFProDisplay-Semibold.otf') format('opentype');font-weight:600;font-display:swap}
+@font-face{font-family:'Hello January';src:url('/assets/fonts/HelloJanuary.otf') format('opentype');font-display:swap}
+@font-face{font-family:'TildaSans';src:url('/assets/fonts/TildaSans-VF.woff2') format('woff2');font-weight:300 700;font-display:swap}
+body,.nsg-case{font-family:'TildaSans','SF Pro Text',-apple-system,system-ui,sans-serif}
+.nsg-case .hero h1{font-family:'SF Pro Display','TildaSans',system-ui,sans-serif;font-weight:300}
+.nsg-case .hero h1 span{font-family:'Hello January',cursive!important;font-style:normal!important;font-weight:400}
+.nsg-case h2,.nsg-case .facts b{font-family:'SF Pro Display','TildaSans',system-ui,sans-serif}
+</style>
 </head><body>
 <div class="progress-bar"><div class="progress-bar__fill" id="pbar"></div></div>
 <header class="site-hd">
@@ -52,7 +63,7 @@
 .nsg-case .gal .t{grid-column:span 2}
 @media(max-width:640px){.nsg-case .gal{grid-template-columns:repeat(2,1fr)}.nsg-case .gal .w,.nsg-case .gal .t{grid-column:span 2}.nsg-case .gal .w img{aspect-ratio:16/11}}
 .nsg-case .cta{text-align:center;margin:52px 0 70px}
-.nsg-case .cta a{display:inline-block;background:var(--burg);color:#ffe7c6;text-decoration:none;padding:18px 44px;border-radius:40px;font-size:14px;letter-spacing:.18em;text-transform:uppercase}
+.nsg-case .cta p a{background:none!important;padding:0!important;border-radius:0!important;color:var(--burg);font-weight:600;text-decoration:none}.nsg-case .cta .btns a{display:inline-block}
 .nsg-case .cta p{color:#6a5a52;font-size:17px;margin-bottom:18px}
 .nsg-case .upd{font-size:14px;color:#8a7b72;margin-top:34px}</style>
 <div class="hero">
