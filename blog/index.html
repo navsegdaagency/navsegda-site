@@ -96,6 +96,102 @@ ym(112491690,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",
 <div class="hero-blog__line"></div>
 <p>Статьи о свадебной подготовке — от площадок и бюджета до трендов 2026. Опыт агентства за 4 года работы.</p>
 </section>
+<section class="blog-search" id="blogSearch">
+<style>
+.blog-search{max-width:1200px;margin:0 auto;padding:8px clamp(18px,5vw,48px) 4px}
+.bs-box{position:relative;display:flex;align-items:center;background:#fff;border:1.5px solid rgba(158,42,47,.22);border-radius:40px;padding:0 18px;box-shadow:0 8px 30px rgba(78,0,2,.06);transition:border-color .2s,box-shadow .2s}
+.bs-box:focus-within{border-color:#ba8a48;box-shadow:0 10px 34px rgba(78,0,2,.12)}
+.bs-ic{flex:none;width:20px;height:20px;opacity:.5}
+.bs-inp{flex:1;border:0;outline:0;background:transparent;font:400 16px/1 'TildaSans','SF Pro Text',system-ui,sans-serif;color:#4e0002;padding:16px 12px}
+.bs-inp::placeholder{color:#b08a8c}
+.bs-clr{flex:none;border:0;background:transparent;color:#9e2a2f;font-size:20px;cursor:pointer;padding:6px 8px;display:none;line-height:1}
+.bs-clr.on{display:block}
+.bs-meta{max-width:1200px;margin:8px auto 0;padding:0 clamp(18px,5vw,48px);min-height:20px;font:400 13px/1.4 'TildaSans',system-ui,sans-serif;color:#9e2a2f}
+.bs-chips{max-width:1200px;margin:10px auto 0;padding:0 clamp(18px,5vw,48px);display:flex;flex-wrap:wrap;gap:8px}
+.bs-chip{border:1px solid rgba(158,42,47,.28);color:#9e2a2f;background:#fff;border-radius:30px;padding:7px 15px;font:500 13px 'TildaSans',system-ui,sans-serif;cursor:pointer;transition:.2s}
+.bs-chip:hover{background:#9e2a2f;color:#ffe7c6;border-color:#9e2a2f}
+.bs-empty{max-width:1200px;margin:24px auto;padding:0 clamp(18px,5vw,48px);color:#5a3a3c;font:400 15px 'TildaSans',system-ui,sans-serif;display:none}
+.bs-empty.on{display:block}
+</style>
+<div class="bs-box">
+<svg class="bs-ic" viewBox="0 0 24 24" fill="none" stroke="#9e2a2f" stroke-width="2"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+<input class="bs-inp" id="bsInput" type="search" autocomplete="off" placeholder="Поиск по статьям: площадка, бюджет, фотограф, платье…" aria-label="Поиск по статьям">
+<button class="bs-clr" id="bsClear" aria-label="Очистить">×</button>
+</div>
+<div class="bs-chips" id="bsChips"></div>
+<div class="bs-meta" id="bsMeta"></div>
+<div class="bs-empty" id="bsEmpty">По запросу ничего не нашли. Попробуйте другое слово или тему выше.</div>
+</section>
+<script>
+(function(){
+  var SYN={
+    'площадка':['лофт','усадьба','ресторан','шатер','шатёр','веранда','зал','банкетный','крыша','локация','место','оранжерея','особняк','загород','ферма','причал','терраса'],
+    'бюджет':['цена','цены','стоимость','смета','расход','сколько стоит','деньги','дорого','экономия','сэконом'],
+    'фотограф':['фото','фотосъемка','фотосъёмка','фотосессия','съемка','съёмка','снимки','фотозона'],
+    'видео':['видеограф','видеосъемка','видеосъёмка','ролик','клип'],
+    'ведущий':['тамада','конферансье','церемониймейстер','модератор'],
+    'декор':['оформление','флорист','флористика','цветы','композиции','арка','президиум','оформить'],
+    'платье':['наряд','салон','образ невесты','фата','аксессуары'],
+    'гости':['рассадка','приглашения','приглашение','список гостей','подарки','дресс-код'],
+    'организатор':['координатор','агентство','планирование','подготовка','организация'],
+    'банкет':['меню','кейтеринг','еда','блюда','алкоголь','бар','напитки','торт','десерт'],
+    'музыка':['диджей','dj','кавер','группа','артисты','саксофон','бэнд'],
+    'образ':['макияж','прическа','причёска','стилист','визажист','маникюр'],
+    'церемония':['выездная','регистрация','клятвы','обмен кольцами','роспись'],
+    'сценарий':['тайминг','программа','конкурсы','развлечения','первый танец'],
+    'стиль':['тематика','концепция','палитра','цвет','тренд','идеи']
+  };
+  function norm(t){return (t||'').toLowerCase().replace(/ё/g,'е').replace(/[^a-zа-я0-9 ]/g,' ').replace(/\s+/g,' ').trim();}
+  var cards=[];
+  function buildCards(){
+    cards=[].slice.call(document.querySelectorAll('.feed-card')).map(function(el){
+      var k=el.querySelector('.fc-k'),t=el.querySelector('.fc-t'),d=el.querySelector('.fc-d');
+      return {el:el, hay:norm((k?k.textContent:'')+' '+(t?t.textContent:'')+' '+(d?d.textContent:'')), title:norm(t?t.textContent:'')};
+    });
+    return cards.length;
+  }
+  var inp=document.getElementById('bsInput'), clr=document.getElementById('bsClear'),
+      meta=document.getElementById('bsMeta'), empty=document.getElementById('bsEmpty'), chipsBox=document.getElementById('bsChips');
+  var CHIPS=['Площадка','Бюджет','Фотограф','Ведущий','Декор','Платье','Организатор','Банкет'];
+  CHIPS.forEach(function(c){var b=document.createElement('button');b.className='bs-chip';b.textContent=c;b.onclick=function(){inp.value=c;run();inp.focus();};chipsBox.appendChild(b);});
+  function expand(tok){
+    var set=[tok];
+    for(var base in SYN){
+      var grp=[base].concat(SYN[base]);
+      if(grp.some(function(w){return w.indexOf(tok)>=0||tok.indexOf(w)>=0;})){ set=set.concat(grp); }
+    }
+    return set;
+  }
+  function matchTok(hay,tok){
+    if(hay.indexOf(tok)>=0) return true;
+    var alts=expand(tok);
+    for(var i=0;i<alts.length;i++){ if(alts[i].length>=3 && hay.indexOf(alts[i])>=0) return true; }
+    return false;
+  }
+  function run(){
+    if(!cards.length) buildCards();
+    var q=norm(inp.value);
+    clr.classList.toggle('on', !!inp.value);
+    if(!q){ cards.forEach(function(c){c.el.style.display='';}); meta.textContent=''; empty.classList.remove('on'); return; }
+    var toks=q.split(' ').filter(function(t){return t.length>=2;});
+    var n=0;
+    cards.forEach(function(c){
+      var ok=toks.every(function(t){return matchTok(c.hay,t);});
+      c.el.style.display=ok?'':'none'; if(ok)n++;
+    });
+    meta.textContent='Найдено статей: '+n;
+    empty.classList.toggle('on', n===0);
+  }
+  var tmr; inp.addEventListener('input',function(){clearTimeout(tmr);tmr=setTimeout(run,120);});
+  clr.addEventListener('click',function(){inp.value='';run();inp.focus();});
+  inp.addEventListener('keydown',function(e){if(e.key==='Escape'){inp.value='';run();}});
+  // карточки идут ПОСЛЕ этого скрипта — собираем, когда DOM готов
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',buildCards);}else{buildCards();}
+  var _bootPoll=setInterval(function(){ if(buildCards()>0){clearInterval(_bootPoll);} },300);
+  setTimeout(function(){clearInterval(_bootPoll);},6000);
+})();
+</script>
+
 <div class="feed"><a class="feed-card" href="https://navseg-da.agency/blog/svadba-u-vody/">
 <div class="fc-img"><img src="https://storage.vigbo.tech/p/w1440/gallery-photo/81b2ebe1-c193-42e4-b482-4c91bc2e5efc/fbba7447-e031-48e6-877e-2e703a066559/original/TzSernPzlwQcH40dMVfcJ.JPG" alt="" loading="lazy"></div>
 <div class="fc-body">
