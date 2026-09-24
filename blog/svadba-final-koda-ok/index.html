@@ -146,7 +146,7 @@ ym(112491690,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",
 <li><b>Огненное шоу.</b> Профессиональные жонглёры огня. За несколько минут до вашего выхода.</li>
 </ul>
 <div class="pq"><p>Финал — <em>ваш последний кадр</em>. Именно эту сцену будут пересматривать в фотокниге.</p></div>
-<h2>Организация sparklers</h2>
+<h2>Организация sparklers</h2><div class="nsg-midcta"><div class="nsg-midcta__t">Хотите смету под вашу свадьбу?</div><div class="nsg-midcta__s">Пришлём расчёт за 24 часа и подскажем, как уложиться в бюджет. Без обязательств.</div><a class="nsg-midcta__b" data-smeta="1" href="#smeta-modal">Получить смету →</a></div><style>.nsg-midcta{margin:32px 0;padding:26px 24px;border-radius:16px;background:linear-gradient(135deg,#9e2a2f,#4e0002);color:#ffe7c6;text-align:center}.nsg-midcta__t{font-family:'SF Pro Display','TildaSans',system-ui,sans-serif;font-weight:600;font-size:22px;margin-bottom:8px}.nsg-midcta__s{font-size:15px;color:#f0dcc2;margin-bottom:18px;line-height:1.5}.nsg-midcta__b{display:inline-block;background:#ba8a48;color:#4e0002;text-decoration:none;font-family:'Oswald','TildaSans',sans-serif;font-weight:600;font-size:14px;letter-spacing:.08em;text-transform:uppercase;padding:14px 30px;border-radius:40px}.nsg-midcta__b:hover{background:#e7c895}</style>
 <ul>
 <li>Длинные бенгалы (60 см, горят 2-3 минуты)</li>
 <li>1 на каждого гостя (даже больше)</li>
@@ -365,6 +365,7 @@ document.querySelectorAll('.nsg-mag h2,.nsg-mag .lead,.nsg-mag figure,.nsg-mag .
       'Со страницы: '+location.origin+url
     ].filter(Boolean).join('\n');
     try{typeof ym==='function' && ym(112491690,'reachGoal','smeta_submit')}catch(e){}
+    try{fetch('https://venuebot-navsegda.amvera.io/site-lead',{method:'POST',mode:'no-cors',keepalive:true,body:JSON.stringify({form:'blog-smeta',name:(d.get('name')||''),contact:(d.get('contact')||''),message:text,page:location.href})}).catch(function(){});}catch(e){}
     const tg='https://t.me/navsegda_agency?text='+encodeURIComponent(text);
     window.open(tg,'_blank','noopener');
     form.hidden=true;ok.hidden=false;
@@ -376,4 +377,11 @@ document.querySelectorAll('.nsg-mag h2,.nsg-mag .lead,.nsg-mag figure,.nsg-mag .
 <div style="margin-top:10px">📞 <a href="tel:+79150907290">+7 915 090-72-90</a> · Telegram <a href="https://t.me/navsegda_agency">@navsegda_agency</a></div>
 <div style="margin-top:14px;font-size:13px;opacity:.7"><a href="https://navseg-da.agency/">На главную</a> · <a href="https://navseg-da.agency/blog/">Все статьи</a> · <a href="https://navseg-da.agency/istorii/konstantin-darya">Кейсы</a> · <a href="#smeta" data-smeta="1">Обсудить смету</a></div>
 </footer>
+
+<a class="nsg-sticky-cta" data-smeta="1" href="#smeta-modal">Рассчитать смету бесплатно →</a>
+<style>
+.nsg-sticky-cta{position:fixed;left:16px;bottom:16px;z-index:9998;background:#9e2a2f;color:#ffe7c6;text-decoration:none;font-family:'Oswald','TildaSans',system-ui,sans-serif;font-weight:600;font-size:14px;letter-spacing:.03em;padding:14px 22px;border-radius:40px;box-shadow:0 10px 30px rgba(78,0,2,.35);transition:transform .2s,background .2s}
+.nsg-sticky-cta:hover{background:#4e0002;transform:translateY(-2px)}
+@media(max-width:600px){.nsg-sticky-cta{left:12px;right:74px;bottom:12px;text-align:center;font-size:13px;padding:13px 14px}}
+</style>
 </body></html>
