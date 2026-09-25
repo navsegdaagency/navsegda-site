@@ -56,4 +56,173 @@ img{max-width:100%}
 <div class="st-b"><div class="st-n">Павел и Юлия</div><div class="st-f">40 гостей · лето</div><div class="st-s">Смета · 1 344 116 ₽</div><div class="st-go">Смотреть историю →</div></div></a></div>
 <footer class="site-ft"><div><b>НАВСЕГДА</b> · свадьбы под ключ · 4 года · оценка 4,9</div>
 <div style="margin-top:10px">📞 <a href="tel:+79150907290">+7 915 090-72-90</a> · Telegram <a href="https://t.me/navsegda_agency">@navsegda_agency</a></div></footer>
+
+<!-- NSG lead engine (смета) -->
+<div id="smeta-modal" class="smeta-modal" hidden aria-hidden="true" role="dialog" aria-labelledby="smeta-title">
+  <div class="smeta-modal__bg" data-close="1"></div>
+  <div class="smeta-modal__box">
+    <button type="button" class="smeta-modal__x" data-close="1" aria-label="Закрыть">×</button>
+    <div class="smeta-modal__k">Расчёт сметы · за 24 часа</div>
+    <h3 id="smeta-title">Обсудим вашу свадьбу</h3>
+    <p class="smeta-modal__sub">Пришлём смету и позвоним в удобное время. Никаких обязательств.</p>
+    <form id="smeta-form" class="smeta-form">
+      <label>Как к вам обращаться<input required name="name" placeholder="Мария" autocomplete="name"></label>
+      <label>Телефон или Telegram<input required name="contact" placeholder="+7 900 000-00-00 или @nick"></label>
+      <div class="smeta-form__row">
+        <label>Дата свадьбы<input name="date" placeholder="лето 2027 / 12.08.2027" autocomplete="off"></label>
+        <label>Гостей<input name="guests" placeholder="около 40" autocomplete="off"></label>
+      </div>
+      <label>Бюджет ориентировочно
+        <select name="budget">
+          <option value="">— выберите —</option>
+          <option>до 1,5 млн</option>
+          <option>1,5–3 млн</option>
+          <option>3–5 млн</option>
+          <option>5–10 млн</option>
+          <option>от 10 млн</option>
+          <option>ещё не решили</option>
+        </select>
+      </label>
+      <label>Коротко о видении (необязательно)<textarea name="notes" rows="2" placeholder="Камерно, за городом, ужин на закате…"></textarea></label>
+
+      <!-- Мгновенная капча + honeypot -->
+      <div class="smeta-form__captcha">
+        <label class="smeta-form__cap-label">
+          <span id="capQ">Сколько будет 3 + 4?</span>
+          <input required name="_captcha" id="capA" placeholder="ответ цифрой" autocomplete="off" inputmode="numeric" pattern="[0-9]*" maxlength="3">
+        </label>
+        <!-- honeypot: скрыт от людей, боты заполняют -->
+        <label class="smeta-form__hp" aria-hidden="true" tabindex="-1"><input type="text" name="_website" autocomplete="off" tabindex="-1"></label>
+      </div>
+
+      <label class="smeta-form__consent">
+        <input required type="checkbox" name="_consent" id="_consent">
+        <span>Я согласен(-а) с <a href="/privacy" target="_blank" rel="noopener">политикой конфиденциальности</a> и обработкой персональных данных</span>
+      </label>
+
+      <button type="submit" class="smeta-form__btn">Отправить и открыть Telegram</button>
+      <div id="smetaErr" class="smeta-form__err" role="alert"></div>
+      <div class="smeta-form__alt">Или сразу:
+        <a href="tel:+79150907290">📞 позвонить</a> ·
+        <a href="https://t.me/navsegda_agency" target="_blank" rel="noopener">Telegram</a>
+      </div>
+    </form>
+    <div id="smeta-ok" class="smeta-ok" hidden>
+      <div class="smeta-ok__i">✓</div>
+      <h3>Отлично!</h3>
+      <p>Открыли Telegram-чат с вашими данными. Просто нажмите «Отправить» в Telegram — мы получим заявку и вернёмся со сметой в течение 24 часов.</p>
+      <a class="smeta-form__btn" href="https://t.me/navsegda_agency" target="_blank" rel="noopener">Открыть Telegram снова</a>
+    </div>
+  </div>
+</div>
+<style>
+.smeta-modal{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px}
+.smeta-modal[hidden]{display:none !important}
+.smeta-modal__bg{position:absolute;inset:0;background:rgba(78,0,2,.55);backdrop-filter:blur(4px);cursor:pointer}
+.smeta-modal__box{position:relative;background:#ffe7c6;color:#2C2C2C;border-radius:14px;max-width:520px;width:100%;padding:36px 32px 32px;box-shadow:0 40px 80px -20px rgba(0,0,0,.55);max-height:90vh;overflow-y:auto;font-family:'TildaSans','SF Pro Text',-apple-system,system-ui,sans-serif}
+.smeta-modal__x{position:absolute;top:12px;right:14px;background:transparent;border:none;font-size:28px;line-height:1;color:#9e2a2f;cursor:pointer;padding:6px 10px}
+.smeta-modal__k{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:#ba8a48;font-weight:600;margin-bottom:12px}
+.smeta-modal__box h3{font-family:'SF Pro Display',system-ui,sans-serif;font-weight:400;color:#9e2a2f;font-size:26px;margin:0 0 8px;line-height:1.2}
+.smeta-modal__sub{color:#6a5a52;font-size:15px;margin:0 0 20px;line-height:1.5}
+.smeta-form label{display:block;font-size:12px;color:#6a5a52;letter-spacing:.02em;margin:0 0 12px;font-weight:500}
+.smeta-form input,.smeta-form select,.smeta-form textarea{width:100%;background:#fff;border:1px solid #d6b07b;border-radius:8px;padding:11px 14px;font-size:15px;color:#2C2C2C;font-family:inherit;margin-top:5px;box-sizing:border-box}
+.smeta-form input:focus,.smeta-form select:focus,.smeta-form textarea:focus{outline:none;border-color:#9e2a2f;box-shadow:0 0 0 3px rgba(158,42,47,.12)}
+.smeta-form textarea{resize:vertical;min-height:60px}
+.smeta-form__row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.smeta-form__btn{width:100%;background:#9e2a2f;color:#ffe7c6;border:none;border-radius:40px;padding:15px 24px;font-size:14px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;cursor:pointer;margin-top:6px;transition:.2s}
+.smeta-form__btn:hover{background:#4e0002;transform:translateY(-1px)}
+.smeta-form__alt{text-align:center;margin-top:14px;font-size:13px;color:#6a5a52}
+.smeta-form__alt a{color:#9e2a2f;text-decoration:none;font-weight:600;margin:0 4px}
+.smeta-form__captcha{background:#fdf4e5;border:1px solid #e8c9a1;border-radius:8px;padding:12px 14px;margin:8px 0 14px}
+.smeta-form__cap-label{display:block;font-size:13px;color:#4e0002;font-weight:600;margin:0}
+.smeta-form__cap-label span{display:block;margin-bottom:6px}
+.smeta-form__cap-label input{max-width:140px}
+.smeta-form__hp{position:absolute !important;left:-9999px !important;width:1px !important;height:1px !important;overflow:hidden !important;opacity:0 !important;pointer-events:none !important}
+.smeta-form__consent{display:flex !important;align-items:flex-start;gap:10px;font-size:13px !important;color:#6a5a52 !important;line-height:1.4;margin:14px 0 !important;font-weight:normal !important;cursor:pointer}
+.smeta-form__consent input[type=checkbox]{width:18px !important;height:18px;margin:2px 0 0 0 !important;padding:0 !important;accent-color:#9e2a2f;flex:none;cursor:pointer}
+.smeta-form__consent a{color:#9e2a2f;text-decoration:underline;text-underline-offset:2px}
+.smeta-form__err{color:#9e2a2f;font-size:13px;margin-top:8px;text-align:center;font-weight:600;min-height:18px}
+.smeta-ok{text-align:center;padding:10px 0}
+.smeta-ok__i{width:60px;height:60px;border-radius:50%;background:#9e2a2f;color:#ffe7c6;font-size:32px;line-height:60px;margin:0 auto 16px}
+.smeta-ok h3{margin:0 0 10px !important}
+.smeta-ok p{color:#6a5a52;font-size:15px;line-height:1.55;margin:0 0 20px}
+@media(max-width:600px){.smeta-modal__box{padding:28px 22px 24px}.smeta-form__row{grid-template-columns:1fr}.smeta-modal__box h3{font-size:22px}}
+</style>
+<script>
+// Smeta-modal
+(function(){
+  const modal=document.getElementById('smeta-modal');
+  const form=document.getElementById('smeta-form');
+  const ok=document.getElementById('smeta-ok');
+  const errEl=document.getElementById('smetaErr');
+  const capQ=document.getElementById('capQ');
+  const capA=document.getElementById('capA');
+  if(!modal||!form) return;
+  let openedAt=0, capExpect=0;
+  const genCaptcha=()=>{
+    const a=Math.floor(Math.random()*8)+2, b=Math.floor(Math.random()*8)+2;
+    capExpect=a+b;
+    if(capQ) capQ.textContent='Сколько будет '+a+' + '+b+'?';
+    if(capA) capA.value='';
+  };
+  const open=()=>{
+    modal.hidden=false;modal.setAttribute('aria-hidden','false');
+    document.body.style.overflow='hidden';
+    openedAt=Date.now();
+    genCaptcha();
+    if(errEl) errEl.textContent='';
+    setTimeout(()=>{const n=form.querySelector('input[name=name]');n&&n.focus()},80);
+  };
+  const close=()=>{modal.hidden=true;modal.setAttribute('aria-hidden','true');document.body.style.overflow='';form.hidden=false;ok.hidden=true;form.reset();if(errEl) errEl.textContent='';};
+  document.addEventListener('click',ev=>{
+    const a=ev.target.closest('a');
+    if(!a) return;
+    const h=a.getAttribute('href')||'';
+    if(a.dataset.smeta==='1'||h==='#smeta'||h.endsWith('#zeropopup')){ev.preventDefault();open()}
+    if(a.dataset.close==='1') close();
+  });
+  modal.addEventListener('click',ev=>{if(ev.target.dataset.close==='1') close()});
+  document.addEventListener('keydown',ev=>{if(ev.key==='Escape'&&!modal.hidden) close()});
+  form.addEventListener('submit',ev=>{
+    ev.preventDefault();
+    if(errEl) errEl.textContent='';
+    const d=new FormData(form);
+    // 1) honeypot — если заполнен, тихо блокируем
+    if((d.get('_website')||'').trim()){ if(errEl) errEl.textContent='Ошибка проверки. Обновите страницу.'; return; }
+    // 2) timing — форма отправлена слишком быстро (<1.5с) = бот
+    if(Date.now()-openedAt<1500){ if(errEl) errEl.textContent='Слишком быстро. Проверьте поля.'; return; }
+    // 3) капча
+    const ans=parseInt((d.get('_captcha')||'').trim(),10);
+    if(!Number.isFinite(ans)||ans!==capExpect){ if(errEl) errEl.textContent='Неверный ответ на вопрос. Попробуйте ещё раз.'; genCaptcha(); return; }
+    // 4) согласие
+    if(!d.get('_consent')){ if(errEl) errEl.textContent='Нужно согласиться с политикой конфиденциальности.'; return; }
+    // OK — собираем текст
+    const url=location.pathname;
+    const text=[
+      '📩 Заявка на смету со статьи',
+      '',
+      'Имя: '+(d.get('name')||'—'),
+      'Контакт: '+(d.get('contact')||'—'),
+      'Дата: '+(d.get('date')||'—'),
+      'Гостей: '+(d.get('guests')||'—'),
+      'Бюджет: '+(d.get('budget')||'—'),
+      d.get('notes')?('Видение: '+d.get('notes')):'',
+      '',
+      'Со страницы: '+location.origin+url
+    ].filter(Boolean).join('\n');
+    try{typeof ym==='function' && ym(112491690,'reachGoal','smeta_submit')}catch(e){}
+    try{fetch('https://venuebot-navsegda.amvera.io/site-lead',{method:'POST',mode:'no-cors',keepalive:true,body:JSON.stringify({form:'istorii-index',name:(d.get('name')||''),contact:(d.get('contact')||''),message:text,page:location.href})}).catch(function(){});}catch(e){}
+    const tg='https://t.me/navsegda_agency?text='+encodeURIComponent(text);
+    window.open(tg,'_blank','noopener');
+    form.hidden=true;ok.hidden=false;
+  });
+})();
+</script>
+<a class="nsg-sticky-cta" data-smeta="1" href="#smeta-modal">Рассчитать смету бесплатно →</a>
+<style>
+.nsg-sticky-cta{position:fixed;left:16px;bottom:16px;z-index:9998;background:#9e2a2f;color:#ffe7c6;text-decoration:none;font-family:'Oswald','TildaSans',system-ui,sans-serif;font-weight:600;font-size:14px;letter-spacing:.03em;padding:14px 22px;border-radius:40px;box-shadow:0 10px 30px rgba(78,0,2,.35);transition:transform .2s,background .2s}
+.nsg-sticky-cta:hover{background:#4e0002;transform:translateY(-2px)}
+@media(max-width:600px){.nsg-sticky-cta{left:12px;right:74px;bottom:12px;text-align:center;font-size:13px;padding:13px 14px}}
+</style>
+
 </body></html>
