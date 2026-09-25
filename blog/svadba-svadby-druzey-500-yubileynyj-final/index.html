@@ -221,43 +221,19 @@ ym(112491690,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",
     <button type="button" class="smeta-modal__x" data-close="1" aria-label="Закрыть">×</button>
     <div class="smeta-modal__k">Расчёт сметы · за 24 часа</div>
     <h3 id="smeta-title">Обсудим вашу свадьбу</h3>
-    <p class="smeta-modal__sub">Пришлём смету и позвоним в удобное время. Никаких обязательств.</p>
+    <p class="smeta-modal__sub">Оставьте имя и контакт — пришлём смету и зададим пару вопросов в удобном мессенджере.</p>
     <form id="smeta-form" class="smeta-form">
       <label>Как к вам обращаться<input required name="name" placeholder="Мария" autocomplete="name"></label>
       <label>Телефон или Telegram<input required name="contact" placeholder="+7 900 000-00-00 или @nick"></label>
-      <div class="smeta-form__row">
-        <label>Дата свадьбы<input name="date" placeholder="лето 2027 / 12.08.2027" autocomplete="off"></label>
-        <label>Гостей<input name="guests" placeholder="около 40" autocomplete="off"></label>
-      </div>
-      <label>Бюджет ориентировочно
-        <select name="budget">
-          <option value="">— выберите —</option>
-          <option>до 1,5 млн</option>
-          <option>1,5–3 млн</option>
-          <option>3–5 млн</option>
-          <option>5–10 млн</option>
-          <option>от 10 млн</option>
-          <option>ещё не решили</option>
-        </select>
-      </label>
-      <label>Коротко о видении (необязательно)<textarea name="notes" rows="2" placeholder="Камерно, за городом, ужин на закате…"></textarea></label>
-
-      <!-- Мгновенная капча + honeypot -->
-      <div class="smeta-form__captcha">
-        <label class="smeta-form__cap-label">
-          <span id="capQ">Сколько будет 3 + 4?</span>
-          <input required name="_captcha" id="capA" placeholder="ответ цифрой" autocomplete="off" inputmode="numeric" pattern="[0-9]*" maxlength="3">
-        </label>
-        <!-- honeypot: скрыт от людей, боты заполняют -->
+      <!-- honeypot: скрыт от людей, боты заполняют -->
         <label class="smeta-form__hp" aria-hidden="true" tabindex="-1"><input type="text" name="_website" autocomplete="off" tabindex="-1"></label>
-      </div>
 
       <label class="smeta-form__consent">
         <input required type="checkbox" name="_consent" id="_consent">
         <span>Я согласен(-а) с <a href="/privacy" target="_blank" rel="noopener">политикой конфиденциальности</a> и обработкой персональных данных</span>
       </label>
 
-      <button type="submit" class="smeta-form__btn">Отправить и открыть Telegram</button>
+      <button type="submit" class="smeta-form__btn">Получить смету</button>
       <div id="smetaErr" class="smeta-form__err" role="alert"></div>
       <div class="smeta-form__alt">Или сразу:
         <a href="tel:+79150907290">📞 позвонить</a> ·
@@ -358,9 +334,6 @@ document.querySelectorAll('.nsg-mag h2,.nsg-mag .lead,.nsg-mag figure,.nsg-mag .
     if((d.get('_website')||'').trim()){ if(errEl) errEl.textContent='Ошибка проверки. Обновите страницу.'; return; }
     // 2) timing — форма отправлена слишком быстро (<1.5с) = бот
     if(Date.now()-openedAt<1500){ if(errEl) errEl.textContent='Слишком быстро. Проверьте поля.'; return; }
-    // 3) капча
-    const ans=parseInt((d.get('_captcha')||'').trim(),10);
-    if(!Number.isFinite(ans)||ans!==capExpect){ if(errEl) errEl.textContent='Неверный ответ на вопрос. Попробуйте ещё раз.'; genCaptcha(); return; }
     // 4) согласие
     if(!d.get('_consent')){ if(errEl) errEl.textContent='Нужно согласиться с политикой конфиденциальности.'; return; }
     // OK — собираем текст
@@ -370,10 +343,6 @@ document.querySelectorAll('.nsg-mag h2,.nsg-mag .lead,.nsg-mag figure,.nsg-mag .
       '',
       'Имя: '+(d.get('name')||'—'),
       'Контакт: '+(d.get('contact')||'—'),
-      'Дата: '+(d.get('date')||'—'),
-      'Гостей: '+(d.get('guests')||'—'),
-      'Бюджет: '+(d.get('budget')||'—'),
-      d.get('notes')?('Видение: '+d.get('notes')):'',
       '',
       'Со страницы: '+location.origin+url
     ].filter(Boolean).join('\n');
