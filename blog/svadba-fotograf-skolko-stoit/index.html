@@ -138,7 +138,38 @@ ym(112491690,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",
 <tr><td>Топ</td><td>300 000 – 500 000+</td><td>Авторская серия, фотокнига, несколько дней</td></tr>
 </table>
 <div class="pq"><p>Дорогой фотограф — не гарантия. Дешёвый — не приговор. Смотрите <em>портфолио</em>, не ценник.</p></div>
-<h2>Что входит в стоимость</h2><div class="nsg-midcta"><div class="nsg-midcta__t">Хотите смету под вашу свадьбу?</div><div class="nsg-midcta__s">Пришлём расчёт за 24 часа и подскажем, как уложиться в бюджет. Без обязательств.</div><a class="nsg-midcta__b" data-smeta="1" href="#smeta-modal">Получить смету →</a></div><style>.nsg-midcta{margin:32px 0;padding:26px 24px;border-radius:16px;background:linear-gradient(135deg,#9e2a2f,#4e0002);color:#ffe7c6;text-align:center}.nsg-midcta__t{font-family:'SF Pro Display','TildaSans',system-ui,sans-serif;font-weight:600;font-size:22px;margin-bottom:8px}.nsg-midcta__s{font-size:15px;color:#f0dcc2;margin-bottom:18px;line-height:1.5}.nsg-midcta__b{display:inline-block;background:#ba8a48;color:#4e0002;text-decoration:none;font-family:'Oswald','TildaSans',sans-serif;font-weight:600;font-size:14px;letter-spacing:.08em;text-transform:uppercase;padding:14px 30px;border-radius:40px}.nsg-midcta__b:hover{background:#e7c895}</style>
+<h2>Что входит в стоимость</h2><section class="nsg-calc" aria-label="Калькулятор бюджета свадьбы"><div class="nsg-calc__head"><div class="nsg-calc__kick">Калькулятор бюджета</div><h3 class="nsg-calc__title">Прикиньте бюджет вашей свадьбы</h3><p class="nsg-calc__sub">За минуту — порядок суммы. Точную смету посчитаем бесплатно под вашу дату и площадку.</p></div><div class="nsg-calc__row"><label class="nsg-calc__lbl">Гостей: <b id="nsgcG">40</b></label><input id="nsgcGuests" class="nsg-calc__range" type="range" min="10" max="200" step="5" value="40"></div><div class="nsg-calc__row"><span class="nsg-calc__lbl">Уровень</span><div class="nsg-calc__levels" id="nsgcLevels"><button type="button" data-lv="0">Камерный</button><button type="button" data-lv="1" class="on">Классический</button><button type="button" data-lv="2">Премиум</button></div></div><div class="nsg-calc__out"><span class="nsg-calc__outlbl">Примерный бюджет</span><span class="nsg-calc__val" id="nsgcVal">1,9 – 2,6 млн ₽</span></div><a class="nsg-calc__cta" href="#smeta" data-smeta="1">Получить точную смету →</a><p class="nsg-calc__note">Расчёт ориентировочный, на основе реальных свадеб НАВСЕГДА в Москве и Подмосковье. Финальная смета зависит от площадки, сезона и наполнения.</p></section>
+<style>
+.nsg-calc{margin:34px 0;background:linear-gradient(160deg,#4E0002,#9e2a2f);border-radius:22px;padding:28px 26px;color:#ffe7c6}
+.nsg-calc__kick{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#d6b07b;font-weight:700;margin:0 0 8px}
+.nsg-calc__title{margin:0 0 6px;color:#fff;font-size:24px;font-weight:700}
+.nsg-calc__sub{margin:0 0 22px;color:#f4d9bb;font-size:15px;line-height:1.55;opacity:.92}
+.nsg-calc__row{margin:0 0 20px}
+.nsg-calc__lbl{display:block;font-size:14px;color:#ffe7c6;margin:0 0 10px;font-weight:600}
+.nsg-calc__lbl b{color:#fff}
+.nsg-calc__range{width:100%;-webkit-appearance:none;appearance:none;height:6px;border-radius:6px;background:rgba(255,231,198,.28);outline:none}
+.nsg-calc__range::-webkit-slider-thumb{-webkit-appearance:none;width:26px;height:26px;border-radius:50%;background:#d6b07b;cursor:pointer;border:3px solid #fff}
+.nsg-calc__range::-moz-range-thumb{width:22px;height:22px;border-radius:50%;background:#d6b07b;cursor:pointer;border:3px solid #fff}
+.nsg-calc__levels{display:flex;gap:8px;flex-wrap:wrap}
+.nsg-calc__levels button{flex:1 1 auto;min-width:96px;padding:12px 10px;border-radius:12px;border:1.5px solid rgba(255,231,198,.4);background:transparent;color:#ffe7c6;font-size:14px;font-weight:600;cursor:pointer;transition:.15s}
+.nsg-calc__levels button.on{background:#ffe7c6;color:#9e2a2f;border-color:#ffe7c6}
+.nsg-calc__out{display:flex;flex-direction:column;gap:4px;background:rgba(0,0,0,.18);border-radius:14px;padding:16px 18px;margin:0 0 18px}
+.nsg-calc__outlbl{font-size:13px;color:#f4d9bb;letter-spacing:.04em}
+.nsg-calc__val{font-size:28px;font-weight:800;color:#fff}
+.nsg-calc__cta{display:block;text-align:center;background:#d6b07b;color:#4E0002;text-decoration:none;font-weight:700;font-size:16px;padding:16px;border-radius:14px;letter-spacing:.02em}
+.nsg-calc__note{margin:14px 0 0;font-size:12.5px;line-height:1.5;color:#e8c9a8;opacity:.85}
+@media(max-width:600px){.nsg-calc{padding:24px 18px}.nsg-calc__title{font-size:21px}.nsg-calc__val{font-size:24px}}
+</style>
+<script>(function(){var el=document.currentScript&&document.currentScript.previousElementSibling;var root=document.querySelector('.nsg-calc');if(!root||root.dataset.init)return;root.dataset.init='1';
+var BASE=[250000,350000,550000],PP=[28000,48000,80000];var lv=1;
+var g=root.querySelector('#nsgcGuests'),gl=root.querySelector('#nsgcG'),out=root.querySelector('#nsgcVal'),levs=root.querySelector('#nsgcLevels');
+function fmt(n){if(n>=1000000){return (n/1000000).toFixed(1).replace('.',',')+' млн ₽';}return Math.round(n/1000)+' тыс ₽';}
+function calc(){var guests=+g.value;gl.textContent=guests;var est=BASE[lv]+guests*PP[lv];out.textContent=fmt(est*0.85)+' – '+fmt(est*1.15);}
+g.addEventListener('input',calc);
+levs.addEventListener('click',function(e){var b=e.target.closest('button[data-lv]');if(!b)return;lv=+b.dataset.lv;[].forEach.call(levs.querySelectorAll('button'),function(x){x.classList.toggle('on',x===b);});calc();});
+calc();})();</script>
+
+<div class="nsg-midcta"><div class="nsg-midcta__t">Хотите смету под вашу свадьбу?</div><div class="nsg-midcta__s">Пришлём расчёт за 24 часа и подскажем, как уложиться в бюджет. Без обязательств.</div><a class="nsg-midcta__b" data-smeta="1" href="#smeta-modal">Получить смету →</a></div><style>.nsg-midcta{margin:32px 0;padding:26px 24px;border-radius:16px;background:linear-gradient(135deg,#9e2a2f,#4e0002);color:#ffe7c6;text-align:center}.nsg-midcta__t{font-family:'SF Pro Display','TildaSans',system-ui,sans-serif;font-weight:600;font-size:22px;margin-bottom:8px}.nsg-midcta__s{font-size:15px;color:#f0dcc2;margin-bottom:18px;line-height:1.5}.nsg-midcta__b{display:inline-block;background:#ba8a48;color:#4e0002;text-decoration:none;font-family:'Oswald','TildaSans',sans-serif;font-weight:600;font-size:14px;letter-spacing:.08em;text-transform:uppercase;padding:14px 30px;border-radius:40px}.nsg-midcta__b:hover{background:#e7c895}</style>
 <ul>
 <li><b>Время работы.</b> Обычно 8-12 часов (от сборов до финала).</li>
 <li><b>Количество фото.</b> 400-1200 обработанных.</li>
