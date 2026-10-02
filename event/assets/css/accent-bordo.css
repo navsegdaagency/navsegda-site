@@ -69,3 +69,19 @@ body:before{background:radial-gradient(42% 36% at 86% 8%,rgba(122,28,34,.32),tra
 .tile.cta p{color:rgba(78,0,2,.62)}
 .tile.cta .ico-tile,.it.cta .ico-tile{background:rgba(78,0,2,.07);color:var(--nv-deep);box-shadow:inset 0 0 0 1px rgba(78,0,2,.1)}
 .geo-list .pill.home{background:var(--nv-cream);color:var(--nv-deep)}.geo-list .home .live{background:var(--nv-deep)}
+
+/* новые блоки (лендинг, каталог площадок, «Кто за проектом») */
+.ny-seg button[aria-checked=true],.vc-f button[aria-pressed=true]{background:var(--nv-cream);color:var(--nv-deep)}
+.ny-badge,.ny-cal li i{background:var(--nv-cream);color:var(--nv-deep)}
+.ny-cal li.hot{box-shadow:inset 0 0 0 1px var(--nv-gold-s)}
+.ny-pack.hot{box-shadow:inset 0 0 0 1px rgba(214,176,123,.55),0 30px 60px -30px rgba(78,0,2,.8)}
+.ny-pack li:before,.vp-fit li:before{background:var(--nv-gold-s);opacity:1}
+.ny-res{background:linear-gradient(160deg,rgba(158,42,47,.22),rgba(78,0,2,.08))}
+.ny-calc input[type=range],.ny-chk input{accent-color:var(--nv-gold-s)}
+.ny-price b,.ny-sum,.ny-case-s{color:var(--nv-cream)}
+.ny-facts b,.fdr-l b{color:var(--nv-gold-s)}
+.vc-k b{color:var(--nv-cream)}
+.vp-t th{background:rgba(122,28,34,.28);color:var(--nv-gold-s)}
+.fdr-glow{background:radial-gradient(closest-side,rgba(158,42,47,.38),rgba(78,0,2,0))}
+.fdr-t img{background:rgba(255,231,198,.12)}
+.ph-media,.ny-pack-m,.vc-m{background:#14070a}
