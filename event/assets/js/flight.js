@@ -52,7 +52,8 @@
   }
   function onScroll() {
     var r = sec.getBoundingClientRect();
-    if (r.top < innerHeight * 2.5) start();
+    // грузим заранее, пока гость смотрит кейсы — иначе при быстрой прокрутке кадры «прыгают»
+    if (r.top < innerHeight * 7) start();
     var p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - innerHeight)));
     tgt = p * (n - 1); want = Math.round(tgt); glide();
     caps.forEach(function (c, idx) {
