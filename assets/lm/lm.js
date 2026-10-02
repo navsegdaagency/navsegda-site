@@ -14,7 +14,7 @@
     var btn = f.querySelector('button'); btn.disabled = true;
     var body = { form: 'lead-magnet-checklist', name: name, contact: contact, page: location.href,
       message: 'Взял(а) чек-лист подготовки к свадьбе со страницы ' + location.origin + location.pathname };
-    try { fetch('https://venuebot-navsegda.amvera.io/site-lead', { method: 'POST', mode: 'no-cors', keepalive: true, body: JSON.stringify(body) }).catch(function () {}); } catch (x) {}
+    try { fetch('https://109-68-213-160.sslip.io/site-lead', { method: 'POST', mode: 'no-cors', keepalive: true, body: JSON.stringify(body) }).catch(function () {}); } catch (x) {}
     try { typeof ym === 'function' && ym(112491690, 'reachGoal', 'lead_magnet'); } catch (x) {}
     try { localStorage.setItem('nsg-lm-checklist', '1'); } catch (x) {}
     done();
