@@ -1,0 +1,50 @@
+/* НАВСЕГДА · премиальный слой. Палитра — логобук:
+   #4E0002 Pantone 490 C (глубокий бордо), #7A1C22 Pantone 7421 C (бордо),
+   #FFE7C6 Pantone 7401 C (крем), золото сайта #BA8A48 / #D6B07B.
+   Селекторы с html body — чтобы перекрывать встроенные стили страниц. */
+:root{--nv-deep:#4E0002;--nv-bordo:#7A1C22;--nv-cream:#FFE7C6;--nv-ivory:#FFF8EE;--nv-gold:#BA8A48;--nv-gold-s:#D6B07B;--nv-line:#E8C9A1;--nv-ink:#2C2C2C}
+
+/* шапка */
+html body .site-hd{background:var(--nv-deep);box-shadow:inset 0 -1px 0 rgba(214,176,123,.38)}
+html body .progress-bar__fill{background:linear-gradient(90deg,var(--nv-gold),var(--nv-gold-s))}
+
+/* обложка статьи без фото */
+html body .nsg-mag .hero--deco{background:linear-gradient(140deg,#260001 0%,var(--nv-deep) 48%,var(--nv-bordo) 100%)}
+
+/* типографика */
+html body .nsg-mag h2,html body .nsg-mag h3,html body .nsg-mag .faq h3{color:var(--nv-deep)}
+html body .nsg-mag .lead{color:#4a3a34}
+html body .nsg-mag .pq p{color:var(--nv-deep)}
+html body .nsg-mag .wrap a:not([style]):not([class]){color:var(--nv-bordo);text-decoration-color:rgba(122,28,34,.35);text-underline-offset:3px}
+
+/* таблицы смет */
+html body .nsg-mag table{border-collapse:separate;border-spacing:0;width:100%;margin:14px 0 26px;background:var(--nv-ivory);border:1px solid var(--nv-line);border-radius:18px;overflow:hidden;
+  box-shadow:0 24px 50px -30px rgba(78,0,2,.45),0 2px 0 rgba(255,255,255,.6) inset;font-size:15.5px;line-height:1.45;font-variant-numeric:tabular-nums}
+html body .nsg-mag th{background:var(--nv-deep);color:var(--nv-cream);font:600 11.5px/1.3 'TildaSans',system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;padding:15px 18px;border-bottom:1px solid rgba(214,176,123,.45)}
+html body .nsg-mag td{padding:14px 18px;color:#3a2a26;border-bottom:1px solid rgba(232,201,161,.65);vertical-align:top}
+html body .nsg-mag tr:last-child td{border-bottom:0}
+html body .nsg-mag tr:nth-child(odd) td{background:rgba(255,231,198,.32)}
+html body .nsg-mag td:last-child{font-weight:600;color:var(--nv-deep)}
+html body .nsg-mag th:last-child{color:var(--nv-gold-s)}
+@media (hover:hover){html body .nsg-mag tr:hover td{background:rgba(214,176,123,.16)}}
+/* широкие таблицы (сравнения): числа не прижимаем вправо */
+html body .nsg-mag table:has(tr:first-child th:nth-child(3)) td,html body .nsg-mag table:has(tr:first-child th:nth-child(3)) th{text-align:left;white-space:normal}
+html body .nsg-mag table:has(tr:first-child th:nth-child(3)) td:first-child{font-weight:600;color:var(--nv-deep)}
+html body .nsg-mag table:has(tr:first-child th:nth-child(3)) td:not(:first-child){font-weight:400;color:#3a2a26}
+
+/* «Итого» сразу после таблицы — отдельная плашка */
+html body .nsg-mag table+p:has(> b:first-child){display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px;margin:-8px 0 28px;padding:18px 22px;border-radius:16px;
+  background:linear-gradient(135deg,var(--nv-deep),var(--nv-bordo));color:rgba(255,231,198,.82);box-shadow:0 20px 40px -26px rgba(78,0,2,.6)}
+html body .nsg-mag table+p:has(> b:first-child) b{font:500 clamp(19px,2.2vw,23px)/1.2 'SF Pro Display',system-ui,sans-serif;color:var(--nv-cream);letter-spacing:-.01em}
+
+/* CTA-блоки */
+html body .nsg-mag .midcta__box{background:linear-gradient(135deg,#2a0002 0%,var(--nv-deep) 45%,var(--nv-bordo) 100%);box-shadow:0 24px 54px -24px rgba(78,0,2,.55)}
+html body .nsg-midcta{background:linear-gradient(135deg,var(--nv-deep),var(--nv-bordo))!important}
+html body .nsg-sticky-cta{background:var(--nv-deep);box-shadow:0 14px 34px -12px rgba(78,0,2,.6),inset 0 0 0 1px rgba(214,176,123,.35)}
+
+@media (max-width:700px){
+  html body .nsg-mag table{font-size:14px;border-radius:14px}
+  html body .nsg-mag th{padding:12px 12px;font-size:10.5px;letter-spacing:.12em}
+  html body .nsg-mag td{padding:11px 12px}
+  html body .nsg-mag table+p:has(> b:first-child){padding:15px 16px}
+}
