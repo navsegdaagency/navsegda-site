@@ -1,4 +1,4 @@
-<!doctype html><html lang="ru"><head>
+<!doctype html><html lang="ru"><head><meta name="robots" content="noindex, follow">
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>870: отзывы пар — НАВСЕГДА</title>
 <meta name="description" content="Настоящие отзывы наших пар. Гид от НАВСЕГДА.">
@@ -256,6 +256,12 @@ ym(112491690,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",
       <!-- honeypot: скрыт от людей, боты заполняют -->
         <label class="smeta-form__hp" aria-hidden="true" tabindex="-1"><input type="text" name="_website" autocomplete="off" tabindex="-1"></label>
 
+<div class="smeta-form__q">
+        <label>Когда свадьба<select name="when"><option value="">Выберите</option><option>Лето 2027</option><option>Осень 2027</option><option>Зима или весна</option><option>Пока не знаем</option></select></label>
+        <label>Гостей<select name="guests"><option value="">Выберите</option><option>до 40</option><option>40–70</option><option>70–100</option><option>больше 100</option></select></label>
+        <label>Бюджет<select name="budget"><option value="">Выберите</option><option>до 1 млн ₽</option><option>1–2 млн ₽</option><option>2–4 млн ₽</option><option>больше 4 млн ₽</option></select></label>
+      </div>
+      <style>.smeta-form__q{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.smeta-form__q label{font-size:12px}.smeta-form__q select{width:100%;margin-top:4px;padding:10px 8px;border-radius:10px;border:1px solid #E8C9A1;background:#fff;font:inherit;font-size:14px;color:#2C2C2C}@media(max-width:520px){.smeta-form__q{grid-template-columns:1fr}}</style>
       <label class="smeta-form__consent">
         <input required type="checkbox" name="_consent" id="_consent">
         <span>Я согласен(-а) с <a href="/privacy" target="_blank" rel="noopener">политикой конфиденциальности</a> и обработкой персональных данных</span>
@@ -270,9 +276,9 @@ ym(112491690,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",
     </form>
     <div id="smeta-ok" class="smeta-ok" hidden>
       <div class="smeta-ok__i">✓</div>
-      <h3>Отлично!</h3>
-      <p>Открыли Telegram-чат с вашими данными. Просто нажмите «Отправить» в Telegram — мы получим заявку и вернёмся со сметой в течение 24 часов.</p>
-      <a class="smeta-form__btn" href="https://t.me/navsegda_agency" target="_blank" rel="noopener">Открыть Telegram снова</a>
+      <h3>Заявка отправлена</h3>
+      <p>Заявка у нас. Пришлём смету и пару вопросов в течение 24 часов. Хотите быстрее — напишите в Telegram или позвоните: +7 958 541-00-41.</p>
+      <a class="smeta-form__btn" href="https://t.me/navsegda_agency" target="_blank" rel="noopener">Написать в Telegram</a>
     </div>
   </div>
 </div>
@@ -367,17 +373,17 @@ document.querySelectorAll('.nsg-mag h2,.nsg-mag .lead,.nsg-mag figure,.nsg-mag .
     // OK — собираем текст
     const url=location.pathname;
     const text=[
-      '📩 Заявка на смету со статьи',
+      '📩 Заявка на смету: '+document.title,
       '',
       'Имя: '+(d.get('name')||'—'),
-      'Контакт: '+(d.get('contact')||'—'),
+      'Контакт: '+(d.get('contact')||'—'),'Когда: '+(d.get('when')||'—'),'Гостей: '+(d.get('guests')||'—'),'Бюджет: '+(d.get('budget')||'—'),
       '',
       'Со страницы: '+location.origin+url
     ].filter(Boolean).join('\n');
     try{typeof ym==='function' && ym(112491690,'reachGoal','smeta_submit')}catch(e){}
-    try{fetch('https://109-68-213-160.sslip.io/site-lead',{method:'POST',mode:'no-cors',keepalive:true,body:JSON.stringify({form:'blog-smeta',name:(d.get('name')||''),contact:(d.get('contact')||''),message:text,page:location.href})}).catch(function(){});}catch(e){}
+    try{fetch('https://109-68-213-160.sslip.io/site-lead',{method:'POST',mode:'no-cors',keepalive:true,body:JSON.stringify({form:'blog-smeta',name:(d.get('name')||''),contact:(d.get('contact')||''),date:(d.get('when')||''),guests:(d.get('guests')||''),budget:(d.get('budget')||''),message:text,page:location.href})}).catch(function(){});}catch(e){}
     const tg='https://t.me/navsegda_agency?text='+encodeURIComponent(text);
-    window.open(tg,'_blank','noopener');
+    
     form.hidden=true;ok.hidden=false;
   });
 })();

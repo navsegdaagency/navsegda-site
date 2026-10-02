@@ -59,3 +59,8 @@ html body .smeta-form__btn:hover,html body .nsg-sticky-cta:hover{background:var(
 html body .nsg-mag .pq p em,html body .nsg-mag .midcta__title em{font-family:'SF Pro Display',-apple-system,system-ui,sans-serif;font-style:italic;font-weight:400;letter-spacing:-.01em;-webkit-text-stroke:0}
 html body .nsg-mag .pq p em{color:#8B5A24}
 html body .nsg-mag .midcta__title em{color:var(--nv-gold-s);white-space:nowrap}
+
+/* логотип: знак ∞ (лемниската, как 3D-знак корпоративного раздела) перед надписью — единый знак бренда (03.10) */
+html body .site-hd .logo{gap:12px}
+html body .site-hd .logo::before{content:"";flex:none;width:44px;height:21px;background:url(brand/mark-gold.svg) center/contain no-repeat}
+@media (max-width:700px){html body .site-hd .logo::before{width:36px;height:17px}}
