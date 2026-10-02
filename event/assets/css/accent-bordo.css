@@ -85,3 +85,10 @@ body:before{background:radial-gradient(42% 36% at 86% 8%,rgba(122,28,34,.32),tra
 .fdr-glow{background:radial-gradient(closest-side,rgba(158,42,47,.38),rgba(78,0,2,0))}
 .fdr-t img{background:rgba(255,231,198,.12)}
 .ph-media,.ny-pack-m,.vc-m{background:#14070a}
+/* КП: смета */
+.art-tbl th{color:var(--nv-gold-s)}
+.art-tbl .kp-total td{color:var(--nv-cream);background:rgba(122,28,34,.34);border-top:1px solid rgba(214,176,123,.45)}
+.art-tbl .kp-total td:last-child{color:var(--nv-gold-s)}
+/* шапка: в меню 6 пунктов (Площадки + Свадьбы) — на средних экранах компактнее */
+@media (max-width:1280px){.hd .nav a{padding-left:10px;padding-right:10px}.hd{gap:18px}}
+@media (max-width:1080px){.hd .nav a{padding-left:7px;padding-right:7px;font-size:13.5px}.hd{gap:12px}}
