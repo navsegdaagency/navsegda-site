@@ -1,0 +1,79 @@
+/* ============ НАВСЕГДА: живые иконки (iOS Liquid Glass) ============
+   Разметка: <span class="ico-tile"><svg viewBox="0 0 24 24" class="ico" aria-hidden="true">...</svg></span>
+   Классы частей: draw (прорисовка при .in), pulse, spin, float, blink, flow (петли), sec (вторичный слой).
+   Прорисовка ждёт .in на ближайшем .rv или .ico-reveal; иначе иконка видна сразу. */
+
+:root{--ico-spring:cubic-bezier(.34,1.56,.64,1);--ico-ease:cubic-bezier(.65,0,.35,1)}
+@supports (transition-timing-function:linear(0,1)){
+  :root{--ico-spring:linear(0,.009,.035 2.1%,.141,.281 6.7%,.723 12.9%,.938 16.7%,1.017,1.077,1.121,1.149 24.3%,1.159,1.163,1.161,1.154 29.9%,1.129 32.8%,1.051 39.6%,1.017 43.1%,.991,.977 51%,.974 53.8%,.975 57.1%,.997 69.8%,1.003 76.9%,1.004 83.8%,1)}
+}
+
+/* ---- base glyph ---- */
+.ico{--s:24px;display:inline-flex;flex:none;width:var(--s);height:var(--s);vertical-align:middle;overflow:visible;
+  fill:none;stroke:currentColor;stroke-width:var(--sw,1.5);stroke-linecap:round;stroke-linejoin:round;
+  transition:transform .6s var(--ico-spring)}
+.ico .sec{stroke-opacity:.46}
+
+/* ---- reveal drawing ---- */
+.ico .draw{stroke-dasharray:1 1;stroke-dashoffset:0}
+.ico>*{transition:stroke-dashoffset 1.15s var(--ico-ease) calc(var(--d,0s) + var(--dd,0s)),opacity .35s ease calc(var(--d,0s) + var(--dd,0s))}
+.ico>:nth-child(2){--dd:.09s}.ico>:nth-child(3){--dd:.18s}.ico>:nth-child(4){--dd:.27s}.ico>:nth-child(5){--dd:.36s}
+.ico>:nth-child(6){--dd:.45s}.ico>:nth-child(7){--dd:.54s}.ico>:nth-child(n+8){--dd:.63s}
+.rv:not(.in) .ico>*,.ico-reveal:not(.in) .ico>*,.ico.ico-reveal:not(.in)>*{opacity:0;animation:ico-fs .45s ease 5s forwards}
+.rv:not(.in) .ico .draw,.ico-reveal:not(.in) .ico .draw,.ico.ico-reveal:not(.in)>.draw{stroke-dashoffset:1}
+.no-js .ico>*{opacity:1;stroke-dashoffset:0}
+@keyframes ico-fs{to{opacity:1;stroke-dashoffset:0}}
+
+/* ---- live loops ---- */
+.ico .pulse,.ico .spin,.ico .float{transform-box:fill-box;transform-origin:center}
+.ico .pulse{animation:ico-pulse var(--pd,3.4s) cubic-bezier(.45,0,.55,1) calc(1.3s + var(--ld,0s)) infinite}
+.ico .float{animation:ico-float var(--fd,4.2s) cubic-bezier(.45,0,.55,1) calc(1.3s + var(--ld,0s)) infinite}
+.ico .spin{animation:ico-spin var(--sd,6s) linear calc(1.1s + var(--ld,0s)) infinite}
+.ico .blink{animation:ico-blink var(--bd,2.8s) ease-in-out calc(1.2s + var(--ld,0s)) infinite}
+.ico .flow{stroke-dasharray:.16 .84;animation:ico-flow var(--wd,3.6s) linear infinite}
+@keyframes ico-pulse{0%,100%{transform:scale(1)}50%{transform:scale(var(--ps,1.12))}}
+@keyframes ico-float{0%,100%{transform:translate(0,0)}50%{transform:translate(var(--fx,0px),var(--fy,-1.2px))}}
+@keyframes ico-spin{to{transform:rotate(360deg)}}
+@keyframes ico-blink{0%,100%{opacity:1}50%{opacity:.18}}
+@keyframes ico-flow{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+.ico-pause .ico *{animation-play-state:paused}
+
+/* ---- glass squircle tile ---- */
+.ico-tile{--t:56px;--s:calc(var(--t)*.46);position:relative;isolation:isolate;display:inline-grid;place-items:center;flex:none;
+  width:var(--t);height:var(--t);border-radius:28%;color:#fff;
+  background:linear-gradient(150deg,rgba(255,255,255,.17),rgba(255,255,255,.025));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),inset 0 -1px 1px rgba(255,255,255,.06),inset 0 0 18px rgba(255,255,255,.035),
+    0 1px 1px rgba(0,0,0,.35),0 16px 34px -16px rgba(0,0,0,.95);
+  -webkit-backdrop-filter:blur(18px) saturate(1.7);backdrop-filter:blur(18px) saturate(1.7);
+  transition:transform .75s var(--ico-spring),box-shadow .5s ease}
+.ico-tile .ico{--s:calc(var(--t)*.46);position:relative;filter:drop-shadow(0 1px 6px rgba(255,255,255,.18))}
+/* specular rim: bright top-left edge, faint refraction on bottom-right */
+.ico-tile:before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;pointer-events:none;
+  background:linear-gradient(145deg,rgba(255,255,255,.7),rgba(255,255,255,0) 42%,rgba(255,255,255,0) 68%,rgba(255,255,255,.28));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0)}
+/* glint sweep */
+.ico-tile:after{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(112deg,rgba(255,255,255,0) 38%,rgba(255,255,255,.26) 50%,rgba(255,255,255,0) 62%) no-repeat;
+  background-size:260% 100%;background-position:140% 0;transition:background-position 1.1s var(--ico-ease)}
+.ico-tile.sm{--t:40px}.ico-tile.lg{--t:72px}.ico-tile.xl{--t:96px}
+@supports (corner-shape:squircle){
+  .ico-tile{border-radius:44%;corner-shape:squircle}
+  .ico-tile:before,.ico-tile:after{corner-shape:squircle}
+}
+@media (hover:hover){
+  .ico-tile:hover,.ico-host:hover .ico-tile{transform:translateY(-4px) scale(1.06);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.42),inset 0 -1px 1px rgba(255,255,255,.08),inset 0 0 22px rgba(255,255,255,.06),
+      0 1px 1px rgba(0,0,0,.35),0 24px 40px -18px rgba(0,0,0,.95)}
+  .ico-tile:hover:after,.ico-host:hover .ico-tile:after{background-position:-40% 0}
+  .ico-tile:hover .ico,.ico-host:hover .ico-tile .ico{transform:scale(1.05)}
+}
+.ico-tile:active{transform:scale(.95);transition-duration:.25s}
+
+/* ---- reduced motion ---- */
+@media (prefers-reduced-motion:reduce){
+  .ico *{animation:none!important;transition:none!important;opacity:1!important;stroke-dashoffset:0!important;transform:none!important}
+  .ico .flow{stroke-dasharray:none!important;display:none}
+  .ico,.ico-tile,.ico-tile:after{transition:none!important}
+  .ico-tile:hover,.ico-host:hover .ico-tile,.ico-tile:hover .ico{transform:none!important}
+}

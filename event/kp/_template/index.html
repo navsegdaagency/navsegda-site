@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<!--
+  ШАБЛОН КП · корпоративные клиенты · НАВСЕГДА
+  Копировать папку в /kp/<slug>/ и заменить всё, что в [квадратных скобках], на данные клиента.
+  Стиль не трогать: он берётся из /assets/css/style.css, 3D-знак — из /assets/js/hero.js.
+  Правила — в /brand/KP-GUIDE.md.
+-->
+<title>Коммерческое предложение · [Клиент] · НАВСЕГДА</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Коммерческое предложение агентства НАВСЕГДА для [Клиент]">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="/event/favicon.ico" sizes="48x48">
+<link rel="icon" href="/event/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/event/apple-touch-icon.png">
+<link rel="preload" href="/event/assets/fonts/onest-cyr.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/event/assets/css/fonts.css?v=nsg2">
+<link rel="stylesheet" href="/event/assets/css/icons.css?v=nsg2">
+<link rel="stylesheet" href="/event/assets/css/style.css?v=nsg2">
+<link rel="stylesheet" href="/event/brand/kp.css?v=nsg2">
+<script type="importmap">{"imports":{"three":"/event/assets/vendor/three.module.min.js","three/addons/":"/event/assets/vendor/addons/"}}</script>
+<link rel="modulepreload" href="/event/assets/vendor/three.module.min.js">
+</head>
+<body>
+<header class="hd glass lv" data-spec>
+  <a class="logo" href="/event/" aria-label="НАВСЕГДА"><b>∞</b><span>НАВСЕГДА</span></a>
+  <nav class="nav" aria-label="Разделы КП"><i class="ind" aria-hidden="true"></i><a href="#zadacha">Задача</a><a href="#programma">Программа</a><a href="#smeta">Смета</a><a href="#keysy">Кейсы</a></nav>
+  <div class="hd-r"><a class="tel" href="tel:+79585410041">+7 (958) 541-00-41</a><a class="btn sm mag" href="#soglasovat"><span>Согласовать</span></a></div>
+</header>
+
+<main>
+<section class="hero" aria-label="Обложка КП">
+  <div class="st"><div class="glow"></div><canvas id="gl" aria-hidden="true"></canvas>
+    <div class="hero-top"><span class="pill glass intro-in">Коммерческое предложение · [дата КП]</span></div>
+    <div class="hero-tx">
+      <div class="intro-in"><h1 class="d1"><span class="eyebrow k">Для [Клиент]</span><span>[Формат мероприятия],</span><span>который запомнят <em class="forever">навсегда</em></span></h1></div>
+      <div class="side widget glass intro-in" data-spec>
+        <p class="seo">[Одно-два предложения: суть идеи и что получит компания — цель, атмосфера, результат для команды.]</p>
+        <div class="acts"><a class="btn mag" href="#smeta"><span>Смотреть смету</span><svg class="ico" viewBox="0 0 24 24" style="--s:18px" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.5 12H19M13.5 6.5L19 12L13.5 17.5" class="draw float" pathLength="1" style="--fx:1.3px;--fy:0px"/></svg></a><a class="btn glass" href="#keysy"><svg class="ico" viewBox="0 0 24 24" style="--s:18px" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9.5" class="draw sec pulse" pathLength="1" style="--ps:1.07"/><path d="M10 8.3V15.7A.7.7 0 0 0 11.05 16.3L16.6 12.6A.7.7 0 0 0 16.6 11.4L11.05 7.7A.7.7 0 0 0 10 8.3Z" class="draw" pathLength="1"/></svg><span>Кейсы</span></a></div>
+        <div class="hp-row">
+          <span class="hpill glass" style="--i:0"><span class="hpill-t"><b>[120]</b></span><small>гостей</small></span>
+          <span class="hpill glass" style="--i:1"><span class="hpill-t"><b>[20.12.2026]</b></span><small>дата</small></span>
+          <span class="hpill glass" style="--i:2"><span class="hpill-t"><b>[Москва]</b></span><small>площадка</small></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec" id="zadacha">
+  <div class="sec-h" data-n="I"><div class="sh-t"><div class="sh-k"><span class="rn">I</span><span class="pill glass nb kick"><i class="live" aria-hidden="true"></i>Задача</span></div>
+    <h2 class="d2 rv">Что нужно получить<br><span class="gold">на выходе</span></h2></div></div>
+  <div class="kp-grid">
+    <div class="ps glass nb rv" style="--i:0"><span class="chip">Цель</span><h3>[Цель]</h3><p>[Зачем мероприятие компании: наградить команду, запустить продукт, собрать партнёров.]</p></div>
+    <div class="ps glass nb rv" style="--i:1"><span class="chip">Аудитория</span><h3>[Кто гости]</h3><p>[Сотрудники, руководители, партнёры, клиенты — сколько и какие.]</p></div>
+    <div class="ps glass nb rv" style="--i:2"><span class="chip">Формат</span><h3>[Формат]</h3><p>[Корпоратив, конференция, форум, премия, тимбилдинг — и тон вечера.]</p></div>
+    <div class="ps glass nb rv" style="--i:3"><span class="chip">Дата и место</span><h3>[Дата · площадка]</h3><p>[Город, тип площадки, вместимость, время начала и окончания.]</p></div>
+  </div>
+</section>
+
+<section class="sec" id="koncepciya">
+  <div class="sec-h" data-n="II"><div class="sh-t"><div class="sh-k"><span class="rn">II</span><span class="pill glass nb kick"><i class="live" aria-hidden="true"></i>Концепция</span></div>
+    <h2 class="d2 rv">[Название идеи] —<br><span class="gold">[короткий смысл]</span></h2></div></div>
+  <div class="kp-text glass nb rv"><p>[2–4 абзаца: идея вечера, как она раскрывается через площадку, декор, программу и детали. Без воды — что гость увидит и почувствует.]</p>
+    <div class="kp-tags"><span class="pill glass nb">[Декор]</span><span class="pill glass nb">[Шоу-программа]</span><span class="pill glass nb">[Кейтеринг]</span><span class="pill glass nb">[Фото и видео]</span></div></div>
+</section>
+
+<section class="sec" id="programma">
+  <div class="sec-h" data-n="III"><div class="sh-t"><div class="sh-k"><span class="rn">III</span><span class="pill glass nb kick"><i class="live" aria-hidden="true"></i>Программа</span></div>
+    <h2 class="d2 rv">Тайминг,<br><span class="gold">расписанный по минутам</span></h2></div></div>
+  <div class="proc"><div class="track" aria-hidden="true"><i></i></div>
+    <div class="ps glass nb rv" style="--i:0"><i class="node" aria-hidden="true"></i><span class="chip">[18:00]</span><h3>[Сбор гостей]</h3><p>[Велком-зона, фотозона, музыка.]</p></div>
+    <div class="ps glass nb rv" style="--i:1"><i class="node" aria-hidden="true"></i><span class="chip">[19:00]</span><h3>[Открытие]</h3><p>[Ведущий, слово руководителя.]</p></div>
+    <div class="ps glass nb rv" style="--i:2"><i class="node" aria-hidden="true"></i><span class="chip">[19:30]</span><h3>[Основная часть]</h3><p>[Шоу, награждение, интерактив.]</p></div>
+    <div class="ps glass nb rv" style="--i:3"><i class="node" aria-hidden="true"></i><span class="chip">[21:30]</span><h3>[Хедлайнер]</h3><p>[Артист или кульминация вечера.]</p></div>
+    <div class="ps glass nb rv" style="--i:4"><i class="node" aria-hidden="true"></i><span class="chip">[23:00]</span><h3>[Финал]</h3><p>[Танцы, афтепати, трансфер.]</p></div>
+  </div>
+</section>
+
+<section class="sec" id="smeta">
+  <div class="sec-h" data-n="IV"><div class="sh-t"><div class="sh-k"><span class="rn">IV</span><span class="pill glass nb kick"><i class="live" aria-hidden="true"></i>Смета</span></div>
+    <h2 class="d2 rv">Смета по статьям —<br><span class="gold">видно, за что вы платите</span></h2></div></div>
+  <div class="art-tbl glass nb rv"><table>
+    <thead><tr><th>Блок</th><th>Что входит</th><th>Стоимость</th></tr></thead>
+    <tbody>
+      <tr><td data-label="Блок">[Трансфер]</td><td data-label="Что входит">[Автобусы на площадку и обратно]</td><td data-label="Стоимость">[000 000 ₽]</td></tr>
+      <tr><td data-label="Блок">[Кейтеринг и напитки]</td><td data-label="Что входит">[Меню, бар, обслуживание]</td><td data-label="Стоимость">[000 000 ₽]</td></tr>
+      <tr><td data-label="Блок">[Техническое оснащение]</td><td data-label="Что входит">[Свет, звук, экраны, монтаж, техперсонал]</td><td data-label="Стоимость">[000 000 ₽]</td></tr>
+      <tr><td data-label="Блок">[Оформление и декор]</td><td data-label="Что входит">[Сцена, фотозона, флористика, навигация]</td><td data-label="Стоимость">[000 000 ₽]</td></tr>
+      <tr><td data-label="Блок">[Активации]</td><td data-label="Что входит">[Интерактивы и зоны для гостей]</td><td data-label="Стоимость">[000 000 ₽]</td></tr>
+      <tr><td data-label="Блок">[Шоу-программа]</td><td data-label="Что входит">[Ведущий, артисты, кавер-группа]</td><td data-label="Стоимость">[000 000 ₽]</td></tr>
+      <tr><td data-label="Блок">[Персонал]</td><td data-label="Что входит">[Хостес, координаторы, охрана]</td><td data-label="Стоимость">[000 000 ₽]</td></tr>
+      <tr><td data-label="Блок">[Режиссёрско-постановочная группа]</td><td data-label="Что входит">[Сценарий, режиссёр, дизайнер, администраторы]</td><td data-label="Стоимость">[000 000 ₽]</td></tr>
+      <tr class="kp-sub"><td data-label="Блок">Промежуточный итог</td><td data-label="Что входит"></td><td data-label="Стоимость">[0 000 000 ₽]</td></tr>
+      <tr class="kp-sub"><td data-label="Блок">Координация и сопровождение</td><td data-label="Что входит">10% — команда агентства от брифа до отчёта</td><td data-label="Стоимость">[000 000 ₽]</td></tr>
+      <tr class="kp-total"><td data-label="Блок">Итого к оплате</td><td data-label="Что входит">[с НДС / без НДС]</td><td data-label="Стоимость">[0 000 000 ₽]</td></tr>
+    </tbody></table></div>
+  <p class="kp-note rv">Детальная смета по позициям (ед., кол-во, смены, цена) — приложением в Excel. Стоимость фиксируем в договоре, закрывающие документы — для бухгалтерии.</p>
+</section>
+
+<section class="sec" id="keysy">
+  <div class="sec-h" data-n="V"><div class="sh-t"><div class="sh-k"><span class="rn">V</span><span class="pill glass nb kick"><i class="live" aria-hidden="true"></i>Кейсы</span></div>
+    <h2 class="d2 rv">Мы уже делали<br><span class="gold">похожие проекты</span></h2></div></div>
+  <div class="kp-cases">
+    <a class="kp-case glass nb rv" href="/event/keysy/telemetrconf/" style="--i:0"><img src="/event/assets/img/telemetrconf-4.webp" alt="" loading="lazy"><span class="chip">Конференция</span><h3>Telemetrconf</h3><p>1 000 участников, 2 сцены, 20+ спикеров</p></a>
+    <a class="kp-case glass nb rv" href="/event/keysy/stormconf/" style="--i:1"><img src="/event/assets/img/stormconf-3.webp" alt="" loading="lazy"><span class="chip">IT-конференция</span><h3>STORM CONF</h3><p>120 участников из Альфа-Банка, Т-Банка, ВкусВилла</p></a>
+    <a class="kp-case glass nb rv" href="/event/keysy/colvir/" style="--i:2"><img src="/event/assets/img/colvir-1.webp" alt="" loading="lazy"><span class="chip">Корпоратив</span><h3>Colvir</h3><p>100 гостей, под ключ за неделю</p></a>
+  </div>
+</section>
+
+<section class="sec" id="process">
+  <div class="sec-h" data-n="VI"><div class="sh-t"><div class="sh-k"><span class="rn">VI</span><span class="pill glass nb kick"><i class="live" aria-hidden="true"></i>Как работаем</span></div>
+    <h2 class="d2 rv">Пять шагов,<br><span class="gold">в которых нет сюрпризов</span></h2></div></div>
+  <div class="proc"><div class="track" aria-hidden="true"><i></i></div>
+    <div class="ps glass nb rv" style="--i:0"><i class="node" aria-hidden="true"></i><span class="chip">Шаг 1</span><h3>Бриф</h3><p>Созвон на 20 минут: цель, аудитория, дата, число гостей и бюджет.</p></div>
+    <div class="ps glass nb rv" style="--i:1"><i class="node" aria-hidden="true"></i><span class="chip">Шаг 2</span><h3>Концепция и смета</h3><p>Идея, площадка, программа и смета по статьям - видно, за что вы платите.</p></div>
+    <div class="ps glass nb rv" style="--i:2"><i class="node" aria-hidden="true"></i><span class="chip">Шаг 3</span><h3>Договор</h3><p>Фиксируем объём, сроки и стоимость. Закрывающие документы для бухгалтерии.</p></div>
+    <div class="ps glass nb rv" style="--i:3"><i class="node" aria-hidden="true"></i><span class="chip">Шаг 4</span><h3>Продакшн</h3><p>Площадка, техника, декор, артисты, кейтеринг, репетиции и тайминг по минутам.</p></div>
+    <div class="ps glass nb rv" style="--i:4"><i class="node" aria-hidden="true"></i><span class="chip">Шаг 5</span><h3>День мероприятия</h3><p>Команда на площадке от монтажа до последнего гостя, затем фото, видео и отчёт.</p></div>
+  </div>
+</section>
+
+<section class="sec" id="soglasovat">
+  <div class="kp-cta widget glass rv" data-spec>
+    <span class="eyebrow k">Следующий шаг</span>
+    <h2 class="d2">Согласуем детали —<br><span class="gold">и запускаем подготовку</span></h2>
+    <p class="seo">[Срок действия предложения, что нужно от клиента для старта: дата, число гостей, предоплата.]</p>
+    <div class="acts"><a class="btn mag" href="tel:+79585410041"><span>+7 (958) 541-00-41</span></a><a class="btn glass" href="https://t.me/navsegda_agency"><span>Написать в Telegram</span></a></div>
+  </div>
+</section>
+</main>
+
+<footer class="ft"><div class="ft-b"><a class="logo" href="/event/"><b>∞</b><span>НАВСЕГДА</span></a>
+  <p class="mu">Event-агентство. Корпоративы, конференции, форумы и премии в Москве, Подмосковье и по всей России.</p>
+  <div class="ft-c"><a class="pill glass nb" href="tel:+79585410041">+7 (958) 541-00-41</a><a class="pill glass nb" href="https://t.me/navsegda_agency">Telegram</a></div></div></footer>
+
+<script src="/event/assets/js/config.js?v=nsg2" defer></script><script src="/event/assets/vendor/lenis.min.js" defer></script><script src="/event/assets/js/smooth.js?v=nsg2" defer></script><script src="/event/assets/js/app.js?v=nsg2" defer></script>
+<script type="module" src="/event/assets/js/hero.js?v=nsg2"></script>
+</body>
+</html>

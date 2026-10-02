@@ -1,0 +1,20 @@
+/* КП НАВСЕГДА · корпоративные — только раскладки; цвета, шрифты, стекло — из style.css */
+.kp-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.kp-text{padding:28px 28px 24px;border-radius:var(--r-l);max-width:900px}
+.kp-text p{margin:0 0 18px;color:var(--tx-2);font-size:17px;line-height:1.65}
+.kp-tags{display:flex;flex-wrap:wrap;gap:8px}
+.kp-cases{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.kp-case{display:flex;flex-direction:column;gap:10px;padding:12px 12px 18px;border-radius:var(--r-l);color:inherit;text-decoration:none;transition:transform .4s var(--spring-soft)}
+.kp-case:hover{transform:translateY(-4px)}
+.kp-case img{width:100%;aspect-ratio:16/10;object-fit:cover;border-radius:var(--r-m)}
+.kp-case .chip{align-self:flex-start;margin:4px 6px 0}
+.kp-case h3,.kp-case p{margin:0 6px}
+.kp-case h3{font:500 20px/1.2 var(--f1);letter-spacing:-.02em}
+.kp-case p{color:var(--tx-2);font-size:14px}
+.art-tbl .kp-total td{font-weight:600;color:var(--tx-1);border-top:1px solid var(--hair)}
+.kp-note{margin:14px 0 0;color:var(--tx-3);font-size:13px}
+.kp-cta{max-width:760px;margin:0 auto;padding:36px 34px 30px;text-align:left;justify-self:auto;position:relative;left:auto;right:auto;bottom:auto}
+.kp-cta .d2{margin:10px 0 18px}
+@media (max-width:1100px){.kp-grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:700px){.kp-grid,.kp-cases{grid-template-columns:1fr}.kp-text{padding:22px 18px}.kp-cta{padding:26px 20px}}
+.art-tbl .kp-sub td{color:var(--tx-2);border-top:1px solid var(--hair)}
