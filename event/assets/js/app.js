@@ -294,7 +294,7 @@
       });
       if (!ok) { msg.textContent = 'Заполните отмеченные поля'; return; }
       msg.textContent = '';
-      var btn = f.querySelector('button[type=submit]'), lab = btn.querySelector('span');
+      var btn = f.querySelector('button[type=submit]'), lab = btn.querySelector('span'), lab0 = lab.textContent;
       btn.disabled = true; lab.textContent = 'Отправляем';
       // Обработчик заявок: /lead.php этого сайта или внешний (window.NSG_LEAD_URL из config.js) — тогда JSON
       var url = window.NSG_LEAD_URL || f.action, opts = { method: 'POST', headers: { 'Accept': 'application/json' } };
@@ -312,7 +312,7 @@
           if (window.ym && window.YM_ID) ym(window.YM_ID, 'reachGoal', 'lead');
         })
         .catch(function () { msg.innerHTML = 'Не получилось отправить. Напишите нам в <a href="https://t.me/navsegda_agency">Telegram</a> или позвоните <a href="tel:+79585410041">+7 (958) 541-00-41</a>'; })
-        .finally(function () { btn.disabled = false; lab.textContent = 'Рассчитать мероприятие'; });
+        .finally(function () { btn.disabled = false; lab.textContent = lab0; });
     });
   });
 

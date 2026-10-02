@@ -1,0 +1,51 @@
+/* Продающие блоки статей и услуг: кейс по теме, цены, калькулятор, площадки, закрывающий призыв.
+   Подключается после accent-bordo.css. Палитра — токены логобука (--nv-*). */
+.bz{display:grid;gap:16px;margin:0 0 clamp(40px,6vh,64px)}
+.bz-k{font:600 11px/1 var(--mono,ui-monospace,monospace);letter-spacing:.18em;text-transform:uppercase;color:var(--nv-gold-s,#D6B07B)}
+.bz h3{margin:0;font:400 clamp(22px,2.1vw,30px)/1.2 var(--f1);letter-spacing:-.02em;color:var(--tx-1)}
+/* кейс */
+.bz-case{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);border-radius:24px;overflow:hidden;text-decoration:none;color:inherit}
+.bz-case img{width:100%;height:100%;min-height:220px;object-fit:cover}
+.bz-case .b{padding:22px 24px;display:flex;flex-direction:column;gap:12px}
+.bz-num{display:flex;flex-wrap:wrap;gap:8px}
+.bz-num span{padding:9px 12px;border-radius:12px;background:var(--glass-fill);box-shadow:inset 0 0 0 1px var(--hair);font-size:13.5px;color:var(--tx-2)}
+.bz-num b{color:var(--nv-cream,#FFE7C6);font-weight:600}
+.bz-case .more{margin-top:auto;font-size:14.5px;color:var(--nv-gold-s,#D6B07B)}
+/* цены */
+.bz-price{border-radius:24px;padding:22px 24px;display:grid;gap:14px}
+.bz-pk{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.bz-pk div{padding:14px 16px;border-radius:16px;background:var(--glass-fill);box-shadow:inset 0 0 0 1px var(--hair)}
+.bz-pk b{display:block;font:500 22px/1.15 var(--f1);color:var(--nv-cream,#FFE7C6);letter-spacing:-.01em}
+.bz-pk span{font-size:13.5px;color:var(--tx-3)}
+.bz-price p{margin:0;font-size:15px;color:var(--tx-2);line-height:1.6}
+.bz-price p b{color:var(--tx-1);font-weight:500}
+/* калькулятор */
+.bc{border-radius:24px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);overflow:hidden}
+.bc-in{padding:22px 24px;display:grid;gap:18px}
+.bc-l{display:flex;justify-content:space-between;align-items:baseline;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx-3);margin-bottom:8px}
+.bc-l output{font-size:26px;letter-spacing:-.02em;text-transform:none;color:var(--tx-1);font-weight:500}
+.bc input[type=range]{width:100%;accent-color:var(--nv-gold-s,#D6B07B);height:26px}
+.bc-seg{display:flex;flex-wrap:wrap;gap:6px}
+.bc-seg button{flex:1 1 auto;padding:10px 12px;border-radius:12px;border:0;background:var(--glass-fill);box-shadow:inset 0 0 0 1px var(--hair);color:var(--tx-2);font:500 14px/1.2 var(--f2);cursor:pointer}
+.bc-seg button[aria-checked=true]{background:var(--nv-cream,#FFE7C6);color:var(--nv-deep,#4E0002)}
+.bc-res{padding:22px 24px;display:flex;flex-direction:column;justify-content:center;gap:10px;background:linear-gradient(160deg,rgba(158,42,47,.24),rgba(78,0,2,.08));border-left:1px solid var(--hair)}
+.bc-sum{font:500 clamp(28px,3vw,40px)/1.05 var(--f1);letter-spacing:-.03em;color:var(--nv-cream,#FFE7C6);font-variant-numeric:tabular-nums}
+.bc-pg{color:var(--tx-2)}
+.bc-res small{color:var(--tx-3);font-size:13px;line-height:1.5}
+.bc-res .btn{justify-content:center;margin-top:6px}
+/* площадки */
+.bz-v{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.bz-v a{display:flex;flex-direction:column;border-radius:20px;overflow:hidden;text-decoration:none;color:inherit}
+.bz-v img{width:100%;aspect-ratio:4/3;object-fit:cover}
+.bz-v .b{padding:12px 14px 14px;display:grid;gap:4px}
+.bz-v b{font:500 17px/1.2 var(--f1);color:var(--tx-1)}
+.bz-v span{font-size:13px;color:var(--tx-3)}
+/* закрывающий призыв */
+.bz-close{border-radius:24px;padding:24px 26px;display:grid;gap:14px;background:linear-gradient(135deg,rgba(122,28,34,.55),rgba(78,0,2,.25));box-shadow:inset 0 0 0 1px rgba(214,176,123,.28)}
+.bz-close p{margin:0;color:var(--tx-2);font-size:16px;line-height:1.6;max-width:62ch}
+.bz-acts{display:flex;flex-wrap:wrap;gap:10px}
+.bz-acts .btn{justify-content:center}
+@media(max-width:800px){.bz-case,.bc{grid-template-columns:1fr}.bz-case img{min-height:0;aspect-ratio:16/10}.bc-res{border-left:0;border-top:1px solid var(--hair)}.bz-pk,.bz-v{grid-template-columns:1fr}.bz-acts .btn{flex:1 1 100%}}
+.bz-case img{max-height:300px}
+.bz-mark{min-height:220px;background:url(../brand/mark-gold.svg) center/58% no-repeat,radial-gradient(80% 90% at 50% 40%,#7A1C22,#2a0003)}
+@media(max-width:800px){.bz-case img{max-height:none}.bz-mark{min-height:170px}}
