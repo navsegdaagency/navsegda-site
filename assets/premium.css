@@ -48,3 +48,14 @@ html body .nsg-sticky-cta{background:var(--nv-deep);box-shadow:0 14px 34px -12px
   html body .nsg-mag td{padding:11px 12px}
   html body .nsg-mag table+p:has(> b:first-child){padding:15px 16px}
 }
+
+/* кнопки-ссылки: при наведении ярче, а не бледнее (03.10). Все они стоят на тёмном бордо → наведение кремовое */
+html body .nsg-calc__cta,html body .nsg-midcta__b,html body .midcta__btn,html body .cta-hd,html body .smeta-form__btn,html body .nsg-sticky-cta{transition:background-color .25s,color .25s,transform .25s,box-shadow .25s}
+html body .nsg-calc__cta:hover,html body .nsg-midcta__b:hover,html body .midcta__btn:hover,html body .cta-hd:hover{background:var(--nv-cream);color:var(--nv-deep);transform:translateY(-1px);box-shadow:0 12px 28px -12px rgba(0,0,0,.45),0 0 0 1px rgba(214,176,123,.6)}
+html body .smeta-form__btn:hover,html body .nsg-sticky-cta:hover{background:var(--nv-deep);color:var(--nv-cream);box-shadow:0 14px 30px -12px rgba(78,0,2,.6),inset 0 0 0 1px rgba(214,176,123,.55)}
+
+/* акцентные фразы в цитатах и CTA: рукописный Hello January на кириллице нечитаем → элегантный курсив SF Pro.
+   Рукописный остаётся только в логотипе «навсегда» */
+html body .nsg-mag .pq p em,html body .nsg-mag .midcta__title em{font-family:'SF Pro Display',-apple-system,system-ui,sans-serif;font-style:italic;font-weight:400;letter-spacing:-.01em;-webkit-text-stroke:0}
+html body .nsg-mag .pq p em{color:#8B5A24}
+html body .nsg-mag .midcta__title em{color:var(--nv-gold-s);white-space:nowrap}
