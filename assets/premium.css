@@ -75,6 +75,6 @@ html body .site-ft a{color:#D6B07B}
 html body .nsg-mag .nsg-calc h2,html body .nsg-mag .nsg-calc h3,html body .nsg-mag .midcta h3,html body .nsg-mag .nsg-midcta__t,html body .nsg-mag .nsg-prem h2,html body .nsg-mag .final-cta h2,html body .nsg-mag .final-cta h3{color:#FFE7C6}
 html body .nsg-mag .nsg-calc p,html body .nsg-mag .nsg-calc li,html body .nsg-mag .nsg-calc td,html body .nsg-mag .midcta p,html body .nsg-mag .nsg-midcta p,html body .nsg-mag .nsg-midcta__s,html body .nsg-mag .nsg-prem p,html body .nsg-mag .final-cta p,html body .nsg-mag .table+p:has(> b:first-child){color:rgba(255,231,198,.82)}
 /* карточка «Реальная смета пары» — без подчёркиваний, кроме строки-ссылки */
-html body .nsg-mag a.wz-card,html body .nsg-mag a.wz-card *{text-decoration:none!important;background:none}
+html body .nsg-mag a.wz-card,html body .nsg-mag a.wz-card *{text-decoration:none!important}
 html body .nsg-mag a.wz-card .wz-link{text-decoration:underline!important;text-underline-offset:3px}
 html body .nsg-mag a.wz-card:hover{box-shadow:0 30px 60px -30px rgba(78,0,2,.55)}
