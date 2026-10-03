@@ -64,3 +64,10 @@ html body .nsg-mag .midcta__title em{color:var(--nv-gold-s);white-space:nowrap}
 html body .site-hd .logo{gap:12px}
 html body .site-hd .logo::before{content:"";flex:none;width:44px;height:21px;background:url(brand/mark-gold.svg) center/contain no-repeat}
 @media (max-width:700px){html body .site-hd .logo::before{width:36px;height:17px}}
+
+/* более бордовая гамма свадеб (03.10): тёплые «чернила» вместо чёрного/серого в статьях */
+html body .nsg-mag{color:#2B0A0C}
+html body .nsg-mag p,html body .nsg-mag li,html body .nsg-mag td{color:#3A1A17}
+html body .nsg-mag .lead{color:#4E0002}
+html body .site-ft{background:#4E0002;color:#FFE7C6}
+html body .site-ft a{color:#D6B07B}
