@@ -150,4 +150,4 @@ f.forEach(function(x,k){x.parentNode.addEventListener('click',function(){op(k)})
 lb.querySelector('.x').onclick=function(){lb.classList.remove('open')};lb.querySelector('.nx').onclick=function(){op(i+1)};lb.querySelector('.pv').onclick=function(){op(i-1)};
 lb.addEventListener('click',function(e){if(e.target===lb)lb.classList.remove('open')});
 document.addEventListener('keydown',function(e){if(!lb.classList.contains('open'))return;if(e.key==='Escape')lb.classList.remove('open');if(e.key==='ArrowRight')op(i+1);if(e.key==='ArrowLeft')op(i-1)});})();
-</script></body></html>
+</script><script src="/assets/legal/legal.js" defer></script></body></html>

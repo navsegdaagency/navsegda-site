@@ -175,4 +175,4 @@ lb.addEventListener('click',function(e){if(e.target===lb)cl()});
 lb.addEventListener('touchstart',function(e){sx=e.changedTouches[0].clientX},{passive:true});
 lb.addEventListener('touchend',function(e){var d=e.changedTouches[0].clientX-sx;if(Math.abs(d)>40)op(i+(d<0?1:-1))},{passive:true});
 document.addEventListener('keydown',function(e){if(!lb.classList.contains('open'))return;if(e.key==='Escape')cl();if(e.key==='ArrowRight')op(i+1);if(e.key==='ArrowLeft')op(i-1)});})();
-</script></body></html>
+</script><script src="/assets/legal/legal.js" defer></script></body></html>
