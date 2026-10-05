@@ -293,6 +293,8 @@
         if (bad) { void row.offsetWidth; row.classList.add('err'); ok = false; }
       });
       if (!ok) { msg.textContent = 'Заполните отмеченные поля'; return; }
+      var cs = f.querySelector('input[name=_consent]'); // 152-ФЗ: без согласия заявку не отправляем
+      if (cs && !cs.checked) { msg.textContent = 'Отметьте согласие на обработку персональных данных'; return; }
       msg.textContent = '';
       var btn = f.querySelector('button[type=submit]'), lab = btn.querySelector('span'), lab0 = lab.textContent;
       btn.disabled = true; lab.textContent = 'Отправляем';

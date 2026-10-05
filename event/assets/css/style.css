@@ -835,3 +835,5 @@ html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto!important}
 .lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
 .lenis.lenis-stopped{overflow:hidden}
+
+.agree-cb{display:flex;gap:8px;align-items:flex-start;cursor:pointer}.agree-cb input{flex:none;width:16px;height:16px;margin-top:1px;accent-color:#BA8A48}
