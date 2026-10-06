@@ -23,8 +23,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Inter+Tight:wght@300;400;500&display=swap">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js"}}</script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script>try{if(window.WebGL2RenderingContext&&!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('fx3d')}catch(e){}</script>
 <link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.min.js" crossorigin>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/environments/RoomEnvironment.js" crossorigin>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/postprocessing/UnrealBloomPass.js" crossorigin>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/postprocessing/Pass.js" crossorigin>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/shaders/CopyShader.js" crossorigin>
+<link rel="modulepreload" href="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/shaders/LuminosityHighPassShader.js" crossorigin>
 <link rel="stylesheet" href="assets/css/main.css">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://navseg-da.agency/decor/#org","name":"FFP — Floral for People","alternateName":"FFP","url":"https://navseg-da.agency/decor/","slogan":"Декор, который расскажет больше, чем слова","description":"Студия флористического декора для свадеб, корпоративов и частных мероприятий. Москва и выездные проекты: озеро Комо, Дубай, Кипр, Бодрум.","foundingDate":"2020","areaServed":["Москва","Озеро Комо","Дубай","Кипр","Бодрум"],"logo":"https://navseg-da.agency/decor/assets/img/og-cover.jpg"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"FFP — Floral for People","url":"https://navseg-da.agency/decor/","inLanguage":"ru","publisher":{"@id":"https://navseg-da.agency/decor/#org"}}</script>
@@ -101,7 +107,7 @@ ym(112491690,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",
   </div>
 </section>
 
-<section class="section" id="projects" aria-labelledby="projects-h">
+<section class="section projects" id="projects" aria-labelledby="projects-h">
   <div class="shell">
     <div class="marker reveal"><span class="marker__num">03</span><span class="marker__line"></span><span>Кейсы</span><span class="marker__total">03 / 08</span></div>
     <div class="intro reveal">
@@ -109,8 +115,14 @@ ym(112491690,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",
       <div class="intro__meta">Избранное 2024 — 2026<br><b>6</b> из <b>175+</b><br>↳ нажмите, чтобы открыть</div>
     </div>
     <div class="pfilter reveal" role="group" aria-label="Фильтр проектов"><button type="button" data-cat="all" aria-pressed="true"><span>Все</span><sup>06</sup></button><button type="button" data-cat="weddings" aria-pressed="false"><span>Свадьбы</span><sup>03</sup></button><button type="button" data-cat="corporate" aria-pressed="false"><span>Корпоративы</span><sup>02</sup></button><button type="button" data-cat="events" aria-pressed="false"><span>Мероприятия</span><sup>01</sup></button></div>
+  </div>
+  <div class="pbloom">
+   <div class="pbloom__stage">
+    <div class="scene" data-scene="projects"></div>
+    <div class="shell pbloom__shell">
+    <div class="pbloom__hud" aria-hidden="true"><span class="pbloom__count"><b>01</b> / <span>06</span></span><span class="pbloom__rail"><i></i></span><span class="pbloom__flower">пион</span></div>
     <div class="pgrid">
-      <article class="pcard reveal" data-cat="weddings" data-project="Villa Balbianello" data-no="P · 01" data-where="Озеро Комо · Италия" data-cursor="Открыть" style="--d:0ms">
+      <article class="pcard reveal" data-cat="weddings" data-project="Villa Balbianello" data-flower="peony" data-tone="blush" data-no="P · 01" data-where="Озеро Комо · Италия" data-cursor="Открыть" style="--d:0ms">
         <button class="pcard__open" type="button" aria-label="Открыть проект Villa Balbianello">
           <div class="pcard__media"><div class="ph ph--sand" style="--ar:5 / 4" data-photo="project-01-cover" role="img" aria-label="Проект Villa Balbianello: церемония, арка · комо (фото будет добавлено)"><span class="ph__cap">ФОТО · церемония, арка · комо</span></div></div>
           <div class="pcard__cap">
@@ -120,7 +132,7 @@ ym(112491690,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",
             <div class="pcard__meta"><span>Озеро Комо · Италия</span><span>08 / 25</span><span>Свадьба · 120 гостей</span></div>
           </div>
         </button>
-      </article><article class="pcard reveal" data-cat="weddings" data-project="Salt Garden" data-no="P · 02" data-where="Дубай · ОАЭ" data-cursor="Открыть" style="--d:120ms">
+      </article><article class="pcard reveal" data-cat="weddings" data-project="Salt Garden" data-flower="rose" data-tone="ivory" data-no="P · 02" data-where="Дубай · ОАЭ" data-cursor="Открыть" style="--d:120ms">
         <button class="pcard__open" type="button" aria-label="Открыть проект Salt Garden">
           <div class="pcard__media"><div class="ph ph--sage" style="--ar:3 / 4" data-photo="project-02-cover" role="img" aria-label="Проект Salt Garden: белые орхидеи · дубай (фото будет добавлено)"><span class="ph__cap">ФОТО · белые орхидеи · дубай</span></div></div>
           <div class="pcard__cap">
@@ -130,7 +142,7 @@ ym(112491690,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",
             <div class="pcard__meta"><span>Дубай · ОАЭ</span><span>11 / 25</span><span>Свадьба · частная</span></div>
           </div>
         </button>
-      </article><article class="pcard reveal" data-cat="weddings" data-project="Olive Hours" data-no="P · 03" data-where="Лимассол · Кипр" data-cursor="Открыть" style="--d:0ms">
+      </article><article class="pcard reveal" data-cat="weddings" data-project="Olive Hours" data-flower="ranunculus" data-tone="peach" data-no="P · 03" data-where="Лимассол · Кипр" data-cursor="Открыть" style="--d:0ms">
         <button class="pcard__open" type="button" aria-label="Открыть проект Olive Hours">
           <div class="pcard__media"><div class="ph ph--olive" style="--ar:4 / 5" data-photo="project-03-cover" role="img" aria-label="Проект Olive Hours: ужин, длинный стол · кипр (фото будет добавлено)"><span class="ph__cap">ФОТО · ужин, длинный стол · кипр</span></div></div>
           <div class="pcard__cap">
@@ -140,7 +152,7 @@ ym(112491690,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",
             <div class="pcard__meta"><span>Лимассол · Кипр</span><span>06 / 25</span><span>Свадьба · 80 гостей</span></div>
           </div>
         </button>
-      </article><article class="pcard reveal" data-cat="corporate" data-project="Bodrum Letters" data-no="P · 04" data-where="Бодрум · Турция" data-cursor="Открыть" style="--d:120ms">
+      </article><article class="pcard reveal" data-cat="corporate" data-project="Bodrum Letters" data-flower="anemone" data-tone="white" data-no="P · 04" data-where="Бодрум · Турция" data-cursor="Открыть" style="--d:120ms">
         <button class="pcard__open" type="button" aria-label="Открыть проект Bodrum Letters">
           <div class="pcard__media"><div class="ph ph--clay" style="--ar:4 / 3" data-photo="project-04-cover" role="img" aria-label="Проект Bodrum Letters: приём на закате · бодрум (фото будет добавлено)"><span class="ph__cap">ФОТО · приём на закате · бодрум</span></div></div>
           <div class="pcard__cap">
@@ -150,7 +162,7 @@ ym(112491690,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",
             <div class="pcard__meta"><span>Бодрум · Турция</span><span>09 / 24</span><span>Корпоратив · 200 гостей</span></div>
           </div>
         </button>
-      </article><article class="pcard reveal" data-cat="corporate" data-project="Bureau Annual" data-no="P · 05" data-where="Москва" data-cursor="Открыть" style="--d:0ms">
+      </article><article class="pcard reveal" data-cat="corporate" data-project="Bureau Annual" data-flower="rose" data-tone="wine" data-no="P · 05" data-where="Москва" data-cursor="Открыть" style="--d:0ms">
         <button class="pcard__open" type="button" aria-label="Открыть проект Bureau Annual">
           <div class="pcard__media"><div class="ph ph--linen" style="--ar:5 / 4" data-photo="project-05-cover" role="img" aria-label="Проект Bureau Annual: церемония премии · главный зал (фото будет добавлено)"><span class="ph__cap">ФОТО · церемония премии · главный зал</span></div></div>
           <div class="pcard__cap">
@@ -160,7 +172,7 @@ ym(112491690,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",
             <div class="pcard__meta"><span>Москва</span><span>12 / 24</span><span>Корпоратив · премия</span></div>
           </div>
         </button>
-      </article><article class="pcard reveal" data-cat="events" data-project="Сорок Полины" data-no="P · 06" data-where="Москва" data-cursor="Открыть" style="--d:120ms">
+      </article><article class="pcard reveal" data-cat="events" data-project="Сорок Полины" data-flower="ranunculus" data-tone="coral" data-no="P · 06" data-where="Москва" data-cursor="Открыть" style="--d:120ms">
         <button class="pcard__open" type="button" aria-label="Открыть проект Сорок Полины">
           <div class="pcard__media"><div class="ph ph--blush" style="--ar:3 / 4" data-photo="project-06-cover" role="img" aria-label="Проект Сорок Полины: частный ужин · 40 лет (фото будет добавлено)"><span class="ph__cap">ФОТО · частный ужин · 40 лет</span></div></div>
           <div class="pcard__cap">
@@ -172,6 +184,8 @@ ym(112491690,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",
         </button>
       </article>
     </div>
+    </div>
+   </div>
   </div>
 </section>
 
@@ -184,7 +198,7 @@ ym(112491690,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",
         <div class="marker reveal"><span class="marker__num">04</span><span class="marker__line"></span><span>Сервировка</span><span class="marker__total">04 / 08</span></div>
         <h2 class="tables__title" id="tables-h">Как украшаются <em>столы</em></h2>
       </div>
-      <div>
+      <div class="tables__foot">
         <p class="tables__caption" aria-hidden="true">Лён ложится мягкими складками — с него начинается стол.</p>
         <ol class="tables__steps" aria-label="Шаги сервировки"><li class="tables__step" data-i="0">Скатерть<p>Лён ложится мягкими складками — с него начинается стол.</p></li><li class="tables__step" data-i="1">Посуда<p>Тарелки, приборы и бокалы задают ритм всей сервировки.</p></li><li class="tables__step" data-i="2">Свечи<p>Высокие свечи поднимаются над столом и дают тёплый свет.</p></li><li class="tables__step" data-i="3">Флористика<p>По центру прорастает живая гирлянда — зелень и бутоны.</p></li><li class="tables__step" data-i="4">Свет<p>Вечер: свечи, цветы и мягкое свечение вместе.</p></li></ol>
       </div>
@@ -321,5 +335,5 @@ ym(112491690,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",
 </div>
 <script type="module" src="assets/js/site.js"></script>
 <script type="module" src="assets/js/home.js"></script>
-<script src="/assets/legal/legal.js" defer></script></body>
+</body>
 </html>

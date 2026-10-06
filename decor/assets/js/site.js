@@ -77,6 +77,8 @@ function initFilter() {
     const cat = b.dataset.cat;
     $$('button', bar).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
     cards.forEach((c) => { c.hidden = !(cat === 'all' || c.dataset.cat === cat); });
+    // 3D-режим проектов (home.js) пересобирает набор цветков
+    document.dispatchEvent(new CustomEvent('ffp:filter', { detail: { cat } }));
   });
 }
 

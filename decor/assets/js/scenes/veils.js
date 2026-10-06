@@ -1,11 +1,12 @@
 // «НЕВЕСТЫ» — шифоновые шлейфы фаты и платья.
 // Каждая лента — экземпляр одной геометрии; форма (волна, кручение, трепет
-// края) считается в вершинном шейдере. Сдвиг лент по экрану привязан к
-// прогрессу скролла секции, «ветер» усиливается от скорости прокрутки.
-import { THREE, mountScene, clamp, lerp, passProgress, rng } from './kit.js';
+// края) считается в вершинном шейдере. Материал — MeshPhysicalMaterial
+// с sheen (шёлковый отлив), прозрачность по Френелю и горошек фатина.
+// Сдвиг лент по экрану привязан к прогрессу скролла секции, «ветер»
+// усиливается от скорости прокрутки.
+import { THREE, mountScene, lerp, passProgress, rng, patchMaterial } from './kit.js';
 
-const VS = /* glsl */`
-  uniform float uTime;
+const HEAD = /* glsl */`
   uniform float uProg;
   uniform float uWind;
   uniform float uSpan;
@@ -13,12 +14,8 @@ const VS = /* glsl */`
   attribute vec4 aA; // seed, y0, z0, ширина
   attribute vec4 aB; // длина, скорость(со знаком), амплитуда, фаза
   attribute float aLace;
-  varying vec2 vUv;
-  varying vec3 vN;
-  varying vec3 vP;
   varying float vLace;
   varying float vLen;
-  const float PI = 3.14159265;
 
   vec3 ribbon(float s, float w) {
     float L = aB.x;
@@ -37,72 +34,73 @@ const VS = /* glsl */`
     vec3 nrm = vec3(0.0, -sin(twist), cos(twist));
     float flutter = sin(X * 3.0 + t * 2.2 + w * 5.0 + ph) * 0.06 * uWind * (0.3 + abs(w) * 1.6)
                   + sin(X * 7.0 - t * 3.1 + ph) * 0.02 * uWind;
-    return vec3(X, y, z) + across * w * width + nrm * flutter;
-  }
-
-  void main() {
-    float s = uv.x;
-    float w = uv.y - 0.5;
-    vec3 p0 = ribbon(s, w);
-    vec3 ps = ribbon(s + 0.004, w);
-    vec3 pw = ribbon(s, w + 0.02);
-    vN = normalize(cross(ps - p0, pw - p0));
-    vec4 wp = modelMatrix * vec4(p0, 1.0);
-    vP = wp.xyz;
-    vUv = uv;
-    vLace = aLace;
-    vLen = aB.x;
-    gl_Position = projectionMatrix * viewMatrix * wp;
+    // мягкие продольные складки шифона
+    float pleat = sin(w * 26.0 + X * 0.8 + ph) * 0.018 * (0.4 + 0.6 * abs(sin(X * 0.3 + t * 0.2)));
+    return vec3(X, y, z) + across * w * width + nrm * (flutter + pleat);
   }
 `;
-
-const FS = /* glsl */`
+const BODY = /* glsl */`
+  float s = uv.x;
+  float w = uv.y - 0.5;
+  vec3 p0 = ribbon(s, w);
+  vec3 ps = ribbon(s + 0.004, w);
+  vec3 pw = ribbon(s, w + 0.02);
+  pos = p0;
+  nrm = normalize(cross(ps - p0, pw - p0));
+  vLace = aLace;
+  vLen = aB.x;
+`;
+const FRAG_HEAD = /* glsl */`
   uniform float uAlpha;
-  varying vec2 vUv;
-  varying vec3 vN;
-  varying vec3 vP;
   varying float vLace;
   varying float vLen;
-  void main() {
-    vec3 N = normalize(vN);
-    vec3 V = normalize(cameraPosition - vP);
-    if (dot(N, V) < 0.0) N = -N;
-    vec3 L = normalize(vec3(-0.4, 0.8, 0.6));
-    float ndv = abs(dot(N, V));
+`;
+const FRAG = [
+  ['normal_fragment_maps', /* glsl */`
+    // тонкая нить ткани: микрорельеф поперёк ленты (гасится при удалении)
+    float th = vPUv.x * vLen * 260.0;
+    float thr = sin(th) * clamp(1.0 - fwidth(th) * 0.5, 0.0, 1.0);
+    normal = ffpBump(-vViewPosition, normal, thr * 0.0008, faceDirection);
+  `, 'after'],
+  ['opaque_fragment', /* glsl */`
+    float ndv = abs(dot(normal, normalize(vViewPosition)));
     float fres = pow(1.0 - ndv, 2.2);
-    float diff = 0.55 + 0.45 * clamp(dot(N, L), 0.0, 1.0);
-    vec3 H = normalize(L + V);
-    float sheen = pow(max(dot(N, H), 0.0), 18.0) * 0.35;
-    vec3 ivory = vec3(0.975, 0.945, 0.89);
-    vec3 col = ivory * diff + vec3(1.0, 0.97, 0.92) * sheen;
-    float edge = smoothstep(0.0, 0.2, vUv.y) * smoothstep(1.0, 0.8, vUv.y);
-    float ends = smoothstep(0.0, 0.1, vUv.x) * smoothstep(1.0, 0.9, vUv.x);
-    // мелкий горошек фатина на части лент
-    vec2 g = vec2(vUv.x * vLen * 9.0, vUv.y * 9.0);
+    float edge = smoothstep(0.0, 0.2, vPUv.y) * smoothstep(1.0, 0.8, vPUv.y);
+    float ends = smoothstep(0.0, 0.1, vPUv.x) * smoothstep(1.0, 0.9, vPUv.x);
+    vec2 g = vec2(vPUv.x * vLen * 9.0, vPUv.y * 9.0);
     vec2 cell = fract(g) - 0.5;
     float d = length(cell);
     float aa = fwidth(d) * 1.2;
     float dots = (1.0 - smoothstep(0.09 - aa, 0.09 + aa, d)) * vLace;
-    float a = (0.16 + 0.6 * fres + 0.14 * sheen) * edge * ends;
-    a = clamp(a + dots * 0.35 * edge * ends, 0.0, 0.9) * uAlpha;
-    gl_FragColor = vec4(col + dots * 0.05, a);
-  }
-`;
+    float va = (0.14 + 0.62 * fres) * edge * ends;
+    va = clamp(va + dots * 0.35 * edge * ends, 0.0, 0.9) * uAlpha;
+    gl_FragColor = vec4(gl_FragColor.rgb + dots * 0.04, va);
+  `, 'after'],
+];
 
 export function mount(host, section) {
-  return mountScene(host, ({ mobile, reduced }) => {
+  return mountScene(host, ({ mobile, env }) => {
     const scene = new THREE.Scene();
+    scene.environment = env;
     const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 60);
     camera.position.set(0, 0, 8);
     camera.lookAt(0, 0, 0);
 
+    scene.add(new THREE.HemisphereLight(0xFFF6EA, 0x3A3C2E, env ? 0.6 : 1.4));
+    const key = new THREE.DirectionalLight(0xFFF2E2, 2.2);
+    key.position.set(-3, 5, 6);
+    const back = new THREE.DirectionalLight(0xE6ECFF, 0.9);
+    back.position.set(4, -1, -5);
+    scene.add(key, back);
+
     const R = rng(21);
     const count = mobile ? 5 : 8;
-    const segs = mobile ? [90, 6] : [180, 10];
+    const segs = mobile ? [110, 8] : [220, 16];
     const base = new THREE.PlaneGeometry(1, 1, segs[0], segs[1]);
     const geo = new THREE.InstancedBufferGeometry();
     geo.index = base.index;
     geo.setAttribute('position', base.getAttribute('position'));
+    geo.setAttribute('normal', base.getAttribute('normal'));
     geo.setAttribute('uv', base.getAttribute('uv'));
     base.dispose();
 
@@ -121,27 +119,25 @@ export function mount(host, section) {
     geo.setAttribute('aLace', new THREE.InstancedBufferAttribute(aLace, 1));
     geo.instanceCount = count;
 
-    const mat = new THREE.ShaderMaterial({
-      vertexShader: VS,
-      fragmentShader: FS,
-      uniforms: {
-        uTime: { value: 0 }, uProg: { value: 0 }, uWind: { value: 1 },
-        uSpan: { value: 16 }, uAlpha: { value: 1 }, uYs: { value: 1 },
-      },
-      transparent: true,
-      depthWrite: false,
-      side: THREE.DoubleSide,
-      extensions: { derivatives: true },
+    const mat = new THREE.MeshPhysicalMaterial({
+      color: '#F8F1E4', roughness: 0.55, sheen: 1, sheenRoughness: 0.32, sheenColor: new THREE.Color('#FFF3E2'),
+      specularIntensity: 0.6, envMapIntensity: 0.8,
+      transparent: true, depthWrite: false, side: THREE.DoubleSide,
     });
+    const u = {
+      uProg: { value: 0 }, uWind: { value: 1 }, uSpan: { value: 16 }, uAlpha: { value: 1 }, uYs: { value: 1 },
+    };
+    patchMaterial(mat, { key: 'ffp-veil', uniforms: u, head: HEAD, body: BODY, fragHead: FRAG_HEAD, frag: FRAG });
+    const uTime = mat.userData.uniforms.uTime;
     const mesh = new THREE.Mesh(geo, mat);
     mesh.frustumCulled = false;
     scene.add(mesh);
 
     let prog = 0, lastP = null, wind = 1;
     const apply = (t, p, wnd) => {
-      mat.uniforms.uTime.value = t;
-      mat.uniforms.uProg.value = p;
-      mat.uniforms.uWind.value = wnd;
+      uTime.value = t;
+      u.uProg.value = p;
+      u.uWind.value = wnd;
     };
 
     return {
@@ -156,8 +152,8 @@ export function mount(host, section) {
         // на вертикальном экране ленты идут по диагонали, чтобы пересекать весь экран
         mesh.rotation.z = portrait ? -1.05 : 0;
         mesh.scale.setScalar(portrait ? 0.8 : 1);
-        mat.uniforms.uSpan.value = (portrait ? Math.hypot(visW, visH) / 0.8 : visW) + 6;
-        mat.uniforms.uYs.value = portrait ? 1.25 : 1;
+        u.uSpan.value = (portrait ? Math.hypot(visW, visH) / 0.8 : visW) + 6;
+        u.uYs.value = portrait ? 1.25 : 1;
       },
       update(t, dt) {
         const target = passProgress(section);
@@ -170,5 +166,5 @@ export function mount(host, section) {
       },
       staticFrame() { apply(3.0, 0.5, 1); },
     };
-  }, { observe: section });
+  }, { observe: section, bloom: false, grain: 0.02, vignette: 0.12, exposure: 1.05 });
 }
