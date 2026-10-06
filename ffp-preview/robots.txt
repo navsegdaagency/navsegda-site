@@ -1,7 +1,0 @@
-# FFP — Floral for People
-# Домен-заглушка ffp.example заменяется скриптом decor-site/set-domain.py
-User-agent: *
-Allow: /
-Disallow: /journal/_template/
-
-Sitemap: https://ffp.example/sitemap.xml

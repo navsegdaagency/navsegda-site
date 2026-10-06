@@ -4,7 +4,6 @@ Disallow: /thanks
 Disallow: /files/
 Disallow: /prezentaciya/
 Disallow: /event/kp/
-Disallow: /ffp-preview/
 
 User-agent: Yandex
 Allow: /
@@ -12,9 +11,9 @@ Disallow: /thanks
 Disallow: /files/
 Disallow: /prezentaciya/
 Disallow: /event/kp/
-Disallow: /ffp-preview/
 Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&yclid&_openstat
 
 Sitemap: https://navseg-da.agency/sitemap.xml
 Sitemap: https://navseg-da.agency/event/sitemap.xml
+Sitemap: https://navseg-da.agency/decor/sitemap.xml
 Host: navseg-da.agency
