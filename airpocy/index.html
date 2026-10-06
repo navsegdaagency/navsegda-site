@@ -504,6 +504,28 @@ h1,h2,h3,p{margin:0}
 html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}.lenis.lenis-stopped{overflow:hidden}
 @media (prefers-reduced-motion:reduce){.fc__in,.gi .gi__t{transition:none}.fc__hint i{animation:none}.glow-l{display:none}.js .gi.rv{opacity:1;transform:none}}
 
+/* ---------- фото в духе iOS: мягкие «непрерывные» углы, слоёные тени, стеклянные подписи ---------- */
+:root{--ios-r:26px}
+.gal{columns:2;column-gap:12px}
+@media (min-width:760px){.gal{columns:3;column-gap:18px}}
+@media (min-width:1100px){.gal{columns:4;column-gap:20px}}
+.gi{margin:0 0 12px;border-radius:var(--ios-r)}
+@media (min-width:760px){.gi{margin-bottom:18px}}
+.gi .gi__c{border-radius:var(--ios-r);box-shadow:0 1px 1px rgba(0,0,0,.25),0 8px 16px -6px rgba(0,0,0,.45),0 28px 60px -24px rgba(0,0,0,.75),inset 0 0 0 .5px rgba(255,255,255,.14)}
+.gi .gi__c::after{content:"";position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.08),transparent 22%);pointer-events:none}
+.gi img{transition:transform 1s cubic-bezier(.2,.8,.2,1),filter .6s}
+.gi:hover img{transform:scale(1.03);filter:saturate(1.06)}
+.gi .gi__cap{left:10px;right:auto;bottom:10px;max-width:calc(100% - 20px);padding:6px 11px;border-radius:999px;font-size:12px;font-weight:500;background:rgba(28,28,30,.42);-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6);box-shadow:inset 0 0 0 .5px rgba(255,255,255,.18);text-shadow:none}
+@media (hover:none){.gi .gi__cap{opacity:1;transform:none}}
+.fc{border-radius:30px}
+.fc__f{box-shadow:0 1px 1px rgba(0,0,0,.25),0 10px 20px -8px rgba(0,0,0,.45),0 40px 80px -30px rgba(0,0,0,.8),inset 0 0 0 .5px rgba(255,255,255,.14)}
+.fc__front .mem__t{left:14px;right:14px;bottom:14px;padding:14px 16px;border-radius:20px;background:rgba(28,28,30,.38);-webkit-backdrop-filter:blur(22px) saturate(1.7);backdrop-filter:blur(22px) saturate(1.7);box-shadow:inset 0 0 0 .5px rgba(255,255,255,.16)}
+.fc__front::after{background:linear-gradient(180deg,transparent 60%,rgba(8,8,9,.35))}
+.fc__hint{background:rgba(28,28,30,.38);-webkit-backdrop-filter:blur(20px) saturate(1.6);backdrop-filter:blur(20px) saturate(1.6);box-shadow:inset 0 0 0 .5px rgba(255,255,255,.18)}
+/* лайтбокс как «Фото» в iOS */
+.lb{background:rgba(10,10,12,.72);-webkit-backdrop-filter:blur(30px) saturate(1.4);backdrop-filter:blur(30px) saturate(1.4)}
+.lb img{border-radius:22px;box-shadow:0 40px 100px -30px rgba(0,0,0,.9)}
+
 </style>
 <!--
   СОЦСЕТИ: ссылки задаются в одном месте — константа SOCIAL в начале inline-скрипта внизу страницы
