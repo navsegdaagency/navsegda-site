@@ -85,6 +85,24 @@ ym(112491690,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",
   <p>Пара хотела классику без пафоса — благородные стены усадьбы, выездная церемония и единая концепция во всём: от приглашений до декора президиума. Мы держали один стиль по всему дню.</p>
 </div>
 <div class="gal"><img class="w" src="https://navseg-da.agency/keysy/img/artem-1.jpg" alt="Артём и Екатерина — свадьба НАВСЕГДА" loading="lazy"><img class="t" src="https://navseg-da.agency/keysy/img/artem-2.jpg" alt="Артём и Екатерина — свадьба НАВСЕГДА" loading="lazy"><img class="t" src="https://navseg-da.agency/keysy/img/artem-3.jpg" alt="Артём и Екатерина — свадьба НАВСЕГДА" loading="lazy"><img class="t" src="https://navseg-da.agency/keysy/img/artem-4.jpg" alt="Артём и Екатерина — свадьба НАВСЕГДА" loading="lazy"><img class="t" src="https://navseg-da.agency/keysy/img/artem-5.jpg" alt="Артём и Екатерина — свадьба НАВСЕГДА" loading="lazy"></div>
+<!-- nsg:gal-more -->
+<h2 class="gal-h">Больше кадров</h2>
+<div class="gal2"><img src="/assets/img/pairs/artem-ekaterina/01.webp" width="825" height="1100" alt="Артём и Екатерина — свадьба НАВСЕГДА, фото 1" loading="lazy" decoding="async"><img src="/assets/img/pairs/artem-ekaterina/02.webp" width="1100" height="733" alt="Артём и Екатерина — свадьба НАВСЕГДА, фото 2" loading="lazy" decoding="async"><img src="/assets/img/pairs/artem-ekaterina/03.webp" width="825" height="1100" alt="Артём и Екатерина — свадьба НАВСЕГДА, фото 3" loading="lazy" decoding="async"><img src="/assets/img/pairs/artem-ekaterina/04.webp" width="733" height="1100" alt="Артём и Екатерина — свадьба НАВСЕГДА, фото 4" loading="lazy" decoding="async"><img src="/assets/img/pairs/artem-ekaterina/05.webp" width="825" height="1100" alt="Артём и Екатерина — свадьба НАВСЕГДА, фото 5" loading="lazy" decoding="async"><img src="/assets/img/pairs/artem-ekaterina/06.webp" width="1100" height="733" alt="Артём и Екатерина — свадьба НАВСЕГДА, фото 6" loading="lazy" decoding="async"><img src="/assets/img/pairs/artem-ekaterina/07.webp" width="1100" height="733" alt="Артём и Екатерина — свадьба НАВСЕГДА, фото 7" loading="lazy" decoding="async"><img src="/assets/img/pairs/artem-ekaterina/08.webp" width="1100" height="733" alt="Артём и Екатерина — свадьба НАВСЕГДА, фото 8" loading="lazy" decoding="async"><img src="/assets/img/pairs/artem-ekaterina/09.webp" width="733" height="1100" alt="Артём и Екатерина — свадьба НАВСЕГДА, фото 9" loading="lazy" decoding="async"></div>
+<!-- /nsg:gal-more -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <div class="wrap">
   <h2>Детали вечера</h2>
   <p>Выездная церемония в историческом дворе, продакшн и декор в одной палитре, живой тайминг вечера. Усадьба задала тон — оставалось усилить её деталями, а не спорить с ней.</p>
@@ -98,6 +116,45 @@ ym(112491690,'init',{ssr:true,webvisor:true,clickmap:true,ecommerce:"dataLayer",
   <p class="upd">Материал подготовлен командой НАВСЕГДА. Обновлено в 2026 году.</p>
 </div>
 </div>
+<!-- nsg:lightbox -->
+<style>
+.nsg-case .gal2{columns:3;column-gap:12px;max-width:1100px;margin:30px auto;padding:0 20px}
+.nsg-case .gal2 img{width:100%;height:auto;margin:0 0 12px;border-radius:4px;display:block;break-inside:avoid;cursor:zoom-in;background:#e7cfae}
+@media(max-width:900px){.nsg-case .gal2{columns:2;column-gap:8px;padding:0 12px}.nsg-case .gal2 img{margin-bottom:8px}}
+.nsg-case .gal img{cursor:zoom-in}
+.nsg-case .gal-h{max-width:1100px;margin:44px auto 0;padding:0 20px;font-family:'SF Pro Display','TildaSans',system-ui,sans-serif;font-weight:400;color:#7A1C22;font-size:clamp(24px,3.6vw,32px)}
+.nsg-lb{position:fixed;inset:0;z-index:10000;background:rgba(20,6,10,.95);display:none;align-items:center;justify-content:center;touch-action:pan-y}
+.nsg-lb.on{display:flex}
+.nsg-lb img{max-width:100vw;max-height:100vh;max-height:100dvh;object-fit:contain;user-select:none;-webkit-user-drag:none}
+.nsg-lb button{position:absolute;background:rgba(255,231,198,.14);color:#ffe7c6;border:0;width:46px;height:46px;border-radius:50%;font-size:26px;line-height:46px;cursor:pointer;padding:0}
+.nsg-lb .x{top:14px;right:14px}.nsg-lb .p{left:12px;top:50%;margin-top:-23px}.nsg-lb .n{right:12px;top:50%;margin-top:-23px}
+.nsg-lb .c{position:absolute;left:0;right:0;bottom:14px;text-align:center;color:#d6b07b;font-size:13px;letter-spacing:.14em}
+@media(max-width:600px){.nsg-lb .p,.nsg-lb .n{top:auto;bottom:18px;margin:0}.nsg-lb .p{left:16px}.nsg-lb .n{right:16px}}
+</style>
+<script>
+(function(){
+ function init(){
+  var imgs=[].slice.call(document.querySelectorAll('.nsg-case .gal img,.nsg-case .gal2 img'));
+  if(!imgs.length) return;
+  var lb=document.createElement('div');lb.className='nsg-lb';lb.setAttribute('role','dialog');lb.setAttribute('aria-label','Просмотр фото');
+  lb.innerHTML='<img alt=""><button class="x" aria-label="Закрыть">×</button><button class="p" aria-label="Назад">‹</button><button class="n" aria-label="Вперёд">›</button><div class="c"></div>';
+  document.body.appendChild(lb);
+  var im=lb.querySelector('img'),cnt=lb.querySelector('.c'),i=0;
+  function show(k){i=(k+imgs.length)%imgs.length;im.src=imgs[i].currentSrc||imgs[i].src;im.alt=imgs[i].alt;cnt.textContent=(i+1)+' / '+imgs.length;
+    var a=new Image();a.src=imgs[(i+1)%imgs.length].src;}
+  function open(k){show(k);lb.classList.add('on');document.documentElement.style.overflow='hidden'}
+  function close(){lb.classList.remove('on');document.documentElement.style.overflow=''}
+  imgs.forEach(function(el,k){el.addEventListener('click',function(){open(k)})});
+  lb.querySelector('.x').onclick=close;lb.querySelector('.p').onclick=function(){show(i-1)};lb.querySelector('.n').onclick=function(){show(i+1)};
+  lb.addEventListener('click',function(e){if(e.target===lb)close()});
+  document.addEventListener('keydown',function(e){if(!lb.classList.contains('on'))return;if(e.key==='Escape')close();if(e.key==='ArrowLeft')show(i-1);if(e.key==='ArrowRight')show(i+1)});
+  var sx=null;lb.addEventListener('touchstart',function(e){sx=e.touches[0].clientX},{passive:true});
+  lb.addEventListener('touchend',function(e){if(sx===null)return;var d=e.changedTouches[0].clientX-sx;if(Math.abs(d)>50)show(d<0?i+1:i-1);sx=null},{passive:true});
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
+<!-- /nsg:lightbox -->
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Article","headline":"Свадьба в усадьбе — Артём и Екатерина","author":{"@type":"Organization","name":"НАВСЕГДА","url":"https://navseg-da.agency/","logo":{"@type":"ImageObject","url":"https://navseg-da.agency/assets/logo-navsegda.png"}},"publisher":{"@type":"Organization","name":"НАВСЕГДА","url":"https://navseg-da.agency/","logo":{"@type":"ImageObject","url":"https://navseg-da.agency/assets/logo-navsegda.png"}},"inLanguage":"ru-RU","image":"https://navseg-da.agency/keysy/img/artem-1.jpg","dateModified":"2026-09-19","url":"https://navseg-da.agency/istorii/artem-ekaterina/","mainEntityOfPage":{"@type":"WebPage","@id":"https://navseg-da.agency/istorii/artem-ekaterina/"},"description":"Реальная история свадьбы от агентства НАВСЕГДА: Артём и Екатерина. Формат, детали и смета под ключ."}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Главная","item":"https://navseg-da.agency/"},{"@type":"ListItem","position":2,"name":"Истории пар","item":"https://navseg-da.agency/istorii/"},{"@type":"ListItem","position":3,"name":"Свадьба в усадьбе — Артём и Екатерина","item":"https://navseg-da.agency/istorii/artem-ekaterina/"}]}</script>
 <script>const pbar=document.getElementById('pbar');if(pbar){const upd=()=>{const h=document.documentElement.scrollHeight-innerHeight;pbar.style.width=Math.min(100,scrollY/h*100)+'%'};addEventListener('scroll',upd,{passive:true});upd();}</script>
