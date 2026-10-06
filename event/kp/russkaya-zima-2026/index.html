@@ -30,9 +30,9 @@
 /* площадки */
 .ven{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .vcard{padding:12px 12px 20px;border-radius:var(--r-l);display:flex;flex-direction:column;gap:10px;position:relative}
-.vcard .ph{display:grid;grid-template-columns:2fr 1fr;grid-template-rows:1fr 1fr;gap:6px;aspect-ratio:16/11}
-.vcard .ph img{width:100%;height:100%;object-fit:cover;border-radius:var(--r-m);cursor:zoom-in}
-.vcard .ph img:first-child{grid-row:1/3}
+.vcard .vph{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr);grid-template-rows:repeat(2,minmax(0,1fr));gap:6px;aspect-ratio:16/11;width:100%;place-content:stretch}
+.vcard .vph img{width:100%;height:100%;min-height:0;object-fit:cover;border-radius:var(--r-m);cursor:zoom-in}
+.vcard .vph img:first-child{grid-row:1/3}
 .vcard h3{margin:4px 6px 0;font:500 20px/1.25 var(--f1);letter-spacing:-.02em}
 .vcard p{margin:0 6px;color:var(--tx-2);font-size:14px;line-height:1.55}
 .vcard ul{margin:2px 6px 0;padding:0;list-style:none;display:grid;gap:6px}
@@ -123,21 +123,21 @@
     <h2 class="d2 rv">Три площадки,<br><span class="gold">свободные в декабре</span></h2></div></div>
   <div class="ven">
     <article class="vcard glass nb best rv" style="--i:0"><span class="badge">Рекомендуем</span>
-      <div class="ph"><img src="img/k3.webp" alt="Банкетный зал с люстрами" loading="lazy"><img src="img/g2.webp" alt="Стеклянный зал в парке" loading="lazy"><img src="img/g3.webp" alt="Ворота усадьбы" loading="lazy"></div>
+      <div class="vph"><img src="img/k3.webp" alt="Банкетный зал с люстрами" loading="lazy"><img src="img/g2.webp" alt="Стеклянный зал в парке" loading="lazy"><img src="img/g3.webp" alt="Ворота усадьбы" loading="lazy"></div>
       <span class="chip">Подмосковье · 50 км, северо-восток</span>
       <h3>Старинная русская усадьба в лесу</h3>
       <p>Усадьба XVIII века: парк, ворота с фонтаном, кирпичный «двор» с люстрами под банкет и отдельный стеклянный зал под ярмарку мастеров. Есть номера для ночёвки.</p>
       <ul><li>Банкет<b>до 280 гостей</b></li><li>Два зала<b>банкет + ярмарка</b></li><li>Аренда в декабре, чт / пт<b>200 / 300 тыс. ₽</b></li><li>Меню<b>6 500 ₽ + 15%</b></li></ul>
     </article>
     <article class="vcard glass nb rv" style="--i:1">
-      <div class="ph"><img src="img/o3.webp" alt="Веранда с люстрами в лесу" loading="lazy"><img src="img/o4.webp" alt="Стеклянный зал среди сосен" loading="lazy"><img src="img/o5.webp" alt="Вход в веранду" loading="lazy"></div>
+      <div class="vph"><img src="img/o3.webp" alt="Веранда с люстрами в лесу" loading="lazy"><img src="img/o4.webp" alt="Стеклянный зал среди сосен" loading="lazy"><img src="img/o5.webp" alt="Вход в веранду" loading="lazy"></div>
       <span class="chip">Подмосковье · 50 км, север</span>
       <h3>Веранда-оранжерея в сосновом лесу</h3>
       <p>Стеклянный зал 370 м² с хрустальными люстрами, вокруг заснеженный лес. Самая «зимняя сказка» по картинке. Ярмарка — в зоне той же веранды.</p>
       <ul><li>Банкет<b>до 200 гостей</b></li><li>Площадь<b>370 м²</b></li><li>Аренда в декабре, чт / пт<b>250 / 350 тыс. ₽</b></li><li>Меню<b>7 000 ₽ + 15%</b></li></ul>
     </article>
     <article class="vcard glass nb rv" style="--i:2">
-      <div class="ph"><img src="img/y3.webp" alt="Зал со сценой" loading="lazy"><img src="img/y1.webp" alt="Банкетная рассадка" loading="lazy"><img src="img/y5.webp" alt="Сцена и свет" loading="lazy"></div>
+      <div class="vph"><img src="img/y3.webp" alt="Зал со сценой" loading="lazy"><img src="img/y1.webp" alt="Банкетная рассадка" loading="lazy"><img src="img/y5.webp" alt="Сцена и свет" loading="lazy"></div>
       <span class="chip">Центр Москвы · без трансфера</span>
       <h3>Зал 1 000 м² в центре Москвы</h3>
       <p>Тёмный зал со сценой, свет, звук и LED-экран уже включены. Гостям не нужно ехать за город, русскую атмосферу целиком создаём декором.</p>
@@ -270,7 +270,7 @@
  function tick(){x.clearRect(0,0,W,H);x.fillStyle='rgba(255,231,198,.8)';F.forEach(function(f){f.y+=f.s;f.d+=.01;f.x+=Math.sin(f.d)*.3;if(f.y>H){f.y=-4;f.x=Math.random()*W}x.beginPath();x.arc(f.x,f.y,f.r,0,6.3);x.fill()});requestAnimationFrame(tick)}
  if(!red)tick();
  /* галерея площадок */
- var im=[].slice.call(document.querySelectorAll('.vcard .ph img')),lb=document.getElementById('lbx'),li=lb.querySelector('img'),k=0,sx=0;
+ var im=[].slice.call(document.querySelectorAll('.vcard .vph img')),lb=document.getElementById('lbx'),li=lb.querySelector('img'),k=0,sx=0;
  function op(i){k=(i+im.length)%im.length;li.src=im[k].src;li.alt=im[k].alt;lb.classList.add('on')}
  function cl(){lb.classList.remove('on')}
  im.forEach(function(m,i){m.addEventListener('click',function(){op(i)})});
