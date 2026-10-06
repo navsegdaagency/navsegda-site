@@ -448,7 +448,63 @@ h1,h2,h3,p{margin:0}
   .phone{transition:none}
 }
 
-.nsg-ck{background:#151515!important;border-color:rgba(255,255,255,.14)!important;color:#ece7de!important}.nsg-ck a{color:#ece7de!important}.nsg-ck button{background:#e9e1d3!important;color:#111!important}</style>
+/* cookie-уведомление legal.js в стиле группы */
+.nsg-ck{background:#151515!important;border-color:rgba(255,255,255,.14)!important;color:#ece7de!important}.nsg-ck a{color:#ece7de!important}.nsg-ck button{background:#e9e1d3!important;color:#111!important}
+
+/* ---------- 3D-карточки с переворотом (участники, события) ---------- */
+.fc{position:relative;perspective:1400px;border-radius:var(--r);aspect-ratio:4/5.4;-webkit-tap-highlight-color:transparent}
+.fc--ev{aspect-ratio:4/4.6}
+.fc__in{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.fc.is-flip .fc__in{transform:rotateY(180deg)}
+@media (hover:hover){.fc:hover .fc__in{transform:rotateY(180deg)}.fc.is-flip:hover .fc__in{transform:rotateY(180deg)}}
+.fc__f{position:absolute;inset:0;border-radius:inherit;overflow:hidden;-webkit-backface-visibility:hidden;backface-visibility:hidden;background:var(--card);box-shadow:0 30px 60px -30px rgba(0,0,0,.8),inset 0 0 0 1px rgba(255,255,255,.06)}
+.fc__front img{width:100%;height:100%;object-fit:cover;transition:transform 1.4s var(--ease)}
+.fc:hover .fc__front img{transform:scale(1.04)}
+.fc__front::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(8,8,9,.85));pointer-events:none}
+.fc__front .mem__t{position:absolute;z-index:2;left:18px;right:18px;bottom:16px}
+.fc .mem__k{margin:0 0 6px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc)}
+.fc h3{margin:0;font-size:26px;font-weight:600;letter-spacing:-.01em;color:var(--tx)}
+.fc .mem__r{margin:4px 0 0;font-size:14px;color:var(--tx2)}
+.fc__hint{position:absolute;z-index:2;top:14px;right:14px;display:inline-flex;align-items:center;gap:6px;padding:6px 11px;border-radius:999px;font-size:11.5px;letter-spacing:.06em;color:var(--tx);background:rgba(10,10,11,.45);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.fc__hint i{width:12px;height:12px;border:1.5px solid currentColor;border-radius:50%;border-right-color:transparent;animation:fcspin 2.6s linear infinite}
+@keyframes fcspin{to{transform:rotate(360deg)}}
+.fc__back{transform:rotateY(180deg);padding:26px 22px;display:flex;flex-direction:column;justify-content:flex-end;gap:8px;
+  background:radial-gradient(120% 80% at 80% 0%,rgba(216,166,96,.22),transparent 60%),radial-gradient(90% 70% at 0% 100%,rgba(96,150,216,.18),transparent 60%),linear-gradient(160deg,#17171a,#0d0d0f)}
+.fc__ill{position:absolute;top:22px;left:22px;right:22px;color:var(--acc);opacity:.9}
+.fc__ill svg{width:100%;height:auto}
+.fc__role{margin:2px 0 0;font-size:15px;color:var(--tx2)}
+.fc__feat{margin:6px 0 0;font-size:16px;line-height:1.5;color:var(--tx)}
+.fc__inst{margin:10px 0 0;font-size:13px;color:var(--tx2)}.fc__inst span{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--tx3)}
+.fc__btn{position:absolute;inset:0;z-index:3;width:100%;height:100%;background:transparent;border:0;cursor:pointer}
+.fc__btn--chip{position:static;width:auto;height:auto;align-self:flex-start;margin-top:10px;display:inline-flex;gap:6px;align-items:center;padding:8px 14px;border-radius:999px;color:var(--tx);background:rgba(255,255,255,.08)}
+.fc__btn--chip svg{width:14px;height:14px}
+.ev__ls{display:grid;gap:6px;margin-top:8px;position:relative;z-index:4}.ev__ls a{display:flex;gap:8px;align-items:center;font-size:14px;color:var(--acc)}.ev__ls svg{width:14px;height:14px}
+.fc__back .fc__btn--back{z-index:2}
+.fc__back .ev__ls,.fc__back .fc__btn--chip{z-index:4}
+.ill-arcs path,.fc__ill line,.fc__ill path,.fc__ill circle{vector-effect:non-scaling-stroke}
+.fc.is-flip .fc__ill--strings line,.fc:hover .fc__ill--strings line{animation:strum .5s ease-in-out 3}
+@keyframes strum{50%{transform:translateY(1.5px)}}
+
+/* ---------- галерея: наклон за курсором, блик, каскад ---------- */
+.gi{transform-style:preserve-3d;perspective:900px;background:transparent;overflow:visible}
+.gi .gi__t{position:relative;display:block;left:auto;right:auto;bottom:auto;opacity:1;transform:none;border-radius:inherit;transition:transform .5s cubic-bezier(.2,.8,.2,1);transform-style:preserve-3d;will-change:transform}
+.gi .gi__c{position:relative;display:block;left:auto;right:auto;bottom:auto;opacity:1;transform:none;border-radius:inherit;overflow:hidden;background:var(--card);box-shadow:0 24px 50px -28px rgba(0,0,0,.85)}
+.gi .gi__g{position:absolute;inset:0;pointer-events:none;background:radial-gradient(500px circle at var(--gx,50%) var(--gy,0%),rgba(255,255,255,.22),transparent 45%);opacity:0;transition:opacity .4s;mix-blend-mode:soft-light}
+.gi:hover .gi__g{opacity:1}
+.gi .gi__cap{position:absolute;left:12px;right:12px;bottom:10px;font-size:12px;color:rgba(244,241,234,.92);opacity:0;transform:translateY(6px);transition:.4s var(--ease);text-shadow:0 1px 8px rgba(0,0,0,.7)}
+.gi:hover .gi__cap{opacity:1;transform:none}
+.js .gi.rv{opacity:0;transform:translateY(40px) rotateX(14deg) scale(.96);transform-origin:50% 100%;transition:opacity 1s var(--ease),transform 1.1s var(--ease);transition-delay:calc(var(--i,0)*90ms)}
+.js .gi.rv.in{opacity:1;transform:none}
+
+/* ---------- сценический свет и 3D-появление секций ---------- */
+.glow-l{position:absolute;pointer-events:none;width:46vw;max-width:620px;aspect-ratio:1;border-radius:50%;filter:blur(70px);opacity:.28;z-index:0;will-change:transform}
+.glow-l--a{background:radial-gradient(circle,#e3a35c,transparent 65%)}
+.glow-l--b{background:radial-gradient(circle,#5a8fd8,transparent 65%)}
+.js .rv{transform:translateY(34px) rotateX(8deg);transform-origin:50% 100%}
+html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}.lenis.lenis-stopped{overflow:hidden}
+@media (prefers-reduced-motion:reduce){.fc__in,.gi .gi__t{transition:none}.fc__hint i{animation:none}.glow-l{display:none}.js .gi.rv{opacity:1;transform:none}}
+
+</style>
 <!--
   СОЦСЕТИ: ссылки задаются в одном месте — константа SOCIAL в начале inline-скрипта внизу страницы
   (и в build_site.py -> SOCIAL). Сейчас там контакты агентства НАВСЕГДА; когда появятся аккаунты группы,
@@ -464,6 +520,7 @@ h1,h2,h3,p{margin:0}
     <symbol id="i-pods" viewBox="0 0 64 64"><g fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"><path d="M20 12c-6 0-10 4.5-10 10s4 9 8.5 9.5V52a3.5 3.5 0 0 0 7 0V24c0-6-1.5-12-5.5-12z"/><path d="M44 12c6 0 10 4.5 10 10s-4 9-8.5 9.5V52a3.5 3.5 0 0 1-7 0V24c0-6 1.5-12 5.5-12z"/></g></symbol>
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M7 17L17 7M9 7h8v8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M9 7L4 12l5 5M4 12h11a5 5 0 0 1 5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
     <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z" fill="currentColor"/></symbol>
     <symbol id="i-gift" viewBox="0 0 24 24"><path d="M4 11h16v9H4zM3 7h18v4H3zM12 7v13M12 7c-2.5 0-5-.6-5-2.6C7 2.9 9.6 2.6 12 7zm0 0c2.5 0 5-.6 5-2.6C17 2.9 14.4 2.6 12 7z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></symbol>
     <symbol id="i-clock" viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M16 9v7l5 3" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></symbol>
@@ -512,6 +569,7 @@ h1,h2,h3,p{margin:0}
       </g>
     </svg>
   </div>
+  <i class="glow glow--a glow--r glow--hero" data-spd="-0.1" aria-hidden="true"></i><i class="glow glow--b glow--hero" data-spd="0.16" aria-hidden="true"></i>
   <div class="hero__vig" aria-hidden="true"></div>
   <div class="hero__grid">
     <div class="hero__copy">
@@ -570,6 +628,7 @@ h1,h2,h3,p{margin:0}
 
 <!-- 3. О ГРУППЕ -->
 <section class="sec" id="about" aria-labelledby="h-about">
+  <i class="glow glow--a glow--r" data-spd="-0.16" aria-hidden="true"></i><i class="glow glow--b" data-spd="0.2" aria-hidden="true"></i>
   <div class="wrap about">
     <div class="pods rv" aria-hidden="true">
       <span class="pods__ring"></span><span class="pods__ring"></span><span class="pods__ring"></span><span class="pods__ring"></span>
@@ -602,27 +661,88 @@ h1,h2,h3,p{margin:0}
 
 <!-- 4. СОСТАВ -->
 <section class="sec" id="team" aria-labelledby="h-team" style="padding-top:0">
+  <i class="glow glow--a" data-spd="0.14" aria-hidden="true"></i><i class="glow glow--b glow--r" data-spd="-0.12" aria-hidden="true"></i>
   <div class="wrap">
     <div class="sec__head sec__head--split">
       <div><p class="eyebrow rv"><i></i>Состав</p><h2 id="h-team" class="h2 grad rv">Четыре партии — один звук</h2></div>
       <p class="lead rv">Вокал, гитара, бас и барабаны. Живой состав, который звучит как плейлист, только громче и ближе.</p>
     </div>
     <div class="team">
-      <article class="mem mem--lead rv">
-        <img src="img/m-denis.webp" alt="Денис Коняев, вокалист и фронтмен AirПоцы, с микрофоном" loading="lazy" decoding="async" width="760" height="1027">
-        <div class="mem__t"><p class="mem__k">Вокал</p><h3>Денис Коняев</h3><p class="mem__r">Фронтмен и лидер группы</p></div>
+      <article class="fc fc--mem rv" data-flip data-spd-min="1080">
+        <div class="fc__in">
+          <div class="fc__f fc__front">
+            <img src="img/m-denis.webp" alt="Денис Коняев, вокалист и фронтмен AirПоцы, с микрофоном" loading="lazy" decoding="async" width="760" height="1027">
+            <div class="mem__t"><p class="mem__k">Вокал</p><h3>Денис Коняев</h3><p class="mem__r">Фронтмен и лидер группы</p></div>
+            <span class="fc__hint" aria-hidden="true"><i></i>Повернуть</span>
+            <button type="button" class="fc__btn" aria-pressed="false" aria-label="Денис Коняев, вокал. Повернуть карточку"></button>
+          </div>
+          <div class="fc__f fc__back">
+            <div class="fc__ill fc__ill--mic" aria-hidden="true"><svg viewBox="0 0 200 84" focusable="false"><g class="ill-arcs" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M122 26a22 22 0 0 1 0 32" style="--k:0"/><path d="M134 18a34 34 0 0 1 0 48" style="--k:1"/><path d="M146 10a46 46 0 0 1 0 64" style="--k:2"/><path d="M78 26a22 22 0 0 0 0 32" style="--k:0"/><path d="M66 18a34 34 0 0 0 0 48" style="--k:1"/><path d="M54 10a46 46 0 0 0 0 64" style="--k:2"/></g><g class="ill-mic"><rect x="92" y="8" width="16" height="34" rx="8" fill="currentColor"/><path d="M85 34a15 15 0 0 0 30 0M100 49v14M91 64h18" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></g></svg></div>
+            <p class="mem__k">Вокал</p>
+            <h3>Денис Коняев</h3>
+            <p class="fc__role">Вокал, фронтмен, лидер</p>
+            <p class="fc__feat">Работает с залом и поднимает на танцпол даже тех, кто «не танцует».</p>
+            <p class="fc__inst"><span>Инструмент</span>Микрофон</p>
+            <button type="button" class="fc__btn fc__btn--back" aria-pressed="false" aria-label="Денис Коняев: вернуть карточку лицом"></button>
+          </div>
+        </div>
       </article>
-      <article class="mem rv d1">
-        <img src="img/m-artem.webp" alt="Артём, гитарист AirПоцы, с акустической гитарой" loading="lazy" decoding="async" width="760" height="1027">
-        <div class="mem__t"><p class="mem__k">Гитара</p><h3>Артём</h3><p class="mem__r">Гитара, в том числе акустика</p></div>
+      <article class="fc fc--mem rv d1" data-flip data-spd-min="1080">
+        <div class="fc__in">
+          <div class="fc__f fc__front">
+            <img src="img/m-artem.webp" alt="Артём, гитарист AirПоцы, с акустической гитарой" loading="lazy" decoding="async" width="760" height="1027">
+            <div class="mem__t"><p class="mem__k">Гитара</p><h3>Артём</h3><p class="mem__r">Гитара, в том числе акустика</p></div>
+            <span class="fc__hint" aria-hidden="true"><i></i>Повернуть</span>
+            <button type="button" class="fc__btn" aria-pressed="false" aria-label="Артём, гитара. Повернуть карточку"></button>
+          </div>
+          <div class="fc__f fc__back">
+            <div class="fc__ill fc__ill--strings" aria-hidden="true"><svg viewBox="0 0 200 84" focusable="false"><line class="ill-str" x1="8" x2="192" y1="10.0" y2="10.0" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" style="--k:0"/><line class="ill-str" x1="8" x2="192" y1="22.8" y2="22.8" stroke="currentColor" stroke-width="1.12" stroke-linecap="round" style="--k:1"/><line class="ill-str" x1="8" x2="192" y1="35.6" y2="35.6" stroke="currentColor" stroke-width="1.44" stroke-linecap="round" style="--k:2"/><line class="ill-str" x1="8" x2="192" y1="48.400000000000006" y2="48.400000000000006" stroke="currentColor" stroke-width="1.76" stroke-linecap="round" style="--k:3"/><line class="ill-str" x1="8" x2="192" y1="61.2" y2="61.2" stroke="currentColor" stroke-width="2.08" stroke-linecap="round" style="--k:4"/><line class="ill-str" x1="8" x2="192" y1="74.0" y2="74.0" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" style="--k:5"/></svg></div>
+            <p class="mem__k">Гитара</p>
+            <h3>Артём</h3>
+            <p class="fc__role">Гитара, в том числе акустика</p>
+            <p class="fc__feat">Играет акустические сеты на welcome-зоне, пока гости собираются.</p>
+            <p class="fc__inst"><span>Инструмент</span>Гитара, акустика</p>
+            <button type="button" class="fc__btn fc__btn--back" aria-pressed="false" aria-label="Артём: вернуть карточку лицом"></button>
+          </div>
+        </div>
       </article>
-      <article class="mem rv d2">
-        <img src="img/m-mikhail.webp" alt="Михаил, басист AirПоцы, с бас-гитарой" loading="lazy" decoding="async" width="760" height="1027">
-        <div class="mem__t"><p class="mem__k">Бас</p><h3>Михаил</h3><p class="mem__r">Бас-гитара</p></div>
+      <article class="fc fc--mem rv d2" data-flip data-spd-min="1080">
+        <div class="fc__in">
+          <div class="fc__f fc__front">
+            <img src="img/m-mikhail.webp" alt="Михаил, басист AirПоцы, с бас-гитарой" loading="lazy" decoding="async" width="760" height="1027">
+            <div class="mem__t"><p class="mem__k">Бас</p><h3>Михаил</h3><p class="mem__r">Бас-гитара</p></div>
+            <span class="fc__hint" aria-hidden="true"><i></i>Повернуть</span>
+            <button type="button" class="fc__btn" aria-pressed="false" aria-label="Михаил, бас. Повернуть карточку"></button>
+          </div>
+          <div class="fc__f fc__back">
+            <div class="fc__ill fc__ill--wave" aria-hidden="true"><svg viewBox="0 0 200 84" focusable="false"><rect class="ill-bar" x="8.0" y="28.5" width="4" height="27" rx="2" fill="currentColor" style="--k:0.84"/><rect class="ill-bar" x="14.4" y="21.0" width="4" height="42" rx="2" fill="currentColor" style="--k:0.52"/><rect class="ill-bar" x="20.8" y="12.0" width="4" height="60" rx="2" fill="currentColor" style="--k:0.64"/><rect class="ill-bar" x="27.200000000000003" y="15.5" width="4" height="53" rx="2" fill="currentColor" style="--k:0.5"/><rect class="ill-bar" x="33.6" y="17.5" width="4" height="49" rx="2" fill="currentColor" style="--k:0.66"/><rect class="ill-bar" x="40.0" y="23.0" width="4" height="38" rx="2" fill="currentColor" style="--k:0.46"/><rect class="ill-bar" x="46.400000000000006" y="31.0" width="4" height="22" rx="2" fill="currentColor" style="--k:0.28"/><rect class="ill-bar" x="52.800000000000004" y="35.0" width="4" height="14" rx="2" fill="currentColor" style="--k:1.0"/><rect class="ill-bar" x="59.2" y="37.0" width="4" height="10" rx="2" fill="currentColor" style="--k:1.0"/><rect class="ill-bar" x="65.6" y="37.0" width="4" height="10" rx="2" fill="currentColor" style="--k:0.84"/><rect class="ill-bar" x="72.0" y="36.0" width="4" height="12" rx="2" fill="currentColor" style="--k:0.71"/><rect class="ill-bar" x="78.4" y="31.5" width="4" height="21" rx="2" fill="currentColor" style="--k:0.32"/><rect class="ill-bar" x="84.80000000000001" y="27.0" width="4" height="30" rx="2" fill="currentColor" style="--k:0.23"/><rect class="ill-bar" x="91.2" y="15.5" width="4" height="53" rx="2" fill="currentColor" style="--k:0.29"/><rect class="ill-bar" x="97.60000000000001" y="13.0" width="4" height="58" rx="2" fill="currentColor" style="--k:0.07"/><rect class="ill-bar" x="104.0" y="21.0" width="4" height="42" rx="2" fill="currentColor" style="--k:0.77"/><rect class="ill-bar" x="110.4" y="16.5" width="4" height="51" rx="2" fill="currentColor" style="--k:0.4"/><rect class="ill-bar" x="116.80000000000001" y="25.0" width="4" height="34" rx="2" fill="currentColor" style="--k:0.85"/><rect class="ill-bar" x="123.2" y="33.0" width="4" height="18" rx="2" fill="currentColor" style="--k:0.39"/><rect class="ill-bar" x="129.60000000000002" y="36.5" width="4" height="11" rx="2" fill="currentColor" style="--k:0.96"/><rect class="ill-bar" x="136.0" y="37.0" width="4" height="10" rx="2" fill="currentColor" style="--k:0.85"/><rect class="ill-bar" x="142.4" y="36.5" width="4" height="11" rx="2" fill="currentColor" style="--k:0.0"/><rect class="ill-bar" x="148.8" y="33.0" width="4" height="18" rx="2" fill="currentColor" style="--k:0.21"/><rect class="ill-bar" x="155.20000000000002" y="29.5" width="4" height="25" rx="2" fill="currentColor" style="--k:0.91"/><rect class="ill-bar" x="161.60000000000002" y="23.0" width="4" height="38" rx="2" fill="currentColor" style="--k:0.47"/><rect class="ill-bar" x="168.0" y="18.5" width="4" height="47" rx="2" fill="currentColor" style="--k:0.98"/><rect class="ill-bar" x="174.4" y="20.5" width="4" height="43" rx="2" fill="currentColor" style="--k:0.4"/><rect class="ill-bar" x="180.8" y="18.5" width="4" height="47" rx="2" fill="currentColor" style="--k:0.07"/><rect class="ill-bar" x="187.20000000000002" y="25.0" width="4" height="34" rx="2" fill="currentColor" style="--k:0.63"/></svg></div>
+            <p class="mem__k">Бас</p>
+            <h3>Михаил</h3>
+            <p class="fc__role">Бас-гитара</p>
+            <p class="fc__feat">Низкие частоты, на которых держится танцпол.</p>
+            <p class="fc__inst"><span>Инструмент</span>Бас-гитара</p>
+            <button type="button" class="fc__btn fc__btn--back" aria-pressed="false" aria-label="Михаил: вернуть карточку лицом"></button>
+          </div>
+        </div>
       </article>
-      <article class="mem rv d3">
-        <img src="img/m-maxim.webp" alt="Максим, барабанщик AirПоцы" loading="lazy" decoding="async" width="760" height="1027">
-        <div class="mem__t"><p class="mem__k">Барабаны</p><h3>Максим</h3><p class="mem__r">Барабаны и ритм</p></div>
+      <article class="fc fc--mem rv d3" data-flip data-spd-min="1080">
+        <div class="fc__in">
+          <div class="fc__f fc__front">
+            <img src="img/m-maxim.webp" alt="Максим, барабанщик AirПоцы" loading="lazy" decoding="async" width="760" height="1027">
+            <div class="mem__t"><p class="mem__k">Барабаны</p><h3>Максим</h3><p class="mem__r">Барабаны и ритм</p></div>
+            <span class="fc__hint" aria-hidden="true"><i></i>Повернуть</span>
+            <button type="button" class="fc__btn" aria-pressed="false" aria-label="Максим, барабаны. Повернуть карточку"></button>
+          </div>
+          <div class="fc__f fc__back">
+            <div class="fc__ill fc__ill--pulse" aria-hidden="true"><svg viewBox="0 0 200 84" focusable="false"><g fill="none" stroke="currentColor" stroke-width="1.6"><circle class="ill-ring" cx="100" cy="42" r="14" style="--k:0"/><circle class="ill-ring" cx="100" cy="42" r="14" style="--k:1"/><circle class="ill-ring" cx="100" cy="42" r="14" style="--k:2"/></g><g class="ill-cajon"><rect x="82" y="24" width="36" height="36" rx="5" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="100" cy="42" r="6.5" fill="currentColor"/></g></svg></div>
+            <p class="mem__k">Барабаны</p>
+            <h3>Максим</h3>
+            <p class="fc__role">Барабаны и кахон</p>
+            <p class="fc__feat">Ритм, под который сложно усидеть на месте.</p>
+            <p class="fc__inst"><span>Инструмент</span>Барабаны, кахон</p>
+            <button type="button" class="fc__btn fc__btn--back" aria-pressed="false" aria-label="Максим: вернуть карточку лицом"></button>
+          </div>
+        </div>
       </article>
     </div>
   </div>
@@ -630,6 +750,7 @@ h1,h2,h3,p{margin:0}
 
 <!-- 5. ЗВУК -->
 <section class="sec" id="sound" aria-labelledby="h-sound" style="padding-top:0">
+  <i class="glow glow--a glow--r" data-spd="-0.16" aria-hidden="true"></i><i class="glow glow--b" data-spd="0.2" aria-hidden="true"></i>
   <div class="wrap">
     <div class="sec__head sec__head--split">
       <div><p class="eyebrow rv"><i></i>Звук</p><h2 id="h-sound" class="h2 grad rv">Из чего собран вечер</h2></div>
@@ -658,33 +779,62 @@ h1,h2,h3,p{margin:0}
 
 <!-- 6. СОБЫТИЯ -->
 <section class="sec sec--paper" id="events" aria-labelledby="h-events">
+  <i class="glow glow--a" data-spd="0.14" aria-hidden="true"></i><i class="glow glow--b glow--r" data-spd="-0.12" aria-hidden="true"></i>
   <div class="wrap">
     <div class="sec__head sec__head--split">
       <div><p class="eyebrow rv"><i></i>Для каких событий</p><h2 id="h-events" class="h2 grad rv">Свадьба, корпоратив, день рождения</h2></div>
       <p class="lead rv">Играем в Москве. Одна группа — три формата вечера: подстраиваемся под тайминг ведущего и под публику в зале.</p>
     </div>
     <div class="events">
-      <article class="ev rv">
-        <div class="ev__img"><img src="img/ev-wedding.webp" alt="Акустическая гитара AirПоцы крупным планом" loading="lazy" decoding="async" width="900" height="764"></div>
-        <div class="ev__b">
-          <h3>Свадьбы</h3>
-          <p>Живая музыка на welcome-зоне и на танцполе. Песни по заявкам, в том числе для первого танца, который можно исполнить вживую.</p>
-          <div class="ev__ls"><a href="https://navseg-da.agency/blog/kak-vybrat-kaver-gruppu-na-svadbu-10-voprosov/"><svg aria-hidden="true"><use href="#i-right"/></svg>Как выбрать кавер-группу на свадьбу</a><a href="https://navseg-da.agency/blog/kaver-gruppa-ili-didzhey-na-svadbu/"><svg aria-hidden="true"><use href="#i-right"/></svg>Кавер-группа или диджей</a></div>
+      <article class="fc fc--ev rv" data-flip>
+        <div class="fc__in">
+          <div class="fc__f fc__front">
+            <img src="img/ev-wedding.webp" alt="Акустическая гитара AirПоцы крупным планом" loading="lazy" decoding="async" width="900" height="764">
+            <div class="mem__t"><p class="mem__k">Живая музыка</p><h3>Свадьбы</h3></div>
+            <span class="fc__hint" aria-hidden="true"><i></i>Подробнее</span>
+            <button type="button" class="fc__btn" aria-pressed="false" aria-label="Свадьбы. Повернуть карточку"></button>
+          </div>
+          <div class="fc__f fc__back">
+            <p class="mem__k">Живая музыка</p>
+            <h3>Свадьбы</h3>
+            <p class="fc__feat">Живая музыка на welcome-зоне и на танцполе. Песни по заявкам, в том числе для первого танца, который можно исполнить вживую.</p>
+            <div class="ev__ls"><a href="https://navseg-da.agency/blog/kak-vybrat-kaver-gruppu-na-svadbu-10-voprosov/"><svg aria-hidden="true"><use href="#i-right"/></svg>Как выбрать кавер-группу на свадьбу</a><a href="https://navseg-da.agency/blog/kaver-gruppa-ili-didzhey-na-svadbu/"><svg aria-hidden="true"><use href="#i-right"/></svg>Кавер-группа или диджей</a></div>
+            <button type="button" class="fc__btn fc__btn--chip" aria-pressed="false" aria-label="Свадьбы: вернуть карточку лицом"><svg aria-hidden="true"><use href="#i-back"/></svg>Назад</button>
+          </div>
         </div>
       </article>
-      <article class="ev rv d1">
-        <div class="ev__img"><img src="img/ev-corp.webp" alt="Зал форума на 500+ человек во время выступления AirПоцы" loading="lazy" decoding="async" width="900" height="765"></div>
-        <div class="ev__b">
-          <h3>Корпоративы</h3>
-          <p>Блоки встраиваются в тайминг ведущего, технику согласуем с площадкой сами. Договор и закрывающие документы.</p>
-          <div class="ev__ls"><a href="https://navseg-da.agency/event/blog/zhivaya-muzyka-na-korporativ-kak-vybrat-gruppu/"><svg aria-hidden="true"><use href="#i-right"/></svg>Живая музыка на корпоратив</a></div>
+      <article class="fc fc--ev rv d1" data-flip>
+        <div class="fc__in">
+          <div class="fc__f fc__front">
+            <img src="img/ev-corp.webp" alt="Зал форума на 500+ человек во время выступления AirПоцы" loading="lazy" decoding="async" width="900" height="765">
+            <div class="mem__t"><p class="mem__k">Блоки в тайминге</p><h3>Корпоративы</h3></div>
+            <span class="fc__hint" aria-hidden="true"><i></i>Подробнее</span>
+            <button type="button" class="fc__btn" aria-pressed="false" aria-label="Корпоративы. Повернуть карточку"></button>
+          </div>
+          <div class="fc__f fc__back">
+            <p class="mem__k">Блоки в тайминге</p>
+            <h3>Корпоративы</h3>
+            <p class="fc__feat">Блоки встраиваются в тайминг ведущего, технику согласуем с площадкой сами. Договор и закрывающие документы.</p>
+            <div class="ev__ls"><a href="https://navseg-da.agency/event/blog/zhivaya-muzyka-na-korporativ-kak-vybrat-gruppu/"><svg aria-hidden="true"><use href="#i-right"/></svg>Живая музыка на корпоратив</a></div>
+            <button type="button" class="fc__btn fc__btn--chip" aria-pressed="false" aria-label="Корпоративы: вернуть карточку лицом"><svg aria-hidden="true"><use href="#i-back"/></svg>Назад</button>
+          </div>
         </div>
       </article>
-      <article class="ev rv d2">
-        <div class="ev__img"><img src="img/ev-bday.webp" alt="Гости танцуют на выступлении AirПоцы" loading="lazy" decoding="async" width="900" height="764"></div>
-        <div class="ev__b">
-          <h3>Дни рождения</h3>
-          <p>Хиты, которые знает вся компания, и песни по заявкам именинника. Можно добавить персональную песню-переделку.</p>
+      <article class="fc fc--ev rv d2" data-flip>
+        <div class="fc__in">
+          <div class="fc__f fc__front">
+            <img src="img/ev-bday.webp" alt="Гости танцуют на выступлении AirПоцы" loading="lazy" decoding="async" width="900" height="764">
+            <div class="mem__t"><p class="mem__k">Хиты для компании</p><h3>Дни рождения</h3></div>
+            <span class="fc__hint" aria-hidden="true"><i></i>Подробнее</span>
+            <button type="button" class="fc__btn" aria-pressed="false" aria-label="Дни рождения. Повернуть карточку"></button>
+          </div>
+          <div class="fc__f fc__back">
+            <p class="mem__k">Хиты для компании</p>
+            <h3>Дни рождения</h3>
+            <p class="fc__feat">Хиты, которые знает вся компания, и песни по заявкам именинника. Можно добавить персональную песню-переделку.</p>
+            
+            <button type="button" class="fc__btn fc__btn--chip" aria-pressed="false" aria-label="Дни рождения: вернуть карточку лицом"><svg aria-hidden="true"><use href="#i-back"/></svg>Назад</button>
+          </div>
         </div>
       </article>
     </div>
@@ -693,6 +843,7 @@ h1,h2,h3,p{margin:0}
 
 <!-- 7. РЕПЕРТУАР -->
 <section class="sec" id="repertoire" aria-labelledby="h-rep">
+  <i class="glow glow--a glow--r" data-spd="-0.16" aria-hidden="true"></i><i class="glow glow--b" data-spd="0.2" aria-hidden="true"></i>
   <div class="wrap">
     <div class="sec__head sec__head--split">
       <div><p class="eyebrow rv"><i></i>Что играем</p><h2 id="h-rep" class="h2 grad rv">Плейлист, который знает весь зал</h2></div>
@@ -705,6 +856,7 @@ h1,h2,h3,p{margin:0}
 
 <!-- 8. ФОРМАТ -->
 <section class="sec sec--paper" id="format" aria-labelledby="h-format">
+  <i class="glow glow--a" data-spd="0.14" aria-hidden="true"></i><i class="glow glow--b glow--r" data-spd="-0.12" aria-hidden="true"></i>
   <div class="wrap">
     <div class="sec__head sec__head--split">
       <div><p class="eyebrow rv"><i></i>Формат</p><h2 id="h-format" class="h2 grad rv">Три блока по 30 минут</h2></div>
@@ -723,6 +875,7 @@ h1,h2,h3,p{margin:0}
 
 <!-- 9. БОНУСЫ -->
 <section class="sec" id="bonus" aria-labelledby="h-bonus">
+  <i class="glow glow--a glow--r" data-spd="-0.16" aria-hidden="true"></i><i class="glow glow--b" data-spd="0.2" aria-hidden="true"></i>
   <div class="wrap">
     <div class="sec__head sec__head--split">
       <div><p class="eyebrow rv"><i></i>Бонусы</p><h2 id="h-bonus" class="h2 grad rv">Бонусы при бронировании до 30.11</h2></div>
@@ -753,6 +906,7 @@ h1,h2,h3,p{margin:0}
 
 <!-- 10. ГДЕ ИГРАЛИ + ТАНЦПОЛ -->
 <section class="sec" id="venues" aria-labelledby="h-venues" style="padding-top:0">
+  <i class="glow glow--a" data-spd="0.14" aria-hidden="true"></i><i class="glow glow--b glow--r" data-spd="-0.12" aria-hidden="true"></i>
   <div class="wrap">
     <div class="split">
       <div>
@@ -775,6 +929,7 @@ h1,h2,h3,p{margin:0}
 
 <!-- 11. СЕРВИС -->
 <section class="sec sec--paper" id="service" aria-labelledby="h-service">
+  <i class="glow glow--a glow--r" data-spd="-0.16" aria-hidden="true"></i><i class="glow glow--b" data-spd="0.2" aria-hidden="true"></i>
   <div class="wrap">
     <div class="sec__head sec__head--split">
       <div><p class="eyebrow rv"><i></i>Сервис</p><h2 id="h-service" class="h2 grad rv">Почему с нами спокойно</h2></div>
@@ -791,6 +946,7 @@ h1,h2,h3,p{margin:0}
 
 <!-- 12. ВИДЕО И ФОТО -->
 <section class="sec" id="video" aria-labelledby="h-video">
+  <i class="glow glow--a" data-spd="0.14" aria-hidden="true"></i><i class="glow glow--b glow--r" data-spd="-0.12" aria-hidden="true"></i>
   <div class="wrap">
     <div class="sec__head sec__head--split">
       <div><p class="eyebrow rv"><i></i>Видео и фото</p><h2 id="h-video" class="h2 grad rv">Как это выглядит из зала</h2></div>
@@ -820,12 +976,13 @@ h1,h2,h3,p{margin:0}
         <figcaption><b>Гитара и бас</b><span>Звук вблизи</span></figcaption>
       </figure>
     </div>
-    <div class="gal" id="gal"><a class="gi rv" href="img/g01.webp" data-cap="Денис Коняев, вокал и фронтмен"><img src="img/g01-t.webp" alt="Денис Коняев, вокал и фронтмен" loading="lazy" decoding="async" width="560" height="996"><span>Денис Коняев, вокал и фронтмен</span></a><a class="gi rv" href="img/g02.webp" data-cap="Артём: акустика крупным планом"><img src="img/g02-t.webp" alt="Артём: акустика крупным планом" loading="lazy" decoding="async" width="560" height="560"><span>Артём: акустика крупным планом</span></a><a class="gi rv" href="img/g03.webp" data-cap="Зал танцует"><img src="img/g03-t.webp" alt="Зал танцует" loading="lazy" decoding="async" width="560" height="700"><span>Зал танцует</span></a><a class="gi rv" href="img/g04.webp" data-cap="AirПоцы на сцене форума"><img src="img/g04-t.webp" alt="AirПоцы на сцене форума" loading="lazy" decoding="async" width="560" height="747"><span>AirПоцы на сцене форума</span></a><a class="gi rv" href="img/g05.webp" data-cap="Михаил, бас"><img src="img/g05-t.webp" alt="Михаил, бас" loading="lazy" decoding="async" width="560" height="996"><span>Михаил, бас</span></a><a class="gi rv" href="img/g06.webp" data-cap="Зал снимает выступление на телефоны"><img src="img/g06-t.webp" alt="Зал снимает выступление на телефоны" loading="lazy" decoding="async" width="560" height="700"><span>Зал снимает выступление на телефоны</span></a><a class="gi rv" href="img/g07.webp" data-cap="Максим за кахоном"><img src="img/g07-t.webp" alt="Максим за кахоном" loading="lazy" decoding="async" width="560" height="700"><span>Максим за кахоном</span></a><a class="gi rv" href="img/g08.webp" data-cap="Зал форума на 500+ человек"><img src="img/g08-t.webp" alt="Зал форума на 500+ человек" loading="lazy" decoding="async" width="560" height="996"><span>Зал форума на 500+ человек</span></a><a class="gi rv" href="img/g09.webp" data-cap="Фронтмен выходит к залу"><img src="img/g09-t.webp" alt="Фронтмен выходит к залу" loading="lazy" decoding="async" width="560" height="700"><span>Фронтмен выходит к залу</span></a><a class="gi rv" href="img/g10.webp" data-cap="Артём, акустическая гитара"><img src="img/g10-t.webp" alt="Артём, акустическая гитара" loading="lazy" decoding="async" width="560" height="996"><span>Артём, акустическая гитара</span></a><a class="gi rv" href="img/g11.webp" data-cap="Вокал и гитара"><img src="img/g11-t.webp" alt="Вокал и гитара" loading="lazy" decoding="async" width="560" height="700"><span>Вокал и гитара</span></a><a class="gi rv" href="img/g12.webp" data-cap="Лицом к залу"><img src="img/g12-t.webp" alt="Лицом к залу" loading="lazy" decoding="async" width="560" height="560"><span>Лицом к залу</span></a><a class="gi rv" href="img/g13.webp" data-cap="Сцена и свет зала"><img src="img/g13-t.webp" alt="Сцена и свет зала" loading="lazy" decoding="async" width="560" height="747"><span>Сцена и свет зала</span></a><a class="gi rv" href="img/g14.webp" data-cap="Денис Коняев на сцене"><img src="img/g14-t.webp" alt="Денис Коняев на сцене" loading="lazy" decoding="async" width="560" height="996"><span>Денис Коняев на сцене</span></a><a class="gi rv" href="img/g15.webp" data-cap="Со сцены — к гостям"><img src="img/g15-t.webp" alt="Со сцены — к гостям" loading="lazy" decoding="async" width="560" height="560"><span>Со сцены — к гостям</span></a><a class="gi rv" href="img/g16.webp" data-cap="Фронтмен и гитарист"><img src="img/g16-t.webp" alt="Фронтмен и гитарист" loading="lazy" decoding="async" width="560" height="700"><span>Фронтмен и гитарист</span></a><a class="gi rv" href="img/g17.webp" data-cap="Живой вокал"><img src="img/g17-t.webp" alt="Живой вокал" loading="lazy" decoding="async" width="560" height="700"><span>Живой вокал</span></a><a class="gi rv" href="img/g18.webp" data-cap="Ритм: кахон"><img src="img/g18-t.webp" alt="Ритм: кахон" loading="lazy" decoding="async" width="560" height="560"><span>Ритм: кахон</span></a><a class="gi rv" href="img/g19.webp" data-cap="Работа с залом"><img src="img/g19-t.webp" alt="Работа с залом" loading="lazy" decoding="async" width="560" height="996"><span>Работа с залом</span></a><a class="gi rv" href="img/g20.webp" data-cap="Фронтмен AirПоцы"><img src="img/g20-t.webp" alt="Фронтмен AirПоцы" loading="lazy" decoding="async" width="560" height="700"><span>Фронтмен AirПоцы</span></a></div>
+    <div class="gal" id="gal"><a class="gi rv" href="img/g01.webp" data-cap="Денис Коняев, вокал и фронтмен" style="--i:0"><span class="gi__t"><span class="gi__c"><img src="img/g01-t.webp" alt="Денис Коняев, вокал и фронтмен" loading="lazy" decoding="async" width="560" height="996"><i class="gi__g" aria-hidden="true"></i><span class="gi__cap">Денис Коняев, вокал и фронтмен</span></span></span></a><a class="gi rv" href="img/g02.webp" data-cap="Артём: акустика крупным планом" style="--i:1"><span class="gi__t"><span class="gi__c"><img src="img/g02-t.webp" alt="Артём: акустика крупным планом" loading="lazy" decoding="async" width="560" height="560"><i class="gi__g" aria-hidden="true"></i><span class="gi__cap">Артём: акустика крупным планом</span></span></span></a><a class="gi rv" href="img/g03.webp" data-cap="Зал танцует" style="--i:2"><span class="gi__t"><span class="gi__c"><img src="img/g03-t.webp" alt="Зал танцует" loading="lazy" decoding="async" width="560" height="700"><i class="gi__g" aria-hidden="true"></i><span class="gi__cap">Зал танцует</span></span></span></a><a class="gi rv" href="img/g04.webp" data-cap="AirПоцы на сцене форума" style="--i:3"><span class="gi__t"><span class="gi__c"><img src="img/g04-t.webp" alt="AirПоцы на сцене форума" loading="lazy" decoding="async" width="560" height="747"><i class="gi__g" aria-hidden="true"></i><span class="gi__cap">AirПоцы на сцене форума</span></span></span></a><a class="gi rv" href="img/g05.webp" data-cap="Михаил, бас" style="--i:0"><span class="gi__t"><span class="gi__c"><img src="img/g05-t.webp" alt="Михаил, бас" loading="lazy" decoding="async" width="560" height="996"><i class="gi__g" aria-hidden="true"></i><span class="gi__cap">Михаил, бас</span></span></span></a><a class="gi rv" href="img/g06.webp" data-cap="Зал снимает выступление на телефоны" style="--i:1"><span class="gi__t"><span class="gi__c"><img src="img/g06-t.webp" alt="Зал снимает выступление на телефоны" loading="lazy" decoding="async" width="560" height="700"><i class="gi__g" aria-hidden="true"></i><span class="gi__cap">Зал снимает выступление на телефоны</span></span></span></a><a class="gi rv" href="img/g07.webp" data-cap="Максим за кахоном" style="--i:2"><span class="gi__t"><span class="gi__c"><img src="img/g07-t.webp" alt="Максим за кахоном" loading="lazy" decoding="async" width="560" height="700"><i class="gi__g" aria-hidden="true"></i><span class="gi__cap">Максим за кахоном</span></span></span></a><a class="gi rv" href="img/g08.webp" data-cap="Зал форума на 500+ человек" style="--i:3"><span class="gi__t"><span class="gi__c"><img src="img/g08-t.webp" alt="Зал форума на 500+ человек" loading="lazy" decoding="async" width="560" height="996"><i class="gi__g" aria-hidden="true"></i><span class="gi__cap">Зал форума на 500+ человек</span></span></span></a><a class="gi rv" href="img/g09.webp" data-cap="Фронтмен выходит к залу" style="--i:0"><span class="gi__t"><span class="gi__c"><img src="img/g09-t.webp" alt="Фронтмен выходит к залу" loading="lazy" decoding="async" width="560" height="700"><i class="gi__g" aria-hidden="true"></i><span class="gi__cap">Фронтмен выходит к залу</span></span></span></a><a class="gi rv" href="img/g10.webp" data-cap="Артём, акустическая гитара" style="--i:1"><span class="gi__t"><span class="gi__c"><img src="img/g10-t.webp" alt="Артём, акустическая гитара" loading="lazy" decoding="async" width="560" height="996"><i class="gi__g" aria-hidden="true"></i><span class="gi__cap">Артём, акустическая гитара</span></span></span></a><a class="gi rv" href="img/g11.webp" data-cap="Вокал и гитара" style="--i:2"><span class="gi__t"><span class="gi__c"><img src="img/g11-t.webp" alt="Вокал и гитара" loading="lazy" decoding="async" width="560" height="700"><i class="gi__g" aria-hidden="true"></i><span class="gi__cap">Вокал и гитара</span></span></span></a><a class="gi rv" href="img/g12.webp" data-cap="Лицом к залу" style="--i:3"><span class="gi__t"><span class="gi__c"><img src="img/g12-t.webp" alt="Лицом к залу" loading="lazy" decoding="async" width="560" height="560"><i class="gi__g" aria-hidden="true"></i><span class="gi__cap">Лицом к залу</span></span></span></a><a class="gi rv" href="img/g13.webp" data-cap="Сцена и свет зала" style="--i:0"><span class="gi__t"><span class="gi__c"><img src="img/g13-t.webp" alt="Сцена и свет зала" loading="lazy" decoding="async" width="560" height="747"><i class="gi__g" aria-hidden="true"></i><span class="gi__cap">Сцена и свет зала</span></span></span></a><a class="gi rv" href="img/g14.webp" data-cap="Денис Коняев на сцене" style="--i:1"><span class="gi__t"><span class="gi__c"><img src="img/g14-t.webp" alt="Денис Коняев на сцене" loading="lazy" decoding="async" width="560" height="996"><i class="gi__g" aria-hidden="true"></i><span class="gi__cap">Денис Коняев на сцене</span></span></span></a><a class="gi rv" href="img/g15.webp" data-cap="Со сцены — к гостям" style="--i:2"><span class="gi__t"><span class="gi__c"><img src="img/g15-t.webp" alt="Со сцены — к гостям" loading="lazy" decoding="async" width="560" height="560"><i class="gi__g" aria-hidden="true"></i><span class="gi__cap">Со сцены — к гостям</span></span></span></a><a class="gi rv" href="img/g16.webp" data-cap="Фронтмен и гитарист" style="--i:3"><span class="gi__t"><span class="gi__c"><img src="img/g16-t.webp" alt="Фронтмен и гитарист" loading="lazy" decoding="async" width="560" height="700"><i class="gi__g" aria-hidden="true"></i><span class="gi__cap">Фронтмен и гитарист</span></span></span></a><a class="gi rv" href="img/g17.webp" data-cap="Живой вокал" style="--i:0"><span class="gi__t"><span class="gi__c"><img src="img/g17-t.webp" alt="Живой вокал" loading="lazy" decoding="async" width="560" height="700"><i class="gi__g" aria-hidden="true"></i><span class="gi__cap">Живой вокал</span></span></span></a><a class="gi rv" href="img/g18.webp" data-cap="Ритм: кахон" style="--i:1"><span class="gi__t"><span class="gi__c"><img src="img/g18-t.webp" alt="Ритм: кахон" loading="lazy" decoding="async" width="560" height="560"><i class="gi__g" aria-hidden="true"></i><span class="gi__cap">Ритм: кахон</span></span></span></a><a class="gi rv" href="img/g19.webp" data-cap="Работа с залом" style="--i:2"><span class="gi__t"><span class="gi__c"><img src="img/g19-t.webp" alt="Работа с залом" loading="lazy" decoding="async" width="560" height="996"><i class="gi__g" aria-hidden="true"></i><span class="gi__cap">Работа с залом</span></span></span></a><a class="gi rv" href="img/g20.webp" data-cap="Фронтмен AirПоцы" style="--i:3"><span class="gi__t"><span class="gi__c"><img src="img/g20-t.webp" alt="Фронтмен AirПоцы" loading="lazy" decoding="async" width="560" height="700"><i class="gi__g" aria-hidden="true"></i><span class="gi__cap">Фронтмен AirПоцы</span></span></span></a></div>
   </div>
 </section>
 
 <!-- 13. СОЦСЕТИ -->
 <section class="sec" id="social" aria-labelledby="h-social" style="padding-top:0">
+  <i class="glow glow--a glow--r" data-spd="-0.16" aria-hidden="true"></i><i class="glow glow--b" data-spd="0.2" aria-hidden="true"></i>
   <div class="wrap">
     <div class="sec__head sec__head--split">
       <div><p class="eyebrow rv"><i></i>Мы в сетях</p><h2 id="h-social" class="h2 grad rv">На связи там, где удобно вам</h2></div>
@@ -842,6 +999,7 @@ h1,h2,h3,p{margin:0}
 
 <!-- 14. FAQ -->
 <section class="sec sec--paper" id="faq" aria-labelledby="h-faq">
+  <i class="glow glow--a" data-spd="0.14" aria-hidden="true"></i><i class="glow glow--b glow--r" data-spd="-0.12" aria-hidden="true"></i>
   <div class="wrap wrap--n">
     <p class="eyebrow rv"><i></i>Вопросы</p>
     <h2 id="h-faq" class="h2 grad rv" style="margin-bottom:48px">Частые вопросы</h2>
@@ -851,6 +1009,7 @@ h1,h2,h3,p{margin:0}
 
 <!-- 15. ФОРМА -->
 <section class="sec formsec" id="zayavka" aria-labelledby="h-form">
+  <i class="glow glow--a glow--r" data-spd="-0.16" aria-hidden="true"></i><i class="glow glow--b" data-spd="0.2" aria-hidden="true"></i>
   <div class="wrap wrap--n">
     <p class="eyebrow rv"><i></i>Заявка</p>
     <h2 id="h-form" class="h2 grad rv">Соберём плейлист вашего вечера</h2>
@@ -1272,6 +1431,89 @@ var SOCIAL = {
         try { ok.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' }); } catch (e) {}
       }, 450);
     });
+  }
+})();
+
+/* ---------- карточки с переворотом, наклон галереи, сценический свет, плавный скролл ---------- */
+(function () {
+  var d = document, w = window;
+  var reduce = w.matchMedia && w.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var fine = w.matchMedia && w.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  // переворот: тап/клик/Enter/Space; на десктопе ещё и hover (в CSS)
+  [].forEach.call(d.querySelectorAll('[data-flip]'), function (card) {
+    function set(on) {
+      card.classList.toggle('is-flip', on);
+      [].forEach.call(card.querySelectorAll('.fc__btn'), function (b) { b.setAttribute('aria-pressed', on ? 'true' : 'false'); });
+    }
+    [].forEach.call(card.querySelectorAll('.fc__btn'), function (b) {
+      b.addEventListener('click', function (e) { e.preventDefault(); set(!card.classList.contains('is-flip')); });
+    });
+    if (fine) card.addEventListener('mouseleave', function () { set(false); });
+  });
+
+  // наклон фото галереи за курсором + блик
+  if (fine && !reduce) {
+    [].forEach.call(d.querySelectorAll('.gi'), function (g) {
+      var t = g.querySelector('.gi__t'); if (!t) return;
+      g.addEventListener('pointermove', function (e) {
+        var r = g.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        t.style.transform = 'rotateX(' + ((0.5 - y) * 10).toFixed(2) + 'deg) rotateY(' + ((x - 0.5) * 12).toFixed(2) + 'deg) translateZ(10px)';
+        g.style.setProperty('--gx', (x * 100).toFixed(1) + '%'); g.style.setProperty('--gy', (y * 100).toFixed(1) + '%');
+      });
+      g.addEventListener('pointerleave', function () { t.style.transform = ''; });
+    });
+  }
+
+  // мягкие «сценические» пятна света в секциях + параллакс
+  var glows = [];
+  if (!reduce) {
+    [].forEach.call(d.querySelectorAll('main section'), function (s, i) {
+      if (i === 0) return;
+      s.style.position = s.style.position || 'relative'; s.style.isolation = 'isolate'; s.style.overflowX = 'clip';
+      var a = d.createElement('i'), b = d.createElement('i');
+      a.className = 'glow-l glow-l--a'; b.className = 'glow-l glow-l--b';
+      a.style.cssText = 'z-index:-1;top:' + (8 + (i * 17) % 40) + '%;' + (i % 2 ? 'left:-14%' : 'right:-14%');
+      b.style.cssText = 'z-index:-1;bottom:' + (4 + (i * 11) % 30) + '%;' + (i % 2 ? 'right:-18%' : 'left:-18%');
+      s.appendChild(a); s.appendChild(b); glows.push([s, a, b]);
+    });
+  }
+  var ticking = false;
+  function para() {
+    ticking = false;
+    var vh = w.innerHeight;
+    glows.forEach(function (g) {
+      var r = g[0].getBoundingClientRect(); if (r.bottom < -200 || r.top > vh + 200) return;
+      var p = (r.top + r.height / 2 - vh / 2) / vh;
+      g[1].style.transform = 'translate3d(0,' + (p * -90).toFixed(1) + 'px,0)';
+      g[2].style.transform = 'translate3d(0,' + (p * 70).toFixed(1) + 'px,0)';
+    });
+  }
+  w.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(para); } }, { passive: true });
+  para();
+
+  // инерционный скролл (только мышь/тачпад; на тач-устройствах — нативный)
+  if (fine && !reduce) {
+    var s = d.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js'; s.defer = true;
+    s.onload = function () {
+      if (!w.Lenis) return;
+      var lenis = new w.Lenis({ lerp: 0.085, smoothWheel: true, wheelMultiplier: 0.95 });
+      w.__lenis = lenis;
+      (function raf(t) { lenis.raf(t); requestAnimationFrame(raf); })(performance.now());
+      d.addEventListener('click', function (e) {
+        var a = e.target.closest && e.target.closest('a[href^="#"]');
+        if (!a || a.getAttribute('href').length < 2) return;
+        var el = d.querySelector(a.getAttribute('href')); if (!el) return;
+        e.preventDefault(); lenis.scrollTo(el, { offset: -70, duration: 1.4 });
+      });
+      var lb = d.querySelector('.lb');
+      if (lb && 'MutationObserver' in w) new MutationObserver(function () {
+        var open = !lb.hidden && lb.getAttribute('aria-hidden') !== 'true' && getComputedStyle(lb).display !== 'none';
+        open ? lenis.stop() : lenis.start();
+      }).observe(lb, { attributes: true, attributeFilter: ['hidden', 'class', 'aria-hidden', 'style'] });
+    };
+    d.head.appendChild(s);
   }
 })();
 
