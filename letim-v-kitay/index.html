@@ -14,7 +14,7 @@
 <style>
 :root{--bg:#0b0a0d;--bg2:#141217;--ink:#f4efe8;--mute:#a49d95;--line:rgba(255,255,255,.12);--red:#e3342f;--gold:#f2b84b;--sea:#3fc1c9}
 *{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-x:hidden}
 body{background:var(--bg);color:var(--ink);font:400 16px/1.6 Manrope,system-ui,-apple-system,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{display:block;max-width:100%}
 a{color:inherit}
@@ -46,8 +46,8 @@ h1,h2,h3,.disp{font-family:Unbounded,Manrope,system-ui,sans-serif;font-weight:80
 
 /* CHAPTERS */
 section{padding:110px 0}
-.ch{display:grid;grid-template-columns:1.15fr 1fr;gap:56px;align-items:center}
-.ch.rev{grid-template-columns:1fr 1.15fr}
+.ch{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:56px;align-items:center}
+.ch.rev{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr)}
 .ch.rev .media{order:2}
 .media{position:relative;border-radius:22px;overflow:hidden;aspect-ratio:4/5}
 .media img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
@@ -115,7 +115,7 @@ section{padding:110px 0}
 .btn{display:inline-flex;align-items:center;gap:12px;border:0;cursor:pointer;background:var(--red);color:#fff;font:800 18px Unbounded,sans-serif;padding:22px 40px;border-radius:999px;box-shadow:0 20px 60px rgba(227,52,47,.35);transition:transform .2s}
 .btn:hover{transform:translateY(-2px) scale(1.02)}
 .yes{display:none;margin-top:26px;font:800 clamp(22px,4vw,34px) Unbounded,sans-serif;color:var(--gold)}
-#cf{position:fixed;inset:0;pointer-events:none;z-index:50}
+#cf{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:50}
 footer{padding:36px 0 50px;color:var(--mute);font-size:12px;border-top:1px solid var(--line)}
 footer details summary{cursor:pointer}
 footer a{color:var(--mute)}
@@ -127,7 +127,8 @@ footer a{color:var(--mute)}
  section{padding:76px 0}
  .stats{grid-template-columns:repeat(2,1fr)}
  .stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}
- .ch,.ch.rev{grid-template-columns:1fr;gap:28px}
+ .ch,.ch.rev{grid-template-columns:minmax(0,1fr);gap:28px}
+ .ch h2{font-size:clamp(30px,9.4vw,44px)}
  .ch.rev .media{order:0}
  .media{aspect-ratio:4/4.4}
  .gal{grid-template-columns:repeat(2,1fr);grid-auto-rows:160px}
