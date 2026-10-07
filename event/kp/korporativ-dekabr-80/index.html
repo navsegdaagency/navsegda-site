@@ -47,6 +47,14 @@
 .alt .ps{padding:18px 18px 16px}
 .alt b{display:block;font:300 26px/1.1 var(--f1);letter-spacing:-.03em;color:var(--tx-1);margin:6px 0 4px}
 .alt p{margin:0;color:var(--tx-3);font-size:13px}
+.paynote{margin:4px 6px 0;font:12px/1.4 var(--mono);letter-spacing:.04em;color:#d6b07b}
+.fmt .paynote{margin:14px 0 0;font-size:13px}
+.pay{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.pay .ps{padding:20px 22px 18px}
+.pay b{display:block;font:300 clamp(28px,3vw,40px)/1.1 var(--f1);letter-spacing:-.03em;color:#fff;margin:8px 0 4px}
+.pay .ps.inv b{color:#d6b07b}
+.pay p{margin:0;color:var(--tx-3);font-size:13px}
+@media (max-width:700px){.pay{grid-template-columns:1fr}}
 .ny{color:#d6b07b!important;font-size:14px!important;border-left:2px solid #7a1c22;padding-left:12px}
 .lbx{position:fixed;inset:0;z-index:100;background:rgba(5,2,3,.94);display:none;align-items:center;justify-content:center}
 .lbx.on{display:flex}.lbx img{max-width:92vw;max-height:86vh;border-radius:10px}
@@ -94,9 +102,9 @@
     <h2 class="d2 rv">Два формата —<br><span class="gold">выберите свой</span></h2></div></div>
   <div class="fmt">
     <div class="ps glass nb rv" style="--i:0"><span class="chip">Аренда + питание</span><b class="big">от 440 000 ₽</b><p style="color:var(--tx-2)">Подбираем и бронируем площадку, согласуем меню и рассадку. Программу и оформление команда делает сама.</p>
-      <ul><li>Площадка на вечер</li><li>Банкет или фуршет на 80 гостей</li><li>Сервис и обслуживание</li><li>Бронирование и переговоры с площадкой — наша работа</li></ul></div>
+      <ul><li>Площадка на вечер</li><li>Банкет или фуршет на 80 гостей</li><li>Сервис и обслуживание</li><li>Бронирование и переговоры с площадкой — наша работа</li></ul><p class="paynote">Оплата по счёту +10%</p></div>
     <div class="ps glass nb rv" style="--i:1"><span class="chip">Под ключ</span><b class="big gold">≈ 1 050 000 ₽</b><p style="color:var(--tx-2)">Всё из первого варианта плюс праздник целиком: вы приходите гостями.</p>
-      <ul><li>Ведущий и диджей, новогодний квиз</li><li>Дед Мороз и Снегурочка</li><li>Новогодняя фотозона и декор столов</li><li>Фотограф, экран, техспециалист, координатор</li></ul></div>
+      <ul><li>Ведущий и диджей, новогодний квиз</li><li>Дед Мороз и Снегурочка</li><li>Новогодняя фотозона и декор столов</li><li>Фотограф, экран, техспециалист, координатор</li></ul><p class="paynote">Оплата по счёту +10% — 1 155 550 ₽</p></div>
   </div>
 </section><section class="sec" id="ploshchadki">
   <div class="sec-h" data-n="III"><div class="sh-t"><div class="sh-k"><span class="rn">III</span><span class="pill glass nb kick"><i class="live" aria-hidden="true"></i>Площадки</span></div>
@@ -109,6 +117,7 @@
       <p>Тёмный лофт 160 м² с хрустальными люстрами, клубным светом и барной стойкой. Свет и звук уже в аренде — вечер звучит с первой минуты.</p>
       <ul><li>Вместимость<b>до 80 банкет · до 105 фуршет</b></li><li>Аренда, 24 и 26 декабря<b>100 000 ₽</b></li><li>Меню<b>6 000 ₽ + 10%</b></li><li>Свой алкоголь<b>без пробкового сбора</b></li></ul>
       <div class="vt"><div><small>Аренда + питание, 80 гостей</small><b>628 000 ₽</b></div><div><small>Под ключ</small><b>≈ 1 050 000 ₽</b></div></div>
+      <p class="paynote">Суммы — при оплате наличными. Оплата по счёту +10%.</p>
     </article>
     <article class="vcard glass nb rv" style="--i:1"><span class="badge">Сцена и экран</span>
       <div class="vph"><img src="img/a2.webp" alt="Кирпичный лофт со сценой" loading="lazy"><img src="img/a1.webp" alt="Кирпичный лофт со сценой" loading="lazy"><img src="img/a5.webp" alt="Кирпичный лофт со сценой" loading="lazy"></div>
@@ -117,6 +126,7 @@
       <p>Лофт 350 м²: кирпич, колонны, сцена, большой экран, свет и звук. Удобен, если планируется официальная часть с выступлением руководителя.</p>
       <ul><li>Вместимость<b>до 100 банкет · до 200 фуршет</b></li><li>Аренда, 24 и 26 декабря<b>200 000 ₽</b></li><li>Меню<b>6 000 ₽ + 15%</b></li><li>Свой алкоголь<b>без пробкового сбора</b></li></ul>
       <div class="vt"><div><small>Аренда + питание, 80 гостей</small><b>752 000 ₽</b></div><div><small>Под ключ</small><b>≈ 1 187 000 ₽</b></div></div>
+      <p class="paynote">Суммы — при оплате наличными. Оплата по счёту +10%.</p>
     </article>
     <article class="vcard glass nb rv" style="--i:2"><span class="badge">Самый выгодный</span>
       <div class="vph"><img src="img/c4.webp" alt="Павильон в парке Сокольники" loading="lazy"><img src="img/c2.webp" alt="Павильон в парке Сокольники" loading="lazy"><img src="img/c5.webp" alt="Павильон в парке Сокольники" loading="lazy"></div>
@@ -125,6 +135,7 @@
       <p>Исторический павильон-«шайба» в парке: 330 м², неоновые линии, деревья-глицинии, рояль и бар. Зимний парк за панорамными окнами.</p>
       <ul><li>Вместимость<b>до 120 банкет · до 200 фуршет</b></li><li>Аренда, 24 и 26 декабря<b>нет, только депозит</b></li><li>Меню<b>4 000 ₽ + 15%</b></li><li>Депозит по меню<b>400 000 ₽</b></li><li>Свой алкоголь<b>пробковый 500 ₽/гость</b></li></ul>
       <div class="vt"><div><small>Аренда + питание, 80 гостей</small><b>440 000 ₽</b></div><div><small>Под ключ</small><b>≈ 844 000 ₽</b></div></div>
+      <p class="paynote">Суммы — при оплате наличными. Оплата по счёту +10%.</p>
     </article>
     <article class="vcard glass nb rv" style="--i:3"><span class="badge">Классика</span>
       <div class="vph"><img src="img/w2.webp" alt="Классический зал с видом на Сити" loading="lazy"><img src="img/w4.webp" alt="Классический зал с видом на Сити" loading="lazy"><img src="img/w3.webp" alt="Классический зал с видом на Сити" loading="lazy"></div>
@@ -133,6 +144,7 @@
       <p>Светлый зал 356 м² в деловом центре: мягкие кресла, панорамные окна на парк и Москва-Сити. Строго и статусно.</p>
       <ul><li>Вместимость<b>до 100 гостей</b></li><li>Аренда, 24 и 26 декабря<b>нет, только депозит</b></li><li>Меню<b>6 800 ₽ + 10%</b></li><li>Депозит по меню<b>300 000 ₽</b></li><li>Свой алкоголь<b>пробковый 800 ₽ чт / 1 200 ₽ сб</b></li></ul>
       <div class="vt"><div><small>Аренда + питание, 80 гостей</small><b>694 400 ₽</b></div><div><small>Под ключ</small><b>≈ 1 190 000 ₽</b></div></div>
+      <p class="paynote">Суммы — при оплате наличными. Оплата по счёту +10%.</p>
     </article>
   </div>
   <p class="kp-note rv ny">Стоимость аренды и меню в новогодний период может отличаться от указанной — точную сумму зафиксируем в момент согласования площадки. Названия площадок пришлём после выбора, дату бронируем после вашего подтверждения.</p>
@@ -164,12 +176,16 @@
       <tr class="kp-sub"><td data-label="Блок">Промежуточный итог</td><td data-label="Что входит"></td><td data-label="Стоимость">955 000 ₽</td></tr>
       <tr class="kp-sub"><td data-label="Блок">Координация и сопровождение</td><td data-label="Что входит">10% — команда агентства от брифа до отчёта</td><td data-label="Стоимость">95 500 ₽</td></tr>
       <tr class="kp-total"><td data-label="Блок">Итого под ключ наличными</td><td data-label="Что входит">одна сумма, банкет на 80 гостей</td><td data-label="Стоимость">1 050 500 ₽</td></tr>
-      <tr class="kp-total inv"><td data-label="Блок">Итого по счёту</td><td data-label="Что входит">безналичная оплата: +10%</td><td data-label="Стоимость">1 155 550 ₽</td></tr>
+      <tr class="kp-total inv"><td data-label="Блок">Итого по счёту</td><td data-label="Что входит">оплата по счёту +10%</td><td data-label="Стоимость">1 155 550 ₽</td></tr>
     </tbody></table></div>
+  <div class="pay">
+    <div class="ps glass nb rv" style="--i:0"><span class="chip">Наличными</span><b>1 050 500 ₽</b><p>Одна сумма под ключ, банкет на 80 гостей.</p></div>
+    <div class="ps glass nb inv rv" style="--i:1"><span class="chip">Оплата по счёту +10%</span><b>1 155 550 ₽</b><p>Безналичный расчёт с юрлицом: +10% к сумме наличными, закрывающие документы для бухгалтерии.</p></div>
+  </div>
   <div class="alt">
-    <div class="ps glass nb rv" style="--i:0"><span class="chip">Под ключ, фуршет</span><b>856 900 ₽</b><p>Тот же праздник, фуршетное меню 4 000 ₽ вместо банкета. Наличными.</p></div>
-    <div class="ps glass nb rv" style="--i:1"><span class="chip">Аренда + банкет</span><b>628 000 ₽</b><p>Только площадка, меню и сервис на 80 гостей, без программы.</p></div>
-    <div class="ps glass nb rv" style="--i:2"><span class="chip">Аренда + фуршет</span><b>452 000 ₽</b><p>Самый лёгкий вариант для этой площадки.</p></div>
+    <div class="ps glass nb rv" style="--i:0"><span class="chip">Под ключ, фуршет</span><b>856 900 ₽</b><p>Тот же праздник, фуршетное меню 4 000 ₽ вместо банкета. Наличными; по счёту +10% — 942 590 ₽.</p></div>
+    <div class="ps glass nb rv" style="--i:1"><span class="chip">Аренда + банкет</span><b>628 000 ₽</b><p>Только площадка, меню и сервис на 80 гостей, без программы. Оплата по счёту +10%.</p></div>
+    <div class="ps glass nb rv" style="--i:2"><span class="chip">Аренда + фуршет</span><b>452 000 ₽</b><p>Самый лёгкий вариант для этой площадки. Оплата по счёту +10%.</p></div>
   </div>
   <p class="kp-note rv">Число гостей, меню и состав программы пересчитаем под финальный список. Стоимость фиксируем в договоре, закрывающие документы — для бухгалтерии.</p>
 </section><section class="sec" id="process">
