@@ -46,6 +46,7 @@ h1,h2,h3,.disp{font-family:Unbounded,Manrope,system-ui,sans-serif;font-weight:80
 
 /* CHAPTERS */
 section{padding:110px 0}
+section.wrap{padding-top:110px;padding-bottom:110px}
 .ch{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:56px;align-items:center}
 .ch.rev{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr)}
 .ch.rev .media{order:2}
@@ -55,7 +56,7 @@ section{padding:110px 0}
 .media .mini{position:absolute;right:-1px;bottom:-1px;width:44%;aspect-ratio:1;border-radius:18px 0 0 0;overflow:hidden;border:6px solid var(--bg)}
 .media .mini img{width:100%;height:100%;object-fit:cover}
 .num{font:800 15px/1 Unbounded,sans-serif;color:var(--mute)}
-.ch h2{font-size:clamp(44px,7vw,84px);margin:14px 0 6px}
+.ch h2{font-size:clamp(40px,4.6vw,64px);margin:14px 0 6px;overflow-wrap:anywhere}
 .ch .when{color:var(--gold);font-weight:700;margin-bottom:18px}
 .ch p.lead{font-size:18px;color:#ddd5cb;margin-bottom:22px}
 .list{list-style:none;display:grid;gap:12px}
@@ -97,7 +98,7 @@ section{padding:110px 0}
 .row:last-child{border-bottom:0}
 .row.h{color:var(--mute);font-size:13px;text-transform:uppercase;letter-spacing:.1em;background:var(--bg2)}
 .row small{display:block;color:var(--mute);font-size:13px}
-.row .v{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+.row .v{white-space:nowrap;text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
 .row.tot{background:linear-gradient(90deg,rgba(227,52,47,.18),rgba(242,184,75,.12));font-size:19px}
 .row.tot .v{font:800 22px Unbounded,sans-serif}
 .note{color:var(--mute);font-size:13px;margin-top:14px}
@@ -124,7 +125,8 @@ footer a{color:var(--mute)}
 .rv.in{opacity:1;transform:none}
 
 @media(max-width:860px){
- section{padding:76px 0}
+ section,section.wrap{padding-top:76px;padding-bottom:76px}
+ .row.tot .v{font-size:18px}
  .stats{grid-template-columns:repeat(2,1fr)}
  .stat:nth-child(2){border-right:0}.stat:nth-child(-n+2){border-bottom:1px solid var(--line)}
  .ch,.ch.rev{grid-template-columns:minmax(0,1fr);gap:28px}
