@@ -24,12 +24,16 @@
   function start() {
     if (started) return; started = true;
     var order = [], seen = {};
-    [12, 6, 3, 1].forEach(function (step) { for (var i = 0; i < n; i += step) if (!seen[i]) { seen[i] = 1; order.push(i); } });
+    (mobile ? [12, 6, 2] : [12, 6, 3, 1]).forEach(function (step) { for (var i = 0; i < n; i += step) if (!seen[i]) { seen[i] = 1; order.push(i); } });  // на телефоне каждый 2-й кадр — память iOS
     var k = 0;
     (function pump() {
       for (var j = 0; j < 6 && k < order.length; j++, k++) load(order[k]);
       if (k < order.length) setTimeout(pump, 50);
     })();
+  }
+  function release() {
+    imgs.forEach(function (im) { if (im) { im.onload = null; im.src = ''; } });
+    imgs = new Array(n); started = false; cur = -1;
   }
   function ready(im) { return im && im._ok && im.naturalWidth; }
   function nearest(i) {
@@ -53,7 +57,9 @@
   function onScroll() {
     var r = sec.getBoundingClientRect();
     // грузим заранее, пока гость смотрит кейсы — иначе при быстрой прокрутке кадры «прыгают»
-    if (r.top < innerHeight * 7) start();
+    if (r.top < innerHeight * (mobile ? 2.5 : 7)) start();
+    // iOS убивает вкладку при переполнении памяти: на телефоне выгружаем кадры, когда секция далеко
+    if (mobile && started && (r.bottom < -innerHeight * 1.5 || r.top > innerHeight * 4)) release();
     var p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - innerHeight)));
     tgt = p * (n - 1); want = Math.round(tgt); glide();
     caps.forEach(function (c, idx) {

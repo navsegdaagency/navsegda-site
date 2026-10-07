@@ -60,7 +60,7 @@
     var order = [0, cnt - 1], seen = {}, step = 1;
     seen[0] = seen[cnt - 1] = 1;
     while (step * 2 <= cnt / 6) step *= 2;
-    for (; step >= 1; step /= 2) for (var i = 0; i < cnt; i += step) if (!seen[i]) { seen[i] = 1; order.push(i); }
+    for (; step >= (portrait ? 2 : 1); step /= 2) for (var i = 0; i < cnt; i += step) if (!seen[i]) { seen[i] = 1; order.push(i); }  // телефон: каждый 2-й кадр
     FR.queue = order; FR.qi = 0;
     pump();
   }
@@ -183,7 +183,14 @@
     if (!eager && r.top < H * 3.2) { eager = true; photos.forEach(function (im) { if (im.loading === 'lazy') im.loading = 'eager'; }); }
     if (!on) return;
     near = r.top < H * 2 && r.bottom > -H * 1.2;
-    if (!near) return;                                           // вне зоны - никакой работы
+    if (!near) {                                                 // вне зоны - никакой работы
+      // iOS: держим кадры в памяти только рядом с секцией, иначе вкладка падает
+      if (portrait && hasFrames && FR.started && (r.top > H * 4 || r.bottom < -H * 2)) {
+        FR.imgs.forEach(function (im) { if (im) { im.onload = im.onerror = null; im.src = ''; } });
+        FR.gen++; FR.imgs = new Array(FR.n); FR.inflight = 0; FR.qi = 0; FR.drawn = -1; FR.src = -1; FR.dir = ''; FR.started = false;
+      }
+      return;
+    }
     if (hasFrames && !FR.started) { FR.started = true; sizeCanvas(); frameSet(); }
     pump(); kick();
   }
