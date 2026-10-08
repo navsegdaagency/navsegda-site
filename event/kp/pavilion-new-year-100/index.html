@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Коммерческое предложение · Новогодний корпоратив на ВДНХ · НАВСЕГДА</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Новогодний корпоратив на 100 гостей 26 декабря в стеклянном павильоне на ВДНХ: аренда с питанием и техникой или под ключ — «Голубой огонёк на ВДНХ».">
+<meta name="theme-color" content="#050505">
+<link rel="icon" href="/event/favicon.ico" sizes="48x48">
+<link rel="icon" href="/event/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/event/apple-touch-icon.png">
+<link rel="preload" href="/event/assets/fonts/onest-cyr.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/event/assets/css/fonts.css?v=nsg2">
+<link rel="stylesheet" href="/event/assets/css/icons.css?v=nsg2">
+<link rel="stylesheet" href="/event/assets/css/style.css?v=nsg3"><link rel="stylesheet" href="/event/assets/css/accent-bordo.css?v=b2">
+<link rel="stylesheet" href="/event/brand/kp.css?v=nsg2">
+<script type="importmap">{"imports":{"three":"/event/assets/vendor/three.module.min.js","three/addons/":"/event/assets/vendor/addons/"}}</script>
+<link rel="modulepreload" href="/event/assets/vendor/three.module.min.js">
+<style>
+.pav{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:190px;gap:10px;grid-template-areas:'a a b c' 'a a d e' 'f g h h'}
+.pav img{width:100%;height:100%;object-fit:cover;border-radius:var(--r-m);cursor:zoom-in}
+.pav img:nth-child(1){grid-area:a}.pav img:nth-child(2){grid-area:b}.pav img:nth-child(3){grid-area:c}.pav img:nth-child(4){grid-area:d}.pav img:nth-child(5){grid-area:e}.pav img:nth-child(6){grid-area:f}.pav img:nth-child(7){grid-area:g}.pav img:nth-child(8){grid-area:h}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:14px}
+.facts .ps{padding:18px 18px 16px}.facts b{display:block;font:300 28px/1.1 var(--f1);letter-spacing:-.03em;margin:6px 0 2px}.facts p{margin:0;color:var(--tx-3);font-size:13px}
+.fmt{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.fmt .ps{padding:24px 24px 20px}
+.fmt b.big{display:block;font:300 clamp(30px,3.2vw,44px)/1.05 var(--f1);letter-spacing:-.03em;margin:10px 0 4px}
+.fmt .inv{display:block;font:13px/1.4 var(--mono);color:#d6b07b;letter-spacing:.03em}
+.fmt ul{margin:12px 0 0;padding:0 0 0 18px;color:var(--tx-2);font-size:14px;line-height:1.7}
+.retro{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:14px}
+.retro .ps{padding:20px 20px 18px}.retro .ps .ic{font:400 26px/1 var(--f1);color:#d6b07b}
+.art-tbl td small{display:block;color:var(--tx-3);font-size:12.5px;line-height:1.55;margin-top:4px}
+.art-tbl td:last-child{white-space:nowrap}
+.art-tbl .inv td{color:#d6b07b}
+.tblh{margin:30px 0 12px;font:300 clamp(22px,2.2vw,30px)/1.2 var(--f1);letter-spacing:-.03em}
+.ny{color:#d6b07b!important;font-size:14px!important;border-left:2px solid #7a1c22;padding-left:12px}
+.lbx{position:fixed;inset:0;z-index:100;background:rgba(5,2,3,.94);display:none;align-items:center;justify-content:center}
+.lbx.on{display:flex}.lbx img{max-width:92vw;max-height:86vh;border-radius:10px}
+.lbx button{position:absolute;background:none;border:0;color:#fff;font-size:40px;cursor:pointer;padding:14px}
+.lbx .x{top:8px;right:12px}.lbx .pv{left:4px;top:50%;transform:translateY(-50%)}.lbx .nx{right:4px;top:50%;transform:translateY(-50%)}
+@media (max-width:900px){.fmt{grid-template-columns:1fr}.facts{grid-template-columns:1fr 1fr}.retro{grid-template-columns:1fr 1fr}
+ .pav{grid-template-columns:1fr 1fr;grid-auto-rows:150px;grid-template-areas:'a a' 'a a' 'b c' 'd e' 'f g' 'h h'}}
+@media (max-width:560px){.retro{grid-template-columns:1fr}.art-tbl td:last-child{white-space:normal}}
+</style>
+</head>
+<body>
+<header class="hd glass lv" data-spec>
+  <a class="logo" href="/event/" aria-label="НАВСЕГДА"><b>∞</b><span>НАВСЕГДА</span></a>
+  <nav class="nav" aria-label="Разделы КП"><i class="ind" aria-hidden="true"></i><a href="#ploshchadka">Площадка</a><a href="#koncepciya">Концепция</a><a href="#programma">Программа</a><a href="#smeta">Смета</a></nav>
+  <div class="hd-r"><a class="tel" href="tel:+79585410041">+7 (958) 541-00-41</a><a class="btn sm mag" href="#soglasovat"><span>Согласовать</span></a></div>
+</header>
+<main>
+<section class="hero" aria-label="Обложка КП">
+  <div class="st"><div class="glow"></div><canvas id="gl" aria-hidden="true"></canvas>
+    <div class="hero-top"><span class="pill glass intro-in">Коммерческое предложение · октябрь 2026</span></div>
+    <div class="hero-tx">
+      <div class="intro-in"><h1 class="d1"><span class="eyebrow k">Для вашей команды</span><span>Новогодний корпоратив</span><span>на ВДНХ, который запомнят <em class="forever">навсегда</em></span></h1></div>
+      <div class="side widget glass intro-in" data-spec>
+        <p class="seo">Стеклянный павильон в заснеженном парке ВДНХ на 100 гостей, 26 декабря. Два варианта в одной смете: аренда с банкетом и техникой — или праздник под ключ «Голубой огонёк на ВДНХ».</p>
+        <div class="acts"><a class="btn mag" href="#smeta"><span>Смотреть смету</span><svg class="ico" viewBox="0 0 24 24" style="--s:18px" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4.5 12H19M13.5 6.5L19 12L13.5 17.5" class="draw float" pathLength="1" style="--fx:1.3px;--fy:0px"/></svg></a><a class="btn glass" href="#ploshchadka"><svg class="ico" viewBox="0 0 24 24" style="--s:18px" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M3.5 20.5h17M5 20.5V9.5L12 4l7 5.5v11M9.5 20.5v-6h5v6" class="draw" pathLength="1"/></svg><span>Площадка</span></a></div>
+        <div class="hp-row">
+          <span class="hpill glass" style="--i:0"><span class="hpill-t"><b>100</b></span><small>гостей</small></span>
+          <span class="hpill glass" style="--i:1"><span class="hpill-t"><b>26 дек</b></span><small>суббота</small></span>
+          <span class="hpill glass" style="--i:2"><span class="hpill-t"><b>ВДНХ</b></span><small>Москва</small></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="sec" id="ploshchadka">
+  <div class="sec-h" data-n="I"><div class="sh-t"><div class="sh-k"><span class="rn">I</span><span class="pill glass nb kick"><i class="live" aria-hidden="true"></i>Площадка</span></div>
+    <h2 class="d2 rv">Стеклянный павильон<br><span class="gold">в парке ВДНХ</span></h2></div></div>
+  <div class="pav rv"><img src="img/p8.webp" alt="Павильон зимой" loading="lazy"><img src="img/p1.webp" alt="Лаунж-зона" loading="lazy"><img src="img/p3.webp" alt="Банкет у окон" loading="lazy"><img src="img/p2.webp" alt="Диваны и зелень" loading="lazy"><img src="img/p4.webp" alt="Банкетная рассадка" loading="lazy"><img src="img/p6.webp" alt="Экраны в зале" loading="lazy"><img src="img/p5.webp" alt="Панорамное остекление" loading="lazy"><img src="img/p7.webp" alt="Велком-зона" loading="lazy"></div>
+  <div class="facts">
+    <div class="ps glass nb rv" style="--i:0"><span class="chip">Площадь</span><b>700 м²</b><p>один большой зал с панорамным остеклением</p></div>
+    <div class="ps glass nb rv" style="--i:1"><span class="chip">Вместимость</span><b>до 250</b><p>банкетом, до 400 фуршетом — 100 гостям просторно</p></div>
+    <div class="ps glass nb rv" style="--i:2"><span class="chip">Лаунж</span><b>диваны</b><p>кожаная лаунж-зона и зелень — готовая велком-зона</p></div>
+    <div class="ps glass nb rv" style="--i:3"><span class="chip">Город</span><b>м. ВДНХ</b><p>в черте Москвы, без трансфера за город</p></div>
+  </div>
+  <p class="kp-note rv ny">Стоимость аренды и меню в новогодний период может отличаться от указанной — точную сумму зафиксируем в момент согласования площадки.</p>
+</section><section class="sec" id="format">
+  <div class="sec-h" data-n="II"><div class="sh-t"><div class="sh-k"><span class="rn">II</span><span class="pill glass nb kick"><i class="live" aria-hidden="true"></i>Форматы</span></div>
+    <h2 class="d2 rv">Два варианта<br><span class="gold">в одной смете</span></h2></div></div>
+  <div class="fmt">
+    <div class="ps glass nb rv" style="--i:0"><span class="chip">Вариант 1 · аренда + питание + техника</span><b class="big">1 472 500 ₽</b><span class="inv">оплата по счёту +10% — 1 619 750 ₽</span>
+      <ul><li>Павильон на вечер</li><li>Банкет 6 500 ₽ на гостя + сервис 15%</li><li>Свой алкоголь, пробковый сбор 250 ₽ с гостя</li><li>Звук, 2 экрана-плазмы, свет</li></ul></div>
+    <div class="ps glass nb rv" style="--i:1"><span class="chip">Вариант 2 · под ключ</span><b class="big gold">2 386 450 ₽</b><span class="inv">оплата по счёту +10% — 2 625 095 ₽</span>
+      <ul><li>Всё из варианта 1</li><li>Ведущий, диджей, кавер-группа</li><li>Фотограф и видеограф с клипом вечера</li><li>Новогодняя фотозона, декор, активности на велкоме</li><li>Концепция «Голубой огонёк на ВДНХ» и медали за год</li></ul></div>
+  </div>
+</section><section class="sec" id="koncepciya">
+  <div class="sec-h" data-n="III"><div class="sh-t"><div class="sh-k"><span class="rn">III</span><span class="pill glass nb kick"><i class="live" aria-hidden="true"></i>Концепция</span></div>
+    <h2 class="d2 rv">«Голубой огонёк<br><span class="gold">на ВДНХ»</span></h2></div></div>
+  <div class="kp-text glass nb rv">
+    <p>Павильон — чистый советский модернизм: стекло, чёрный глянец, снег за окнами. Мы не прячем это, а играем: вечер устроен как новогодний «Голубой огонёк» из 60-х, только гости — ваша команда, а «Выставка достижений» — итоги вашего года.</p>
+    <p>На велкоме — ретро-зона: автомат с газировкой за копейку, Polaroid с рамкой «Открытка 1966» и стенды отделов с главными цифрами и фото года, как павильоны ВДНХ. В зале ведущий ведёт программу как огонёк: тосты «из зала», музыкальные номера кавер-группы от Магомаева до сегодняшних хитов, телеграммы-поздравления на экранах.</p>
+    <p>Кульминация — церемония «Медали Выставки достижений»: 15 именных медалей в шуточных и серьёзных номинациях. Потом Дед Мороз в ретро-образе, торт и танцы до ночи.</p>
+    <div class="kp-tags"><span class="pill glass nb">Ретро 60-х</span><span class="pill glass nb">Выставка достижений</span><span class="pill glass nb">Медали за год</span><span class="pill glass nb">Кавер-группа</span><span class="pill glass nb">Клип вечера</span></div></div>
+  <div class="retro">
+    <div class="ps glass nb rv" style="--i:0"><span class="ic">01</span><h3>Автомат с газировкой</h3><p>Настоящий ретро-автомат: газировка с сиропом за жетон. Самая фотогеничная точка велкома.</p></div>
+    <div class="ps glass nb rv" style="--i:1"><span class="ic">02</span><h3>«Открытка 1966»</h3><p>Polaroid с печатью в рамке советской новогодней открытки — гости уносят снимок с собой.</p></div>
+    <div class="ps glass nb rv" style="--i:2"><span class="ic">03</span><h3>Выставка достижений</h3><p>Стенды отделов: главные цифры, фото и «экспонаты» года. Повод для разговоров на велкоме.</p></div>
+  </div>
+</section><section class="sec" id="programma">
+  <div class="sec-h" data-n="IV"><div class="sh-t"><div class="sh-k"><span class="rn">IV</span><span class="pill glass nb kick"><i class="live" aria-hidden="true"></i>Программа</span></div>
+    <h2 class="d2 rv">Тайминг<br><span class="gold">новогоднего вечера</span></h2></div></div>
+  <div class="proc"><div class="track" aria-hidden="true"><i></i></div>
+    <div class="ps glass nb rv" style="--i:0"><i class="node" aria-hidden="true"></i><span class="chip">18:00</span><h3>Велком</h3><p>Хостес, ретро-автомат, Polaroid, «Выставка достижений», диджей.</p></div>
+    <div class="ps glass nb rv" style="--i:1"><i class="node" aria-hidden="true"></i><span class="chip">19:00</span><h3>Открытие «Огонька»</h3><p>Ведущий, слово руководителя, банкет.</p></div>
+    <div class="ps glass nb rv" style="--i:2"><i class="node" aria-hidden="true"></i><span class="chip">20:00</span><h3>Медали за год</h3><p>Церемония «Выставки достижений», 15 номинаций.</p></div>
+    <div class="ps glass nb rv" style="--i:3"><i class="node" aria-hidden="true"></i><span class="chip">21:00</span><h3>Кавер-группа</h3><p>Живой сет и Дед Мороз со Снегурочкой.</p></div>
+    <div class="ps glass nb rv" style="--i:4"><i class="node" aria-hidden="true"></i><span class="chip">22:00</span><h3>Танцы</h3><p>Диджей до 23:30, финальный тост.</p></div>
+  </div>
+</section><section class="sec" id="smeta">
+  <div class="sec-h" data-n="V"><div class="sh-t"><div class="sh-k"><span class="rn">V</span><span class="pill glass nb kick"><i class="live" aria-hidden="true"></i>Смета</span></div>
+    <h2 class="d2 rv">Смета —<br><span class="gold">два варианта</span></h2></div></div>
+  <h3 class="tblh rv">Вариант 1 · аренда + питание + техника</h3>
+  <div class="art-tbl glass nb rv"><table>
+    <thead><tr><th>Блок</th><th>Что входит</th><th>Стоимость</th></tr></thead>
+    <tbody>
+      <tr><td data-label="Блок">Площадка и банкет</td><td data-label="Что входит">Аренда павильона, банкет, сервис, пробковый сбор<small>Аренда павильона 450 000 ₽ · Банкетное меню — 6 500 × 100 = 650 000 ₽ · Сервис 15% 97 500 ₽ · Пробковый сбор (свой алкоголь) — 250 × 100 = 25 000 ₽</small></td><td data-label="Стоимость">1 222 500 ₽</td></tr>
+      <tr><td data-label="Блок">Техника</td><td data-label="Что входит">Звук, экраны, свет<small>Звук и экраны: 2 плазмы, 2 колонки, 2 сабвуфера 140 000 ₽ · Световое оборудование 110 000 ₽</small></td><td data-label="Стоимость">250 000 ₽</td></tr>
+      <tr class="kp-total"><td data-label="Блок">Итого наличными</td><td data-label="Что входит">аренда + питание + техника, 100 гостей</td><td data-label="Стоимость">1 472 500 ₽</td></tr>
+      <tr class="kp-total inv"><td data-label="Блок">Итого по счёту</td><td data-label="Что входит">оплата по счёту +10%</td><td data-label="Стоимость">1 619 750 ₽</td></tr>
+    </tbody></table></div>
+  <h3 class="tblh rv">Вариант 2 · под ключ «Голубой огонёк на ВДНХ»</h3>
+  <div class="art-tbl glass nb rv"><table>
+    <thead><tr><th>Блок</th><th>Что входит</th><th>Стоимость</th></tr></thead>
+    <tbody>
+      <tr><td data-label="Блок">Вариант 1 целиком</td><td data-label="Что входит">Аренда, банкет, сервис, пробковый сбор, звук, экраны, свет</td><td data-label="Стоимость">1 472 500 ₽</td></tr>
+      <tr><td data-label="Блок">Программа</td><td data-label="Что входит">Ведущий, диджей, кавер-группа<small>Ведущий «Голубого огонька» 90 000 ₽ · Диджей — 6 000 × 6 ч = 36 000 ₽ · Кавер-группа 100 000 ₽</small></td><td data-label="Стоимость">226 000 ₽</td></tr>
+      <tr><td data-label="Блок">Съёмка</td><td data-label="Что входит">Фотограф и видеограф<small>Фотограф — 8 000 × 6 ч = 48 000 ₽ · Видеограф: репортаж и клип вечера 70 000 ₽</small></td><td data-label="Стоимость">118 000 ₽</td></tr>
+      <tr><td data-label="Блок">Новогоднее оформление</td><td data-label="Что входит">Фотозона и декор столов<small>Фотозона «Новогодняя открытка» в стиле 60-х 70 000 ₽ · Декор столов: хвоя, свечи, ретро-игрушки — 10 × 5 000 = 50 000 ₽</small></td><td data-label="Стоимость">120 000 ₽</td></tr>
+      <tr><td data-label="Блок">Активности на велкоме</td><td data-label="Что входит">Ретро-зона «Выставка достижений»<small>Polaroid «Открытка 1966» с печатью 35 000 ₽ · Ретро-автомат газированной воды 30 000 ₽ · «Выставка достижений»: стенды итогов года отделов 40 000 ₽</small></td><td data-label="Стоимость">105 000 ₽</td></tr>
+      <tr><td data-label="Блок">Фишки концепции</td><td data-label="Что входит">Медали и Дед Мороз<small>Медали «Выставки достижений» — 15 номинаций 30 000 ₽ · Дед Мороз и Снегурочка в ретро-образе 25 000 ₽</small></td><td data-label="Стоимость">55 000 ₽</td></tr>
+      <tr><td data-label="Блок">Команда</td><td data-label="Что входит">Координатор, хостес, питание подрядчиков<small>Координатор на площадке 25 000 ₽ · Хостес на встрече — 2 × 5 ч × 3 000 = 30 000 ₽ · Питание подрядчиков — 1 500 × 12 = 18 000 ₽</small></td><td data-label="Стоимость">73 000 ₽</td></tr>
+      <tr class="kp-sub"><td data-label="Блок">Промежуточный итог</td><td data-label="Что входит"></td><td data-label="Стоимость">2 169 500 ₽</td></tr>
+      <tr class="kp-sub"><td data-label="Блок">Координация и сопровождение</td><td data-label="Что входит">10% — команда агентства от брифа до отчёта</td><td data-label="Стоимость">216 950 ₽</td></tr>
+      <tr class="kp-total"><td data-label="Блок">Итого под ключ наличными</td><td data-label="Что входит">одна сумма, 100 гостей</td><td data-label="Стоимость">2 386 450 ₽</td></tr>
+      <tr class="kp-total inv"><td data-label="Блок">Итого по счёту</td><td data-label="Что входит">оплата по счёту +10%</td><td data-label="Стоимость">2 625 095 ₽</td></tr>
+    </tbody></table></div>
+  <p class="kp-note rv">Расчёт на 100 гостей. Алкоголь — свой, пробковый сбор учтён. Число гостей и меню пересчитаем под финальный список. Оплата наличными — одна сумма; оплата по счёту +10%, закрывающие документы для бухгалтерии.</p>
+</section><section class="sec" id="process">
+  <div class="sec-h" data-n="VI"><div class="sh-t"><div class="sh-k"><span class="rn">VI</span><span class="pill glass nb kick"><i class="live" aria-hidden="true"></i>Как работаем</span></div>
+    <h2 class="d2 rv">Пять шагов,<br><span class="gold">без сюрпризов</span></h2></div></div>
+  <div class="proc"><div class="track" aria-hidden="true"><i></i></div>
+    <div class="ps glass nb rv" style="--i:0"><i class="node" aria-hidden="true"></i><span class="chip">Шаг 1</span><h3>Бриф</h3><p>Созвон на 20 минут: цель, аудитория, дата, число гостей и бюджет.</p></div>
+    <div class="ps glass nb rv" style="--i:1"><i class="node" aria-hidden="true"></i><span class="chip">Шаг 2</span><h3>Концепция и смета</h3><p>Идея, площадка, программа и смета по статьям — видно, за что вы платите.</p></div>
+    <div class="ps glass nb rv" style="--i:2"><i class="node" aria-hidden="true"></i><span class="chip">Шаг 3</span><h3>Договор</h3><p>Фиксируем объём, сроки и стоимость. Закрывающие документы для бухгалтерии.</p></div>
+    <div class="ps glass nb rv" style="--i:3"><i class="node" aria-hidden="true"></i><span class="chip">Шаг 4</span><h3>Продакшн</h3><p>Площадка, техника, декор, артисты, кейтеринг, репетиции и тайминг по минутам.</p></div>
+    <div class="ps glass nb rv" style="--i:4"><i class="node" aria-hidden="true"></i><span class="chip">Шаг 5</span><h3>День мероприятия</h3><p>Команда на площадке от монтажа до последнего гостя, затем фото, видео и отчёт.</p></div>
+  </div>
+</section>
+<section class="sec" id="soglasovat">
+  <div class="kp-cta widget glass rv" data-spec>
+    <span class="eyebrow k">Следующий шаг</span>
+    <h2 class="d2">Бронируем 26 декабря —<br><span class="gold">пока дата свободна</span></h2>
+    <p class="seo">Предложение действует 10 дней: последние субботы декабря на ВДНХ разбирают в октябре–ноябре. Для брони нужны формат (вариант 1 или 2), ориентир по числу гостей и предоплата за площадку.</p>
+    <div class="acts"><a class="btn mag" href="tel:+79585410041"><span>+7 (958) 541-00-41</span></a><a class="btn glass" href="https://t.me/navsegda_agency"><span>Написать в Telegram</span></a></div>
+  </div>
+</section>
+</main>
+<footer class="ft"><div class="ft-b"><a class="logo" href="/event/"><b>∞</b><span>НАВСЕГДА</span></a>
+  <p class="mu">Event-агентство. Корпоративы, конференции, форумы и премии в Москве, Подмосковье и по всей России.</p>
+  <div class="ft-c"><a class="pill glass nb" href="tel:+79585410041">+7 (958) 541-00-41</a><a class="pill glass nb" href="https://t.me/navsegda_agency">Telegram</a></div></div></footer>
+<div class="lbx" id="lbx"><button class="x" aria-label="Закрыть">&times;</button><button class="pv" aria-label="Назад">&#8249;</button><img alt=""><button class="nx" aria-label="Вперёд">&#8250;</button></div>
+<script>
+(function(){var im=[].slice.call(document.querySelectorAll('.pav img')),lb=document.getElementById('lbx'),li=lb.querySelector('img'),k=0,sx=0;
+function op(i){k=(i+im.length)%im.length;li.src=im[k].src;li.alt=im[k].alt;lb.classList.add('on')}
+function cl(){lb.classList.remove('on')}
+im.forEach(function(m,i){m.addEventListener('click',function(){op(i)})});
+lb.querySelector('.x').onclick=cl;lb.querySelector('.nx').onclick=function(){op(k+1)};lb.querySelector('.pv').onclick=function(){op(k-1)};
+lb.addEventListener('click',function(e){if(e.target===lb)cl()});
+lb.addEventListener('touchstart',function(e){sx=e.changedTouches[0].clientX},{passive:true});
+lb.addEventListener('touchend',function(e){var d=e.changedTouches[0].clientX-sx;if(Math.abs(d)>40)op(k+(d<0?1:-1))},{passive:true});
+addEventListener('keydown',function(e){if(!lb.classList.contains('on'))return;if(e.key==='Escape')cl();if(e.key==='ArrowRight')op(k+1);if(e.key==='ArrowLeft')op(k-1)});})();
+</script>
+<script src="/event/assets/js/config.js?v=nsg2" defer></script><script src="/event/assets/vendor/lenis.min.js" defer></script><script src="/event/assets/js/smooth.js?v=nsg2" defer></script><script src="/event/assets/js/app.js?v=nsg5" defer></script>
+<script type="module" src="/event/assets/js/hero.js?v=nsg2"></script>
+<script src="/event/assets/legal/legal.js" defer></script></body>
+</html>
