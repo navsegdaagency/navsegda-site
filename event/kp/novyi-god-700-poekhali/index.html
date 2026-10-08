@@ -56,6 +56,8 @@
 .alts b{display:block;margin:2px 6px 0;font:300 26px/1.1 var(--f1);letter-spacing:-.03em}
 .alts .tk{margin:0 6px;font:12.5px/1.45 var(--mono);color:#d6b07b}
 .alts .ps.main{outline:1px solid rgba(214,176,123,.55)}
+.fmt.f3{grid-template-columns:repeat(3,1fr)}
+@media (max-width:1100px){.fmt.f3{grid-template-columns:1fr}}
 .src{margin-top:26px;color:var(--tx-3);font-size:11.5px;line-height:1.6}
 .src a{color:inherit}
 @media (max-width:1100px){.alts{grid-template-columns:1fr 1fr}.cg{grid-template-columns:repeat(3,1fr)}}
@@ -94,12 +96,14 @@
   <p class="kp-note rv ny">Стоимость аренды и меню в новогодний период может отличаться от указанной — точную сумму зафиксируем в момент брони даты.</p>
 </section><section class="sec" id="format">
   <div class="sec-h" data-n="II"><div class="sh-t"><div class="sh-k"><span class="rn">II</span><span class="pill glass nb kick"><i class="live" aria-hidden="true"></i>Форматы</span></div>
-    <h2 class="d2 rv">Два варианта<br><span class="gold">в одной смете</span></h2></div></div>
-  <div class="fmt">
+    <h2 class="d2 rv">Три варианта<br><span class="gold">в одной смете</span></h2></div></div>
+  <div class="fmt f3">
     <div class="ps glass nb rv" style="--i:0"><span class="chip">Вариант 1 · площадка + фуршет</span><b class="big">7 570 000 ₽</b><span class="inv">по счёту — та же сумма</span>
       <ul><li>Зал с велком-зоной на вечер</li><li>Фуршет 8 000 ₽ на гостя + сервис 20%</li><li>Свой алкоголь, пробковый сбор 500 ₽</li><li>Сцена, LED-экран, звук, свет и техперсонал</li></ul></div>
     <div class="ps glass nb rv" style="--i:1"><span class="chip">Вариант 2 · под ключ «Поехали! 2027»</span><b class="big gold">12 285 000 ₽</b><span class="inv">по счёту — 12 756 500 ₽: +10% на услуги под ключ, площадка и питание без надбавки</span>
       <ul><li>Всё из варианта 1</li><li>Ведущий «ЦУП», кавер-группа, диджей</li><li>Шоу «Старт» с обратным отсчётом на экране</li><li>Космодром на велкоме: VR, паспорта, жетоны</li><li>Две фотозоны, декор, фото и видео</li></ul></div>
+    <div class="ps glass nb rv" style="--i:2"><span class="chip">Вариант 3 · под ключ, бюджетнее</span><b class="big">10 930 000 ₽</b><span class="inv">по счёту — 11 266 000 ₽: +10% на услуги под ключ, площадка и питание без надбавки</span>
+      <ul><li>Всё из варианта 1</li><li>Ведущий, кавер-группа, диджей</li><li>Обратный отсчёт на экране и конфетти</li><li>Космопаспорта и VR-станция на велкоме</li><li>Фотозона «Борт 2027», неон, фото и рилсы</li></ul></div>
   </div>
 </section><section class="sec" id="koncepciya">
   <div class="sec-h" data-n="III"><div class="sh-t"><div class="sh-k"><span class="rn">III</span><span class="pill glass nb kick"><i class="live" aria-hidden="true"></i>Концепция</span></div>
@@ -122,7 +126,7 @@
   </div>
 </section><section class="sec" id="smeta">
   <div class="sec-h" data-n="V"><div class="sh-t"><div class="sh-k"><span class="rn">V</span><span class="pill glass nb kick"><i class="live" aria-hidden="true"></i>Смета</span></div>
-    <h2 class="d2 rv">Смета —<br><span class="gold">два варианта</span></h2></div></div>
+    <h2 class="d2 rv">Смета —<br><span class="gold">три варианта</span></h2></div></div>
   <h3 class="tblh rv">Вариант 1 · площадка + фуршет</h3>
   <div class="art-tbl glass nb rv"><table>
     <thead><tr><th>Блок</th><th>Что входит</th><th>Стоимость</th></tr></thead>
@@ -145,6 +149,21 @@
       <tr class="kp-sub"><td data-label="Блок">Организация под ключ</td><td data-label="Что входит">концепция, сценарий, подрядчики, тайминг, команда агентства от брифа до отчёта</td><td data-label="Стоимость">250 000 ₽</td></tr>
       <tr class="kp-total"><td data-label="Блок">Итого под ключ наличными</td><td data-label="Что входит">одна сумма, 700 гостей</td><td data-label="Стоимость">12 285 000 ₽</td></tr>
       <tr class="kp-total inv"><td data-label="Блок">Итого по счёту</td><td data-label="Что входит">+10% на услуги под ключ; площадка и питание — без надбавки</td><td data-label="Стоимость">12 756 500 ₽</td></tr>
+    </tbody></table></div>
+  <h3 class="tblh rv">Вариант 3 · под ключ «Поехали! 2027» — бюджетнее</h3>
+  <div class="art-tbl glass nb rv"><table>
+    <thead><tr><th>Блок</th><th>Что входит</th><th>Стоимость</th></tr></thead>
+    <tbody>
+      <tr><td data-label="Блок">Вариант 1 целиком</td><td data-label="Что входит">Аренда с техникой, фуршет, сервис, пробковый сбор</td><td data-label="Стоимость">7 570 000 ₽</td></tr>
+      <tr><td data-label="Блок">Программа</td><td data-label="Что входит">Ведущий, диджей, кавер-группа<small>Ведущий в образе руководителя полётов — весь вечер, 285 000 ₽ · Диджей — 6 часов, 145 000 ₽ · Кавер-группа — два живых сета, 355 000 ₽ · Бэклайн для группы: барабаны, усилители, клавиши — комплект, 85 000 ₽</small></td><td data-label="Стоимость">870 000 ₽</td></tr>
+      <tr><td data-label="Блок">Старт на экране</td><td data-label="Что входит">Кульминация силами LED-экрана площадки<small>Контент для LED-экрана: обратный отсчёт и «иллюминатор» — моушн-дизайн, 145 000 ₽ · Конфетти-пушки на обратный отсчёт — 6 пушек, 75 000 ₽ · Дед Мороз-космонавт и Снегурочка — 20 минут, 120 000 ₽</small></td><td data-label="Стоимость">340 000 ₽</td></tr>
+      <tr><td data-label="Блок">Космодром на велкоме</td><td data-label="Что входит">Две активности<small>«Космический паспорт»: фото + печать + штамп экипажа — весь велком, 215 000 ₽ · VR-станция «Стыковка» — 1 станция, 4 часа, 170 000 ₽</small></td><td data-label="Стоимость">385 000 ₽</td></tr>
+      <tr><td data-label="Блок">Оформление</td><td data-label="Что входит">Одна фотозона и навигация<small>Фотозона «Борт 2027» — кабина с иллюминатором — изготовление и монтаж, 425 000 ₽ · Декор-лайт: неоновые надписи, навигация «космодрома» — велком и зал, 245 000 ₽</small></td><td data-label="Стоимость">670 000 ₽</td></tr>
+      <tr><td data-label="Блок">Съёмка</td><td data-label="Что входит">Фото и рилсы<small>Два фотографа — 6 часов, 215 000 ₽ · Видео: рилсы вечера — 1 оператор, 145 000 ₽</small></td><td data-label="Стоимость">360 000 ₽</td></tr>
+      <tr><td data-label="Блок">Команда и логистика</td><td data-label="Что входит">Хостес, координаторы, монтаж<small>Хостес-«стюарды» — 6 × 6 часов = 85 000 ₽ · Координаторы на площадке — 3 человека, 145 000 ₽ · Монтаж, демонтаж, доставка — ночь до и после, 145 000 ₽ · Питание команды и артистов — 30 × 1 500 = 110 000 ₽</small></td><td data-label="Стоимость">485 000 ₽</td></tr>
+      <tr class="kp-sub"><td data-label="Блок">Организация под ключ</td><td data-label="Что входит">концепция, сценарий, подрядчики, тайминг, команда агентства от брифа до отчёта</td><td data-label="Стоимость">250 000 ₽</td></tr>
+      <tr class="kp-total"><td data-label="Блок">Итого под ключ наличными</td><td data-label="Что входит">одна сумма, 700 гостей</td><td data-label="Стоимость">10 930 000 ₽</td></tr>
+      <tr class="kp-total inv"><td data-label="Блок">Итого по счёту</td><td data-label="Что входит">+10% на услуги под ключ; площадка и питание — без надбавки</td><td data-label="Стоимость">11 266 000 ₽</td></tr>
     </tbody></table></div>
   <p class="kp-note rv">Расчёт на 700 гостей, фуршет. Алкоголь — свой, пробковый сбор учтён. Число гостей и меню пересчитаем под финальный список. Оплата наличными — одна сумма. Оплата по счёту: +10% на услуги под ключ (площадка и питание — без надбавки); закрывающие документы для бухгалтерии.</p>
 </section><section class="sec" id="process">
