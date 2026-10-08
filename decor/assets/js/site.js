@@ -92,7 +92,7 @@ const ZONES = [
 function initLightbox() {
   const cards = $$('.pcard[data-project]');
   if (!cards.length) return;
-  let dlg = null, zone = 0, lastFocus = null;
+  let dlg = null, zone = 0, lastFocus = null, slides = ZONES;
 
   const build = () => {
     dlg = document.createElement('div');
@@ -132,11 +132,11 @@ function initLightbox() {
     else if (e.key === 'ArrowLeft') go(zone - 1);
   };
   const go = (i) => {
-    zone = (i + ZONES.length) % ZONES.length;
+    zone = (i + slides.length) % slides.length;
     $$('.lb__slide', dlg).forEach((s, k) => s.classList.toggle('is-active', k === zone));
     $$('.lb__dots i', dlg).forEach((d, k) => d.classList.toggle('is-on', k === zone));
-    $('.lb__num', dlg).textContent = `${String(zone + 1).padStart(2, '0')} / ${String(ZONES.length).padStart(2, '0')}`;
-    $('.lb__zone', dlg).textContent = ZONES[zone][0];
+    $('.lb__num', dlg).textContent = `${String(zone + 1).padStart(2, '0')} / ${String(slides.length).padStart(2, '0')}`;
+    $('.lb__zone', dlg).textContent = slides[zone][0];
   };
   const open = (card) => {
     if (!dlg) build();
@@ -144,13 +144,25 @@ function initLightbox() {
     const d = card.dataset;
     $('.lb__idx', dlg).textContent = `${d.no} · ${d.where}`;
     $('.lb__name', dlg).textContent = d.project;
-    $('.lb__media', dlg).innerHTML = ZONES.map(([label, note], k) => `
+    let photos = null;
+    try { photos = d.photos ? JSON.parse(d.photos) : null; } catch (e) { photos = null; }
+    if (photos && photos.length) {
+      // реальные фото декора пары: [[подпись, путь], …]
+      slides = photos.map(([label, src]) => [label, src]);
+      $('.lb__media', dlg).innerHTML = slides.map(([label, src], k) => `
+      <div class="lb__slide${k === 0 ? ' is-active' : ''}">
+        <img src="${src}" alt="${d.project}: ${label.toLowerCase()}" loading="${k < 2 ? 'eager' : 'lazy'}" decoding="async" style="width:100%;height:100%;object-fit:contain">
+      </div>`).join('');
+    } else {
+      slides = ZONES;
+      $('.lb__media', dlg).innerHTML = ZONES.map(([label, note], k) => `
       <div class="lb__slide${k === 0 ? ' is-active' : ''}">
         <div class="ph ph--${['sand', 'sage', 'clay', 'linen'][k]}" role="img" aria-label="Фото проекта ${d.project}: ${label.toLowerCase()} (будет добавлено)">
           <span class="ph__cap">ФОТО · ${d.project} · ${note}</span>
         </div>
       </div>`).join('');
-    $('.lb__dots', dlg).innerHTML = ZONES.map(() => '<i></i>').join('');
+    }
+    $('.lb__dots', dlg).innerHTML = slides.map(() => '<i></i>').join('');
     go(0);
     dlg.classList.add('is-open');
     document.documentElement.classList.add('lb-open');
