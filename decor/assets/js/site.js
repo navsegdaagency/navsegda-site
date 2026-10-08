@@ -90,7 +90,7 @@ const ZONES = [
   ['Велком-зона', 'входная группа · детали'],
 ];
 function initLightbox() {
-  const cards = $$('.pcard[data-project]');
+  const cards = $$('.pcard[data-project], [data-lb]');
   if (!cards.length) return;
   let dlg = null, zone = 0, lastFocus = null, slides = ZONES;
 
@@ -141,7 +141,9 @@ function initLightbox() {
   const open = (card) => {
     if (!dlg) build();
     lastFocus = document.activeElement;
-    const d = card.dataset;
+    // на странице кейса фото лежат в общем контейнере [data-photos], кнопка хранит номер кадра
+    const d = (card.closest('[data-photos]') || card).dataset;
+    const start = +card.dataset.start || 0;
     $('.lb__idx', dlg).textContent = `${d.no} · ${d.where}`;
     $('.lb__name', dlg).textContent = d.project;
     let photos = null;
@@ -151,7 +153,7 @@ function initLightbox() {
       slides = photos.map(([label, src]) => [label, src]);
       $('.lb__media', dlg).innerHTML = slides.map(([label, src], k) => `
       <div class="lb__slide${k === 0 ? ' is-active' : ''}">
-        <img src="${src}" alt="${d.project}: ${label.toLowerCase()}" loading="${k < 2 ? 'eager' : 'lazy'}" decoding="async" style="width:100%;height:100%;object-fit:contain">
+        <img src="${src}" alt="${d.project}: ${label.toLowerCase()}" loading="${Math.abs(k - start) < 2 ? 'eager' : 'lazy'}" decoding="async" style="width:100%;height:100%;object-fit:contain">
       </div>`).join('');
     } else {
       slides = ZONES;
@@ -163,7 +165,7 @@ function initLightbox() {
       </div>`).join('');
     }
     $('.lb__dots', dlg).innerHTML = slides.map(() => '<i></i>').join('');
-    go(0);
+    go(start);
     dlg.classList.add('is-open');
     document.documentElement.classList.add('lb-open');
     document.addEventListener('keydown', onKey);
@@ -178,6 +180,7 @@ function initLightbox() {
   }
   cards.forEach((c) => {
     const b = $('.pcard__open', c);
+    if (b && b.tagName === 'A') return;   // карточка ведёт на страницу кейса
     (b || c).addEventListener('click', (e) => { e.preventDefault(); open(c); });
   });
 }
