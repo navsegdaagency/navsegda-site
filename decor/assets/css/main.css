@@ -739,3 +739,42 @@ em, .it { font-style: italic; }
   .tables__step::after { width: 100%; }
 }
 @media (prefers-reduced-motion: reduce) and (min-width: 700px) { .tables__steps { grid-template-columns: repeat(5, 1fr); } }
+
+/* ─── Кейсы: паспарту-рамка (08.10) ─── */
+.pcard__open {
+  position: relative; background: #FFFFFF; padding: 14px 14px 0;
+  border: 1px solid rgba(26,26,26,.14);
+  box-shadow: 0 1px 0 rgba(26,26,26,.04), 0 24px 48px -28px rgba(40,32,20,.28);
+  transition: box-shadow .6s var(--ease), transform .6s var(--ease);
+}
+.pcard__open::before {            /* внутренняя тонкая линия — двойная рамка */
+  content: ""; position: absolute; inset: 6px; border: 1px solid rgba(26,26,26,.07); pointer-events: none;
+}
+.pcard__open:hover, .pcard__open:focus-visible { box-shadow: 0 1px 0 rgba(26,26,26,.04), 0 34px 60px -30px rgba(40,32,20,.36); transform: translateY(-2px); }
+.pcard__media { position: relative; outline: 1px solid rgba(26,26,26,.10); outline-offset: -1px; }
+.pcard__media img { transition: transform 1.2s var(--ease); }
+.pcard__open:hover .pcard__media img, .pcard__open:focus-visible .pcard__media img { transform: scale(1.03); }
+.pcard__media::after {            /* уголки */
+  content: ""; position: absolute; inset: 10px; pointer-events: none;
+  background:
+    linear-gradient(#fff,#fff) left top/16px 1px, linear-gradient(#fff,#fff) left top/1px 16px,
+    linear-gradient(#fff,#fff) right top/16px 1px, linear-gradient(#fff,#fff) right top/1px 16px,
+    linear-gradient(#fff,#fff) left bottom/16px 1px, linear-gradient(#fff,#fff) left bottom/1px 16px,
+    linear-gradient(#fff,#fff) right bottom/16px 1px, linear-gradient(#fff,#fff) right bottom/1px 16px;
+  background-repeat: no-repeat; opacity: .85;
+}
+.pcard__cap { padding: 16px 4px 18px; }
+.pcard__no { display: flex; align-items: center; gap: 10px; }
+.pcard__no::after { content: ""; flex: 1; height: 1px; background: rgba(26,26,26,.10); }
+.pcard__meta { border-top: 1px solid rgba(26,26,26,.10); padding-top: 10px; margin-top: 8px; }
+.fx3d .pbloom .pcard__cap { padding: 14px 4px 16px; }
+@media (max-width: 699px) {
+  .pcard__open { padding: 10px 10px 0; }
+  .pcard__open::before { inset: 4px; }
+  .fx3d .pbloom .pcard__media img { aspect-ratio: auto !important; height: min(30svh, 240px); }
+  .fx3d .pbloom .pcard__cap { padding: 10px 2px 12px; }
+  .fx3d .pbloom .pcard__meta { padding-top: 8px; margin-top: 4px; }
+}
+@media (min-width: 700px) {
+  .fx3d .pbloom .pcard__media img { aspect-ratio: auto !important; height: min(52svh, 480px); }
+}
