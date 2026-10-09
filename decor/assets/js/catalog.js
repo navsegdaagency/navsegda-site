@@ -15,6 +15,7 @@ const fmt = (n) => n ? 'от ' + n.toLocaleString('ru-RU') + ' ₽' : 'цена 
 function render() {
   $$('[data-cadd]').forEach((b) => b.setAttribute('aria-pressed', String(cart.includes(b.dataset.cadd))));
   const bar = $('[data-cbar]');
+  document.documentElement.classList.toggle('has-cbar', cart.length > 0);
   if (bar) { bar.hidden = cart.length === 0; $('[data-ccount]', bar).textContent = cart.length; }
   const box = $('[data-citems]');
   if (!box) return;
