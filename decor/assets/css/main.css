@@ -1020,3 +1020,4 @@ a.ccard__img:hover img { transform: scale(1.03); }
 button.btn-link { background: none; border: 0; border-bottom: 1px solid currentColor; border-radius: 0; padding: 4px 0; cursor: pointer; font: inherit; color: inherit; }
 .has-cbar main { padding-bottom: 96px; }
 @media (min-width: 1024px) { .citem__info { top: 96px; } .has-cbar .citem__info { padding-bottom: 72px; } }
+@media (min-width: 1024px) { .cbar { justify-content: flex-start; padding-left: var(--gutter); } .cbar__btn { width: 420px; } }
