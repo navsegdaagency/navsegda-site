@@ -1012,3 +1012,8 @@ a.ccard__img:hover img { transform: scale(1.03); }
 .citem-row b { display: block; font-family: var(--serif); font-style: italic; font-weight: 400; font-size: 19px; }
 .citem-row span { font-size: 11px; color: var(--ink-2); letter-spacing: .06em; }
 .citem-row button { width: 36px; height: 36px; border-radius: 50%; border: 1px solid var(--hair); background: none; cursor: pointer; font-size: 18px; }
+@media (max-width: 699px) {
+  .cchips { flex-wrap: nowrap; overflow-x: auto; margin: 0 calc(var(--gutter) * -1); padding: 0 var(--gutter) 6px; scrollbar-width: none; }
+  .cchips::-webkit-scrollbar { display: none; }
+  .cchips button { flex: 0 0 auto; }
+}
