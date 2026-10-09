@@ -245,7 +245,7 @@ function initTestimonials() {
 
 // ─── Формы заявки ───
 function initForms() {
-  $$('form.lead').forEach((form) => {
+  $$('form.lead:not([data-cform])').forEach((form) => {
     const status = $('.lead__status', form);
     const btn = $('button[type="submit"]', form);
     const consent = form.elements.consent;
