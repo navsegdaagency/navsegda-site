@@ -901,3 +901,26 @@ em, .it { font-style: italic; }
 
 .lb__num { white-space: nowrap; }
 @media (max-width: 699px) { .lb__dots { display: none; } }
+
+/* ─── Главная, раздел 07: статьи журнала с обложками (09.10) ─── */
+.jgrid--live { gap: 40px 20px; grid-template-columns: 1fr 1fr; }
+.jgrid--live .jcard:nth-child(even) { margin-top: 0; }
+@media (min-width: 1024px) {
+  .jgrid--live { grid-template-columns: repeat(3, 1fr); gap: 72px 40px; }
+  .jgrid--live .jcard:nth-child(3n+2) { margin-top: 72px; }
+}
+.jcard--live a { display: grid; gap: 0; color: inherit; }
+.jcard__img { display: block; padding: 10px; margin-bottom: 18px; background: #fff; border: 1px solid rgba(26,26,26,.14);
+  box-shadow: 0 1px 0 rgba(26,26,26,.04), 0 24px 46px -30px rgba(40,32,20,.30); position: relative; overflow: hidden;
+  transition: transform .6s var(--ease), box-shadow .6s var(--ease); }
+.jcard__img::before { content: ""; position: absolute; inset: 4px; border: 1px solid rgba(26,26,26,.07); pointer-events: none; z-index: 1; }
+.jcard__img img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; transition: transform 1.2s var(--ease); }
+.jcard--live a:hover .jcard__img { transform: translateY(-3px); box-shadow: 0 1px 0 rgba(26,26,26,.04), 0 34px 60px -32px rgba(40,32,20,.40); }
+.jcard--live a:hover .jcard__img img { transform: scale(1.03); }
+.jcard--live .jcard__title { display: block; font-family: var(--serif); font-size: clamp(19px, 2vw, 28px); line-height: 1.15; text-wrap: balance; }
+.jcard--live a:hover .jcard__title { color: var(--accent); }
+@media (max-width: 699px) {
+  .jcard__img { padding: 6px; margin-bottom: 12px; }
+  .jcard__img::before { inset: 2px; }
+  .jcard--live .jcard__meta { font-size: 9px; letter-spacing: .14em; margin-bottom: 6px; }
+}
