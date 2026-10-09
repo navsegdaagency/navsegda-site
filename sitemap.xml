@@ -966,4 +966,12 @@
   <url><loc>https://navseg-da.agency/ploshchadki/omega-rooftop/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://navseg-da.agency/ploshchadki/goelro-hertz/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
   <url><loc>https://navseg-da.agency/ploshchadki/megapolis-artikon/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://navseg-da.agency/ploshchadki/svadebnye/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://navseg-da.agency/ploshchadki/korporativnye/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://navseg-da.agency/ploshchadki/u-vody/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://navseg-da.agency/ploshchadki/steklyannye/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://navseg-da.agency/ploshchadki/kamernye/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://navseg-da.agency/ploshchadki/bolshie/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://navseg-da.agency/ploshchadki/moskva/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://navseg-da.agency/ploshchadki/podmoskovye/</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
 </urlset>
