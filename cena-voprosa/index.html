@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Цена вопроса · 80 лет</title>
+  <meta name="robots" content="noindex">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Ruslan+Display&family=Oswald:wght@400;500;700&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <script>try { localStorage.setItem('nl-hud:public:v1', 'hidden'); } catch (e) {}</script>
+  <style>
+    #nl-badge-frame, #nl-hud-frame { display: none !important; }
+    :root { --paper: #efe1c3; --paper-2: #e6d3ad; --red: #b3221c; --red-dark: #7d130f; --ink: #2a1a10; --gold: #c99a3a; }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; height: 100%; overflow: hidden; }
+    body {
+      background:
+        radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(80, 45, 15, 0.35) 100%),
+        repeating-linear-gradient(0deg, rgba(90, 60, 20, 0.035) 0 2px, transparent 2px 5px),
+        var(--paper);
+      color: var(--ink);
+      font-family: 'PT Serif', Georgia, serif;
+      cursor: default;
+    }
+    .slide { position: absolute; inset: 0; display: flex; flex-direction: column; padding: 4vh 5vw; opacity: 0; transition: opacity 0.5s ease; pointer-events: none; }
+    .slide.on { opacity: 1; }
+
+    /* верхняя плашка как у советской газеты */
+    .bar { display: flex; justify-content: space-between; align-items: center; font-family: 'Oswald', sans-serif; font-weight: 500; letter-spacing: 0.18em; text-transform: uppercase; font-size: 1.4vw; color: var(--red-dark); border-bottom: 0.35vh solid var(--red); padding-bottom: 1vh; }
+    .bar b { color: var(--red); }
+    .star { display: inline-block; width: 1.4vw; height: 1.4vw; background: var(--red); clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%); vertical-align: -0.15vw; margin: 0 0.6vw; }
+
+    /* титул */
+    .rays { position: absolute; inset: -20%; background: repeating-conic-gradient(from 0deg at 50% 62%, rgba(179, 34, 28, 0.13) 0deg 7deg, transparent 7deg 14deg); z-index: -1; }
+    .center { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; }
+    .kicker { font-family: 'Oswald', sans-serif; letter-spacing: 0.35em; text-transform: uppercase; font-size: 1.6vw; color: var(--red-dark); }
+    .title { font-family: 'Ruslan Display', 'Oswald', serif; font-weight: 400; font-size: 9vw; line-height: 0.95; color: var(--red); margin: 2vh 0 1vh; text-shadow: 0.35vw 0.35vw 0 rgba(42, 26, 16, 0.18); }
+    .sub { font-family: 'Oswald', sans-serif; font-size: 2.6vw; letter-spacing: 0.08em; text-transform: uppercase; }
+    .ribbon { margin-top: 4vh; background: var(--red); color: var(--paper); font-family: 'Oswald', sans-serif; font-size: 2vw; letter-spacing: 0.12em; text-transform: uppercase; padding: 1.2vh 3vw; clip-path: polygon(0 0, 100% 0, 96% 50%, 100% 100%, 0 100%, 4% 50%); }
+    .big80 { font-family: 'Ruslan Display', serif; font-size: 22vw; line-height: 0.85; color: var(--red); text-shadow: 0.5vw 0.5vw 0 rgba(201, 154, 58, 0.55); }
+
+    /* правила */
+    .rules { list-style: none; padding: 0; margin: 4vh auto 0; max-width: 70vw; text-align: left; }
+    .rules li { font-size: 2.2vw; line-height: 1.35; margin: 2vh 0; padding-left: 4vw; position: relative; }
+    .rules li::before { content: attr(data-n); position: absolute; left: 0; top: 0.2vh; font-family: 'Oswald', sans-serif; font-weight: 700; color: var(--paper); background: var(--red); width: 2.8vw; height: 2.8vw; display: grid; place-items: center; border-radius: 50%; font-size: 1.6vw; }
+
+    /* раунд */
+    .round { flex: 1; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 4vw; align-items: center; min-height: 0; }
+    .photo { background: #fff; padding: 1.2vw 1.2vw 4.5vw; box-shadow: 0 2vh 4vh rgba(60, 35, 10, 0.35); transform: rotate(-2deg); justify-self: center; width: min(100%, 72vh); position: relative; }
+    .photo img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; filter: sepia(0.18) saturate(0.95) contrast(1.02); }
+    .photo .cap { position: absolute; left: 0; right: 0; bottom: 1.2vw; text-align: center; font-style: italic; font-size: 1.5vw; color: #5a4632; }
+    .tape { position: absolute; width: 9vw; height: 2.6vw; background: rgba(230, 210, 160, 0.75); top: -1.2vw; left: 50%; transform: translateX(-50%) rotate(3deg); box-shadow: 0 0.2vh 0.4vh rgba(0, 0, 0, 0.1); }
+    .q .num { font-family: 'Oswald', sans-serif; font-size: 1.7vw; letter-spacing: 0.25em; text-transform: uppercase; color: var(--red-dark); }
+    .q h2 { font-family: 'Oswald', sans-serif; font-weight: 700; font-size: 4.6vw; line-height: 1.02; margin: 1.5vh 0 2.5vh; text-transform: uppercase; }
+    .q .ask { font-size: 3.2vw; color: var(--red); font-family: 'Ruslan Display', serif; }
+    .q .hint { font-size: 1.7vw; margin-top: 2.5vh; color: #5a4632; font-style: italic; }
+
+    /* ценник-штамп */
+    .tag { display: inline-block; margin-top: 1vh; border: 0.5vw double var(--red); color: var(--red); padding: 2vh 2.6vw 1.6vh; transform: rotate(-6deg); font-family: 'Oswald', sans-serif; text-transform: uppercase; background: rgba(239, 225, 195, 0.6); }
+    .tag small { display: block; font-size: 1.4vw; letter-spacing: 0.3em; }
+    .tag strong { display: block; font-size: 6.8vw; line-height: 1; font-weight: 700; letter-spacing: 0.02em; }
+    .slide.on .tag { animation: stamp 0.55s cubic-bezier(.2, 1.4, .4, 1) 0.25s both; }
+    @keyframes stamp { from { opacity: 0; transform: rotate(-6deg) scale(2.4); } to { opacity: 1; transform: rotate(-6deg) scale(1); } }
+    .fact { margin-top: 4vh; font-size: 2vw; line-height: 1.4; max-width: 38vw; }
+    .fact::before { content: '★ '; color: var(--red); }
+
+    .credits { font-size: 1.05vw; line-height: 1.5; columns: 2; column-gap: 4vw; margin-top: 3vh; color: #5a4632; }
+    .progress { position: fixed; left: 0; bottom: 0; height: 0.6vh; background: var(--red); transition: width 0.3s; }
+    .help { position: fixed; right: 1.2vw; bottom: 1.2vh; font-family: 'Oswald', sans-serif; font-size: 11px; color: #8a7458; opacity: 0.6; letter-spacing: 0.05em; }
+  </style>
+</head>
+<body>
+  <div id="deck"></div>
+  <div class="progress" id="progress"></div>
+  <div class="help">клик / → — дальше · ← — назад · F — полный экран</div>
+  <script>
+    // Цены — типичные для 70-80-х годов (в разные годы и города немного отличались).
+    var ITEMS = [
+      { img: 'spichki', name: 'Коробок спичек', cap: 'Спичечная этикетка, 1960-е', price: '1 коп.', fact: 'Самая знаменитая копеечная цена - держалась десятилетиями.' },
+      { img: 'taksofon', name: 'Звонок из таксофона', cap: 'Уличный таксофон', price: '2 коп.', fact: 'Для звонка берегли монету в 2 копейки - «двушку».' },
+      { img: 'gazirovka', name: 'Стакан газировки с сиропом', cap: 'Автоматы газированной воды', price: '3 коп.', fact: 'Без сиропа - всего 1 копейка. Гранёный стакан был общий: его мыли прямо в автомате.' },
+      { img: 'metro', name: 'Проезд в метро', cap: 'Турникеты московского метро', price: '5 коп.', fact: 'Пятак бросали в турникет - так было с 1961 по 1991 год.' },
+      { img: 'kvas', name: 'Большая кружка кваса из бочки', cap: 'Жёлтая бочка «Квас»', price: '6 коп.', fact: 'Маленькая кружка стоила 3 копейки. Свою банку приносили с собой.' },
+      { img: 'eskimo', name: 'Эскимо на палочке', cap: 'Эскимо в шоколаде', price: '11 коп.', fact: 'Пломбир в вафельном стаканчике стоил около 20 копеек.' },
+      { img: 'hleb', name: 'Буханка ржаного хлеба', cap: '«Бородинский»', price: '16 коп.', fact: '«Бородинский» с кориандром был чуть дороже - около 18 копеек.' },
+      { img: 'sgushenka', name: 'Банка сгущёнки', cap: 'Сгущённое молоко', price: '55 коп.', fact: 'Её варили прямо в банке - получалась «варёнка».' },
+      { img: 'kolbasa', name: 'Килограмм «Докторской»', cap: 'Колбаса «Докторская»', price: '2 р. 20 к.', fact: 'Рецепт по ГОСТу появился ещё в 1936 году.' },
+      { img: 'zarplata', name: 'Зарплата инженера в месяц', cap: 'Рубль образца 1961 года', price: '120 руб.', fact: 'Столько получал молодой специалист после института.' },
+      { img: 'zhiguli', name: '«Жигули» ВАЗ-2101', cap: '«Копейка»', price: '5500 руб.', fact: 'Столько стоила «копейка» в 1970 году. За машиной стояли в очереди годами.' },
+    ];
+    var CREDITS = [
+      'Спички: этикетка «Лось», 1960-е — public domain',
+      'Газировка: Vmenkov, CC BY-SA 4.0',
+      'Таксофон: Vidnoye Sovetskaya street, CC BY 4.0',
+      'Метро: Mos.ru, CC BY 3.0',
+      'Квас: «Бочка с квасом», CC BY 3.0',
+      'Эскимо: ILoveCocomelon, CC BY-SA 4.0',
+      'Хлеб: Paveletskaya Plaza, CC0',
+      'Сгущёнка: JustKronos, CC0',
+      '«Докторская»: Pannet, CC BY-SA 4.0',
+      'Рубль 1961: Госбанк СССР, public domain',
+      'ВАЗ-2101: Jamshid Nurkulov, CC BY-SA 4.0',
+      'Все фото — Wikimedia Commons',
+    ];
+
+    var S = [];
+    var bar = function (l, r) { return '<div class="bar"><span><span class="star"></span>' + l + '</span><span>' + r + '</span></div>'; };
+    S.push(bar('Семейная игра', '80 лет') +
+      '<div class="center"><div class="rays"></div><div class="kicker">Сколько это стоило в СССР?</div>' +
+      '<h1 class="title">Цена<br>вопроса</h1><div class="ribbon">К 80-летию нашей любимой бабушки</div></div>');
+    S.push(bar('Правила игры', 'Цена вопроса') +
+      '<div class="center"><div class="sub">Как играем</div><ul class="rules">' +
+      '<li data-n="1">Показываем вещь из СССР — каждый пишет на листочке, сколько она стоила.</li>' +
+      '<li data-n="2">Открываем ценник. Кто ближе всех к правде — получает очко.</li>' +
+      '<li data-n="3">Бабушка — главный эксперт: подтверждает и рассказывает, как было на самом деле.</li>' +
+      '</ul></div>');
+    ITEMS.forEach(function (it, i) {
+      var head = bar('Раунд ' + (i + 1) + ' из ' + ITEMS.length, 'Цена вопроса');
+      var photo = '<div class="photo"><span class="tape"></span><img src="img/' + it.img + '.jpg" alt=""><div class="cap">' + it.cap + '</div></div>';
+      S.push(head + '<div class="round">' + photo + '<div class="q"><div class="num">Раунд ' + (i + 1) + '</div><h2>' + it.name + '</h2>' +
+        '<div class="ask">Сколько стоило?</div><div class="hint">Пишите ответ на листочке</div></div></div>');
+      S.push(head + '<div class="round">' + photo + '<div class="q"><div class="num">Правильный ответ</div><h2>' + it.name + '</h2>' +
+        '<div class="tag"><small>Цена</small><strong>' + it.price + '</strong></div><div class="fact">' + it.fact + '</div></div></div>');
+    });
+    S.push(bar('Итоги', '80 лет') +
+      '<div class="center"><div class="rays"></div><div class="kicker">Считаем очки — и главный тост</div>' +
+      '<div class="big80">80</div><div class="ribbon">С юбилеем, бабушка! Ты — бесценна</div></div>');
+    S.push(bar('Фотографии', 'Wikimedia Commons') + '<div class="credits">' + CREDITS.map(function (c) { return '<div>' + c + '</div>'; }).join('') + '</div>');
+
+    var deck = document.getElementById('deck');
+    deck.innerHTML = S.map(function (s) { return '<section class="slide">' + s + '</section>'; }).join('');
+    var els = deck.querySelectorAll('.slide');
+    var cur = Math.min(els.length - 1, Math.max(0, parseInt(location.hash.slice(1), 10) || 0));
+    function show(i) {
+      cur = Math.max(0, Math.min(els.length - 1, i));
+      for (var k = 0; k < els.length; k++) els[k].classList.toggle('on', k === cur);
+      document.getElementById('progress').style.width = (100 * cur) / (els.length - 1) + '%';
+      history.replaceState(null, '', '#' + cur);
+    }
+    show(cur);
+    Array.prototype.forEach.call(deck.querySelectorAll('img'), function (im) { if (im.decode) im.decode().catch(function () {}); });
+
+    var fsTried = false;
+    function fs() { fsTried = true; if (!document.fullscreenElement && document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(function () {}); }
+    document.addEventListener('click', function (e) {
+      if (!fsTried) { fs(); return; }
+      show(e.clientX < innerWidth * 0.2 ? cur - 1 : cur + 1);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (['ArrowRight', 'ArrowDown', 'PageDown', ' ', 'Enter'].indexOf(e.key) >= 0) { e.preventDefault(); show(cur + 1); }
+      else if (['ArrowLeft', 'ArrowUp', 'PageUp', 'Backspace'].indexOf(e.key) >= 0) { e.preventDefault(); show(cur - 1); }
+      else if (e.key === 'f' || e.key === 'F' || e.key === 'а' || e.key === 'А') fs();
+    });
+  </script>
+</body>
+</html>

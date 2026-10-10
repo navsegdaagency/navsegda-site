@@ -3,6 +3,7 @@ Allow: /
 Disallow: /thanks
 Disallow: /files/
 Disallow: /prezentaciya/
+Disallow: /cena-voprosa/
 Disallow: /event/kp/
 
 User-agent: Yandex
@@ -10,6 +11,7 @@ Allow: /
 Disallow: /thanks
 Disallow: /files/
 Disallow: /prezentaciya/
+Disallow: /cena-voprosa/
 Disallow: /event/kp/
 Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&yclid&_openstat
 
