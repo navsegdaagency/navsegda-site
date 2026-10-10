@@ -77,7 +77,7 @@
   <script>
     // Цены — типичные для 70-80-х годов (в разные годы и города немного отличались).
     var ITEMS = [
-      { img: 'spichki', name: 'Коробок спичек', cap: 'Спичечная этикетка, 1960-е', price: '1 коп.', fact: 'Самая знаменитая копеечная цена - держалась десятилетиями.' },
+      { img: 'spichki', fit: true, name: 'Коробок спичек', cap: 'Спичечная этикетка, 1960-е', price: '1 коп.', fact: 'Самая знаменитая копеечная цена - держалась десятилетиями.' },
       { img: 'taksofon', name: 'Звонок из таксофона', cap: 'Уличный таксофон', price: '2 коп.', fact: 'Для звонка берегли монету в 2 копейки - «двушку».' },
       { img: 'gazirovka', name: 'Стакан газировки с сиропом', cap: 'Автоматы газированной воды', price: '3 коп.', fact: 'Без сиропа - всего 1 копейка. Гранёный стакан был общий: его мыли прямо в автомате.' },
       { img: 'metro', name: 'Проезд в метро', cap: 'Турникеты московского метро', price: '5 коп.', fact: 'Пятак бросали в турникет - так было с 1961 по 1991 год.' },
@@ -117,7 +117,7 @@
       '</ul></div>');
     ITEMS.forEach(function (it, i) {
       var head = bar('Раунд ' + (i + 1) + ' из ' + ITEMS.length, 'Цена вопроса');
-      var photo = '<div class="photo"><span class="tape"></span><img src="img/' + it.img + '.jpg" alt=""><div class="cap">' + it.cap + '</div></div>';
+      var photo = '<div class="photo"><span class="tape"></span><img src="img/' + it.img + '.jpg" alt=""' + (it.fit ? ' style="object-fit:contain;background:#f6efe0"' : '') + '><div class="cap">' + it.cap + '</div></div>';
       S.push(head + '<div class="round">' + photo + '<div class="q"><div class="num">Раунд ' + (i + 1) + '</div><h2>' + it.name + '</h2>' +
         '<div class="ask">Сколько стоило?</div><div class="hint">Пишите ответ на листочке</div></div></div>');
       S.push(head + '<div class="round">' + photo + '<div class="q"><div class="num">Правильный ответ</div><h2>' + it.name + '</h2>' +
