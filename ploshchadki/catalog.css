@@ -168,6 +168,31 @@ input[type=range]{flex:1;accent-color:var(--bordo);height:28px}
 .form small{display:block;margin-top:10px;font-size:12px;color:rgba(255,231,198,.55)}
 .ok{display:none;text-align:center;padding:30px 0}.form.done form{display:none}.form.done .ok{display:block}
 .hp{position:absolute;left:-9999px}
+/* seo blocks */
+.prices{padding:10px 0 60px}
+.ptab{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--mat)}
+.ptab table{width:100%;border-collapse:collapse;font-size:15px;font-variant-numeric:tabular-nums;min-width:560px}
+.ptab caption{text-align:left;padding:14px 16px 0;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.ptab th{text-align:left;font-weight:500;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding:12px 16px;border-bottom:1px solid var(--line)}
+.ptab td{padding:12px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+.ptab tr:last-child td{border-bottom:0}
+.ptab td a{color:var(--bordo);text-decoration:none;font-weight:500}.ptab td small{display:block;color:var(--muted);font-size:13px}
+.pnote{font-size:13px;color:var(--muted);max-width:80ch;margin:12px 0 0}
+.tips{display:grid;grid-template-columns:1.4fr 1fr;gap:48px;padding:10px 0 60px}
+.tips ul{list-style:none;margin:0;padding:0;display:grid;gap:14px}.tips li{padding-left:24px;position:relative;color:var(--ink);max-width:62ch}
+.tips li:before{content:'';position:absolute;left:0;top:.8em;width:12px;height:1px;background:var(--gold)}
+.tips .rel{margin-top:14px}.tips .rel .chip{background:#fff;color:var(--deep);border-color:var(--line)}
+.tips .keys{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+@media (max-width:900px){.tips{grid-template-columns:1fr;gap:28px}}
+.allc{padding:60px 0 50px;border-top:1px solid var(--line)}
+.allc-g{display:grid;grid-template-columns:repeat(4,1fr);gap:28px}
+.allc h3{font:400 12px/1 TildaSans,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:0 0 14px}
+.allc ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.allc a{text-decoration:none;font-size:15px}.allc a:hover,.allc a[aria-current]{color:var(--bordo)}
+.aka{font-size:14px;color:var(--muted);margin:-20px 0 34px}
+.chero p+p{margin-top:12px}
+@media (max-width:900px){.allc-g{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.allc-g{grid-template-columns:1fr}}
 /* turnkey + misc */
 .turnkey{background:var(--mat);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:70px 0}
 .turnkey .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:56px;align-items:center}
