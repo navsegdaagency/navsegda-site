@@ -19,3 +19,4 @@ Sitemap: https://navseg-da.agency/sitemap.xml
 Sitemap: https://navseg-da.agency/event/sitemap.xml
 Sitemap: https://navseg-da.agency/decor/sitemap.xml
 Host: navseg-da.agency
+Sitemap: https://navseg-da.agency/ploshchadki/sitemap.xml
