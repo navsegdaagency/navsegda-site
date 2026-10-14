@@ -189,6 +189,11 @@ input[type=range]{flex:1;accent-color:var(--bordo);height:28px}
 .tips .rel{margin-top:14px}.tips .rel .chip{background:#fff;color:var(--deep);border-color:var(--line)}
 .tips .keys{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
 @media (max-width:900px){.tips{grid-template-columns:1fr;gap:28px}}
+.cform{padding-top:34px;padding-bottom:6px}
+.cform form{display:grid;grid-template-columns:1fr 1fr auto;gap:0 14px;align-items:end}
+.cform form>h2,.cform form>p,.cform form>small{grid-column:1/-1}
+.cform .form .btn{width:auto;margin-top:0;white-space:nowrap}
+@media (max-width:700px){.cform form{grid-template-columns:minmax(0,1fr)}.cform .form .btn{width:100%;margin-top:18px}}
 .guides{padding-top:20px;padding-bottom:50px}
 .gcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px}
 .gcard{display:flex;flex-direction:column;gap:8px;background:var(--mat);border:1px solid var(--line);border-radius:12px;padding:22px;text-decoration:none;position:relative;transition:transform .3s,border-color .3s}
