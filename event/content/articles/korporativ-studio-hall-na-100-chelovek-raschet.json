@@ -1,14 +1,14 @@
 {
  "slug": "korporativ-studio-hall-na-100-chelovek-raschet",
  "title": "Корпоратив в Studio Hall на 100 человек: расчёт (модель) по условиям площадки",
- "desc": "Корпоратив на 100 человек: Studio Hall, зал 10. Расчёт меню и аренды по условиям площадки и модель сметы (банкет от 8 000 ₽ + 20%, ведущий и диджей от 150 000 ₽), навигация «площадка × гости».",
+ "desc": "Корпоратив на 100 человек: Studio Hall, зал 10. Расчёт меню и аренды по условиям площадки и модель сметы (банкет от 8 000 ₽ + 20%, ведущий и диджей, координатор, счёт +10%).",
  "label": "Расчёт",
  "h1": [
   "Корпоратив в Studio Hall",
   "на 100 человек:",
   "расчёт (модель)"
  ],
- "seo": "Корпоратив на 100 гостей в Studio Hall: по прайсу площадки (условия каталога) меню и аренда — около 855 000 ₽; в модели сметы (банкет не ниже 8 000 ₽ плюс 20% сервиса) — около 1 155 000 ₽, с ведущим и диджеем (от 150 000 ₽) — около 1 305 000 ₽. Это модель, а не готовая смета.",
+ "seo": "Корпоратив на 100 гостей в Studio Hall: по прайсу площадки (условия каталога) меню и аренда — около 855 000 ₽; в модели сметы (банкет не ниже 8 000 ₽ плюс 20% сервиса) — около 1 155 000 ₽, с ведущим и диджеем (от 150 000 ₽) и координатором (25 000 ₽) — около 1 330 000 ₽, при оплате по счёту (+10% ко всей сумме) — около 1 463 000 ₽. Это модель, а не готовая смета.",
  "date": "2026-10-16",
  "read": 8,
  "img": "/assets/img/stock/33852468.webp",
@@ -96,6 +96,39 @@
    ]
   },
   {
+   "h2": "Полный набор модели: координатор и оплата по счёту",
+   "blocks": [
+    {
+     "p": "К модели мы добавляем <b>координатора на площадке — 25 000 ₽</b>: он есть в каждой нашей корпоративной смете. При оплате по счёту к итогу прибавляется <b>10% ко всей сумме</b> — площадка, питание, сервис и подрядчики идут с надбавкой, потому что площадки сами берут за безналичную оплату. Ниже — итог для 100 гостей."
+    },
+    {
+     "table": {
+      "head": [
+       "Вариант аренды",
+       "Площадка, меню, ведущий и диджей",
+       "Координатор",
+       "Итого, модель",
+       "По счёту, +10%",
+       "На гостя по счёту"
+      ],
+      "rows": [
+       [
+        "Аренда по каталогу (08:00–00:00)",
+        "≈ 1 305 000 ₽",
+        "25 000 ₽",
+        "≈ 1 330 000 ₽",
+        "≈ 1 463 000 ₽",
+        "≈ 14 630 ₽"
+       ]
+      ]
+     }
+    },
+    {
+     "p": "В этот итог не входят оформление, фото и видео, техника сверх площадки, подарки, трансфер и организационное вознаграждение агентства: их считаем по статьям в смете после уточнения задачи. Поэтому цифры — ориентир для сравнения площадок, а не цена мероприятия. Как читать строки сметы, объяснено в <a href='/blog/kak-chitat-korporativnuyu-smetu-postrochno/'>отдельной статье</a>."
+    }
+   ]
+  },
+  {
    "h2": "Площадка × гости: навигация по расчётам",
    "blocks": [
     {
@@ -108,7 +141,8 @@
        "50",
        "80",
        "100",
-       "150"
+       "150",
+       "200"
       ],
       "rows": [
        [
@@ -116,56 +150,64 @@
         "<a href='/blog/korporativ-v-otradnom-veranda-divnyy-les/'>50 гостей</a>",
         "—",
         "<a href='/blog/korporativ-divnyy-les-na-100-chelovek-raschet/'>100 гостей</a>",
-        "<a href='/blog/korporativ-divnyy-les-na-150-chelovek-raschet/'>150 гостей</a>"
+        "<a href='/blog/korporativ-divnyy-les-na-150-chelovek-raschet/'>150 гостей</a>",
+        "—"
        ],
        [
         "<a href='/ploshchadki/les-event-house/'>Les Event House</a>",
         "<a href='/blog/korporativ-v-les-event-house/'>50 гостей</a>",
         "<a href='/blog/korporativ-les-event-house-na-80-chelovek-raschet/'>80 гостей</a>",
-        "<a href='/blog/korporativ-v-les-event-house/'>100 гостей</a>",
-        "<a href='/blog/korporativ-les-event-house-na-150-chelovek-raschet/'>150 гостей</a>"
+        "<a href='/blog/korporativ-les-event-house-na-100-chelovek-raschet/'>100 гостей</a>",
+        "<a href='/blog/korporativ-les-event-house-na-150-chelovek-raschet/'>150 гостей</a>",
+        "<a href='/blog/korporativ-v-les-event-house/'>200 гостей</a>"
        ],
        [
-        "<a href='/ploshchadki/soho-rooms/'>SOHO Rooms, Event Room</a>",
+        "<a href='/ploshchadki/soho-rooms/'>SOHO Rooms</a>",
         "<a href='/blog/korporativ-v-soho-rooms/'>50 гостей</a>",
         "<a href='/blog/korporativ-soho-rooms-na-80-chelovek-raschet/'>80 гостей</a>",
-        "<a href='/blog/korporativ-v-soho-rooms/'>100 гостей</a>",
-        "<a href='/blog/korporativ-soho-rooms-na-150-chelovek-raschet/'>150 гостей</a>"
+        "<a href='/blog/korporativ-soho-rooms-na-100-chelovek-raschet/'>100 гостей</a>",
+        "<a href='/blog/korporativ-soho-rooms-na-150-chelovek-raschet/'>150 гостей</a>",
+        "<a href='/blog/korporativ-v-soho-rooms/'>200 гостей</a>"
        ],
        [
-        "<a href='https://navseg-da.agency/ploshchadki/kristall-kolomenskoe/'>«Кристалл» в Коломенском (Кристалл Гарден)</a>",
+        "<a href='https://navseg-da.agency/ploshchadki/kristall-kolomenskoe/'>«Кристалл» в Коломенском</a>",
         "<a href='/blog/korporativ-v-kristalle-v-kolomenskom/'>50 гостей</a>",
         "<a href='/blog/korporativ-kristall-na-80-chelovek-raschet/'>80 гостей</a>",
         "<a href='/blog/korporativ-v-kristalle-v-kolomenskom/'>100 гостей</a>",
-        "—"
+        "<a href='/blog/korporativ-kristall-na-150-chelovek-raschet/'>150 гостей</a>",
+        "<a href='/blog/korporativ-v-kristalle-v-kolomenskom/'>200 гостей</a>"
        ],
        [
         "<a href='https://navseg-da.agency/ploshchadki/goelro-hertz/'>GOELRO, зал Hertz</a>",
         "<a href='/blog/korporativ-v-goelro-zal-hertz/'>50 гостей</a>",
         "—",
         "<a href='/blog/korporativ-goelro-hertz-na-100-chelovek-raschet/'>100 гостей</a>",
-        "—"
+        "—",
+        "<a href='/blog/korporativ-goelro-hertz-na-200-chelovek-raschet/'>200 гостей</a>"
        ],
        [
         "<a href='https://navseg-da.agency/ploshchadki/studio-hall-zal-10/'>Studio Hall, зал 10</a>",
         "<a href='/blog/korporativ-v-studio-hall-zal-10/'>50 гостей</a>",
         "—",
         "<b>этот расчёт</b>",
-        "—"
+        "<a href='/blog/korporativ-studio-hall-na-150-chelovek-raschet/'>150 гостей</a>",
+        "<a href='/blog/korporativ-v-studio-hall-zal-10/'>200 гостей</a>"
        ],
        [
         "<a href='/ploshchadki/profsoyuz/'>клуб «Профсоюз»</a>",
         "<a href='/blog/korporativ-v-klube-profsoyuz/'>50 гостей</a>",
         "—",
         "<a href='/blog/korporativ-profsoyuz-na-100-chelovek-raschet/'>100 гостей</a>",
-        "—"
+        "—",
+        "<a href='/blog/korporativ-v-klube-profsoyuz/'>200 гостей</a>"
        ],
        [
-        "<a href='/ploshchadki/loft-hall/'>Loft Hall, зал Rosewood</a>",
+        "<a href='/ploshchadki/loft-hall/'>Loft Hall</a>",
         "<a href='/blog/korporativ-v-loft-hall-kakoy-zal-vybrat/'>50 гостей</a>",
         "—",
-        "<a href='/blog/korporativ-v-loft-hall-kakoy-zal-vybrat/'>100 гостей</a>",
-        "<a href='/blog/korporativ-loft-hall-na-150-chelovek-raschet/'>150 гостей</a>"
+        "<a href='/blog/korporativ-loft-hall-na-100-chelovek-raschet/'>100 гостей</a>",
+        "<a href='/blog/korporativ-loft-hall-na-150-chelovek-raschet/'>150 гостей</a>",
+        "<a href='/blog/korporativ-loft-hall-na-200-chelovek-raschet/'>200 гостей</a>"
        ]
       ]
      }
@@ -279,7 +321,11 @@
  "faq": [
   [
    "Сколько стоит корпоратив на 100 человек в Studio Hall?",
-   "По условиям площадки (условия каталога) меню и аренда — около 855 000 ₽; в модели нашей сметы (банкет не ниже 8 000 ₽ плюс 20% сервиса) — около 1 155 000 ₽, с ведущим и диджеем от 150 000 ₽ — около 1 305 000 ₽. Это модель, точную смету присылаем за рабочий день."
+   "По условиям площадки (условия каталога) меню и аренда — около 855 000 ₽; в модели нашей сметы (банкет не ниже 8 000 ₽ плюс 20% сервиса) — около 1 155 000 ₽, с ведущим и диджеем от 150 000 ₽ и координатором 25 000 ₽ — около 1 330 000 ₽, при оплате по счёту (+10% ко всей сумме) — около 1 463 000 ₽. Это модель, точную смету присылаем за рабочий день."
+  ],
+  [
+   "Что добавляется к расчёту при оплате по счёту?",
+   "К итогу прибавляется 10% ко всей сумме, включая площадку, питание и сервис, а в каждую нашу корпоративную смету закладывается координатор на площадке — 25 000 ₽."
   ],
   [
    "Вмещает ли Studio Hall 100 гостей?",
@@ -296,9 +342,9 @@
  ],
  "related": [
   "korporativ-v-studio-hall-zal-10",
-  "korporativ-na-100-chelovek-v-podmoskove",
+  "korporativ-na-100-chelovek-v-moskve-cena",
   "vedushchiy-i-didzhey-na-korporativ-skolko-stoit-2027",
   "kak-chitat-korporativnuyu-smetu-postrochno"
  ],
- "modified": "2026-10-16"
+ "modified": "2026-10-20"
 }
