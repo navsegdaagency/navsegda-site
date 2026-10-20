@@ -1,0 +1,40 @@
+/* Новогодние входные группы: посадочная, CTA-блок в статьях, баннер на главной */
+.ohero--e .ohero__title { font-size: clamp(36px, 4.6vw, 58px); line-height: 1; margin-bottom: 24px; }
+.ohero--e .ohero__grid { align-items: start; }
+@media (min-width: 1024px) { .ohero--e .ohero__grid { grid-template-columns: 6fr 5fr; gap: 72px; } }
+.ohero__sub { font-size: 17px; line-height: 1.6; color: var(--ink-2); margin: 0 0 28px; max-width: 560px; }
+.ecard { background: #fff; border: 1px solid var(--hair); padding: 26px 22px 24px; }
+@media (min-width: 700px) { .ecard { padding: 34px 32px 30px; } }
+.ecard__h { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(26px, 3vw, 34px); line-height: 1.1; margin: 0 0 8px; }
+.ecard__p { font-size: 14px; line-height: 1.55; color: var(--ink-2); margin: 0 0 18px; }
+.ecard .lead { gap: 16px; }
+.ecard .lead textarea { min-height: 72px; }
+.e-fig { margin: 0 auto 40px; max-width: 380px; }
+.e-fig img { display: block; width: 100%; height: auto; border-radius: 4px; }
+.e-grant { border: 1px solid var(--hair); background: var(--cream); padding: 24px 22px; margin-top: 28px; }
+.e-grant__tag { font-size: 10.5px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--accent); margin: 0 0 12px; }
+.e-grant ul { margin: 0 0 14px; padding-left: 1.1em; display: grid; gap: 6px; }
+.e-grant p { font-size: 15px; line-height: 1.6; color: var(--ink-2); margin: 0 0 10px; }
+.e-links { display: grid; gap: 0; border-top: 1px solid var(--hair); }
+.e-links a { display: flex; justify-content: space-between; gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--hair); font-family: var(--serif); font-size: clamp(20px, 2.2vw, 26px); line-height: 1.25; }
+.e-links a span { color: var(--accent); }
+@media (min-width: 1024px) { .e-links { grid-template-columns: 1fr 1fr; column-gap: 64px; } }
+.spec__v small a, .lead-sec__body a { text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(26,26,26,.3); }
+.e-cta__sub { margin: 0 0 8px; }
+/* CTA-блок в статьях */
+.ecta { margin: 28px 0 36px; padding: 24px 20px 22px; border: 1px solid var(--hair); border-left: 3px solid var(--accent); background: var(--cream); }
+@media (min-width: 700px) { .ecta { padding: 30px 32px 28px; } }
+.ecta__k { font-size: 10.5px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--accent); margin: 0 0 10px !important; }
+.ecta__h { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(24px, 3vw, 32px); line-height: 1.15; margin: 0 0 8px !important; }
+.ecta__p { font-size: 15px; line-height: 1.55; color: var(--ink-2); margin: 0 0 14px !important; }
+.ecta__link { display: inline-block; font-size: 14px; font-weight: 500; margin-bottom: 18px; border-bottom: 1px solid var(--ink); }
+.ecta .lead { gap: 14px; }
+.ecta .lead textarea { min-height: 64px; }
+/* баннер на главной */
+.egban { display: grid; gap: 6px; margin: 0 0 28px; padding: 22px 22px; border: 1px solid var(--hair); background: var(--cream); }
+.egban__k { font-size: 10.5px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--accent); }
+.egban__h { font-family: var(--serif); font-style: italic; font-size: clamp(26px, 3vw, 38px); line-height: 1.1; }
+.egban__p { font-size: 15px; color: var(--ink-2); }
+.egban__go { font-size: 14px; font-weight: 500; }
+.egban:hover .egban__go { color: var(--accent); }
+@media (max-width: 699px) { .ohero--e .ohero__meta { display: none; } .ohero--e .ohero__sub { margin-bottom: 8px; } .ohero--e .ohero__grid { gap: 28px; } }

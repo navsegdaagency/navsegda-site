@@ -274,14 +274,22 @@ function initForms() {
       // ловушка для ботов: настоящий человек это поле не видит
       if (form.elements.website && form.elements.website.value) { done(); return; }
 
+      const val = (n) => (form.elements[n] ? String(form.elements[n].value || '').trim() : '');
+      // доп. поля формы входных групп: компания и адрес объекта уходят в сообщение (сервер принимает venue/message)
+      const extra = [];
+      if (val('company')) extra.push('Компания: ' + val('company'));
+      if (val('address')) extra.push('Адрес объекта: ' + val('address'));
+      const note = val('message');
       const payload = {
         form: form.dataset.form,
         name,
         contact,
-        date: form.elements.date.value || '',
-        message: form.elements.message.value.trim(),
+        date: val('date'),
+        message: extra.length ? extra.concat(note ? ['Комментарий: ' + note] : []).join('\n') : note,
         page: location.href,
       };
+      if (val('address')) payload.venue = val('address');
+      if (val('company')) payload.company = val('company');
       form.dataset.busy = '1';
       btn.disabled = true;
       status.textContent = 'Отправляем…';
