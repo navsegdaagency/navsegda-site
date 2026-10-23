@@ -108,7 +108,7 @@ if (form) {
       form.innerHTML = '<div class="lead__ok" role="status" tabindex="-1"><p class="lead__ok-h">Спасибо, заявка у нас.</p><p>Посчитаем стоимость и свяжемся с вами в ближайшее время.</p></div>';
       render();
     } catch (x) {
-      status.textContent = 'Не получилось отправить — попробуйте ещё раз или позвоните +7 985 691-61-00.';
+      status.textContent = 'Не получилось отправить — попробуйте ещё раз или позвоните +7 958 541-00-41.';
       btn.disabled = false; delete form.dataset.busy;
     }
   });
