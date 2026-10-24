@@ -95,7 +95,7 @@
 <div class="ny-f"><div class="ny-l"><span>День</span></div><div class="ny-seg" id="nyDay" role="radiogroup" aria-label="День недели">
 <button type="button" role="radio" aria-checked="true" data-i="0">Понедельник–четверг</button><button type="button" role="radio" aria-checked="false" data-i="1">Пятница–воскресенье</button></div></div>
 <div class="ny-f"><div class="ny-l"><span>Дополнительно</span></div><div class="ny-chk">
-<label><input type="checkbox" id="nyBand"><span>Кавер-группа<small>+ около 230 000 ₽</small></span></label>
+<label><input type="checkbox" id="nyBand"><span>Кавер-группа<small>+ около 120 000 ₽</small></span></label>
 <label><input type="checkbox" id="nyBus"><span>Трансфер гостей<small>+ около 2 000 ₽ за гостя</small></span></label></div></div>
 </div><div class="ny-res"><span class="k">Ориентир бюджета при оплате по счёту</span><div class="ny-sum" id="nySum">—</div><div class="ny-pg" id="nyPg">—</div>
 <p class="mu" id="nyBasis">—</p>
@@ -194,7 +194,7 @@
   function m(n){return n>=1e6?(n/1e6).toFixed(2).replace(/0$/,'').replace('.',',')+' млн':Math.round(n/1000)+' тыс.'}
   function calc(){
     var n=+g.value; go.textContent=n; lh.textContent=LH[lv];
-    var lo=1e12, hi=0, used=[], extra=(band.checked?230000:0)+(bus.checked?2000*n:0);
+    var lo=1e12, hi=0, used=[], extra=(band.checked?120000:0)+(bus.checked?2000*n:0);
     V.forEach(function(v){
       if(v[1]!==lv) return; var cap=fmt?v[5]:v[4]; if(n>cap) return;
       var menu=fmt?v[3]:Math.max(v[2],MINB), food=menu*n*(1+SRV), rent=dy?v[7]:v[6];
