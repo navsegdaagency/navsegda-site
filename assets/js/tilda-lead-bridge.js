@@ -23,7 +23,7 @@
   function tgOf(f) {
     var v = val(f, ['tg', 'telegram']);
     if (!v) return '';
-    v = v.replace(/^https?:\/\/(www\.)?(t\.me|telegram\.me)\//i, '').replace(/^@+/, '').replace(/[^A-Za-z0-9_]/g, '');
+    v = v.replace(/^(https?:\/\/)?(www\.)?(t\.me|telegram\.me)\//i, '').replace(/^@+/, '').replace(/[^A-Za-z0-9_]/g, '');
     return v.length >= 3 ? '@' + v : '';
   }
   function say(f, text, ok) {

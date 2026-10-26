@@ -9,7 +9,7 @@
   function norm(v) {
     v = String(v || '').trim();
     if (!v) return '';
-    v = v.replace(/^https?:\/\/(www\.)?(t\.me|telegram\.me)\//i, '').replace(/^@+/, '').replace(/[^A-Za-z0-9_]/g, '');
+    v = v.replace(/^(https?:\/\/)?(www\.)?(t\.me|telegram\.me)\//i, '').replace(/^@+/, '').replace(/[^A-Za-z0-9_]/g, '');
     return v.length >= 3 ? '@' + v : '';
   }
 
