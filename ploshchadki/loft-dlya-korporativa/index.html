@@ -43,4 +43,5 @@ document.addEventListener('click',function(ev){var a=ev.target.closest('[data-go
 <script src="/assets/legal/legal.js" defer></script><script>document.querySelectorAll('.card').forEach(function(c){var f=c.querySelector('.fr');if(!f||matchMedia('(hover:none)').matches)return;
 c.addEventListener('pointermove',function(ev){var r=f.getBoundingClientRect(),x=(ev.clientX-r.left)/r.width,y=(ev.clientY-r.top)/r.height;
 f.style.transform='rotateY('+((x-.5)*10)+'deg) rotateX('+((.5-y)*8)+'deg) translateY(-4px)';f.style.setProperty('--mx',x*100+'%');f.style.setProperty('--my',y*100+'%')});
-c.addEventListener('pointerleave',function(){f.style.transform=''})});</script></body></html>
+c.addEventListener('pointerleave',function(){f.style.transform=''})});</script><script src="/assets/js/tg-field.js?v=1" defer></script>
+</body></html>

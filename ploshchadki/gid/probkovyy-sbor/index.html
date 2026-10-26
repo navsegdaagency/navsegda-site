@@ -43,4 +43,5 @@ var b=f.querySelector('button');b.disabled=true;b.textContent='Отправля�
 fetch('https://109-68-213-160.sslip.io/site-lead',{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify(d)}).then(function(r){return r.json()})
 .then(function(j){if(!j||!j.ok)throw 0;document.getElementById('gform').classList.add('done');if(window.ym)try{ym(112491690,'reachGoal','catalog_lead')}catch(x){}})
 .catch(function(){b.disabled=false;b.textContent='Получить варианты площадок';alert('Не получилось отправить. Позвоните или напишите нам: +7 958 541-00-41')})};
-</script></body></html>
+</script><script src="/assets/js/tg-field.js?v=1" defer></script>
+</body></html>
