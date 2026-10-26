@@ -1,0 +1,3 @@
+Playfair Display — Copyright 2017 The Playfair Project Authors (https://github.com/clauseggers/Playfair).
+Licensed under the SIL Open Font License, Version 1.1: https://openfontlicense.org
+Subsets (cyrillic/latin, regular+italic, variable 400–900) downloaded from Google Fonts for self-hosting on the home page.
