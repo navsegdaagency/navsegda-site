@@ -132,6 +132,7 @@ h3.lbl{font:400 12px/1 TildaSans,sans-serif;letter-spacing:.16em;text-transform:
 .incl li{break-inside:avoid;padding:0 0 10px 24px;position:relative}
 .incl li:before{content:'✓';position:absolute;left:0;color:var(--gold)}
 .tagrow{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 30px}
+.tagrow .chip{white-space:normal!important;max-width:100%;line-height:1.3}
 /* calc */
 .calc{background:var(--mat);border:1px solid var(--line);border-radius:12px;padding:30px;margin:10px 0 50px;position:relative}
 .calc:before{content:'';position:absolute;inset:8px;border:1px solid var(--gold-soft);border-radius:8px;pointer-events:none}
@@ -178,6 +179,8 @@ input[type=range]{flex:1;accent-color:var(--bordo);height:28px}
 .ptab td{padding:12px 16px;border-bottom:1px solid var(--line);vertical-align:top}
 .ptab tr:last-child td{border-bottom:0}
 .ptab td a{color:var(--bordo);text-decoration:none;font-weight:500}.ptab td small{display:block;color:var(--muted);font-size:13px}
+.lx{max-width:860px}.lx p,.lx li{font-size:16px;line-height:1.65}.lx ul,.lx ol{padding-left:20px}.lx li{margin:6px 0}.lx .sec-h{margin-bottom:16px}
+.lx a{color:var(--bordo)}
 .pnote{font-size:13px;color:var(--muted);max-width:80ch;margin:12px 0 0}
 .tips{display:grid;grid-template-columns:1.4fr 1fr;gap:48px;padding-top:10px;padding-bottom:60px}
 .tips ul{list-style:none;margin:0;padding:0;display:grid;gap:14px}.tips li{padding-left:24px;position:relative;color:var(--ink);max-width:62ch}

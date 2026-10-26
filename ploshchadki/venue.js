@@ -19,7 +19,7 @@ stage.addEventListener('pointermove',function(ev){if(!drag)return;var dx=ev.clie
 function up(){drag=false}stage.addEventListener('pointerup',up);stage.addEventListener('pointercancel',up);
 ring.addEventListener('click',function(ev){var b=ev.target.closest('[data-i]');if(b&&moved<6)sh(+b.dataset.i)});ring.addEventListener('keydown',function(ev){var b=ev.target.closest('[data-i]');if(b&&(ev.key=='Enter'||ev.key==' ')){ev.preventDefault();sh(+b.dataset.i)}});
 /* calculator */
-var S=[{id:'decor',l:'Декор и флористика',from:150000,on:1},{id:'host',l:CFG.wedding?'Ведущий и диджей':'Ведущий, диджей, программа',from:110000,on:1},
+var S=[{id:'decor',l:'Декор и флористика',from:150000,on:1},{id:'host',l:CFG.wedding?'Ведущий и диджей':'Ведущий, диджей, программа',from:150000,on:1},
 {id:'tech',l:'Свет и звук',from:100000,on:!CFG.tech_in,note:CFG.tech_in?'часть техники уже есть на площадке':''},{id:'photo',l:'Фото и видео',from:135000,on:1},
 {id:'cake',l:'Торт',pg:750,on:CFG.wedding,w:1},{id:'team',l:'Координатор и персонал',from:60000,on:1}];
 var svc=document.getElementById('svc'),g=document.getElementById('cg'),go=document.getElementById('cgo'),res=document.getElementById('res'),day=null;
@@ -37,7 +37,7 @@ function calc(){var n=+g.value;go.textContent=n;var L=[],venue=0,food=0;
   if(dep&&fs<dep){L.push(['Добор до минимального депозита '+rub(dep),dep-fs])}}
  else{L.push(['Питание — по меню площадки, посчитаем отдельно',0])}
  if(CFG.corkage){L.push(['Пробковый сбор: '+rub(CFG.corkage)+' × '+n,CFG.corkage*n])}
- var rent=CFG.days&&day?CFG.days[day][0]:CFG.rent;if(rent){L.push(['Аренда'+(day?' ('+day+')':''),rent])}else{L.push(['Аренда — уточним под дату',0])}
+ var rent=CFG.days&&day?CFG.days[day][0]:CFG.rent;if(rent){L.push([(CFG.rent_label||'Аренда')+(day?' ('+day+')':''),rent])}else{L.push(['Аренда — уточним под дату',0])}
  L.forEach(function(x){venue+=x[1]});
  var sv=0,SL=[];svc.querySelectorAll('input').forEach(function(c){if(!c.checked)return;var s=S.filter(function(z){return z.id==c.dataset.id})[0];var v=s.pg?s.pg*n:s.from;sv+=v;SL.push([s.l,v])});
  var org=Math.round((venue+sv)*0.11),tot=venue+sv+org;
