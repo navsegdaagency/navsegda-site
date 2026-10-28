@@ -216,7 +216,7 @@ var T = K.hideToken('t', 'nsg-kab-t'), D = null, TAB = (location.hash || '').sli
 var SK = 'nsg-kab-s:' + T, S = K.ls(SK);
 var TABS = [['main','Главное'],['team','Команда'],['smeta','Смета'],['pay','Оплаты'],['anketa','Анкета'],['ideas','Идеи'],['docs','Документы']];
 // Фото с наших свадеб 2026 (реальные проекты НАВСЕГДА)
-var IMG = '/assets/img/pairs/';
+var IMG = 'https://navseg-da.agency/assets/img/pairs/';
 var HERO_PH = IMG + 'dmitriy-diana/11.webp';
 var GALLERY = [[IMG + 'konstantin-darya/12.webp', 'Декор в белом и зелени'], [IMG + 'dmitriy-diana/04.webp', 'Президиум в цветах'], [IMG + 'konstantin-darya/14.webp', 'Шампанская башня на велкоме'], [IMG + 'ruslan-darya/13.webp', 'Арка из драпировки']];
 
@@ -264,7 +264,7 @@ function hero(){
   k.push([teamPct() + '%', 'команды собрано']);
   k.push([((D.anketa || {}).percent || 0) + '%', 'анкеты заполнено']);
   var sub = [D.date ? K.fmtDate(D.date) : '', D.guests ? D.guests + ' ' + K.plural(+D.guests || 0, 'гость', 'гостя', 'гостей') : '', D.venue || ''].filter(Boolean);
-  return '<div class="hero" style="background:linear-gradient(100deg,rgba(78,0,2,.94) 0%,rgba(78,0,2,.82) 55%,rgba(78,0,2,.45)),url(\'' + HERO_PH + '\') center 40%/cover"><div class="sm" style="color:#f0d6cc">🔒 Личный кабинет · только для вас</div><h1 style="margin:4px 0 6px">' + esc(D.names) + '</h1>' +
+  return '<div class="hero" style="background:linear-gradient(180deg,rgba(40,0,2,.55) 0%,rgba(78,0,2,.78) 70%,rgba(78,0,2,.9)),url(\'' + HERO_PH + '\') center 40%/cover"><div class="sm" style="color:#f0d6cc">🔒 Личный кабинет · только для вас</div><h1 style="margin:4px 0 6px">' + esc(D.names) + '</h1>' +
     '<div class="mu">' + sub.map(esc).join(' · ') + '</div>' +
     '<div class="kpis">' + k.map(function(x){ return '<div class="kpi"><b>' + esc(x[0]) + '</b><span>' + esc(x[1]) + '</span></div>'; }).join('') + '</div></div>';
 }
