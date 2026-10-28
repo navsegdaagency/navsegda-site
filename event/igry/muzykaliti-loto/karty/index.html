@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Карточки «Музыкалити лото» | НАВСЕГДА</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/event/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/event/assets/css/fonts.css?v=nsg2">
+<style>
+:root{--bordo:#4E0002;--wine:#7A1C22;--gold:#BA8A48;--cream:#FFE7C6;--ink:#2A1416;font-family:'Onest',system-ui,sans-serif}
+body{margin:0;background:#f4ece0;color:var(--ink)}
+.bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:16px 20px;background:var(--bordo);color:var(--cream)}
+.bar b{font-size:18px}.bar label{font-size:14px}
+.bar input{width:70px;padding:6px 8px;border-radius:8px;border:0;font:inherit}
+.bar button{padding:8px 14px;border-radius:10px;border:0;background:var(--gold);color:#1a0d0f;font:inherit;font-weight:700;cursor:pointer}
+.sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(520px,1fr));gap:18px;padding:20px}
+.card{background:#fff;border:3px solid var(--wine);border-radius:14px;padding:12px 14px 14px;break-inside:avoid}
+.ch{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px}
+.ch b{color:var(--wine);font-size:16px}.ch span{font-size:12px;color:#7b6560}
+table{border-collapse:collapse;width:100%;table-layout:fixed}
+td{border:2px solid var(--wine);height:46px;text-align:center;font-size:22px;font-weight:800;color:var(--bordo)}
+td.e{background:repeating-linear-gradient(45deg,#f6eadb,#f6eadb 6px,#fff 6px,#fff 12px)}
+.foot{font-size:11px;color:#7b6560;margin-top:6px;text-align:right}
+@media print{.bar{display:none}body{background:#fff}.sheet{grid-template-columns:1fr;gap:10mm;padding:0}.card{page-break-inside:avoid}
+  @page{size:A4;margin:10mm}}
+</style></head>
+<body>
+<div class="bar"><b>∞ Карточки «Музыкалити лото»</b>
+  <label>Сколько карточек <input type="number" id="cnt" value="30" min="1" max="300"></label>
+  <button type="button" id="gen">Сгенерировать заново</button>
+  <button type="button" onclick="window.print()">Печать / PDF</button>
+  <span style="font-size:13px;opacity:.85">Классическая карточка: 3 ряда по 5 чисел, числа 1–90. Каждая карточка уникальна.</span>
+</div>
+<div class="sheet" id="sheet"></div>
+<script>
+function card(){
+  let mask;
+  while(true){
+    mask = [0,1,2].map(() => { const cols = [...Array(9).keys()].sort(() => Math.random() - .5).slice(0, 5); return [...Array(9)].map((_, c) => cols.includes(c)); });
+    if([...Array(9).keys()].every(c => mask.some(r => r[c]))) break;
+  }
+  const grid = [[], [], []];
+  for(let c = 0; c < 9; c++){
+    const lo = c === 0 ? 1 : c * 10, hi = c === 8 ? 90 : c * 10 + 9;
+    const pool = []; for(let n = lo; n <= hi; n++) pool.push(n);
+    const k = mask.filter(r => r[c]).length;
+    const pick = pool.sort(() => Math.random() - .5).slice(0, k).sort((a, b) => a - b);
+    let j = 0; for(let r = 0; r < 3; r++) grid[r][c] = mask[r][c] ? pick[j++] : null;
+  }
+  return grid;
+}
+function gen(){
+  const n = Math.max(1, Math.min(300, +document.getElementById('cnt').value || 30));
+  const seen = new Set(); let html = '';
+  for(let i = 1; i <= n; i++){
+    let g, key; do { g = card(); key = g.flat().join(','); } while(seen.has(key)); seen.add(key);
+    html += `<div class="card"><div class="ch"><b>∞ НАВСЕГДА · Музыкалити лото</b><span>карточка № ${i}</span></div><table>${g.map(r => '<tr>' + r.map(v => v ? `<td>${v}</td>` : '<td class="e"></td>').join('') + '</tr>').join('')}</table><div class="foot">Отмечайте выпавшие номера · navseg-da.agency</div></div>`;
+  }
+  document.getElementById('sheet').innerHTML = html;
+}
+document.getElementById('gen').onclick = gen; gen();
+</script>
+<script src="/event/assets/legal/legal.js" defer></script></body></html>

@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Пульт «Музыкалити лото» | НАВСЕГДА</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/event/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="/event/assets/fonts/onest-cyr.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/event/assets/css/fonts.css?v=nsg2">
+<style>
+:root{--bg:#0d0607;--panel:#1a0d0f;--panel2:#24131a;--line:#3a2226;--tx:#f6e9da;--tx2:#bfa69c;--bordo:#7A1C22;--wine:#a3333b;--gold:#d4a35c;--gold2:#ffe7c6;--ok:#6cc08e;--r:16px;font-family:'Onest',system-ui,sans-serif}
+*{box-sizing:border-box}html,body{margin:0;background:var(--bg);color:var(--tx);height:100%}
+button,input,select{font:inherit;color:inherit}
+.top{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;padding:14px max(16px,env(safe-area-inset-left)) 10px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--bg);z-index:5}
+.brand{display:flex;align-items:baseline;gap:10px}.brand b{font-size:20px;letter-spacing:.02em}.brand span{color:var(--tx2);font-size:13px}
+.acts{display:flex;flex-wrap:wrap;gap:8px}
+.b{border:1px solid var(--line);background:var(--panel);border-radius:12px;padding:9px 14px;cursor:pointer;font-weight:600;font-size:14px}
+.b:hover{border-color:var(--gold)}.b.gold{background:var(--gold);color:#1a0d0f;border-color:var(--gold)}.b.red{border-color:var(--wine)}
+.b:focus-visible,.cell:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+.wrap{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;padding:16px max(16px,env(safe-area-inset-left))}
+@media (max-width:900px){.wrap{grid-template-columns:1fr}}
+.enter{display:flex;gap:10px;align-items:center;margin-bottom:14px}
+.enter input{width:150px;font-size:28px;font-weight:800;text-align:center;background:var(--panel);border:2px solid var(--line);border-radius:14px;padding:8px}
+.enter input:focus{border-color:var(--gold);outline:none}
+.enter small{color:var(--tx2)}
+.grid{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:8px}
+@media (max-width:640px){.grid{grid-template-columns:repeat(6,minmax(0,1fr))}}
+.cell{position:relative;aspect-ratio:1;border-radius:50%;border:2px solid var(--line);background:radial-gradient(circle at 35% 30%,#3a2026,#1a0d0f 70%);font-size:clamp(16px,2.2vw,26px);font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:transform .15s}
+.cell:hover{transform:scale(1.06);border-color:var(--gold)}
+.cell.prize::after{content:"🎁";position:absolute;top:-4px;right:-4px;font-size:14px}
+.cell.nolink{border-style:dashed;opacity:.85}
+.cell.played{background:var(--bordo);border-color:var(--wine);color:var(--gold2);opacity:.55}
+.side{display:flex;flex-direction:column;gap:12px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.card h3{margin:0 0 8px;font-size:14px;color:var(--gold);text-transform:uppercase;letter-spacing:.08em}
+.stat{display:flex;justify-content:space-between;font-size:14px;padding:3px 0}.stat b{font-variant-numeric:tabular-nums}
+.hist{max-height:42vh;overflow:auto;display:flex;flex-direction:column;gap:6px}
+.hist div{display:flex;gap:8px;font-size:13px;align-items:center}.hist i{font-style:normal;min-width:30px;height:30px;border-radius:50%;background:var(--bordo);display:flex;align-items:center;justify-content:center;font-weight:800}
+.help{font-size:12.5px;color:var(--tx2);line-height:1.5}
+/* сцена */
+.stage{position:fixed;inset:0;background:#000;z-index:50;display:none;flex-direction:column}
+.stage.on{display:flex}
+.st-top{display:flex;align-items:center;gap:16px;padding:12px 18px;background:linear-gradient(180deg,#000,transparent);position:absolute;top:0;left:0;right:0;z-index:3}
+.ball{width:76px;height:76px;border-radius:50%;background:radial-gradient(circle at 35% 30%,var(--gold2),var(--gold) 55%,#8a5f22);color:#2a1210;font-size:34px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 6px 30px rgba(212,163,92,.5)}
+.st-t b{display:block;font-size:22px}.st-t span{color:var(--tx2)}
+.st-ctl{margin-left:auto;display:flex;gap:8px}
+#yt{flex:1;width:100%;height:100%}
+.noclip{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:20px}
+.noclip a{color:var(--gold)}
+.prizebar{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);background:var(--gold);color:#2a1210;font-weight:900;font-size:clamp(20px,3vw,34px);padding:12px 26px;border-radius:999px;z-index:4;display:none;box-shadow:0 10px 40px rgba(212,163,92,.6)}
+.prizebar.on{display:block;animation:pop .5s ease}
+@keyframes pop{from{transform:translateX(-50%) scale(.6);opacity:0}to{transform:translateX(-50%) scale(1);opacity:1}}
+.intro{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:5;background:#000;pointer-events:none;opacity:0;transition:opacity .3s}
+.intro.on{opacity:1}
+.intro .ball{width:min(40vw,320px);height:min(40vw,320px);font-size:min(18vw,150px)}
+@media (prefers-reduced-motion:reduce){.prizebar.on{animation:none}.cell{transition:none}}
+/* настройка */
+.setup{display:none;padding:16px max(16px,env(safe-area-inset-left))}
+.setup.on{display:block}
+.setup .tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r)}
+table{border-collapse:collapse;width:100%;min-width:900px;font-size:13px}
+th,td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:middle}
+th{color:var(--tx2);font-weight:600;font-size:12px;position:sticky;top:0;background:var(--panel2)}
+td input[type=text]{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 8px}
+td input.t{width:70px}
+td a{color:var(--gold);text-decoration:none}
+.ok{color:var(--ok)}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--gold);color:#1a0d0f;padding:10px 16px;border-radius:12px;font-weight:700;z-index:60;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.on{opacity:1}
+</style></head>
+<body>
+<div class="top">
+  <div class="brand"><b>∞ Музыкалити лото</b><span>пульт ведущего и диджея · НАВСЕГДА</span></div>
+  <div class="acts">
+    <button class="b" id="bGame" type="button">Игра</button>
+    <button class="b" id="bSetup" type="button">Песни и ссылки</button>
+    <a class="b" href="../karty/" target="_blank" rel="noopener" style="text-decoration:none">Карточки для печати</a>
+    <button class="b red" id="bNew" type="button">Новая игра</button>
+  </div>
+</div>
+
+<div id="game">
+  <div class="wrap">
+    <div>
+      <div class="enter"><input id="num" inputmode="numeric" maxlength="2" placeholder="№" aria-label="Номер бочонка"><button class="b gold" id="bPlay" type="button">Играть ▶</button><small>Наберите номер и Enter, или нажмите на бочонок</small></div>
+      <div class="grid" id="grid"></div>
+    </div>
+    <div class="side">
+      <div class="card"><h3>Игра</h3>
+        <div class="stat"><span>Сыграно</span><b id="sPlayed">0 / 90</b></div>
+        <div class="stat"><span>Выигрышных выпало</span><b id="sPrize">0</b></div>
+        <div class="stat"><span>Песен без ссылки</span><b id="sNo">0</b></div>
+      </div>
+      <div class="card"><h3>История</h3><div class="hist" id="hist"></div></div>
+      <div class="card help"><b>Клавиши на сцене:</b> пробел — пауза, R — заново, Esc — закрыть. 🎁 — выигрышный бочонок, гостю подарок. Пунктирный бочонок — песне ещё не добавлена ссылка.</div>
+    </div>
+  </div>
+</div>
+
+<div class="setup" id="setup">
+  <div class="acts" style="margin-bottom:12px">
+    <button class="b" id="bExport" type="button">Сохранить список в файл</button>
+    <label class="b" style="cursor:pointer">Загрузить из файла<input type="file" id="fImport" accept="application/json" hidden></label>
+    <button class="b" id="bDefaults" type="button">Вернуть стартовый список</button>
+  </div>
+  <p class="help">Вставьте ссылку на клип YouTube (с текстом на экране), укажите, с какой секунды начинать и где закончить (обычно куплет + припев, 60–90 секунд). Время можно писать как 1:05. Всё сохраняется на этом ноутбуке автоматически; для другого ноутбука — «Сохранить список в файл» и «Загрузить из файла».</p>
+  <div class="tbl"><table><thead><tr><th>№</th><th>Исполнитель</th><th>Песня</th><th>Ссылка YouTube</th><th>Начало</th><th>Конец</th><th>🎁</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
+</div>
+
+<div class="stage" id="stage" role="dialog" aria-label="Сцена">
+  <div class="st-top"><div class="ball" id="stBall">0</div><div class="st-t"><b id="stTitle"></b><span id="stArtist"></span></div>
+    <div class="st-ctl"><button class="b" id="bPause" type="button">⏯</button><button class="b" id="bRe" type="button">⟲</button><button class="b" id="bFull" type="button">⛶</button><button class="b red" id="bClose" type="button">✕</button></div></div>
+  <div id="yt"></div>
+  <div class="noclip" id="noclip" hidden><b style="font-size:24px">Для этого бочонка ещё нет клипа</b><a id="noSearch" target="_blank" rel="noopener">Найти на YouTube →</a></div>
+  <div class="prizebar" id="prizebar">🎁 Выигрышный бочонок — подарок!</div>
+  <div class="intro" id="intro"><div class="ball" id="introBall">0</div></div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const DEFAULT = [
+["Руки Вверх","Крошка моя"],["Руки Вверх","18 мне уже"],["Hi-Fi","Седьмой лепесток"],["Звери","Районы-кварталы"],["Звери","Всё, что тебя касается"],
+["Мумий Тролль","Владивосток 2000"],["Сплин","Выхода нет"],["Земфира","Хочешь?"],["Земфира","Ариведерчи"],["Ленинград","Экспонат"],
+["Ленинград","WWW"],["Кино","Группа крови"],["Кино","Звезда по имени Солнце"],["Кино","Кукушка"],["ДДТ","Что такое осень"],
+["Любэ","Конь"],["Би-2","Полковнику никто не пишет"],["Би-2","Варвара"],["Алла Пугачёва","Миллион алых роз"],["Алла Пугачёва","Позови меня с собой"],
+["Валерий Меладзе","Сэра"],["ВИА Гра","Попытка №5"],["Блестящие","А я всё летала"],["Татьяна Буланова","Ясный мой свет"],["Иванушки International","Тополиный пух"],
+["Иванушки International","Кукла"],["Отпетые мошенники","Обратите внимание"],["Дискотека Авария","Если хочешь остаться"],["Дискотека Авария","Новогодняя"],["Король и Шут","Лесник"],
+["Король и Шут","Кукла колдуна"],["Ария","Беспечный ангел"],["Чайф","Аргентина - Ямайка 5:0"],["Агата Кристи","Как на войне"],["Сектор Газа","Лирика"],
+["Ласковый май","Белые розы"],["Леонид Агутин","Хоп хэй лала лэй"],["Мираж","Музыка нас связала"],["Комбинация","Бухгалтер"],["Григорий Лепс","Рюмка водки на столе"],
+["Ёлка","Прованс"],["Тату","Нас не догонят"],["Uma2rman","Проститься"],["Монеточка","Каждый раз"],["Gayazov$ Brother$","Малиновая Лада"],
+["Тима Белорусских","Мокрые кроссы"],["Artik & Asti","Девочка танцуй"],["Zivert","Life"],["Баста","Сансара"],["Макс Корж","Мотылёк"],
+["Макс Корж","Жить в кайф"],["Время и Стекло","Имя 505"],["Полина Гагарина","Спектакль окончен"],["Валентин Стрыкало","Наше лето"],["Нервы","Батареи"],
+["Звери","Напитки покрепче"],["Сплин","Моё сердце"],["Ночные Снайперы","Катастрофически"],["Корни","Ты узнаешь её"],["Фабрика","Про любовь"],
+["Серебро","Мало тебя"],["Дима Билан","Невозможное возможно"],["Винтаж","Плохая девочка"],["Ани Лорак","Зеркала"],["Бьянка","Были танцы"],
+["Банд'Эрос","Манхэттен"],["Нюша","Выбирать чудо"],["Ёлка","На большом воздушном шаре"],["Dabro","Юность"],["Little Big","Skibidi"],
+["Shakira","Waka Waka"],["Los del Río","Macarena"],["Village People","Y.M.C.A."],["ABBA","Dancing Queen"],["Queen","We Will Rock You"],
+["Gloria Gaynor","I Will Survive"],["Bon Jovi","It's My Life"],["Boney M.","Rasputin"],["Modern Talking","Cheri Cheri Lady"],["Las Ketchup","Asereje"],
+["Mr. President","Coco Jambo"],["Eiffel 65","Blue"],["Spice Girls","Wannabe"],["Backstreet Boys","Everybody"],["Michael Jackson","Billie Jean"],
+["Lou Bega","Mambo No. 5"],["Bellini","Samba de Janeiro"],["Ricky Martin","Livin' la Vida Loca"],["Ирина Аллегрова","Младший лейтенант"],["Дискотека Авария","Небо"]
+];
+const PRIZE = [7, 13, 22, 33, 44, 55, 66, 77, 88, 90];
+const KEY = 'nsg-loto-v1', GKEY = 'nsg-loto-game';
+const $ = id => document.getElementById(id);
+function defaults(){ return DEFAULT.map(([a, t], i) => ({n: i + 1, artist: a, title: t, url: '', start: '', end: '', prize: PRIZE.includes(i + 1)})); }
+let songs = defaults(), game = {played: []};
+try{ const s = JSON.parse(localStorage.getItem(KEY) || 'null'); if(Array.isArray(s) && s.length === 90) songs = s; }catch(e){}
+try{ const g = JSON.parse(localStorage.getItem(GKEY) || 'null'); if(g && Array.isArray(g.played)) game = g; }catch(e){}
+const saveSongs = () => { try{ localStorage.setItem(KEY, JSON.stringify(songs)); }catch(e){} };
+const saveGame = () => { try{ localStorage.setItem(GKEY, JSON.stringify(game)); }catch(e){} };
+function toast(t){ const el = $('toast'); el.textContent = t; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove('on'), 1800); }
+function ytId(u){ const m = String(u || '').match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([\w-]{11})/); return m ? m[1] : ''; }
+function sec(v){ v = String(v || '').trim(); if(!v) return 0; if(v.includes(':')){ const [m, s] = v.split(':'); return (+m || 0) * 60 + (+s || 0); } return +v || 0; }
+function urlStart(u){ const m = String(u || '').match(/[?&]t=(\d+)/); return m ? +m[1] : 0; }
+
+function renderGrid(){
+  $('grid').innerHTML = songs.map(s => `<button type="button" class="cell${s.prize ? ' prize' : ''}${ytId(s.url) ? '' : ' nolink'}${game.played.includes(s.n) ? ' played' : ''}" data-n="${s.n}" title="${s.n}. ${s.artist} - ${s.title}">${s.n}</button>`).join('');
+  $('sPlayed').textContent = game.played.length + ' / 90';
+  $('sPrize').textContent = game.played.filter(n => songs[n - 1].prize).length;
+  $('sNo').textContent = songs.filter(s => !ytId(s.url)).length;
+  $('hist').innerHTML = game.played.slice().reverse().map(n => { const s = songs[n - 1]; return `<div><i>${n}</i><span>${s.prize ? '🎁 ' : ''}${s.artist} - ${s.title}</span></div>`; }).join('') || '<span class="help">Пока ничего не сыграно</span>';
+}
+function esc(t){ return String(t).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+function renderSetup(){
+  $('rows').innerHTML = songs.map((s, i) => `<tr data-i="${i}"><td><b>${s.n}</b></td>
+    <td><input type="text" data-f="artist" value="${esc(s.artist)}" aria-label="Исполнитель ${s.n}"></td>
+    <td><input type="text" data-f="title" value="${esc(s.title)}" aria-label="Песня ${s.n}"></td>
+    <td><input type="text" data-f="url" value="${esc(s.url)}" placeholder="https://youtu.be/…" aria-label="Ссылка ${s.n}"></td>
+    <td><input type="text" class="t" data-f="start" value="${esc(s.start)}" placeholder="0:45" aria-label="Начало ${s.n}"></td>
+    <td><input type="text" class="t" data-f="end" value="${esc(s.end)}" placeholder="2:05" aria-label="Конец ${s.n}"></td>
+    <td><input type="checkbox" data-f="prize" ${s.prize ? 'checked' : ''} aria-label="Выигрышный ${s.n}"></td>
+    <td>${ytId(s.url) ? '<span class="ok">✓</span>' : `<a href="https://www.youtube.com/results?search_query=${encodeURIComponent(s.artist + ' ' + s.title + ' караоке клип')}" target="_blank" rel="noopener">найти</a>`}</td></tr>`).join('');
+}
+$('rows').addEventListener('change', e => {
+  const tr = e.target.closest('tr'); if(!tr) return;
+  const s = songs[+tr.dataset.i], f = e.target.dataset.f;
+  s[f] = f === 'prize' ? e.target.checked : e.target.value.trim();
+  if(f === 'url' && !s.start && urlStart(s.url)){ s.start = String(urlStart(s.url)); }
+  saveSongs(); renderSetup(); renderGrid(); toast('Сохранено');
+});
+
+// ---- плеер ----
+let player = null, apiReady = false, cur = null;
+window.onYouTubeIframeAPIReady = () => { apiReady = true; };
+(function(){ const s = document.createElement('script'); s.src = 'https://www.youtube.com/iframe_api'; document.head.appendChild(s); })();
+function play(n){
+  n = +n; if(!(n >= 1 && n <= 90)) { toast('Номер от 1 до 90'); return; }
+  const s = songs[n - 1]; cur = s;
+  if(!game.played.includes(n)){ game.played.push(n); saveGame(); }
+  renderGrid();
+  $('stBall').textContent = n; $('introBall').textContent = n;
+  $('stTitle').textContent = s.title; $('stArtist').textContent = s.artist;
+  $('prizebar').classList.remove('on');
+  $('stage').classList.add('on');
+  const intro = $('intro'); intro.classList.add('on'); setTimeout(() => intro.classList.remove('on'), 1400);
+  const id = ytId(s.url);
+  $('noclip').hidden = !!id; $('yt').style.display = id ? '' : 'none';
+  $('noSearch').href = 'https://www.youtube.com/results?search_query=' + encodeURIComponent(s.artist + ' ' + s.title + ' караоке клип');
+  if(s.prize) setTimeout(() => $('prizebar').classList.add('on'), 1600);
+  if(!id) return;
+  const vars = {start: sec(s.start) || urlStart(s.url), autoplay: 1, controls: 0, rel: 0, modestbranding: 1, playsinline: 1};
+  const e = sec(s.end); if(e) vars.end = e;
+  const go = () => {
+    if(player && player.loadVideoById){ player.loadVideoById({videoId: id, startSeconds: vars.start, endSeconds: vars.end}); return; }
+    player = new YT.Player('yt', {videoId: id, playerVars: vars, width: '100%', height: '100%',
+      events: {onStateChange: ev => { if(ev.data === YT.PlayerState.ENDED) setTimeout(closeStage, 1500); }}});
+  };
+  if(apiReady) setTimeout(go, 600); else { const t = setInterval(() => { if(apiReady){ clearInterval(t); go(); } }, 200); }
+}
+function closeStage(){ $('stage').classList.remove('on'); try{ player && player.stopVideo(); }catch(e){} $('num').value = ''; $('num').focus(); }
+$('bClose').onclick = closeStage;
+$('bPause').onclick = () => { try{ player.getPlayerState() === 1 ? player.pauseVideo() : player.playVideo(); }catch(e){} };
+$('bRe').onclick = () => { try{ player.seekTo(sec(cur.start) || urlStart(cur.url)); player.playVideo(); }catch(e){} };
+$('bFull').onclick = () => { const el = $('stage'); (document.fullscreenElement ? document.exitFullscreen() : el.requestFullscreen && el.requestFullscreen()).catch?.(() => {}); };
+document.addEventListener('keydown', e => {
+  if(!$('stage').classList.contains('on')) return;
+  if(e.key === 'Escape') closeStage();
+  else if(e.key === ' '){ e.preventDefault(); $('bPause').click(); }
+  else if(e.key.toLowerCase() === 'r' || e.key.toLowerCase() === 'к') $('bRe').click();
+});
+$('grid').addEventListener('click', e => { const c = e.target.closest('.cell'); if(c) play(c.dataset.n); });
+$('bPlay').onclick = () => play($('num').value);
+$('num').addEventListener('keydown', e => { if(e.key === 'Enter') play($('num').value); });
+$('bNew').onclick = () => { if(game.played.length && !$('bNew').dataset.sure){ $('bNew').dataset.sure = 1; $('bNew').textContent = 'Точно сбросить?'; setTimeout(() => { delete $('bNew').dataset.sure; $('bNew').textContent = 'Новая игра'; }, 3000); return; }
+  delete $('bNew').dataset.sure; $('bNew').textContent = 'Новая игра'; game = {played: []}; saveGame(); renderGrid(); toast('Новая игра'); };
+$('bGame').onclick = () => { $('game').hidden = false; $('setup').classList.remove('on'); };
+$('bSetup').onclick = () => { $('game').hidden = true; $('setup').classList.add('on'); renderSetup(); };
+$('bExport').onclick = () => { const b = new Blob([JSON.stringify(songs, null, 1)], {type: 'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'muzykaliti-loto-pesni.json'; a.click(); };
+$('fImport').onchange = e => { const f = e.target.files[0]; if(!f) return; f.text().then(t => { try{ const d = JSON.parse(t); if(!Array.isArray(d) || d.length !== 90) throw 0; songs = d; saveSongs(); renderSetup(); renderGrid(); toast('Список загружен'); }catch(err){ toast('Файл не подходит: нужен список из 90 песен'); } }); };
+$('bDefaults').onclick = () => { songs = defaults(); saveSongs(); renderSetup(); renderGrid(); toast('Стартовый список возвращён'); };
+renderGrid(); $('num').focus();
+</script>
+<script src="/event/assets/legal/legal.js" defer></script></body></html>
