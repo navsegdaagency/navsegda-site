@@ -224,7 +224,7 @@ var KAB = (function(){
 var K = KAB, esc = K.esc, $ = K.$;
 var T = K.hideToken('t', 'nsg-kab-t'), D = null, TAB = (location.hash || '').slice(1) || 'main', app = $('#app');
 var SK = 'nsg-kab-s:' + T, S = K.ls(SK);
-var TABS = [['main','Главное'],['team','Команда'],['smeta','Смета'],['pay','Оплаты'],['anketa','Анкета'],['ideas','Идеи'],['docs','Документы']];
+var TABS = [['main','Главное'],['prep','Подготовка'],['team','Команда'],['smeta','Смета'],['pay','Оплаты'],['anketa','Анкета'],['ideas','Идеи'],['docs','Документы']];
 // Фото с наших свадеб 2026 (реальные проекты НАВСЕГДА)
 var IMG = 'https://navseg-da.agency/assets/img/pairs/';
 var HERO_PH = IMG + 'ruslan-darya/17.webp';   // выездная церемония без людей
@@ -291,12 +291,17 @@ function teamCard(){
   if(t.realizer) h += '<div class="row" style="margin-bottom:10px"><div class="av" style="background:' + K.COL[0] + '">' + esc(K.ini(t.realizer)) + '</div><div><b>' + esc(t.realizer) + ' - реализатор</b><div class="sm mu">ведёт вашу свадьбу до самого дня</div></div></div>';
   if(t.manager) h += '<div class="row" style="margin-bottom:10px"><div class="av" style="background:' + K.COL[1] + '">' + esc(K.ini(t.manager)) + '</div><div><b>' + esc(t.manager) + '</b><div class="sm mu">менеджер</div></div></div>';
   h += '<a class="btn pr wide" href="' + esc(t.telegram || K.TG) + '" target="_blank" rel="noopener">Написать в Telegram</a>';
+  var tg = D.tg || {};
+  if(tg.on) h += '<p class="sm" style="margin:10px 0 0">🔔 Новости кабинета приходят вам в Telegram</p>';
+  else if(tg.link) h += '<a class="btn wide" style="margin-top:8px" href="' + esc(tg.link) + '" target="_blank" rel="noopener">🔔 Получать новости в Telegram</a><p class="sm mu" style="margin:6px 0 0">Бот напишет, когда нужно что-то выбрать, обновится смета или придёт платёж.</p>';
   h += '<p class="sm mu" style="margin:8px 0 0">Телефон: ' + esc(t.phone || K.PHONE) + '</p></div>';
   return h;
 }
 function main(){
   var todo = [];
   (D.slots || []).forEach(function(s){ if(s.status === 'choose' && !s.picked) todo.push(['👆', 'Выберите: ' + String(s.key).toLowerCase(), s.note || ((s.cands || []).length ? 'варианты уже ждут вас' : 'варианты скоро появятся'), 'team']); });
+  var nx = nextChecks()[0];
+  if(nx) todo.push(['✅', nx.title, nx.left < 0 ? 'пора сделать - срок прошёл' : 'лучше успеть за ' + nx.due_days + ' ' + K.plural(nx.due_days, 'день', 'дня', 'дней') + ' до свадьбы', 'prep']);
   var ap = (D.anketa || {}).percent || 0;
   if(ap < 100) todo.push(['📝', ap ? 'Дозаполните анкету' : 'Заполните анкету', 'заполнено ' + ap + '% - это нужно ведущему, фотографу и декору', 'anketa']);
   var u = unpaid()[0];
@@ -312,6 +317,25 @@ function main(){
   h += '</div></div><div class="card" style="margin-top:14px"><h3>Наши свадьбы 2026</h3><p class="sm mu" style="margin:0 0 10px">Живые кадры с проектов НАВСЕГДА - для вдохновения. Понравилось - напишите в «Анкете», учтём.</p><div class="gal">' +
     GALLERY.map(function(g){ return '<figure><img src="' + g[0] + '" alt="' + esc(g[1]) + '" loading="lazy"><figcaption>' + esc(g[1]) + '</figcaption></figure>'; }).join('') + '</div></div>';
   return h + '<p class="sm mu" style="text-align:center;margin:18px 0 0"><button class="btn sm gh" type="button" data-logout>Выйти на этом устройстве</button></p>';
+}
+function nextChecks(){
+  var dl = D.days_left; if(dl == null) return [];
+  return (D.checklist || []).filter(function(c){ return !c.done && c.id !== 'anketa'; }).map(function(c){ return Object.assign({left: dl - c.due_days}, c); })
+    .filter(function(c){ return c.left <= 30; }).sort(function(a, b){ return a.left - b.left; });
+}
+function prep(){
+  var dl = D.days_left, day = D.day || {}, list = (D.checklist || []).slice().sort(function(a, b){ return b.due_days - a.due_days; });
+  var done = list.filter(function(c){ return c.done; }).length;
+  var h = '<div class="grid2"><div class="card"><h3>Чек-лист пары · ' + done + ' из ' + list.length + '</h3><div class="prog" style="margin-bottom:10px"><i style="width:' + Math.round(done / Math.max(1, list.length) * 100) + '%"></i></div>' +
+    '<p class="sm mu" style="margin:0 0 8px">То, что делаете вы сами. Отмечайте - реализатор видит.</p>' +
+    list.map(function(c){
+      var left = dl == null ? null : dl - c.due_days, tag = c.done ? '' : left == null ? '' : left < 0 ? '<span class="pill p-warn">пора</span>' : left <= 30 ? '<span class="pill p-mu">скоро</span>' : '';
+      return '<label class="todo" style="cursor:pointer"><input type="checkbox" data-check="' + esc(c.id) + '"' + (c.done ? ' checked' : '') + ' style="width:20px;height:20px;flex-shrink:0"><div style="flex:1;min-width:0"><b' + (c.done ? ' style="text-decoration:line-through;opacity:.6"' : '') + '>' + esc(c.title) + '</b><div class="sm mu">за ' + c.due_days + ' ' + K.plural(c.due_days, 'день', 'дня', 'дней') + ' до свадьбы</div></div>' + tag + '</label>';
+    }).join('') + '</div><div class="stack">';
+  h += '<div class="card"><h3>Тайминг дня свадьбы</h3>' + (day.timing ? '<div class="pre">' + esc(day.timing) + '</div>' : '<p class="mu sm" style="margin:0">' + (day.timing_in != null ? 'Появится здесь за месяц до свадьбы - через ' + day.timing_in + ' ' + K.plural(day.timing_in, 'день', 'дня', 'дней') + '.' : 'Реализатор пришлёт тайминг за месяц до свадьбы.') + '</p>') + '</div>';
+  h += '<div class="card"><h3>Контакты команды на день</h3>' + ((day.contacts || []).length ? day.contacts.map(function(c){ return '<div class="todo"><div class="ic" aria-hidden="true">📞</div><div style="flex:1;min-width:0"><b>' + esc(c.key) + ': ' + esc(c.who) + '</b><div class="sm">' + esc(c.contact) + '</div></div></div>'; }).join('') :
+    '<p class="mu sm" style="margin:0">' + (day.contacts_in != null ? 'Откроются за неделю до свадьбы - через ' + day.contacts_in + ' ' + K.plural(day.contacts_in, 'день', 'дня', 'дней') + '. До этого все вопросы - реализатору.' : 'Появятся за неделю до свадьбы.') + '</p>') + '</div>';
+  return h + '</div></div>';
 }
 function team(){
   var sl = D.slots || [];
@@ -395,7 +419,7 @@ function render(){
   if(TAB === 'docs' && !(D.docs || []).length) TAB = 'main';
   if(!TABS.some(function(t){ return t[0] === TAB; })) TAB = 'main';
   document.title = (D.names || 'Кабинет') + ' · НАВСЕГДА';
-  var body = ({main:main, team:team, smeta:smeta, pay:pay, anketa:anketa, ideas:ideas, docs:docs})[TAB]();
+  var body = ({main:main, prep:prep, team:team, smeta:smeta, pay:pay, anketa:anketa, ideas:ideas, docs:docs})[TAB]();
   var keep = $('#wish') ? $('#wish').value : '';
   app.innerHTML = hero() + tabs() + '<div id="tabBody">' + body + '</div>';
   if(keep && $('#wish')) $('#wish').value = keep;
@@ -426,6 +450,11 @@ document.addEventListener('click', function(e){
       K.toast(on ? 'Отметили - реализатор увидит' : 'Отметка снята'); render();
     }, function(err){ K.toast(err.message); t.disabled = false; });
   }
+});
+document.addEventListener('change', function(e){
+  var t = e.target; if(!t.dataset || !t.dataset.check || !D) return;
+  var cid = t.dataset.check, on = t.checked;
+  call('/check', {method:'POST', body:{id:cid, on:on}}).then(function(){ (D.checklist || []).forEach(function(c){ if(c.id === cid) c.done = on; }); K.toast(on ? 'Отмечено - реализатор увидит' : 'Отметка снята'); render(); }, function(err){ K.toast(err.message); t.checked = !on; });
 });
 window.addEventListener('hashchange', function(){ var h = location.hash.slice(1); if(D && h && h !== TAB){ TAB = h; render(); } });
 if(!T){ app.innerHTML = K.notFound('В ссылке нет кода кабинета.'); return; }

@@ -358,7 +358,7 @@ document.addEventListener('input', function(e){
 });
 function pairLink(){ return (CUR.links || {}).pair || (SITE + '/para/?t=' + ((CUR.tokens || {}).pair || '')); }
 function pairMsg(names, link){ if(CUR && CUR.invite && (!link || CUR.invite.indexOf(link) >= 0)) return CUR.invite; return (names || '') + ', это ваш личный кабинет НАВСЕГДА: смета, команда, оплаты и анкета в одном месте - ' + link; }
-function secLine(){ var s = CUR.security || {}; return '<div class="sm" style="margin-top:8px">🔒 Код входа пары: <b style="letter-spacing:.15em">' + esc(s.pin || '-') + '</b> · устройств со входом: ' + (s.devices || 0) + (s.last_login ? ' · последний вход ' + esc(s.last_login) : ' · ещё не входили') + '</div>' +
+function secLine(){ var s = CUR.security || {}, cl = CUR.checklist || [], cd = cl.filter(function(c){ return c.done; }).length; return '<div class="sm" style="margin-top:8px">✅ Чек-лист пары: ' + cd + ' из ' + cl.length + ' · 🔔 Telegram пары: ' + (CUR.pair_tg_on ? 'подключён' : 'не подключён (кнопка в кабинете пары)') + '</div><div class="sm" style="margin-top:4px">🔒 Код входа пары: <b style="letter-spacing:.15em">' + esc(s.pin || '-') + '</b> · устройств со входом: ' + (s.devices || 0) + (s.last_login ? ' · последний вход ' + esc(s.last_login) : ' · ещё не входили') + '</div>' +
   '<div class="row wrapf" style="margin-top:6px"><button class="btn sm gh" type="button" data-rot="pin">Новый код</button><button class="btn sm gh" type="button" data-rot="sessions">Выйти на всех устройствах пары</button><button class="btn sm gh" type="button" data-rot="pair">Новая ссылка и код</button><button class="btn sm gh" type="button" data-act="access">Журнал входов</button></div><div id="accBox"></div>'; }
 function stages(){ return CUR.stages || HELP.stages || []; }
 
@@ -380,7 +380,7 @@ function secSlots(){
   return '<div class="row sb wrapf"><h3 style="margin:0">Команда: что нашли и что ищем</h3><span class="sm mu">' + st.filter(function(s){ return s.status === 'ok' || s.status === 'no'; }).length + ' из ' + st.length + ' готово</span></div>' +
     '<p class="sm mu" style="margin:4px 0 10px">Пара видит статус, «кто» и заметку. «Нужно выбрать» + варианты делаются через «Подборку паре».</p><div class="elist">' + st.map(function(s, i){
       return '<div class="erow" data-i="' + i + '"><input class="full" aria-label="Слот" value="' + esc(s.key) + '" data-f="key" placeholder="Слот"><select aria-label="Статус" data-f="status">' + optStatus(s.status) + '</select>' +
-        '<input aria-label="Кто" value="' + esc(s.who) + '" data-f="who" placeholder="Кто (имя, студия)"><input class="full" aria-label="Заметка" value="' + esc(s.note) + '" data-f="note" placeholder="Заметка для пары">' +
+        '<input aria-label="Кто" value="' + esc(s.who) + '" data-f="who" placeholder="Кто (имя, студия)"><input class="full" aria-label="Заметка" value="' + esc(s.note) + '" data-f="note" placeholder="Заметка для пары"><input aria-label="Контакт на день свадьбы" value="' + esc(s.contact || '') + '" data-f="contact" placeholder="Телефон / Telegram (паре - за 7 дней)">' +
         '<button class="xbtn" type="button" data-delrow="slots" data-i="' + i + '" title="Удалить слот" aria-label="Удалить слот">✕</button>' +
         (((s.cands || []).length || s.picked) ? '<div class="full sm" style="grid-column:1/-1">' + ((s.cands || []).length ? '<span class="mu">Варианты: </span>' + s.cands.map(function(c, j){ return '<span class="tag">' + esc(catName(c)) + '<button type="button" data-delcand="' + i + ':' + j + '" aria-label="Убрать вариант">×</button></span>'; }).join('') : '') +
           (s.picked ? ' <span class="pill p-ok">пара выбрала: ' + esc(catName(s.picked)) + '</span> <button class="btn sm gh" type="button" data-unpick="' + i + '">сбросить</button>' : '') + '</div>' : '') + '</div>';
@@ -431,7 +431,7 @@ function ta(id, label, v, rows){ return '<div class="field"><label for="' + id +
 function secBrief(){
   var b = CUR.brief || {};
   return '<h3>Содержание брифа</h3><p class="sm mu" style="margin-top:-4px">Это видят все подрядчики по своим ссылкам. «Для роли» - видит только эта роль.</p>' +
-    ta('bTiming', 'Тайминг дня', CUR.timing, 4) + '<div class="field"><label for="bAddr">Адрес площадки</label><input id="bAddr" value="' + esc(CUR.venue_address) + '"></div>' +
+    ta('bTiming', 'Тайминг дня (пара видит за 30 дней до свадьбы)', CUR.timing, 4) + '<div class="field"><label for="bAddr">Адрес площадки</label><input id="bAddr" value="' + esc(CUR.venue_address) + '"></div>' +
     BRIEF_F.map(function(f){ return ta('bf_' + f[0], f[1], b[f[0]]); }).join('') +
     '<details' + (BRIEF_X.some(function(f){ return b[f[0]]; }) ? ' open' : '') + '><summary>Пожелания для других ролей</summary>' + BRIEF_X.map(function(f){ return ta('bf_' + f[0], f[1], b[f[0]], 2); }).join('') + '</details>' +
     '<button class="btn pr" type="button" data-save="brief">Сохранить бриф</button>';
@@ -508,7 +508,7 @@ function patch(body, okMsg, sec){
 function val(id){ var el = $('#' + id); return el ? el.value : ''; }
 function save(what, btn){
   var body;
-  if(what === 'slots'){ body = {slots: ED.slots.filter(function(s){ return String(s.key || '').trim(); }).map(function(s){ return {key:String(s.key).trim(), status:s.status || 'search', who:s.who || '', note:s.note || '', cands:s.cands || [], picked:s.picked || null}; })}; }
+  if(what === 'slots'){ body = {slots: ED.slots.filter(function(s){ return String(s.key || '').trim(); }).map(function(s){ return {key:String(s.key).trim(), status:s.status || 'search', who:s.who || '', note:s.note || '', contact:String(s.contact || '').trim(), cands:s.cands || [], picked:s.picked || null}; })}; }
   if(what === 'payplan'){ body = {payplan: ED.payplan.filter(function(x){ return isPaid(x) || String(x.name || '').trim() || x.amount; }).map(function(x){ return isPaid(x) ? x : {id:x.id, dir:x.dir === 'out' ? 'out' : 'in', to:String(x.to || '').trim(), name:String(x.name || '').trim(), amount:x.amount === '' || x.amount == null ? 0 : Number(x.amount), due:x.due || ''}; })}; }
   if(what === 'docs'){ body = {docs: ED.docs.filter(function(x){ return String(x.name || '').trim() || String(x.url || '').trim(); }).map(function(x){ return {name:String(x.name || '').trim() || 'Документ', url:String(x.url || '').trim()}; })}; }
   if(what === 'brief'){ var b = Object.assign({}, CUR.brief || {}); BRIEF_F.concat(BRIEF_X).forEach(function(f){ b[f[0]] = val('bf_' + f[0]); }); body = {brief:b, timing:val('bTiming'), venue_address:val('bAddr')}; }
