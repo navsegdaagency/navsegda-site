@@ -123,6 +123,10 @@ button.stg{cursor:pointer;font:inherit;font-size:12px;font-weight:600}
 [hidden]{display:none!important}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
+.img{position:relative}
+.ph-soon{position:absolute;inset:0 0 28px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;font-weight:500;color:rgba(255,231,198,.72);padding:0 14px;border:1px dashed rgba(186,138,72,.35);border-radius:inherit;margin:8px}
+.cph-soon{aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;color:rgba(255,231,198,.72);border:1px dashed rgba(186,138,72,.35);border-radius:10px;margin-bottom:6px;padding:0 10px}
+
 .desk{display:grid;grid-template-columns:320px minmax(0,1fr);gap:14px;align-items:start}
 @media (max-width:900px){.desk{grid-template-columns:minmax(0,1fr)}body.has-cur #main{order:-1}}
 .back{display:none}
@@ -190,6 +194,7 @@ var KAB = (function(){
     if(opt.body !== undefined) h['Content-Type'] = 'application/json';
     if(opt.key) h['X-Kab-Key'] = opt.key;
     if(opt.session) h['X-Kab-Session'] = opt.session;
+    if(opt.who) h['X-Kab-Who'] = encodeURIComponent(opt.who);
     return fetch(API + path, {method: opt.method || 'GET', headers: h, body: opt.body !== undefined ? JSON.stringify(opt.body) : undefined, cache: 'no-store'})
       .catch(function(){ var e = new Error(NET); e.net = true; throw e; })
       .then(function(r){
@@ -227,6 +232,11 @@ var KAB = (function(){
   var COL = ['#7A1C22','#BA8A48','#5E7C8A','#4F7F5F','#8C5A7A','#C7795A','#6B5B95'];
   function ini(n){ return String(n || '?').split(/\s+/).map(function(x){ return x[0] || ''; }).join('').slice(0, 2).toUpperCase(); }
   function stLabel(st){ return ({ok:['p-ok','готово'], choose:['p-warn','нужно выбрать'], search:['p-mu','ищем'], wait:['p-warn','на согласовании'], later:['p-mu','позже'], no:['p-mu','не нужно']})[st] || ['p-mu', st || '']; }
+  // Карточка с фото; если фото ещё нет - аккуратная заглушка «скоро будет фото»
+  function imgBox(ph, label){
+    return '<div class="img" style="background:' + (ph ? "linear-gradient(transparent 40%,rgba(0,0,0,.55)),url('" + esc(ph) + "') center/cover" : 'linear-gradient(135deg,#3a1c1f,#241214)') + '">' +
+      (ph ? '' : '<span class="ph-soon">📷 Скоро здесь появится фотография</span>') + esc(label || '') + '</div>';
+  }
   function q(name){ try{ return new URLSearchParams(location.search).get(name) || ''; }catch(_){ return ''; } }
   function ls(k, v){ try{ if(v === undefined) return localStorage.getItem(k) || ''; if(v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); }catch(_){} return ''; }
   // Код из адреса прячем: остаётся только на этом устройстве, не светится в истории, на скриншотах и при пересылке адреса
@@ -235,20 +245,20 @@ var KAB = (function(){
     if(t){ ls(store, t); try{ history.replaceState(null, '', location.pathname + location.hash); }catch(_){} }
     return t || ls(store);
   }
-  return {ls:ls, hideToken:hideToken,API:API, NET:NET, TG:TG, PHONE:PHONE, $:$, $$:$$, esc:esc, fmt:fmt, rub:rub, parseDate:parseDate, fmtDate:fmtDate, shortDate:shortDate, plural:plural, toast:toast, api:api, copy:copy, errBox:errBox, notFound:notFound, skeleton:skeleton, COL:COL, ini:ini, stLabel:stLabel, q:q};
+  return {ls:ls, hideToken:hideToken, imgBox:imgBox, API:API, NET:NET, TG:TG, PHONE:PHONE, $:$, $$:$$, esc:esc, fmt:fmt, rub:rub, parseDate:parseDate, fmtDate:fmtDate, shortDate:shortDate, plural:plural, toast:toast, api:api, copy:copy, errBox:errBox, notFound:notFound, skeleton:skeleton, COL:COL, ini:ini, stLabel:stLabel, q:q};
 })();
 
 (function(){
 var K = KAB, esc = K.esc, $ = K.$, $$ = K.$$, app = $('#app');
 var SITE = 'https://navseg-da.agency';
-var LS = 'nsg-kab-key', KEY = '';
+var LS = 'nsg-kab-key', KEY = '', WHO = K.ls('nsg-kab-who');
 try{ KEY = localStorage.getItem(LS) || ''; }catch(_){}
 var HELP = {stages:[], slot_status:{ok:'готово', choose:'нужно выбрать', search:'ищем', wait:'на согласовании', later:'позже', no:'не нужно'}, brief_roles:{host:'Ведущий', photo:'Фотограф', video:'Видеограф', decor:'Декоратор', dj:'Диджей', coord:'Координатор', other:'Подрядчик'}};
 var ROLE_TO = {host:'Ведущему', photo:'Фотографу', video:'Видеографу', decor:'Декоратору', coord:'Координатору', dj:'Диджею', other:'Другому'};
 var LIST = [], FEED = [], CAT = [], CUR = null, ED = {}, DIRTY = {}, FILTER = '';
 
 function api(path, opt){
-  opt = opt || {}; opt.key = KEY;
+  opt = opt || {}; opt.key = KEY; opt.who = WHO;
   return K.api(path, opt).catch(function(e){
     if(e.status === 403){ logout('Ключ не подошёл или устарел - введите заново'); }
     if(e.net && /PATCH|DELETE/.test(opt.method || '')) e.message = K.NET + '. Если VPN выключен, а ошибка повторяется - сервер пока не принимает изменения с сайта (PATCH/DELETE), сообщите Денису.';
@@ -263,9 +273,10 @@ function gate(msg){
   $('#nav').hidden = true; document.body.classList.remove('has-cur');
   app.innerHTML = '<div class="center"><form class="card stack" id="gate" style="width:100%;max-width:420px;text-align:left"><h2 style="margin:0">Рабочий стол НАВСЕГДА</h2><p class="sm mu" style="margin:0">Для реализаторов и Дениса. Ключ команды выдаёт Денис, он сохранится в этом браузере.</p>' +
     (msg ? '<div class="note" style="color:var(--bad)">' + esc(msg) + '</div>' : '') +
-    '<div class="field"><label for="key">Ключ команды</label><input id="key" type="password" autocomplete="current-password" required></div><button class="btn pr" type="submit">Войти</button></form></div>';
+    '<div class="field"><label for="who">Кто вы</label><input id="who" list="whoList" value="' + esc(WHO) + '" placeholder="Имя - им подписываются правки и оплаты" required><datalist id="whoList"><option>Денис</option><option>Настя</option><option>Марк</option><option>Ольга</option><option>Даша</option></datalist></div>' +
+    '<div class="field"><label for="key">Ключ команды</label><input id="key" type="password" autocomplete="current-password" value="' + esc(KEY) + '" required></div><button class="btn pr" type="submit">Войти</button></form></div>';
   $('#gate').onsubmit = function(e){
-    e.preventDefault(); var v = $('#key').value.trim(); if(!v) return;
+    e.preventDefault(); var v = $('#key').value.trim(), w = $('#who').value.trim(); if(!v || !w) return; WHO = w; K.ls('nsg-kab-who', w);
     var b = e.target.querySelector('button'); b.disabled = true; b.textContent = 'Проверяем...';
     K.api('/api/kab/projects', {key:v}).then(function(d){ KEY = v; try{ localStorage.setItem(LS, v); }catch(_){} LIST = d.projects || []; start(); },
       function(err){ gate(err.status === 403 ? 'Ключ не подошёл' : err.message); });
@@ -275,6 +286,7 @@ function gate(msg){
 
 // ───── каркас ─────
 function start(){
+  if(!WHO){ gate('Укажите, как вас зовут: этим именем подписываются правки и подтверждённые оплаты'); return; }
   $('#nav').hidden = false;
   app.innerHTML = '<div class="desk"><aside class="side stack" id="side"><div class="card stack"><button class="btn pr wide" type="button" id="newBtn">＋ Кабинет для пары</button><input id="flt" type="search" placeholder="Поиск по парам" aria-label="Поиск по парам"></div><div class="card"><h3 id="lh">Проекты</h3><div class="pairs" id="plist">' + K.skeleton() + '</div></div><div class="card"><h3>Лента</h3><div class="feed" id="feed">' + K.skeleton() + '</div></div></aside><section id="main" class="stack"></section></div>';
   $('#newBtn').onclick = openCreate;
@@ -428,10 +440,15 @@ function isPaid(x){ return /^(paid|получено|оплачено)$/i.test(St
 function secPay(){
   if(!ED.payplan) ED.payplan = JSON.parse(JSON.stringify(CUR.payplan || []));
   var pp = ED.payplan;
-  return '<h3>График платежей</h3><p class="sm mu" style="margin-top:-4px">Пара видит этот график во вкладке «Оплаты».</p><div class="elist">' + pp.map(function(x, i){
-    return '<div class="erow pp" data-i="' + i + '"><input class="full" aria-label="Платёж" data-f="name" value="' + esc(x.name) + '" placeholder="Платёж"><input aria-label="Сумма" data-f="amount" type="number" inputmode="numeric" value="' + esc(x.amount) + '" placeholder="Сумма"><input aria-label="Когда" data-f="due" value="' + esc(x.due) + '" placeholder="2026-12-01 или текст">' +
-      '<select aria-label="Статус" data-f="status"><option value="wait"' + (!isPaid(x) ? ' selected' : '') + '>ожидаем</option><option value="paid"' + (isPaid(x) ? ' selected' : '') + '>получено</option></select><button class="xbtn" type="button" data-delrow="payplan" data-i="' + i + '" aria-label="Удалить платёж">✕</button></div>';
-  }).join('') + '</div>' + (pp.length ? '' : '<p class="sm mu">Платежей нет.</p>') + '<div class="row wrapf"><button class="btn sm" type="button" data-addrow="payplan">＋ Платёж</button><button class="btn pr" type="button" data-save="payplan">Сохранить график</button></div>';
+  var saved = {}; (CUR.payplan || []).forEach(function(x){ if(x.id) saved[x.id] = x; });
+  return '<h3>Оплаты</h3><p class="sm mu" style="margin-top:-4px">Организатор ставит: от пары или подрядчику, кому, за что, сколько. После оплаты - «Подтвердить»: запись сама уйдёт в журнал «ПРИХОД И ОПЛАТЫ», в карточку пары и в amoCRM, а пара увидит статус. Подтверждённые строки не меняются.</p><div class="elist">' + pp.map(function(x, i){
+    if(isPaid(x)) return '<div class="erow pp paid" data-i="' + i + '"><div class="full sm"><span class="pill p-ok">✓ оплачено</span> <b>' + (x.dir === 'out' ? 'Подрядчику ' + esc(x.to || '') : 'От пары') + '</b> · ' + esc(x.name) + ' · ' + K.rub(x.amount) + '<div class="mu">' + esc([x.paid_date || x.paid_at, x.paid_by, x.wallet].filter(Boolean).join(' · ')) + '</div></div></div>';
+    var ready = x.id && saved[x.id] && !DIRTY.pay;
+    return '<div class="erow pp" data-i="' + i + '"><select aria-label="Направление" data-f="dir"><option value="in"' + (x.dir !== 'out' ? ' selected' : '') + '>от пары</option><option value="out"' + (x.dir === 'out' ? ' selected' : '') + '>подрядчику</option></select>' +
+      '<input aria-label="Кому" data-f="to" value="' + esc(x.to) + '" placeholder="Кому (для подрядчика)"><input class="full" aria-label="За что" data-f="name" value="' + esc(x.name) + '" placeholder="За что"><input aria-label="Сумма" data-f="amount" type="number" inputmode="numeric" value="' + esc(x.amount) + '" placeholder="Сумма, ₽"><input aria-label="Когда" data-f="due" value="' + esc(x.due) + '" placeholder="2026-12-01 или текст">' +
+      (ready ? '<select aria-label="Счёт" data-nodirty id="pw_' + esc(x.id) + '"><option value="">счёт…</option><option>Альфа-банк карта</option><option>Т-банк карта</option><option>Наличные</option><option>Напрямую</option></select><button class="btn sm pr" type="button" data-confirm="' + esc(x.id) + '">Подтвердить оплату</button>' : '<span class="sm mu">сохраните, чтобы подтвердить</span>') +
+      '<button class="xbtn" type="button" data-delrow="payplan" data-i="' + i + '" aria-label="Удалить платёж">✕</button></div>';
+  }).join('') + '</div>' + (pp.length ? '' : '<p class="sm mu">Платежей нет.</p>') + '<div class="row wrapf"><button class="btn sm" type="button" data-addrow="payplan">＋ Платёж</button><button class="btn pr" type="button" data-save="payplan">Сохранить</button></div>';
 }
 function secDocs(){
   if(!ED.docs) ED.docs = JSON.parse(JSON.stringify(CUR.docs || []));
@@ -442,11 +459,15 @@ function secDocs(){
 }
 function secMoney(){
   var s = CUR.smeta || {};
-  if(!s.found) return '<h3>Смета и деньги</h3><p class="sm mu" style="margin:0">Карточка «' + esc(CUR.pair) + '» в таблице реализации не найдена - смета появится, когда пару передадут в реализацию (название в поле «pair» должно совпадать с таблицей).</p>';
+  var L = CUR.smeta_link, links = '<div class="stack" style="gap:8px;margin-bottom:12px">' +
+    (L && L.url ? '<div class="sm">Смета у пары: <a href="' + esc(L.url) + '" target="_blank" rel="noopener">' + esc(L.url.replace(/^https?:\/\//, '').slice(0, 60)) + '</a> <span class="mu">(' + esc(L.source || '') + (L.at ? ', ' + esc(L.at) : '') + ')</span></div>' : '<div class="sm mu">Ссылку на смету в переписке с парой и в сделке не нашли. Её подхватит сама, когда менеджер отправит смету в чат, или вставьте вручную.</div>') +
+    '<div class="row wrapf" data-nodirty><input id="smUrl" style="flex:1 1 220px" placeholder="Ссылка на смету вручную (необязательно)" value="' + esc(CUR.smeta_url || '') + '"><button class="btn sm" type="button" data-act="smUrl">Сохранить ссылку</button>' +
+    '<a class="btn sm pr" href="' + esc(s.sheet_url || 'https://docs.google.com/spreadsheets/d/1nHz-ZsVB-1essR-tDa5810ztazChVSfoeLzSqmQzH8c/edit') + '" target="_blank" rel="noopener">Открыть смету в Google Таблице</a></div></div>';
+  if(!s.found) return '<h3>Смета и деньги</h3>' + links + '<p class="sm mu" style="margin:0">Карточка «' + esc(CUR.pair) + '» в таблице реализации не найдена - строки сметы появятся, когда пару внесут в таблицу (название в поле «pair» должно совпадать с листом).</p>';
   var k = [['Смета клиенту', K.rub(s.total)], ['Внесено парой', K.rub(s.paid)], ['Осталось от пары', K.rub(s.left)], ['Факт подрядчиков', K.rub(s.fact)], ['Комиссии', K.rub(s.commission)], ['Маржа', K.rub(s.margin) + ' · ' + (s.margin_pct || 0) + '%'], ['Оплачено подрядчикам', K.rub(s.vendor_paid)]];
   var rows = s.rows || [], cat = null, t = '';
   rows.forEach(function(r){ if(r.cat !== cat){ cat = r.cat; t += '<tr class="cat"><td colspan="6">' + esc(cat || 'Прочее') + '</td></tr>'; } t += '<tr><td>' + esc(r.name) + '</td><td>' + K.fmt(r.price) + '</td><td>' + K.fmt(r.fact) + '</td><td>' + K.fmt(r.commission) + '</td><td>' + K.fmt(r.vendor_paid) + '</td><td>' + K.fmt(r.vendor_left) + '</td></tr>'; });
-  return '<h3>Смета и деньги <span class="pill p-mu">только команда</span></h3><div class="kpi2">' + k.map(function(x){ return '<div><b>' + esc(x[1]) + '</b><span>' + esc(x[0]) + '</span></div>'; }).join('') + '</div>' +
+  return '<h3>Смета и деньги <span class="pill p-mu">только команда</span></h3>' + links + '<div class="kpi2">' + k.map(function(x){ return '<div><b>' + esc(x[1]) + '</b><span>' + esc(x[0]) + '</span></div>'; }).join('') + '</div>' +
     '<details><summary>Строки сметы (' + rows.length + ')' + (s.sheet ? ' · лист «' + esc(s.sheet) + '»' : '') + '</summary><div class="scroll"><table><tr><th>Позиция</th><th>Клиенту</th><th>Факт</th><th>Комис.</th><th>Оплач.</th><th>Остал.</th></tr>' + t + '</table></div></details>';
 }
 function secInfo(){
@@ -488,7 +509,7 @@ function val(id){ var el = $('#' + id); return el ? el.value : ''; }
 function save(what, btn){
   var body;
   if(what === 'slots'){ body = {slots: ED.slots.filter(function(s){ return String(s.key || '').trim(); }).map(function(s){ return {key:String(s.key).trim(), status:s.status || 'search', who:s.who || '', note:s.note || '', cands:s.cands || [], picked:s.picked || null}; })}; }
-  if(what === 'payplan'){ body = {payplan: ED.payplan.filter(function(x){ return String(x.name || '').trim() || x.amount; }).map(function(x){ return {name:String(x.name || '').trim(), amount:x.amount === '' || x.amount == null ? 0 : Number(x.amount), due:x.due || '', status:x.status === 'paid' ? 'paid' : 'wait'}; })}; }
+  if(what === 'payplan'){ body = {payplan: ED.payplan.filter(function(x){ return isPaid(x) || String(x.name || '').trim() || x.amount; }).map(function(x){ return isPaid(x) ? x : {id:x.id, dir:x.dir === 'out' ? 'out' : 'in', to:String(x.to || '').trim(), name:String(x.name || '').trim(), amount:x.amount === '' || x.amount == null ? 0 : Number(x.amount), due:x.due || ''}; })}; }
   if(what === 'docs'){ body = {docs: ED.docs.filter(function(x){ return String(x.name || '').trim() || String(x.url || '').trim(); }).map(function(x){ return {name:String(x.name || '').trim() || 'Документ', url:String(x.url || '').trim()}; })}; }
   if(what === 'brief'){ var b = Object.assign({}, CUR.brief || {}); BRIEF_F.concat(BRIEF_X).forEach(function(f){ b[f[0]] = val('bf_' + f[0]); }); body = {brief:b, timing:val('bTiming'), venue_address:val('bAddr')}; }
   if(what === 'notes'){ body = {notes: val('nNotes')}; }
@@ -623,6 +644,12 @@ document.addEventListener('click', function(e){
   if(d.act === 'copyLink'){ K.copy(pairLink(), 'Ссылка кабинета скопирована'); return; }
   if(d.act === 'copyMsg'){ K.copy(pairMsg(CUR.names, pairLink()), 'Сообщение паре скопировано'); return; }
   if(d.act === 'mkSel'){ mkSel(t); return; }
+  if(d.act === 'smUrl'){ var su = val('smUrl').trim(); if(su && !/^https?:\/\//.test(su)){ K.toast('Ссылка должна начинаться с https://'); return; } t.disabled = true; patch({smeta_url:su}, su ? 'Ссылка на смету сохранена - пара её видит' : 'Ссылка убрана, берём из переписки', 'money').catch(function(){}).then(function(){ t.disabled = false; }); return; }
+  if(d.confirm){ var it = (CUR.payplan || []).filter(function(x){ return x.id === d.confirm; })[0]; if(!it) return;
+    var wsel = $('#pw_' + d.confirm), wl = wsel ? wsel.value : '';
+    if(!confirm('Подтвердить оплату?\n' + (it.dir === 'out' ? 'Подрядчику ' + (it.to || '') : 'От пары') + ' · ' + it.name + ' · ' + K.rub(it.amount) + (wl ? ' · ' + wl : '') + '\n\nЗапись уйдёт в журнал «ПРИХОД И ОПЛАТЫ» и в amoCRM, пара увидит статус.')) return;
+    t.disabled = true; t.textContent = 'Записываем...';
+    api('/api/kab/projects/' + encodeURIComponent(CUR.id) + '/pay/' + encodeURIComponent(d.confirm) + '/confirm', {method:'POST', body:{wallet:wl}}).then(function(r){ K.toast(r.card === 'test' ? 'Тестовый проект: отмечено, в журнал не писали' : 'Оплата записана в журнал'); ED.payplan = null; DIRTY.pay = false; return openProject(CUR.id); }, function(err){ K.toast(err.message); t.disabled = false; t.textContent = 'Подтвердить оплату'; }); return; }
   if(d.rot){ var RT = {pin:'Сменить код входа? Пара выйдет на всех устройствах и войдёт по новому коду.', sessions:'Выйти на всех устройствах пары? Войти можно будет по тому же коду.', pair:'Выдать новую ссылку и код? Старая ссылка перестанет работать - новую нужно будет отправить паре.'};
     if(!confirm(RT[d.rot])) return; t.disabled = true;
     api('/api/kab/projects/' + encodeURIComponent(CUR.id) + '/rotate', {method:'POST', body:{what:d.rot}}).then(function(r){ K.toast('Готово. ' + (d.rot === 'sessions' ? 'Пара вышла со всех устройств' : 'Не забудьте отправить паре новое сообщение')); openProject(CUR.id); }, function(err){ K.toast(err.message); t.disabled = false; }); return; }
@@ -631,7 +658,7 @@ document.addEventListener('click', function(e){
   if(d.stage !== undefined){ var st = +d.stage; if(st === (CUR.stage || 0)) return; t.disabled = true; patch({stage:st}, 'Этап: ' + stages()[st]).catch(function(){ t.disabled = false; }); return; }
   if(d.save){ save(d.save, t); return; }
   if(d.brief){ mkBrief(d.brief, t); return; }
-  if(d.addrow){ var key = d.addrow; ED[key] = ED[key] || []; ED[key].push(key === 'slots' ? {key:'', status:'search', who:'', note:'', cands:[], picked:null} : key === 'payplan' ? {name:'', amount:'', due:'', status:'wait'} : {name:'', url:''}); repaintKeep(secOf(key)); markDirty(secOf(key)); var rows = $$('#sec-' + secOf(key) + ' .erow'); if(rows.length) rows[rows.length - 1].querySelector('input').focus(); return; }
+  if(d.addrow){ var key = d.addrow; ED[key] = ED[key] || []; ED[key].push(key === 'slots' ? {key:'', status:'search', who:'', note:'', cands:[], picked:null} : key === 'payplan' ? {dir:'out', to:'', name:'', amount:'', due:'', status:'wait'} : {name:'', url:''}); repaintKeep(secOf(key)); markDirty(secOf(key)); var rows = $$('#sec-' + secOf(key) + ' .erow'); if(rows.length) rows[rows.length - 1].querySelector('input').focus(); return; }
   if(d.delrow){ ED[d.delrow].splice(+d.i, 1); repaintKeep(secOf(d.delrow)); markDirty(secOf(d.delrow)); return; }
   if(d.delcand){ var ij = d.delcand.split(':'); ED.slots[+ij[0]].cands.splice(+ij[1], 1); repaintKeep('slots'); markDirty('slots'); return; }
   if(d.unpick){ ED.slots[+d.unpick].picked = null; repaintKeep('slots'); markDirty('slots'); return; }

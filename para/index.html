@@ -123,6 +123,10 @@ button.stg{cursor:pointer;font:inherit;font-size:12px;font-weight:600}
 [hidden]{display:none!important}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
+.img{position:relative}
+.ph-soon{position:absolute;inset:0 0 28px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;font-weight:500;color:rgba(255,231,198,.72);padding:0 14px;border:1px dashed rgba(186,138,72,.35);border-radius:inherit;margin:8px}
+.cph-soon{aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;color:rgba(255,231,198,.72);border:1px dashed rgba(186,138,72,.35);border-radius:10px;margin-bottom:6px;padding:0 10px}
+
 .todo .btn{flex-shrink:0}
 .money .row{padding:3px 0}
 .gal{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
@@ -162,6 +166,7 @@ var KAB = (function(){
     if(opt.body !== undefined) h['Content-Type'] = 'application/json';
     if(opt.key) h['X-Kab-Key'] = opt.key;
     if(opt.session) h['X-Kab-Session'] = opt.session;
+    if(opt.who) h['X-Kab-Who'] = encodeURIComponent(opt.who);
     return fetch(API + path, {method: opt.method || 'GET', headers: h, body: opt.body !== undefined ? JSON.stringify(opt.body) : undefined, cache: 'no-store'})
       .catch(function(){ var e = new Error(NET); e.net = true; throw e; })
       .then(function(r){
@@ -199,6 +204,11 @@ var KAB = (function(){
   var COL = ['#7A1C22','#BA8A48','#5E7C8A','#4F7F5F','#8C5A7A','#C7795A','#6B5B95'];
   function ini(n){ return String(n || '?').split(/\s+/).map(function(x){ return x[0] || ''; }).join('').slice(0, 2).toUpperCase(); }
   function stLabel(st){ return ({ok:['p-ok','готово'], choose:['p-warn','нужно выбрать'], search:['p-mu','ищем'], wait:['p-warn','на согласовании'], later:['p-mu','позже'], no:['p-mu','не нужно']})[st] || ['p-mu', st || '']; }
+  // Карточка с фото; если фото ещё нет - аккуратная заглушка «скоро будет фото»
+  function imgBox(ph, label){
+    return '<div class="img" style="background:' + (ph ? "linear-gradient(transparent 40%,rgba(0,0,0,.55)),url('" + esc(ph) + "') center/cover" : 'linear-gradient(135deg,#3a1c1f,#241214)') + '">' +
+      (ph ? '' : '<span class="ph-soon">📷 Скоро здесь появится фотография</span>') + esc(label || '') + '</div>';
+  }
   function q(name){ try{ return new URLSearchParams(location.search).get(name) || ''; }catch(_){ return ''; } }
   function ls(k, v){ try{ if(v === undefined) return localStorage.getItem(k) || ''; if(v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); }catch(_){} return ''; }
   // Код из адреса прячем: остаётся только на этом устройстве, не светится в истории, на скриншотах и при пересылке адреса
@@ -207,7 +217,7 @@ var KAB = (function(){
     if(t){ ls(store, t); try{ history.replaceState(null, '', location.pathname + location.hash); }catch(_){} }
     return t || ls(store);
   }
-  return {ls:ls, hideToken:hideToken,API:API, NET:NET, TG:TG, PHONE:PHONE, $:$, $$:$$, esc:esc, fmt:fmt, rub:rub, parseDate:parseDate, fmtDate:fmtDate, shortDate:shortDate, plural:plural, toast:toast, api:api, copy:copy, errBox:errBox, notFound:notFound, skeleton:skeleton, COL:COL, ini:ini, stLabel:stLabel, q:q};
+  return {ls:ls, hideToken:hideToken, imgBox:imgBox, API:API, NET:NET, TG:TG, PHONE:PHONE, $:$, $$:$$, esc:esc, fmt:fmt, rub:rub, parseDate:parseDate, fmtDate:fmtDate, shortDate:shortDate, plural:plural, toast:toast, api:api, copy:copy, errBox:errBox, notFound:notFound, skeleton:skeleton, COL:COL, ini:ini, stLabel:stLabel, q:q};
 })();
 
 (function(){
@@ -217,7 +227,7 @@ var SK = 'nsg-kab-s:' + T, S = K.ls(SK);
 var TABS = [['main','Главное'],['team','Команда'],['smeta','Смета'],['pay','Оплаты'],['anketa','Анкета'],['ideas','Идеи'],['docs','Документы']];
 // Фото с наших свадеб 2026 (реальные проекты НАВСЕГДА)
 var IMG = 'https://navseg-da.agency/assets/img/pairs/';
-var HERO_PH = IMG + 'dmitriy-diana/11.webp';
+var HERO_PH = IMG + 'ruslan-darya/17.webp';   // выездная церемония без людей
 var GALLERY = [[IMG + 'konstantin-darya/12.webp', 'Декор в белом и зелени'], [IMG + 'dmitriy-diana/04.webp', 'Президиум в цветах'], [IMG + 'konstantin-darya/14.webp', 'Шампанская башня на велкоме'], [IMG + 'ruslan-darya/13.webp', 'Арка из драпировки']];
 
 function call(path, opt){ opt = opt || {}; opt.session = S; return K.api('/api/kab/pair/' + encodeURIComponent(T) + path, opt).catch(function(e){ if(e.status === 401 && path){ pinScreen(); } throw e; }); }
@@ -252,7 +262,7 @@ function logout(){
   call('/logout', {method:'POST', body:{}}).catch(function(){}).then(function(){ K.ls(SK, null); K.ls('nsg-kab-t', null); S = ''; app.innerHTML = '<div class="center"><div class="card stack"><h2 style="margin:0">Вы вышли</h2><p class="mu" style="margin:0">Чтобы вернуться, откройте ссылку из сообщения реализатора.</p></div></div>'; });
 }
 function teamPct(){ var s = D.slots || []; if(!s.length) return 0; return Math.round(s.filter(function(x){ return x.status === 'ok' || x.status === 'no'; }).length / s.length * 100); }
-function unpaid(){ return (D.payplan || []).filter(function(x){ return !isPaid(x); }); }
+function unpaid(){ return (D.payplan || []).filter(function(x){ return x.dir !== 'out' && !isPaid(x); }); }
 function isPaid(x){ return /^(paid|получено|оплачено|да)$/i.test(String(x.status || '').trim()); }
 function hero(){
   var dl = D.days_left, k = [];
@@ -316,7 +326,7 @@ function team(){
         body += '<div class="cands">' + s.cands.map(function(c){
           var sel = s.picked === c.id;
           var cph = [].concat(c.photos || [])[0];
-          return '<div class="cand' + (sel ? ' sel' : '') + '">' + (cph ? '<img class="cph" src="' + esc(cph) + '" alt="" loading="lazy">' : '') + '<b>' + esc(c.name) + '</b>' + (c.tag ? '<div class="sm mu">' + esc(c.tag) + '</div>' : '') + (c.price ? '<div class="sm">' + esc(c.price) + '</div>' : '') +
+          return '<div class="cand' + (sel ? ' sel' : '') + '">' + (cph ? '<img class="cph" src="' + esc(cph) + '" alt="" loading="lazy">' : '<div class="cph-soon">📷 Скоро здесь появится фотография</div>') + '<b>' + esc(c.name) + '</b>' + (c.tag ? '<div class="sm mu">' + esc(c.tag) + '</div>' : '') + (c.price ? '<div class="sm">' + esc(c.price) + '</div>' : '') +
             (c.about ? '<div class="sm mu">' + esc(c.about) + '</div>' : '') + linksHtml(c) +
             '<button class="btn sm' + (sel ? ' pr' : '') + '" type="button" style="margin-top:6px" data-pick="' + esc(s.key) + '" data-item="' + esc(c.id) + '"' + (sel ? ' disabled' : '') + '>' + (sel ? '✓ Выбран' : 'Выбрать') + '</button></div>';
         }).join('') + '</div>';
@@ -329,22 +339,32 @@ function linksHtml(c){
   var l = [].concat(c.links || []).filter(Boolean);
   return l.length ? '<div class="sm">' + l.map(function(u, i){ return '<a href="' + esc(u) + '" target="_blank" rel="noopener">' + (l.length > 1 ? 'Примеры ' + (i + 1) : 'Примеры работ') + '</a>'; }).join(' · ') + '</div>' : '';
 }
+function smetaLink(){
+  var l = D.smeta_link;
+  if(!l || !l.url) return '';
+  return '<div class="card"><h3>Ваша смета</h3><p class="sm mu" style="margin:0 0 10px">Актуальная версия, которую мы вам отправляли' + (l.at ? ' ' + esc(l.at) : '') + '. Открывается в новой вкладке.</p><a class="btn pr" href="' + esc(l.url) + '" target="_blank" rel="noopener">Открыть смету</a></div>';
+}
 function smeta(){
-  var sm = D.smeta || {};
-  if(!sm.found) return '<div class="card"><h3>Смета</h3><p class="mu" style="margin:0">Смета появится после передачи в реализацию.</p></div>';
+  var sm = D.smeta || {}, top = smetaLink();
+  if(!sm.found) return top || '<div class="card"><h3>Смета</h3><p class="mu" style="margin:0">Смета появится здесь, как только менеджер её пришлёт.</p></div>';
   var rows = sm.rows || [], h = '', cat = null;
   rows.forEach(function(r){ if(r.cat !== cat){ cat = r.cat; h += '<tr class="cat"><td colspan="2">' + esc(cat || 'Прочее') + '</td></tr>'; } h += '<tr><td>' + esc(r.name) + '</td><td>' + K.fmt(r.price) + '</td></tr>'; });
-  return '<div class="card"><h3>Смета</h3><div class="scroll"><table><tr><th>Позиция</th><th>Стоимость, ₽</th></tr>' + h + '<tr class="tot"><td>Итого</td><td>' + K.rub(sm.total) + '</td></tr></table></div>' +
+  return top + '<div class="card"' + (top ? ' style="margin-top:14px"' : '') + '><h3>Смета по позициям</h3><div class="scroll"><table><tr><th>Позиция</th><th>Стоимость, ₽</th></tr>' + h + '<tr class="tot"><td>Итого</td><td>' + K.rub(sm.total) + '</td></tr></table></div>' +
     '<div class="row sb" style="margin-top:12px"><span>Внесено</span><b>' + K.rub(sm.paid) + '</b></div><div class="row sb"><span>Осталось</span><b>' + K.rub(sm.left) + '</b></div>' +
     '<p class="sm mu" style="margin:10px 0 0">Смета обновляется автоматически, когда реализатор вносит изменения.</p></div>';
 }
 function pay(){
-  var p = D.payplan || [];
+  var p = D.payplan || [], inn = p.filter(function(x){ return x.dir !== 'out'; }), out = p.filter(function(x){ return x.dir === 'out'; });
   if(!p.length) return '<div class="card"><h3>Оплаты</h3><p class="mu" style="margin:0">График платежей пришлёт реализатор.</p></div>';
-  return '<div class="card"><h3>График платежей</h3><div class="scroll"><table><tr><th>Платёж</th><th>Сумма, ₽</th><th>Когда</th><th>Статус</th></tr>' + p.map(function(x){
-    var due = K.parseDate(x.due) ? K.shortDate(x.due) : (x.due || '');
-    return '<tr><td>' + esc(x.name) + '</td><td>' + (x.amount ? K.fmt(x.amount) : '') + '</td><td>' + esc(due) + '</td><td>' + (isPaid(x) ? '<span class="pill p-ok">получено</span>' : '<span class="pill p-warn">ожидаем</span>') + '</td></tr>';
-  }).join('') + '</table></div><p class="sm mu" style="margin:10px 0 0">Каждый платёж подтверждаем чеком или распиской.</p></div>';
+  function when(x){ return isPaid(x) && x.paid_date ? x.paid_date : (K.parseDate(x.due) ? K.shortDate(x.due) : (x.due || '')); }
+  var h = '';
+  if(inn.length) h += '<div class="card"><h3>Ваши платежи</h3><div class="scroll"><table><tr><th>Платёж</th><th>Сумма, ₽</th><th>Когда</th><th>Статус</th></tr>' + inn.map(function(x){
+    return '<tr><td>' + esc(x.name) + '</td><td>' + (x.amount ? K.fmt(x.amount) : '') + '</td><td>' + esc(when(x)) + '</td><td>' + (isPaid(x) ? '<span class="pill p-ok">получено</span>' : '<span class="pill p-warn">ожидаем</span>') + '</td></tr>';
+  }).join('') + '</table></div><p class="sm mu" style="margin:10px 0 0">Как только организатор подтверждает платёж, статус меняется здесь сам. Каждый платёж подтверждаем чеком или распиской.</p></div>';
+  if(out.length) h += '<div class="card" style="margin-top:14px"><h3>Оплаты подрядчикам</h3><p class="sm mu" style="margin:-4px 0 10px">Из ваших средств мы платим подрядчикам сами - здесь реестр.</p><div class="scroll"><table><tr><th>Кому</th><th>За что</th><th>Сумма, ₽</th><th>Статус</th></tr>' + out.map(function(x){
+    return '<tr><td>' + esc(x.to || '') + '</td><td>' + esc(x.name) + '</td><td>' + (x.amount ? K.fmt(x.amount) : '') + '</td><td>' + (isPaid(x) ? '<span class="pill p-ok">оплачено' + (x.paid_date ? ' ' + esc(x.paid_date) : '') + '</span>' : '<span class="pill p-mu">запланировано</span>') + '</td></tr>';
+  }).join('') + '</table></div></div>';
+  return h;
 }
 function anketa(){
   var a = D.anketa || {}, ap = a.percent || 0;
@@ -362,7 +382,7 @@ function ideas(){
   if(!list.length) return '<div class="card mu">Идеи скоро появятся.</div>';
   return '<p class="mu">Отметьте, что нравится, - реализатор учтёт это в программе и смете.</p><div class="grid3">' + list.map(function(x, i){
     var on = likes.indexOf(x.id) >= 0, ph = [].concat(x.photos || [])[0];
-    return '<div class="idea"><div class="img" style="background:' + (ph ? 'linear-gradient(transparent 40%,rgba(0,0,0,.55)),url(\'' + esc(ph) + '\') center/cover' : 'linear-gradient(135deg,' + K.COL[i % K.COL.length] + ',#2a1416)') + '">' + esc(x.cat) + '</div><div class="b"><b>' + esc(x.name) + '</b>' + (x.tag ? '<p>' + esc(x.tag) + '</p>' : '') + (x.price ? '<p>' + esc(x.price) + '</p>' : '') +
+    return '<div class="idea">' + K.imgBox(ph, x.cat) + '<div class="b"><b>' + esc(x.name) + '</b>' + (x.tag ? '<p>' + esc(x.tag) + '</p>' : '') + (x.price ? '<p>' + esc(x.price) + '</p>' : '') +
       '<button class="btn' + (on ? ' pr' : '') + '" type="button" data-like="' + esc(x.id) + '" aria-pressed="' + on + '">' + (on ? '♥ Хотим' : '♡ Хотим') + '</button></div></div>';
   }).join('') + '</div>';
 }

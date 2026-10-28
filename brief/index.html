@@ -123,6 +123,10 @@ button.stg{cursor:pointer;font:inherit;font-size:12px;font-weight:600}
 [hidden]{display:none!important}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 
+.img{position:relative}
+.ph-soon{position:absolute;inset:0 0 28px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;font-weight:500;color:rgba(255,231,198,.72);padding:0 14px;border:1px dashed rgba(186,138,72,.35);border-radius:inherit;margin:8px}
+.cph-soon{aspect-ratio:4/3;display:flex;align-items:center;justify-content:center;text-align:center;font-size:12px;color:rgba(255,231,198,.72);border:1px dashed rgba(186,138,72,.35);border-radius:10px;margin-bottom:6px;padding:0 10px}
+
 .sec{border-top:1px solid var(--line);padding-top:14px;margin-top:14px}
 .sec h3{font-family:var(--display);font-size:21px;color:var(--bordo);margin-bottom:6px}
 .empty{color:var(--muted);font-style:italic;font-size:13.5px}
@@ -172,6 +176,7 @@ var KAB = (function(){
     if(opt.body !== undefined) h['Content-Type'] = 'application/json';
     if(opt.key) h['X-Kab-Key'] = opt.key;
     if(opt.session) h['X-Kab-Session'] = opt.session;
+    if(opt.who) h['X-Kab-Who'] = encodeURIComponent(opt.who);
     return fetch(API + path, {method: opt.method || 'GET', headers: h, body: opt.body !== undefined ? JSON.stringify(opt.body) : undefined, cache: 'no-store'})
       .catch(function(){ var e = new Error(NET); e.net = true; throw e; })
       .then(function(r){
@@ -209,6 +214,11 @@ var KAB = (function(){
   var COL = ['#7A1C22','#BA8A48','#5E7C8A','#4F7F5F','#8C5A7A','#C7795A','#6B5B95'];
   function ini(n){ return String(n || '?').split(/\s+/).map(function(x){ return x[0] || ''; }).join('').slice(0, 2).toUpperCase(); }
   function stLabel(st){ return ({ok:['p-ok','готово'], choose:['p-warn','нужно выбрать'], search:['p-mu','ищем'], wait:['p-warn','на согласовании'], later:['p-mu','позже'], no:['p-mu','не нужно']})[st] || ['p-mu', st || '']; }
+  // Карточка с фото; если фото ещё нет - аккуратная заглушка «скоро будет фото»
+  function imgBox(ph, label){
+    return '<div class="img" style="background:' + (ph ? "linear-gradient(transparent 40%,rgba(0,0,0,.55)),url('" + esc(ph) + "') center/cover" : 'linear-gradient(135deg,#3a1c1f,#241214)') + '">' +
+      (ph ? '' : '<span class="ph-soon">📷 Скоро здесь появится фотография</span>') + esc(label || '') + '</div>';
+  }
   function q(name){ try{ return new URLSearchParams(location.search).get(name) || ''; }catch(_){ return ''; } }
   function ls(k, v){ try{ if(v === undefined) return localStorage.getItem(k) || ''; if(v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); }catch(_){} return ''; }
   // Код из адреса прячем: остаётся только на этом устройстве, не светится в истории, на скриншотах и при пересылке адреса
@@ -217,7 +227,7 @@ var KAB = (function(){
     if(t){ ls(store, t); try{ history.replaceState(null, '', location.pathname + location.hash); }catch(_){} }
     return t || ls(store);
   }
-  return {ls:ls, hideToken:hideToken,API:API, NET:NET, TG:TG, PHONE:PHONE, $:$, $$:$$, esc:esc, fmt:fmt, rub:rub, parseDate:parseDate, fmtDate:fmtDate, shortDate:shortDate, plural:plural, toast:toast, api:api, copy:copy, errBox:errBox, notFound:notFound, skeleton:skeleton, COL:COL, ini:ini, stLabel:stLabel, q:q};
+  return {ls:ls, hideToken:hideToken, imgBox:imgBox, API:API, NET:NET, TG:TG, PHONE:PHONE, $:$, $$:$$, esc:esc, fmt:fmt, rub:rub, parseDate:parseDate, fmtDate:fmtDate, shortDate:shortDate, plural:plural, toast:toast, api:api, copy:copy, errBox:errBox, notFound:notFound, skeleton:skeleton, COL:COL, ini:ini, stLabel:stLabel, q:q};
 })();
 
 (function(){
