@@ -5,6 +5,9 @@ Disallow: /files/
 Disallow: /prezentaciya/
 Disallow: /cena-voprosa/
 Disallow: /event/kp/
+Disallow: /para/
+Disallow: /brief/
+Disallow: /proekty/
 
 User-agent: Yandex
 Allow: /
@@ -13,6 +16,9 @@ Disallow: /files/
 Disallow: /prezentaciya/
 Disallow: /cena-voprosa/
 Disallow: /event/kp/
+Disallow: /para/
+Disallow: /brief/
+Disallow: /proekty/
 Clean-param: utm_source&utm_medium&utm_campaign&utm_content&utm_term&yclid&_openstat
 
 Sitemap: https://navseg-da.agency/sitemap.xml

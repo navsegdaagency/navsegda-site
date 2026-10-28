@@ -166,6 +166,7 @@ var KAB = (function(){
     var h = {};
     if(opt.body !== undefined) h['Content-Type'] = 'application/json';
     if(opt.key) h['X-Kab-Key'] = opt.key;
+    if(opt.session) h['X-Kab-Session'] = opt.session;
     return fetch(API + path, {method: opt.method || 'GET', headers: h, body: opt.body !== undefined ? JSON.stringify(opt.body) : undefined, cache: 'no-store'})
       .catch(function(){ var e = new Error(NET); e.net = true; throw e; })
       .then(function(r){
@@ -204,7 +205,14 @@ var KAB = (function(){
   function ini(n){ return String(n || '?').split(/\s+/).map(function(x){ return x[0] || ''; }).join('').slice(0, 2).toUpperCase(); }
   function stLabel(st){ return ({ok:['p-ok','готово'], choose:['p-warn','нужно выбрать'], search:['p-mu','ищем'], wait:['p-warn','на согласовании'], later:['p-mu','позже'], no:['p-mu','не нужно']})[st] || ['p-mu', st || '']; }
   function q(name){ try{ return new URLSearchParams(location.search).get(name) || ''; }catch(_){ return ''; } }
-  return {API:API, NET:NET, TG:TG, PHONE:PHONE, $:$, $$:$$, esc:esc, fmt:fmt, rub:rub, parseDate:parseDate, fmtDate:fmtDate, shortDate:shortDate, plural:plural, toast:toast, api:api, copy:copy, errBox:errBox, notFound:notFound, skeleton:skeleton, COL:COL, ini:ini, stLabel:stLabel, q:q};
+  function ls(k, v){ try{ if(v === undefined) return localStorage.getItem(k) || ''; if(v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); }catch(_){} return ''; }
+  // Код из адреса прячем: остаётся только на этом устройстве, не светится в истории, на скриншотах и при пересылке адреса
+  function hideToken(param, store){
+    var t = q(param);
+    if(t){ ls(store, t); try{ history.replaceState(null, '', location.pathname + location.hash); }catch(_){} }
+    return t || ls(store);
+  }
+  return {ls:ls, hideToken:hideToken,API:API, NET:NET, TG:TG, PHONE:PHONE, $:$, $$:$$, esc:esc, fmt:fmt, rub:rub, parseDate:parseDate, fmtDate:fmtDate, shortDate:shortDate, plural:plural, toast:toast, api:api, copy:copy, errBox:errBox, notFound:notFound, skeleton:skeleton, COL:COL, ini:ini, stLabel:stLabel, q:q};
 })();
 
 (function(){

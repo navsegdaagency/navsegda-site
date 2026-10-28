@@ -125,6 +125,12 @@ button.stg{cursor:pointer;font:inherit;font-size:12px;font-weight:600}
 
 .todo .btn{flex-shrink:0}
 .money .row{padding:3px 0}
+.gal{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.gal figure{margin:0;min-width:0}
+.gal img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:12px;display:block}
+.gal figcaption{font-size:12px;opacity:.75;margin-top:4px}
+.cph{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;display:block;margin-bottom:6px}
+@media (max-width:700px){.gal{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
@@ -155,6 +161,7 @@ var KAB = (function(){
     var h = {};
     if(opt.body !== undefined) h['Content-Type'] = 'application/json';
     if(opt.key) h['X-Kab-Key'] = opt.key;
+    if(opt.session) h['X-Kab-Session'] = opt.session;
     return fetch(API + path, {method: opt.method || 'GET', headers: h, body: opt.body !== undefined ? JSON.stringify(opt.body) : undefined, cache: 'no-store'})
       .catch(function(){ var e = new Error(NET); e.net = true; throw e; })
       .then(function(r){
@@ -193,20 +200,56 @@ var KAB = (function(){
   function ini(n){ return String(n || '?').split(/\s+/).map(function(x){ return x[0] || ''; }).join('').slice(0, 2).toUpperCase(); }
   function stLabel(st){ return ({ok:['p-ok','готово'], choose:['p-warn','нужно выбрать'], search:['p-mu','ищем'], wait:['p-warn','на согласовании'], later:['p-mu','позже'], no:['p-mu','не нужно']})[st] || ['p-mu', st || '']; }
   function q(name){ try{ return new URLSearchParams(location.search).get(name) || ''; }catch(_){ return ''; } }
-  return {API:API, NET:NET, TG:TG, PHONE:PHONE, $:$, $$:$$, esc:esc, fmt:fmt, rub:rub, parseDate:parseDate, fmtDate:fmtDate, shortDate:shortDate, plural:plural, toast:toast, api:api, copy:copy, errBox:errBox, notFound:notFound, skeleton:skeleton, COL:COL, ini:ini, stLabel:stLabel, q:q};
+  function ls(k, v){ try{ if(v === undefined) return localStorage.getItem(k) || ''; if(v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); }catch(_){} return ''; }
+  // Код из адреса прячем: остаётся только на этом устройстве, не светится в истории, на скриншотах и при пересылке адреса
+  function hideToken(param, store){
+    var t = q(param);
+    if(t){ ls(store, t); try{ history.replaceState(null, '', location.pathname + location.hash); }catch(_){} }
+    return t || ls(store);
+  }
+  return {ls:ls, hideToken:hideToken,API:API, NET:NET, TG:TG, PHONE:PHONE, $:$, $$:$$, esc:esc, fmt:fmt, rub:rub, parseDate:parseDate, fmtDate:fmtDate, shortDate:shortDate, plural:plural, toast:toast, api:api, copy:copy, errBox:errBox, notFound:notFound, skeleton:skeleton, COL:COL, ini:ini, stLabel:stLabel, q:q};
 })();
 
 (function(){
 var K = KAB, esc = K.esc, $ = K.$;
-var T = K.q('t'), D = null, TAB = (location.hash || '').slice(1) || 'main', app = $('#app');
+var T = K.hideToken('t', 'nsg-kab-t'), D = null, TAB = (location.hash || '').slice(1) || 'main', app = $('#app');
+var SK = 'nsg-kab-s:' + T, S = K.ls(SK);
 var TABS = [['main','Главное'],['team','Команда'],['smeta','Смета'],['pay','Оплаты'],['anketa','Анкета'],['ideas','Идеи'],['docs','Документы']];
+// Фото с наших свадеб 2026 (реальные проекты НАВСЕГДА)
+var IMG = '/assets/img/pairs/';
+var HERO_PH = IMG + 'dmitriy-diana/11.webp';
+var GALLERY = [[IMG + 'konstantin-darya/12.webp', 'Декор в белом и зелени'], [IMG + 'dmitriy-diana/04.webp', 'Президиум в цветах'], [IMG + 'konstantin-darya/14.webp', 'Шампанская башня на велкоме'], [IMG + 'ruslan-darya/13.webp', 'Арка из драпировки']];
 
+function call(path, opt){ opt = opt || {}; opt.session = S; return K.api('/api/kab/pair/' + encodeURIComponent(T) + path, opt).catch(function(e){ if(e.status === 401 && path){ pinScreen(); } throw e; }); }
 function load(quiet){
   if(!quiet) app.innerHTML = K.skeleton() + K.skeleton();
-  return K.api('/api/kab/pair/' + encodeURIComponent(T)).then(function(d){ D = d; render(); }, function(e){
+  return call('').then(function(d){ D = d; render(); }, function(e){
+    if(e.status === 401){ pinScreen(); return; }
     if(quiet){ K.toast(e.message); return; }
     app.innerHTML = e.status === 404 ? K.notFound('Этой ссылки на кабинет нет.') : K.errBox(e, true);
   });
+}
+function pinScreen(msg){
+  D = null; S = ''; K.ls(SK, null);
+  app.innerHTML = '<div class="center"><form class="card stack" id="pinForm" style="max-width:360px;width:100%"><div style="font-size:34px;color:var(--gold,#BA8A48)">∞</div>' +
+    '<h2 style="margin:0">Вход в личный кабинет</h2><p class="mu sm" style="margin:0">Введите 4-значный код из сообщения реализатора. На этом устройстве код больше не спросим 90 дней.</p>' +
+    '<div class="field"><label for="pin">Код входа</label><input id="pin" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{4}" maxlength="4" required style="font-size:28px;letter-spacing:.5em;text-align:center"></div>' +
+    (msg ? '<p class="sm" role="alert" style="margin:0;color:#e0897f">' + esc(msg) + '</p>' : '') +
+    '<button class="btn pr" type="submit">Войти</button><p class="sm mu" style="margin:0">Нет кода? <a href="' + K.TG + '" target="_blank" rel="noopener">Напишите нам</a> - пришлём заново.</p>' +
+    '<p class="sm mu" style="margin:0">🔒 Смета и личные данные видны только тем, у кого есть и ссылка, и код.</p></form></div>';
+  var f = $('#pinForm'), inp = $('#pin'); inp.focus();
+  f.addEventListener('submit', function(e){
+    e.preventDefault(); var b = f.querySelector('button'), v = inp.value.trim();
+    if(!/^\d{4}$/.test(v)){ inp.focus(); return; }
+    b.disabled = true; b.textContent = 'Проверяем...';
+    K.api('/api/kab/pair/' + encodeURIComponent(T) + '/login', {method:'POST', body:{pin:v}}).then(function(r){
+      S = r.session; K.ls(SK, S); load();
+    }, function(err){ pinScreen(err.status === 404 ? 'Ссылка не найдена - попросите новую у реализатора' : err.message); });
+  });
+}
+function logout(){
+  if(!confirm('Выйти из кабинета на этом устройстве? Для входа снова понадобится код.')) return;
+  call('/logout', {method:'POST', body:{}}).catch(function(){}).then(function(){ K.ls(SK, null); K.ls('nsg-kab-t', null); S = ''; app.innerHTML = '<div class="center"><div class="card stack"><h2 style="margin:0">Вы вышли</h2><p class="mu" style="margin:0">Чтобы вернуться, откройте ссылку из сообщения реализатора.</p></div></div>'; });
 }
 function teamPct(){ var s = D.slots || []; if(!s.length) return 0; return Math.round(s.filter(function(x){ return x.status === 'ok' || x.status === 'no'; }).length / s.length * 100); }
 function unpaid(){ return (D.payplan || []).filter(function(x){ return !isPaid(x); }); }
@@ -221,7 +264,7 @@ function hero(){
   k.push([teamPct() + '%', 'команды собрано']);
   k.push([((D.anketa || {}).percent || 0) + '%', 'анкеты заполнено']);
   var sub = [D.date ? K.fmtDate(D.date) : '', D.guests ? D.guests + ' ' + K.plural(+D.guests || 0, 'гость', 'гостя', 'гостей') : '', D.venue || ''].filter(Boolean);
-  return '<div class="hero"><div class="sm" style="color:#f0d6cc">Личный кабинет · ссылка только для вас</div><h1 style="margin:4px 0 6px">' + esc(D.names) + '</h1>' +
+  return '<div class="hero" style="background:linear-gradient(100deg,rgba(78,0,2,.94) 0%,rgba(78,0,2,.82) 55%,rgba(78,0,2,.45)),url(\'' + HERO_PH + '\') center 40%/cover"><div class="sm" style="color:#f0d6cc">🔒 Личный кабинет · только для вас</div><h1 style="margin:4px 0 6px">' + esc(D.names) + '</h1>' +
     '<div class="mu">' + sub.map(esc).join(' · ') + '</div>' +
     '<div class="kpis">' + k.map(function(x){ return '<div class="kpi"><b>' + esc(x[0]) + '</b><span>' + esc(x[1]) + '</span></div>'; }).join('') + '</div></div>';
 }
@@ -256,7 +299,9 @@ function main(){
     var pct = Math.min(100, Math.round((sm.paid || 0) / sm.total * 100));
     h += '<div class="card money"><h3>Деньги</h3><div class="row sb sm"><span>Смета сейчас</span><b>' + K.rub(sm.total) + '</b></div><div class="row sb sm"><span>Внесено</span><b>' + K.rub(sm.paid) + '</b></div><div class="row sb sm"><span>Осталось</span><b>' + K.rub(sm.left) + '</b></div><div class="prog" style="margin-top:8px"><i style="width:' + pct + '%"></i></div></div>';
   }
-  return h + '</div></div>';
+  h += '</div></div><div class="card" style="margin-top:14px"><h3>Наши свадьбы 2026</h3><p class="sm mu" style="margin:0 0 10px">Живые кадры с проектов НАВСЕГДА - для вдохновения. Понравилось - напишите в «Анкете», учтём.</p><div class="gal">' +
+    GALLERY.map(function(g){ return '<figure><img src="' + g[0] + '" alt="' + esc(g[1]) + '" loading="lazy"><figcaption>' + esc(g[1]) + '</figcaption></figure>'; }).join('') + '</div></div>';
+  return h + '<p class="sm mu" style="text-align:center;margin:18px 0 0"><button class="btn sm gh" type="button" data-logout>Выйти на этом устройстве</button></p>';
 }
 function team(){
   var sl = D.slots || [];
@@ -270,7 +315,8 @@ function team(){
       if((s.cands || []).length){
         body += '<div class="cands">' + s.cands.map(function(c){
           var sel = s.picked === c.id;
-          return '<div class="cand' + (sel ? ' sel' : '') + '"><b>' + esc(c.name) + '</b>' + (c.tag ? '<div class="sm mu">' + esc(c.tag) + '</div>' : '') + (c.price ? '<div class="sm">' + esc(c.price) + '</div>' : '') +
+          var cph = [].concat(c.photos || [])[0];
+          return '<div class="cand' + (sel ? ' sel' : '') + '">' + (cph ? '<img class="cph" src="' + esc(cph) + '" alt="" loading="lazy">' : '') + '<b>' + esc(c.name) + '</b>' + (c.tag ? '<div class="sm mu">' + esc(c.tag) + '</div>' : '') + (c.price ? '<div class="sm">' + esc(c.price) + '</div>' : '') +
             (c.about ? '<div class="sm mu">' + esc(c.about) + '</div>' : '') + linksHtml(c) +
             '<button class="btn sm' + (sel ? ' pr' : '') + '" type="button" style="margin-top:6px" data-pick="' + esc(s.key) + '" data-item="' + esc(c.id) + '"' + (sel ? ' disabled' : '') + '>' + (sel ? '✓ Выбран' : 'Выбрать') + '</button></div>';
         }).join('') + '</div>';

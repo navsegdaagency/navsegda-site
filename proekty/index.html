@@ -189,6 +189,7 @@ var KAB = (function(){
     var h = {};
     if(opt.body !== undefined) h['Content-Type'] = 'application/json';
     if(opt.key) h['X-Kab-Key'] = opt.key;
+    if(opt.session) h['X-Kab-Session'] = opt.session;
     return fetch(API + path, {method: opt.method || 'GET', headers: h, body: opt.body !== undefined ? JSON.stringify(opt.body) : undefined, cache: 'no-store'})
       .catch(function(){ var e = new Error(NET); e.net = true; throw e; })
       .then(function(r){
@@ -227,7 +228,14 @@ var KAB = (function(){
   function ini(n){ return String(n || '?').split(/\s+/).map(function(x){ return x[0] || ''; }).join('').slice(0, 2).toUpperCase(); }
   function stLabel(st){ return ({ok:['p-ok','готово'], choose:['p-warn','нужно выбрать'], search:['p-mu','ищем'], wait:['p-warn','на согласовании'], later:['p-mu','позже'], no:['p-mu','не нужно']})[st] || ['p-mu', st || '']; }
   function q(name){ try{ return new URLSearchParams(location.search).get(name) || ''; }catch(_){ return ''; } }
-  return {API:API, NET:NET, TG:TG, PHONE:PHONE, $:$, $$:$$, esc:esc, fmt:fmt, rub:rub, parseDate:parseDate, fmtDate:fmtDate, shortDate:shortDate, plural:plural, toast:toast, api:api, copy:copy, errBox:errBox, notFound:notFound, skeleton:skeleton, COL:COL, ini:ini, stLabel:stLabel, q:q};
+  function ls(k, v){ try{ if(v === undefined) return localStorage.getItem(k) || ''; if(v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); }catch(_){} return ''; }
+  // Код из адреса прячем: остаётся только на этом устройстве, не светится в истории, на скриншотах и при пересылке адреса
+  function hideToken(param, store){
+    var t = q(param);
+    if(t){ ls(store, t); try{ history.replaceState(null, '', location.pathname + location.hash); }catch(_){} }
+    return t || ls(store);
+  }
+  return {ls:ls, hideToken:hideToken,API:API, NET:NET, TG:TG, PHONE:PHONE, $:$, $$:$$, esc:esc, fmt:fmt, rub:rub, parseDate:parseDate, fmtDate:fmtDate, shortDate:shortDate, plural:plural, toast:toast, api:api, copy:copy, errBox:errBox, notFound:notFound, skeleton:skeleton, COL:COL, ini:ini, stLabel:stLabel, q:q};
 })();
 
 (function(){
@@ -337,7 +345,9 @@ document.addEventListener('input', function(e){
   var s = sec.id.slice(4); DIRTY[s] = true; sec.classList.add('dirty');
 });
 function pairLink(){ return (CUR.links || {}).pair || (SITE + '/para/?t=' + ((CUR.tokens || {}).pair || '')); }
-function pairMsg(names, link){ return (names || '') + ', это ваш личный кабинет НАВСЕГДА: смета, команда, оплаты и анкета в одном месте - ' + link; }
+function pairMsg(names, link){ if(CUR && CUR.invite && (!link || CUR.invite.indexOf(link) >= 0)) return CUR.invite; return (names || '') + ', это ваш личный кабинет НАВСЕГДА: смета, команда, оплаты и анкета в одном месте - ' + link; }
+function secLine(){ var s = CUR.security || {}; return '<div class="sm" style="margin-top:8px">🔒 Код входа пары: <b style="letter-spacing:.15em">' + esc(s.pin || '-') + '</b> · устройств со входом: ' + (s.devices || 0) + (s.last_login ? ' · последний вход ' + esc(s.last_login) : ' · ещё не входили') + '</div>' +
+  '<div class="row wrapf" style="margin-top:6px"><button class="btn sm gh" type="button" data-rot="pin">Новый код</button><button class="btn sm gh" type="button" data-rot="sessions">Выйти на всех устройствах пары</button><button class="btn sm gh" type="button" data-rot="pair">Новая ссылка и код</button><button class="btn sm gh" type="button" data-act="access">Журнал входов</button></div><div id="accBox"></div>'; }
 function stages(){ return CUR.stages || HELP.stages || []; }
 
 function secHead(){
@@ -346,7 +356,7 @@ function secHead(){
   return '<div class="row sb wrapf" style="align-items:flex-start"><div style="min-width:0"><h2 style="margin:0">' + esc(p.names || p.pair) + '</h2><div class="mu sm">' + sub.map(esc).join(' · ') + '</div>' +
     '<div class="sm mu">в таблице: «' + esc(p.pair) + '» · id ' + esc(p.id) + (p.amo_lead ? ' · сделка amoCRM ' + esc(p.amo_lead) : '') + '</div>' +
     ((p.flags || []).length ? '<div class="chips" style="margin-top:6px">' + p.flags.map(flagPill).join('') + '</div>' : '') + '</div>' +
-    '<div class="row wrapf"><button class="btn sm" type="button" data-act="copyLink">🔗 Ссылка кабинета пары</button><button class="btn sm" type="button" data-act="copyMsg">Скопировать сообщение паре</button><a class="btn sm gh" href="' + esc(pairLink()) + '" target="_blank" rel="noopener">Открыть как пара</a></div></div>' +
+    '<div class="row wrapf"><button class="btn sm" type="button" data-act="copyLink">🔗 Ссылка кабинета пары</button><button class="btn sm" type="button" data-act="copyMsg">Сообщение паре (ссылка + код)</button><a class="btn sm gh" href="' + esc(pairLink()) + '" target="_blank" rel="noopener">Открыть как пара</a></div></div>' + secLine() +
     '<div class="lbl" style="margin:12px 0 6px">Этап <span class="mu sm" style="font-weight:400">- нажмите, чтобы переключить (пара видит этап у себя)</span></div><div class="stages">' + stages().map(function(s, i){
       return '<button class="stg ' + (i < cur ? 'done' : i === cur ? 'cur' : '') + '" type="button" data-stage="' + i + '" aria-pressed="' + (i === cur) + '">' + (i + 1) + '. ' + esc(s) + '</button>'; }).join('') + '</div>';
 }
@@ -564,8 +574,8 @@ function create(body, btn){
     REG = null;
     return api('/api/kab/projects/' + encodeURIComponent(r.id)).then(function(p){ return [r, p]; }, function(){ return [r, null]; });
   }).then(function(x){
-    var r = x[0], p = x[1], link = (r.links || {}).pair, names = (p && p.names) || body.names || body.pair, msg = pairMsg(names, link);
-    $('#cmBody').innerHTML = '<div class="res"><b>' + (r.existing ? 'Кабинет уже был' : 'Кабинет создан') + ': ' + esc(names) + '</b><p class="sm mu" style="margin:4px 0 6px">Паре ничего не отправлено. Скопируйте сообщение и отправьте сами.</p><input readonly value="' + esc(link) + '"><textarea readonly rows="3" style="margin-top:6px">' + esc(msg) + '</textarea>' +
+    var r = x[0], p = x[1], link = (r.links || {}).pair, names = (p && p.names) || body.names || body.pair, msg = (p && p.invite) || r.invite || pairMsg(names, link);
+    $('#cmBody').innerHTML = '<div class="res"><b>' + (r.existing ? 'Кабинет уже был' : 'Кабинет создан') + ': ' + esc(names) + '</b><p class="sm mu" style="margin:4px 0 6px">Паре ничего не отправлено. В сообщении ссылка и код входа - отправьте паре сами, лучше в личный чат.</p><input readonly value="' + esc(link) + '"><textarea readonly rows="3" style="margin-top:6px">' + esc(msg) + '</textarea>' +
       '<div class="row wrapf" style="margin-top:8px"><button class="btn sm pr" type="button" data-copy="' + esc(msg) + '">Скопировать сообщение паре</button><button class="btn sm" type="button" data-copy="' + esc(link) + '">Только ссылку</button><a class="btn sm" href="#' + esc(r.id) + '" data-close>Открыть проект</a></div></div>';
     refreshSide();
   }, function(e){ K.toast(e.message); btn.disabled = false; });
@@ -613,6 +623,11 @@ document.addEventListener('click', function(e){
   if(d.act === 'copyLink'){ K.copy(pairLink(), 'Ссылка кабинета скопирована'); return; }
   if(d.act === 'copyMsg'){ K.copy(pairMsg(CUR.names, pairLink()), 'Сообщение паре скопировано'); return; }
   if(d.act === 'mkSel'){ mkSel(t); return; }
+  if(d.rot){ var RT = {pin:'Сменить код входа? Пара выйдет на всех устройствах и войдёт по новому коду.', sessions:'Выйти на всех устройствах пары? Войти можно будет по тому же коду.', pair:'Выдать новую ссылку и код? Старая ссылка перестанет работать - новую нужно будет отправить паре.'};
+    if(!confirm(RT[d.rot])) return; t.disabled = true;
+    api('/api/kab/projects/' + encodeURIComponent(CUR.id) + '/rotate', {method:'POST', body:{what:d.rot}}).then(function(r){ K.toast('Готово. ' + (d.rot === 'sessions' ? 'Пара вышла со всех устройств' : 'Не забудьте отправить паре новое сообщение')); openProject(CUR.id); }, function(err){ K.toast(err.message); t.disabled = false; }); return; }
+  if(d.act === 'access'){ t.disabled = true; api('/api/kab/projects/' + encodeURIComponent(CUR.id) + '/access').then(function(r){ var a = r.access || [];
+    $('#accBox').innerHTML = '<div class="sm" style="margin-top:8px">' + (a.length ? a.slice(0, 30).map(function(x){ return esc(x.at) + ' · ' + esc(({pair:'кабинет пары', login:'вход по коду', pin:'неверный код', sel:'подборка'})[x.kind] || x.kind) + ' · ' + esc(x.result === 'ok' ? 'ок' : 'отказ') + ' · ' + esc(x.ip) + ' · <span class="mu">' + esc((x.ua || '').slice(0, 40)) + '</span>'; }).join('<br>') : 'Входов пока не было') + '</div>'; t.disabled = false; }, function(err){ K.toast(err.message); t.disabled = false; }); return; }
   if(d.stage !== undefined){ var st = +d.stage; if(st === (CUR.stage || 0)) return; t.disabled = true; patch({stage:st}, 'Этап: ' + stages()[st]).catch(function(){ t.disabled = false; }); return; }
   if(d.save){ save(d.save, t); return; }
   if(d.brief){ mkBrief(d.brief, t); return; }
