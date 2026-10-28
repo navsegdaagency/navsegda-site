@@ -474,7 +474,7 @@ function secInfo(){
   var p = CUR, a = p.anketa || {};
   function inp(id, label, v, type, ph){ return '<div class="field"><label for="' + id + '">' + esc(label) + '</label><input id="' + id + '" ' + (type ? 'type="' + type + '" ' : '') + 'value="' + esc(v == null ? '' : v) + '"' + (ph ? ' placeholder="' + esc(ph) + '"' : '') + '></div>'; }
   return '<h3>Основное</h3><div class="ed">' + inp('iNames', 'Имена (видит пара)', p.names) + inp('iDate', 'Дата', /^\d{4}-\d{2}-\d{2}$/.test(p.date || '') ? p.date : '', 'date') + inp('iGuests', 'Гостей', p.guests, 'number') + inp('iVenue', 'Площадка', p.venue) +
-    inp('iReal', 'Реализатор', p.realizer) + inp('iRealTg', 'Telegram ID реализатора', p.realizer_tg, '', 'для уведомлений, цифрами') + inp('iMgr', 'Менеджер', p.manager) + inp('iAmo', 'Сделка amoCRM (номер)', p.amo_lead, '', 'например 12345678') +
+    inp('iReal', 'Реализатор', p.realizer) + inp('iRealTg', 'Telegram реализатора', p.realizer_tg, '', '@ник или ID - для уведомлений') + inp('iMgr', 'Менеджер', p.manager) + inp('iAmo', 'Сделка amoCRM (номер)', p.amo_lead, '', 'например 12345678') +
     inp('iAnkP', 'Анкета, %', a.percent || 0, 'number') + inp('iAnkL', 'Ссылка на анкету', a.link) + '</div>' +
     '<label class="row sm" style="margin:6px 0 10px"><input type="checkbox" id="iArch"' + (p.archived ? ' checked' : '') + '> В архив (скрыть из списка)</label><button class="btn pr" type="button" data-save="info">Сохранить</button>';
 }
@@ -580,7 +580,7 @@ function manView(){
   var b = $('#cmBody'); b.onclick = null;
   b.innerHTML = '<form id="manF"><div class="ed"><div class="field"><label for="mPair">Пара как в таблице реализации *</label><input id="mPair" required placeholder="Миша и Лиза"></div><div class="field"><label for="mNames">Имена для пары</label><input id="mNames" placeholder="если отличается"></div>' +
     '<div class="field"><label for="mDate">Дата</label><input id="mDate" type="date"></div><div class="field"><label for="mGuests">Гостей</label><input id="mGuests" type="number"></div><div class="field"><label for="mVenue">Площадка</label><input id="mVenue"></div>' +
-    '<div class="field"><label for="mReal">Реализатор</label><input id="mReal" value="Настя"></div><div class="field"><label for="mRealTg">Telegram ID реализатора</label><input id="mRealTg"></div><div class="field"><label for="mAmo">Сделка amoCRM</label><input id="mAmo"></div></div>' +
+    '<div class="field"><label for="mReal">Реализатор</label><input id="mReal" value="Настя"></div><div class="field"><label for="mRealTg">Telegram реализатора</label><input id="mRealTg"></div><div class="field"><label for="mAmo">Сделка amoCRM</label><input id="mAmo"></div></div>' +
     '<button class="btn pr" type="submit" style="margin-top:6px">Создать кабинет</button></form>';
   $('#manF').onsubmit = function(e){ e.preventDefault();
     var body = {pair:val('mPair').trim(), names:val('mNames').trim(), date:val('mDate'), guests:val('mGuests') ? Number(val('mGuests')) : '', venue:val('mVenue').trim(), realizer:val('mReal').trim(), realizer_tg:val('mRealTg').trim(), amo_lead:val('mAmo').trim()};
