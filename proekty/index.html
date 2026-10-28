@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Проекты · НАВСЕГДА</title>
+<meta name="theme-color" content="#4E0002">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&display=swap">
+<style>
+:root{
+  --bg:#FBF6EE; --surface:#FFFFFF; --surface2:#F4EADB; --ink:#2A1416; --muted:#7B6560; --line:#E6D8C4;
+  --bordo:#4E0002; --wine:#7A1C22; --gold:#BA8A48; --cream:#FFE7C6;
+  --ok:#2F7D4F; --warn:#B7791F; --bad:#B42318; --on-wine:#FFFFFF;
+  --display:"Cormorant Garamond", Georgia, serif; --sans:"Golos Text", system-ui, -apple-system, sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#170D0E; --surface:#231516; --surface2:#2E1C1D; --ink:#F5E9DA; --muted:#BFA79E; --line:#3E2A2A;
+  --bordo:#FFE7C6; --wine:#A8343C; --gold:#D9AE6E; --cream:#3A2426; --ok:#6CC08E; --warn:#E3B05A; --bad:#F08A80; --on-wine:#FFFFFF; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#170D0E; --surface:#231516; --surface2:#2E1C1D; --ink:#F5E9DA; --muted:#BFA79E; --line:#3E2A2A;
+  --bordo:#FFE7C6; --wine:#A8343C; --gold:#D9AE6E; --cream:#3A2426; --ok:#6CC08E; --warn:#E3B05A; --bad:#F08A80; --on-wine:#FFFFFF; color-scheme:dark }
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-wrap:anywhere}
+button,input,textarea,select{font:inherit;color:inherit}
+a{color:var(--wine)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) a{color:var(--gold)}}
+.top{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.top-in{max-width:1180px;margin:0 auto;padding:10px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px));display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;justify-content:space-between}
+.logo{font-family:var(--display);font-size:22px;font-weight:700;color:var(--bordo);text-decoration:none;display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
+.logo img{height:16px;width:auto}
+.logo small{font-family:var(--sans);font-size:12.5px;font-weight:500;color:var(--muted)}
+main{max-width:1180px;margin:0 auto;padding:18px max(16px,env(safe-area-inset-right,0px)) 70px max(16px,env(safe-area-inset-left,0px))}
+main.narrow{max-width:820px}
+h1{font-family:var(--display);font-size:clamp(30px,6vw,44px);line-height:1.05;margin:0;color:var(--bordo);text-wrap:balance}
+h2{font-family:var(--display);font-size:26px;line-height:1.15;margin:0 0 10px;color:var(--bordo)}
+h3{font-size:15px;margin:0 0 8px}
+p{margin:0 0 10px}
+.mu{color:var(--muted)}.sm{font-size:12.5px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px 16px;min-width:0}
+.stack{display:flex;flex-direction:column;gap:12px;min-width:0}
+.row{display:flex;gap:10px;align-items:center;min-width:0}.row.sb{justify-content:space-between}.wrapf{flex-wrap:wrap}
+.grid2{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:14px;align-items:start}
+.grid3{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+@media (max-width:860px){.grid2{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:520px){.grid3{grid-template-columns:minmax(0,1fr)}}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:2px 9px;border-radius:999px;font-size:12px;font-weight:700;white-space:nowrap}
+.p-ok{background:color-mix(in srgb,var(--ok) 15%,transparent);color:var(--ok)}
+.p-warn{background:color-mix(in srgb,var(--warn) 17%,transparent);color:var(--warn)}
+.p-bad{background:color-mix(in srgb,var(--bad) 13%,transparent);color:var(--bad)}
+.p-gold{background:color-mix(in srgb,var(--gold) 20%,transparent);color:var(--gold)}
+.p-mu{background:var(--surface2);color:var(--muted)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 13px;cursor:pointer;font-weight:600;font-size:13.5px;text-decoration:none;color:var(--ink);min-height:38px;line-height:1.2;text-align:center}
+.btn.pr{background:var(--wine);border-color:var(--wine);color:var(--on-wine)}
+.btn.gh{background:transparent}
+.btn.sm{min-height:30px;padding:4px 10px;font-size:12.5px;border-radius:10px}
+.btn.wide{width:100%}
+.btn:disabled{opacity:.55;cursor:default}
+.btn:focus-visible,.tab:focus-visible,.chip:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.tabs{display:flex;gap:4px;overflow-x:auto;margin:14px 0;padding-bottom:2px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.tabs::-webkit-scrollbar{display:none}
+.tab{border:0;background:transparent;padding:8px 12px;border-radius:10px;cursor:pointer;font-weight:600;white-space:nowrap;color:var(--muted);flex-shrink:0}
+.tab[aria-selected="true"]{background:var(--surface2);color:var(--ink)}
+.hero{border-radius:20px;padding:20px;background:linear-gradient(135deg,#7A1C22,#3d0a0e);color:#fff}
+.hero h1{color:#FFE7C6}
+.hero .mu{color:#f0d6cc}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(96px,1fr));gap:8px;margin-top:14px}
+.kpi{background:rgba(255,255,255,.1);border-radius:12px;padding:8px 12px}.kpi b{display:block;font-size:22px;font-variant-numeric:tabular-nums;line-height:1.2}.kpi span{font-size:12px;color:#f0d6cc}
+.prog{height:8px;border-radius:4px;background:var(--surface2);overflow:hidden}.prog i{display:block;height:100%;background:var(--gold)}
+.todo{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px dashed var(--line)}.todo:last-child{border-bottom:0}
+.ic{width:30px;height:30px;border-radius:9px;background:var(--surface2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.slot{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--line)}.slot:last-child{border-bottom:0}
+.av{width:42px;height:42px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;flex-shrink:0;font-size:14px}
+.cands{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-top:8px}
+.cand{border:1px solid var(--line);border-radius:12px;padding:10px;background:var(--surface);display:flex;flex-direction:column;gap:4px}
+.cand.sel{border-color:var(--ok);box-shadow:0 0 0 2px color-mix(in srgb,var(--ok) 30%,transparent)}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+td,th{padding:7px 8px;border-bottom:1px solid var(--line);font-size:13.5px;text-align:right;vertical-align:top}
+td:first-child,th:first-child{text-align:left}
+th{font-size:11.5px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+tr.cat td{background:var(--surface2);font-weight:700;font-size:12.5px}
+tr.tot td{font-weight:800;border-top:2px solid var(--ink)}
+.scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+.field{display:flex;flex-direction:column;gap:4px;margin-bottom:10px;min-width:0}
+.field label,.lbl{font-size:12.5px;font-weight:700}
+input,textarea,select{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:9px 11px;min-width:0;max-width:100%;width:100%}
+input[type=checkbox]{width:auto}
+textarea{resize:vertical}
+.feed{display:flex;flex-direction:column;gap:8px}
+.ev{display:flex;gap:10px;font-size:13.5px;padding:9px 11px;border-radius:12px;background:var(--surface2);min-width:0}
+.ev time{color:var(--muted);font-size:12px;white-space:nowrap}
+.stages{display:flex;gap:6px;flex-wrap:wrap}
+.stg{font-size:12px;padding:5px 9px;border-radius:9px;background:var(--surface2);color:var(--muted);border:0}
+.stg.done{background:color-mix(in srgb,var(--ok) 15%,transparent);color:var(--ok)}
+.stg.cur{background:var(--wine);color:var(--on-wine)}
+button.stg{cursor:pointer;font:inherit;font-size:12px;font-weight:600}
+.idea{border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--surface);display:flex;flex-direction:column;min-width:0}
+.idea .img{height:110px;display:flex;align-items:flex-end;padding:10px;color:#fff;font-weight:700;background-size:cover;background-position:center}
+.idea .b{padding:10px 12px;display:flex;flex-direction:column;gap:6px;flex:1}
+.idea .b p{margin:0;font-size:13px;color:var(--muted)}
+.idea .b .btn{margin-top:auto}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;cursor:pointer;font-size:13px;font-weight:600}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:12px;font-weight:600;font-size:13.5px;opacity:0;transition:opacity .2s;pointer-events:none;z-index:80;max-width:calc(100vw - 32px);text-align:center}
+.toast.on{opacity:1}
+.kv{display:grid;grid-template-columns:150px minmax(0,1fr);gap:4px 12px;font-size:14px}.kv>b{font-weight:600;color:var(--muted)}
+@media (max-width:520px){.kv{grid-template-columns:minmax(0,1fr)}.kv>b{margin-top:6px}}
+.note{font-size:12.5px;color:var(--muted);background:var(--surface2);border-radius:12px;padding:10px 12px}
+.pre{white-space:pre-wrap}
+.center{min-height:60vh;display:flex;align-items:center;justify-content:center;text-align:center}
+.center .card{max-width:440px;padding:24px}
+.skel{height:14px;border-radius:7px;background:var(--surface2);margin:8px 0;animation:sk 1.2s ease-in-out infinite alternate}
+@keyframes sk{from{opacity:.5}to{opacity:1}}
+.modal{position:fixed;inset:0;z-index:70;background:rgba(20,8,9,.55);display:flex;align-items:center;justify-content:center;padding:16px}
+.modal .card{width:100%;max-width:560px;max-height:calc(100vh - 32px);overflow:auto}
+.copybox{width:100%;font-size:13px;min-height:80px}
+[hidden]{display:none!important}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+.desk{display:grid;grid-template-columns:320px minmax(0,1fr);gap:14px;align-items:start}
+@media (max-width:900px){.desk{grid-template-columns:minmax(0,1fr)}body.has-cur #main{order:-1}}
+.back{display:none}
+@media (max-width:900px){body.has-cur .back{display:inline-flex}}
+.side{position:sticky;top:70px;max-height:calc(100vh - 84px);overflow:auto}
+@media (max-width:900px){.side{position:static;max-height:none;overflow:visible}}
+.pairs{display:flex;flex-direction:column;gap:8px}
+.pairbtn{text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:10px 12px;cursor:pointer;width:100%}
+.pairbtn[aria-current="true"]{border-color:var(--wine);box-shadow:0 0 0 2px color-mix(in srgb,var(--wine) 25%,transparent)}
+.nav{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.nav .btn[aria-current="page"]{background:var(--surface2)}
+.ed{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))}
+.ed .field{margin:0}
+.erow{border:1px solid var(--line);border-radius:12px;padding:10px;display:grid;gap:8px;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) minmax(0,1.3fr) minmax(0,1.6fr) auto;align-items:start;background:var(--surface)}
+.erow.pp{grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1.2fr) minmax(0,1fr) auto}
+.erow.dc{grid-template-columns:minmax(0,1fr) minmax(0,2fr) auto}
+@media (max-width:700px){.erow,.erow.pp,.erow.dc{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.erow .full{grid-column:1/-1}}
+.erow input,.erow select{padding:7px 9px;font-size:13.5px}
+.elist{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+.tag{display:inline-flex;gap:4px;align-items:center;background:var(--surface2);border-radius:8px;padding:2px 4px 2px 8px;font-size:12px;margin:2px 4px 0 0}
+.tag button{border:0;background:transparent;cursor:pointer;padding:0 4px;color:var(--muted);font-size:14px;line-height:1}
+.xbtn{border:1px solid var(--line);background:transparent;border-radius:10px;cursor:pointer;width:34px;height:34px;color:var(--muted)}
+.res{border:1px dashed var(--gold);border-radius:12px;padding:10px 12px;margin-top:10px;background:color-mix(in srgb,var(--gold) 8%,transparent)}
+.res input{font-size:13px}
+.checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:6px;margin:8px 0}
+.checks label{display:flex;gap:8px;align-items:flex-start;border:1px solid var(--line);border-radius:10px;padding:8px;font-size:13px;cursor:pointer;background:var(--surface)}
+.checks input{margin-top:3px;flex-shrink:0}
+.dirty{box-shadow:inset 3px 0 0 var(--gold)}
+details summary{cursor:pointer;font-weight:600;font-size:13.5px;margin:6px 0}
+.reglist{display:flex;flex-direction:column;gap:6px;max-height:50vh;overflow:auto;margin-top:8px}
+.regit{display:flex;gap:10px;align-items:center;justify-content:space-between;border:1px solid var(--line);border-radius:12px;padding:8px 10px}
+.mtabs{display:flex;gap:4px;margin:6px 0 10px}
+.kpi2{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:10px}
+.kpi2 div{background:var(--surface2);border-radius:12px;padding:8px 10px}.kpi2 b{display:block;font-size:17px;font-variant-numeric:tabular-nums}.kpi2 span{font-size:12px;color:var(--muted)}
+.ev a{cursor:pointer;text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="top"><div class="top-in"><a class="logo" href="/proekty/"><img src="/assets/brand/mark-gold.svg" alt="">НАВСЕГДА <small>рабочий стол</small></a>
+<nav class="nav" id="nav" hidden><a class="btn sm" href="#" id="navP">Проекты</a><a class="btn sm" href="#catalog" id="navC">Каталог</a><a class="btn sm gh" href="/proekty/api/">API</a><button class="btn sm gh" type="button" id="logout">Выйти</button></nav></div></div>
+<main id="app"></main>
+<div class="toast" id="toast" role="status"></div>
+<script>
+// Общие помощники кабинета НАВСЕГДА
+var KAB = (function(){
+  var LOCAL = /^(localhost|127\.0\.0\.1|\[::1\])$/.test(location.hostname);
+  var API = LOCAL ? '' : 'https://109-68-213-160.sslip.io';
+  var NET = 'Сервер не ответил. Если включён VPN - отключите его и обновите страницу';
+  var TG = 'https://t.me/navsegda_agency', PHONE = '+7 958 541-00-41';
+  var MONTHS = ['января','февраля','марта','апреля','мая','июня','июля','августа','сентября','октября','ноября','декабря'];
+  var WD = ['воскресенье','понедельник','вторник','среда','четверг','пятница','суббота'];
+  function $(s, r){ return (r || document).querySelector(s); }
+  function $$(s, r){ return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+  function esc(t){ return String(t == null ? '' : t).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function fmt(n){ n = Number(n) || 0; return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
+  function rub(n){ return fmt(n) + ' ₽'; }
+  function parseDate(s){ var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(s || ''); return m ? new Date(+m[1], +m[2] - 1, +m[3]) : null; }
+  function fmtDate(s, wd){ var d = parseDate(s); if(!d) return s || ''; return (wd ? WD[d.getDay()] + ', ' : '') + d.getDate() + ' ' + MONTHS[d.getMonth()] + ' ' + d.getFullYear(); }
+  function shortDate(s){ var d = parseDate(s); if(!d) return s || ''; return ('0' + d.getDate()).slice(-2) + '.' + ('0' + (d.getMonth() + 1)).slice(-2) + '.' + d.getFullYear(); }
+  function plural(n, a, b, c){ n = Math.abs(n) % 100; var n1 = n % 10; if(n > 10 && n < 20) return c; if(n1 > 1 && n1 < 5) return b; if(n1 === 1) return a; return c; }
+  function toast(t){ var el = $('#toast'); if(!el){ el = document.createElement('div'); el.id = 'toast'; el.className = 'toast'; el.setAttribute('role', 'status'); document.body.appendChild(el); } el.textContent = t; el.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(function(){ el.classList.remove('on'); }, 2600); }
+  function api(path, opt){
+    opt = opt || {};
+    var h = {};
+    if(opt.body !== undefined) h['Content-Type'] = 'application/json';
+    if(opt.key) h['X-Kab-Key'] = opt.key;
+    return fetch(API + path, {method: opt.method || 'GET', headers: h, body: opt.body !== undefined ? JSON.stringify(opt.body) : undefined, cache: 'no-store'})
+      .catch(function(){ var e = new Error(NET); e.net = true; throw e; })
+      .then(function(r){
+        return r.text().then(function(t){
+          var j = null; try{ j = t ? JSON.parse(t) : null; }catch(_){}
+          if(!r.ok && r.status >= 502 && !(j && j.detail)){ var e5 = new Error(NET); e5.net = true; e5.status = r.status; throw e5; }
+          if(!r.ok){ var e = new Error((j && j.detail && (typeof j.detail === 'string' ? j.detail : JSON.stringify(j.detail))) || ('Ошибка ' + r.status)); e.status = r.status; throw e; }
+          return j;
+        });
+      });
+  }
+  // Копирование: буфер обмена, если не вышло - окно с выделенным текстом
+  function copy(text, okMsg){
+    function fallback(){
+      var m = document.createElement('div'); m.className = 'modal';
+      m.innerHTML = '<div class="card stack" role="dialog" aria-modal="true" aria-label="Скопируйте текст"><b>Скопируйте вручную</b><p class="sm mu" style="margin:0">Текст уже выделен - нажмите «Копировать» в меню или Cmd/Ctrl+C.</p><textarea class="copybox" readonly rows="5"></textarea><button class="btn pr" type="button">Готово</button></div>';
+      document.body.appendChild(m);
+      var ta = m.querySelector('textarea'); ta.value = text; ta.focus(); ta.select(); try{ ta.setSelectionRange(0, text.length); }catch(_){}
+      try{ if(document.execCommand('copy')) toast(okMsg || 'Скопировано'); }catch(_){}
+      function close(){ m.remove(); }
+      m.querySelector('button').onclick = close; m.addEventListener('click', function(e){ if(e.target === m) close(); });
+    }
+    if(navigator.clipboard && window.isSecureContext){
+      navigator.clipboard.writeText(text).then(function(){ toast(okMsg || 'Скопировано'); }, fallback);
+    } else fallback();
+  }
+  function errBox(e, retry){
+    var msg = e && e.message ? e.message : NET;
+    return '<div class="center"><div class="card stack"><h2 style="margin:0">Не получилось загрузить</h2><p class="mu" style="margin:0">' + esc(msg) + '</p>' + (retry ? '<button class="btn pr" type="button" onclick="location.reload()">Обновить страницу</button>' : '') + '</div></div>';
+  }
+  function notFound(what){
+    return '<div class="center"><div class="card stack"><div style="font-size:34px">∞</div><h2 style="margin:0">Ссылка не найдена</h2><p class="mu" style="margin:0">' + esc(what || 'Похоже, ссылка устарела или скопировалась не целиком.') + ' Напишите реализатору - пришлём новую.</p><a class="btn pr" href="' + TG + '" target="_blank" rel="noopener">Написать в Telegram</a><p class="sm mu" style="margin:0">Телефон: ' + PHONE + '</p></div></div>';
+  }
+  function skeleton(){ return '<div class="card"><div class="skel" style="width:40%"></div><div class="skel" style="width:75%"></div><div class="skel" style="width:60%"></div></div>'; }
+  var COL = ['#7A1C22','#BA8A48','#5E7C8A','#4F7F5F','#8C5A7A','#C7795A','#6B5B95'];
+  function ini(n){ return String(n || '?').split(/\s+/).map(function(x){ return x[0] || ''; }).join('').slice(0, 2).toUpperCase(); }
+  function stLabel(st){ return ({ok:['p-ok','готово'], choose:['p-warn','нужно выбрать'], search:['p-mu','ищем'], wait:['p-warn','на согласовании'], later:['p-mu','позже'], no:['p-mu','не нужно']})[st] || ['p-mu', st || '']; }
+  function q(name){ try{ return new URLSearchParams(location.search).get(name) || ''; }catch(_){ return ''; } }
+  return {API:API, NET:NET, TG:TG, PHONE:PHONE, $:$, $$:$$, esc:esc, fmt:fmt, rub:rub, parseDate:parseDate, fmtDate:fmtDate, shortDate:shortDate, plural:plural, toast:toast, api:api, copy:copy, errBox:errBox, notFound:notFound, skeleton:skeleton, COL:COL, ini:ini, stLabel:stLabel, q:q};
+})();
+
+(function(){
+var K = KAB, esc = K.esc, $ = K.$, $$ = K.$$, app = $('#app');
+var SITE = 'https://navseg-da.agency';
+var LS = 'nsg-kab-key', KEY = '';
+try{ KEY = localStorage.getItem(LS) || ''; }catch(_){}
+var HELP = {stages:[], slot_status:{ok:'готово', choose:'нужно выбрать', search:'ищем', wait:'на согласовании', later:'позже', no:'не нужно'}, brief_roles:{host:'Ведущий', photo:'Фотограф', video:'Видеограф', decor:'Декоратор', dj:'Диджей', coord:'Координатор', other:'Подрядчик'}};
+var ROLE_TO = {host:'Ведущему', photo:'Фотографу', video:'Видеографу', decor:'Декоратору', coord:'Координатору', dj:'Диджею', other:'Другому'};
+var LIST = [], FEED = [], CAT = [], CUR = null, ED = {}, DIRTY = {}, FILTER = '';
+
+function api(path, opt){
+  opt = opt || {}; opt.key = KEY;
+  return K.api(path, opt).catch(function(e){
+    if(e.status === 403){ logout('Ключ не подошёл или устарел - введите заново'); }
+    if(e.net && /PATCH|DELETE/.test(opt.method || '')) e.message = K.NET + '. Если VPN выключен, а ошибка повторяется - сервер пока не принимает изменения с сайта (PATCH/DELETE), сообщите Денису.';
+    throw e;
+  });
+}
+function logout(msg){ try{ localStorage.removeItem(LS); }catch(_){} KEY = ''; gate(msg); }
+$('#logout').onclick = function(){ logout(); };
+
+// ───── вход ─────
+function gate(msg){
+  $('#nav').hidden = true; document.body.classList.remove('has-cur');
+  app.innerHTML = '<div class="center"><form class="card stack" id="gate" style="width:100%;max-width:420px;text-align:left"><h2 style="margin:0">Рабочий стол НАВСЕГДА</h2><p class="sm mu" style="margin:0">Для реализаторов и Дениса. Ключ команды выдаёт Денис, он сохранится в этом браузере.</p>' +
+    (msg ? '<div class="note" style="color:var(--bad)">' + esc(msg) + '</div>' : '') +
+    '<div class="field"><label for="key">Ключ команды</label><input id="key" type="password" autocomplete="current-password" required></div><button class="btn pr" type="submit">Войти</button></form></div>';
+  $('#gate').onsubmit = function(e){
+    e.preventDefault(); var v = $('#key').value.trim(); if(!v) return;
+    var b = e.target.querySelector('button'); b.disabled = true; b.textContent = 'Проверяем...';
+    K.api('/api/kab/projects', {key:v}).then(function(d){ KEY = v; try{ localStorage.setItem(LS, v); }catch(_){} LIST = d.projects || []; start(); },
+      function(err){ gate(err.status === 403 ? 'Ключ не подошёл' : err.message); });
+  };
+  setTimeout(function(){ var k = $('#key'); if(k) k.focus(); }, 50);
+}
+
+// ───── каркас ─────
+function start(){
+  $('#nav').hidden = false;
+  app.innerHTML = '<div class="desk"><aside class="side stack" id="side"><div class="card stack"><button class="btn pr wide" type="button" id="newBtn">＋ Кабинет для пары</button><input id="flt" type="search" placeholder="Поиск по парам" aria-label="Поиск по парам"></div><div class="card"><h3 id="lh">Проекты</h3><div class="pairs" id="plist">' + K.skeleton() + '</div></div><div class="card"><h3>Лента</h3><div class="feed" id="feed">' + K.skeleton() + '</div></div></aside><section id="main" class="stack"></section></div>';
+  $('#newBtn').onclick = openCreate;
+  $('#flt').oninput = function(){ FILTER = this.value.trim().toLowerCase(); paintList(); };
+  Promise.all([api('/api/kab/help').then(function(h){ HELP = h; }, function(){}), loadCat()]).then(route);
+  refreshSide();
+}
+function refreshSide(){
+  return Promise.all([api('/api/kab/projects').then(function(d){ LIST = d.projects || []; paintList(); }),
+    api('/api/kab/feed').then(function(d){ FEED = d.events || []; paintFeed(); })]).catch(function(e){ var el = $('#plist'); if(el && !LIST.length) el.innerHTML = '<div class="note">' + esc(e.message) + '</div>'; });
+}
+function flagPill(f){ var c = /горит/.test(f) ? 'p-bad' : /выбор/.test(f) ? 'p-warn' : /от пары/.test(f) ? 'p-gold' : 'p-mu'; return '<span class="pill ' + c + '">' + esc(f) + '</span>'; }
+function daysTxt(d){ return d == null ? '' : d < 0 ? 'прошла' : d + ' дн'; }
+function paintList(){
+  var el = $('#plist'); if(!el) return;
+  var l = LIST.filter(function(p){ return !FILTER || ((p.names || '') + ' ' + (p.pair || '') + ' ' + (p.realizer || '')).toLowerCase().indexOf(FILTER) >= 0; });
+  $('#lh').textContent = 'Проекты · ' + LIST.length;
+  el.innerHTML = l.length ? l.map(function(p){
+    return '<button class="pairbtn" type="button" data-open="' + esc(p.id) + '" aria-current="' + (CUR && CUR.id === p.id) + '"><b>' + esc(p.names || p.pair) + '</b><div class="sm mu">' + [K.shortDate(p.date), daysTxt(p.days_left), p.stage_name, p.team_ready + '% команды'].filter(Boolean).map(esc).join(' · ') + '</div>' +
+      (p.realizer ? '<div class="sm mu">реализатор: ' + esc(p.realizer) + '</div>' : '') + ((p.flags || []).length ? '<div class="chips" style="margin-top:5px">' + p.flags.map(flagPill).join('') + '</div>' : '') + '</button>';
+  }).join('') : '<p class="mu sm" style="margin:0">' + (LIST.length ? 'Ничего не нашлось' : 'Пока нет проектов - создайте первый кабинет.') + '</p>';
+}
+function evHtml(e, withName){
+  return '<div class="ev"><time>' + esc(String(e.at || '').slice(5).replace(/^(\d\d)-(\d\d)/, '$2.$1')) + '</time><span style="min-width:0">' + (withName && e.project ? '<a data-open="' + esc(e.project) + '">' + esc(e.names || e.project) + '</a> · ' : '') + '<b>' + esc(e.who) + ':</b> ' + esc(e.text) + '</span></div>';
+}
+function paintFeed(){ var el = $('#feed'); if(el) el.innerHTML = FEED.length ? FEED.slice(0, 40).map(function(e){ return evHtml(e, true); }).join('') : '<p class="mu sm" style="margin:0">Событий пока нет</p>'; }
+
+// ───── маршруты ─────
+function route(){
+  var h = decodeURIComponent((location.hash || '').slice(1));
+  $('#navC').setAttribute('aria-current', h === 'catalog' ? 'page' : 'false');
+  $('#navP').setAttribute('aria-current', h !== 'catalog' ? 'page' : 'false');
+  if(h === 'catalog'){ CUR = null; document.body.classList.add('has-cur'); paintList(); return showCatalog(); }
+  if(h){ return openProject(h); }
+  CUR = null; document.body.classList.remove('has-cur'); paintList();
+  $('#main').innerHTML = '<div class="card"><h2>Выберите проект слева</h2><p class="mu" style="margin:0">Или создайте кабинет для новой пары кнопкой «＋ Кабинет для пары». Всё, что делает пара и подрядчики, появляется в ленте.</p></div>';
+}
+window.addEventListener('hashchange', function(){ if(KEY) route(); });
+
+// ───── проект ─────
+function openProject(id){
+  document.body.classList.add('has-cur');
+  if(!CUR || CUR.id !== id){ ED = {}; DIRTY = {}; $('#main').innerHTML = K.skeleton() + K.skeleton() + K.skeleton(); }
+  return api('/api/kab/projects/' + encodeURIComponent(id)).then(function(p){
+    var same = CUR && CUR.id === p.id; CUR = p;
+    if(!same){ ED = {}; DIRTY = {}; paintAll(); window.scrollTo({top:0}); } else paintAll(true);
+    paintList();
+  }, function(e){ $('#main').innerHTML = '<div class="card"><h2>Проект не открылся</h2><p class="mu">' + esc(e.status === 404 ? 'Такого проекта нет (возможно, ссылка старая).' : e.message) + '</p><a class="btn" href="#">К списку</a></div>'; });
+}
+var SECS = ['head','slots','pair','briefs','sel','brief','pay','docs','money','info','notes','hist'];
+function paintAll(keepDirty){
+  var m = $('#main');
+  if(!$('#sec-head')){
+    m.innerHTML = '<button class="btn sm back" type="button" onclick="location.hash=\'\'">← Все проекты</button>' +
+      '<div class="card" id="sec-head"></div><div class="card" id="sec-slots"></div>' +
+      '<div class="grid2"><div class="stack"><div class="card" id="sec-briefs"></div><div class="card" id="sec-sel"></div><div class="card" id="sec-brief"></div></div>' +
+      '<div class="stack"><div class="card" id="sec-pair"></div><div class="card" id="sec-money"></div><div class="card" id="sec-pay"></div><div class="card" id="sec-docs"></div><div class="card" id="sec-info"></div><div class="card" id="sec-notes"></div><div class="card" id="sec-hist"></div></div></div>';
+  }
+  SECS.forEach(function(s){ if(!(keepDirty && DIRTY[s])){ if(s === 'slots') ED.slots = null; if(s === 'pay') ED.payplan = null; if(s === 'docs') ED.docs = null; paint(s); } });
+}
+function paint(s){
+  var el = $('#sec-' + s); if(!el) return;
+  var fn = {head:secHead, slots:secSlots, pair:secPair, briefs:secBriefs, sel:secSel, brief:secBrief, pay:secPay, docs:secDocs, money:secMoney, info:secInfo, notes:secNotes, hist:secHist}[s];
+  el.innerHTML = fn(); el.classList.remove('dirty'); DIRTY[s] = false;
+}
+document.addEventListener('input', function(e){
+  var sec = e.target.closest('[id^="sec-"]'); if(!sec || e.target.closest('[data-nodirty]')) return;
+  var s = sec.id.slice(4); DIRTY[s] = true; sec.classList.add('dirty');
+});
+function pairLink(){ return (CUR.links || {}).pair || (SITE + '/para/?t=' + ((CUR.tokens || {}).pair || '')); }
+function pairMsg(names, link){ return (names || '') + ', это ваш личный кабинет НАВСЕГДА: смета, команда, оплаты и анкета в одном месте - ' + link; }
+function stages(){ return CUR.stages || HELP.stages || []; }
+
+function secHead(){
+  var p = CUR, sub = [p.date ? K.fmtDate(p.date) : 'дата не указана', p.days_left != null ? (p.days_left >= 0 ? p.days_left + ' ' + K.plural(p.days_left, 'день', 'дня', 'дней') : 'прошла') : '', p.guests ? p.guests + ' гостей' : '', p.venue].filter(Boolean);
+  var cur = p.stage || 0;
+  return '<div class="row sb wrapf" style="align-items:flex-start"><div style="min-width:0"><h2 style="margin:0">' + esc(p.names || p.pair) + '</h2><div class="mu sm">' + sub.map(esc).join(' · ') + '</div>' +
+    '<div class="sm mu">в таблице: «' + esc(p.pair) + '» · id ' + esc(p.id) + (p.amo_lead ? ' · сделка amoCRM ' + esc(p.amo_lead) : '') + '</div>' +
+    ((p.flags || []).length ? '<div class="chips" style="margin-top:6px">' + p.flags.map(flagPill).join('') + '</div>' : '') + '</div>' +
+    '<div class="row wrapf"><button class="btn sm" type="button" data-act="copyLink">🔗 Ссылка кабинета пары</button><button class="btn sm" type="button" data-act="copyMsg">Скопировать сообщение паре</button><a class="btn sm gh" href="' + esc(pairLink()) + '" target="_blank" rel="noopener">Открыть как пара</a></div></div>' +
+    '<div class="lbl" style="margin:12px 0 6px">Этап <span class="mu sm" style="font-weight:400">- нажмите, чтобы переключить (пара видит этап у себя)</span></div><div class="stages">' + stages().map(function(s, i){
+      return '<button class="stg ' + (i < cur ? 'done' : i === cur ? 'cur' : '') + '" type="button" data-stage="' + i + '" aria-pressed="' + (i === cur) + '">' + (i + 1) + '. ' + esc(s) + '</button>'; }).join('') + '</div>';
+}
+function optStatus(v){ var h = '', st = HELP.slot_status || {}; Object.keys(st).forEach(function(k){ h += '<option value="' + k + '"' + (k === v ? ' selected' : '') + '>' + esc(st[k]) + '</option>'; }); if(v && !st[v]) h += '<option selected>' + esc(v) + '</option>'; return h; }
+function catName(id){ var c = CAT.filter(function(x){ return x.id === id; })[0]; return c ? c.name : id; }
+function secSlots(){
+  if(!ED.slots) ED.slots = JSON.parse(JSON.stringify(CUR.slots || []));
+  var st = ED.slots;
+  return '<div class="row sb wrapf"><h3 style="margin:0">Команда: что нашли и что ищем</h3><span class="sm mu">' + st.filter(function(s){ return s.status === 'ok' || s.status === 'no'; }).length + ' из ' + st.length + ' готово</span></div>' +
+    '<p class="sm mu" style="margin:4px 0 10px">Пара видит статус, «кто» и заметку. «Нужно выбрать» + варианты делаются через «Подборку паре».</p><div class="elist">' + st.map(function(s, i){
+      return '<div class="erow" data-i="' + i + '"><input class="full" aria-label="Слот" value="' + esc(s.key) + '" data-f="key" placeholder="Слот"><select aria-label="Статус" data-f="status">' + optStatus(s.status) + '</select>' +
+        '<input aria-label="Кто" value="' + esc(s.who) + '" data-f="who" placeholder="Кто (имя, студия)"><input class="full" aria-label="Заметка" value="' + esc(s.note) + '" data-f="note" placeholder="Заметка для пары">' +
+        '<button class="xbtn" type="button" data-delrow="slots" data-i="' + i + '" title="Удалить слот" aria-label="Удалить слот">✕</button>' +
+        (((s.cands || []).length || s.picked) ? '<div class="full sm" style="grid-column:1/-1">' + ((s.cands || []).length ? '<span class="mu">Варианты: </span>' + s.cands.map(function(c, j){ return '<span class="tag">' + esc(catName(c)) + '<button type="button" data-delcand="' + i + ':' + j + '" aria-label="Убрать вариант">×</button></span>'; }).join('') : '') +
+          (s.picked ? ' <span class="pill p-ok">пара выбрала: ' + esc(catName(s.picked)) + '</span> <button class="btn sm gh" type="button" data-unpick="' + i + '">сбросить</button>' : '') + '</div>' : '') + '</div>';
+    }).join('') + '</div><div class="row wrapf"><button class="btn sm" type="button" data-addrow="slots">＋ Слот</button><button class="btn pr" type="button" data-save="slots">Сохранить команду</button></div>';
+}
+function secPair(){
+  var w = CUR.wishes || [], l = CUR.likes || [];
+  return '<h3>От пары</h3>' + (w.length ? '<div class="feed">' + w.slice().reverse().map(function(x){ return '<div class="ev"><span aria-hidden="true">💬</span><span style="min-width:0"><span class="pre">' + esc(x.text) + '</span><br><time>' + esc(x.at) + '</time></span></div>'; }).join('') + '</div>' : '<p class="mu sm" style="margin:0">Пожеланий пока нет</p>') +
+    (l.length ? '<p class="sm" style="margin:8px 0 0">♥ Отметили идеи: ' + l.map(function(id){ return esc(catName(id)); }).join(', ') + '</p>' : '') +
+    '<p class="sm mu" style="margin:8px 0 0">Анкета: ' + ((CUR.anketa || {}).percent || 0) + '%</p>';
+}
+function briefUrl(t){ return SITE + '/brief/?t=' + t; }
+function briefMsg(role, who, url){ return 'Здравствуйте' + (who ? ', ' + who.split(' ').slice(-1)[0] : '') + '! Это бриф НАВСЕГДА по свадьбе ' + (CUR.names || '') + (CUR.date ? ' (' + K.shortDate(CUR.date) + ')' : '') + ': ' + url + ' - посмотрите и нажмите «Ознакомился», там же можно указать удобное время созвона.'; }
+function secBriefs(){
+  var br = ((CUR.tokens || {}).briefs) || {}, roles = HELP.brief_roles || {};
+  var h = '<h3>Брифы подрядчикам</h3>';
+  var ks = Object.keys(br);
+  h += ks.length ? '<div class="stack" style="gap:8px;margin-bottom:12px">' + ks.map(function(r){
+    var b = br[r], url = briefUrl(b.token);
+    return '<div class="ev" style="flex-direction:column;gap:6px"><div class="row sb wrapf"><b>' + esc(roles[r] || r) + (b.who ? ' - ' + esc(b.who) : '') + '</b>' + (b.ready ? '<span class="pill p-ok" style="white-space:normal">✓ готов к созвону' + (b.ready.call ? ': ' + esc(b.ready.call) : '') + '</span>' : '<span class="pill p-mu">не открыл / не отметил</span>') + '</div>' +
+      '<div class="row wrapf"><button class="btn sm" type="button" data-copy="' + esc(url) + '">Скопировать ссылку</button><button class="btn sm" type="button" data-copy="' + esc(briefMsg(r, b.who, url)) + '">Сообщение подрядчику</button><a class="btn sm gh" href="' + esc(url) + '" target="_blank" rel="noopener">Открыть</a></div></div>';
+  }).join('') + '</div>' : '<p class="sm mu">Брифов пока нет.</p>';
+  h += '<div class="field" data-nodirty><label for="bWho">Кто (имя подрядчика, необязательно)</label><input id="bWho" placeholder="например, Ведущий Александр"></div>' +
+    '<div class="row wrapf">' + Object.keys(ROLE_TO).filter(function(r){ return roles[r] !== undefined || !Object.keys(roles).length; }).map(function(r){ return '<button class="btn sm" type="button" data-brief="' + r + '">Бриф ' + esc(ROLE_TO[r].toLowerCase()) + '</button>'; }).join('') + '</div><div id="briefRes"></div>';
+  return h;
+}
+function secSel(){
+  var sl = (CUR.slots || []).map(function(s){ return s.key; });
+  var sels = CUR.selections || {}, ks = Object.keys(sels);
+  var h = '<h3>Подборка паре</h3>';
+  if(ks.length) h += '<div class="stack" style="gap:8px;margin-bottom:12px">' + ks.map(function(t){
+    var s = sels[t], url = s.url || (SITE + '/komanda/?s=' + t), pk = s.picked || [];
+    return '<div class="ev" style="flex-direction:column;gap:4px"><div class="row sb wrapf"><b>' + esc(s.title || 'Подборка') + '</b><span class="sm mu">' + esc(s.slot || 'идеи') + ' · ' + (s.items || []).length + ' поз. · ' + esc(s.created || '') + '</span></div>' +
+      (pk.length ? '<div class="sm">♥ Нравится: ' + pk.map(function(i){ return esc(catName(i)); }).join(', ') + '</div>' : '<div class="sm mu">Пара пока ничего не отметила</div>') +
+      '<div class="row wrapf"><button class="btn sm" type="button" data-copy="' + esc(url) + '">Ссылка</button><button class="btn sm" type="button" data-copy="' + esc((CUR.names || '') + ', собрали для вас подборку - посмотрите и отметьте, что нравится: ' + url) + '">Текст для Telegram</button><a class="btn sm gh" href="' + esc(url) + '" target="_blank" rel="noopener">Открыть</a></div></div>';
+  }).join('') + '</div>';
+  var groups = {};
+  CAT.forEach(function(c){ (groups[c.cat || 'Прочее'] = groups[c.cat || 'Прочее'] || []).push(c); });
+  h += '<details data-nodirty' + (ks.length ? '' : ' open') + '><summary>Новая подборка</summary><div class="ed" style="margin-top:6px"><div class="field"><label for="sSlot">Для слота</label><select id="sSlot"><option value="">Без слота (идеи)</option>' + sl.map(function(k){ return '<option>' + esc(k) + '</option>'; }).join('') + '</select></div>' +
+    '<div class="field"><label for="sTitle">Заголовок</label><input id="sTitle" placeholder="Подборка для вас"></div></div>' +
+    (CAT.length ? Object.keys(groups).map(function(g){ return '<div class="lbl" style="margin-top:6px">' + esc(g) + '</div><div class="checks">' + groups[g].map(function(c){ return '<label><input type="checkbox" value="' + esc(c.id) + '" name="selItem"><span><b>' + esc(c.name) + '</b>' + (c.tag ? '<br><span class="mu">' + esc(c.tag) + '</span>' : '') + '</span></label>'; }).join('') + '</div>'; }).join('') : '<p class="sm mu">Каталог пуст - добавьте позиции в разделе «Каталог».</p>') +
+    '<p class="sm mu">Если выбран слот, у пары он станет «нужно выбрать» с этими вариантами.</p><button class="btn pr" type="button" data-act="mkSel">Создать подборку</button><div id="selRes"></div></details>';
+  return h;
+}
+var BRIEF_F = [['story','История пары'],['people','Важные люди'],['music','Музыка'],['stop','Стоп-лист'],['wishes_host','Для ведущего']];
+var BRIEF_X = [['wishes_photo','Для фотографа'],['wishes_video','Для видеографа'],['wishes_decor','Для декоратора'],['wishes_dj','Для диджея'],['wishes_coord','Для координатора'],['wishes_other','Для других подрядчиков']];
+function ta(id, label, v, rows){ return '<div class="field"><label for="' + id + '">' + esc(label) + '</label><textarea id="' + id + '" rows="' + (rows || 3) + '">' + esc(v || '') + '</textarea></div>'; }
+function secBrief(){
+  var b = CUR.brief || {};
+  return '<h3>Содержание брифа</h3><p class="sm mu" style="margin-top:-4px">Это видят все подрядчики по своим ссылкам. «Для роли» - видит только эта роль.</p>' +
+    ta('bTiming', 'Тайминг дня', CUR.timing, 4) + '<div class="field"><label for="bAddr">Адрес площадки</label><input id="bAddr" value="' + esc(CUR.venue_address) + '"></div>' +
+    BRIEF_F.map(function(f){ return ta('bf_' + f[0], f[1], b[f[0]]); }).join('') +
+    '<details' + (BRIEF_X.some(function(f){ return b[f[0]]; }) ? ' open' : '') + '><summary>Пожелания для других ролей</summary>' + BRIEF_X.map(function(f){ return ta('bf_' + f[0], f[1], b[f[0]], 2); }).join('') + '</details>' +
+    '<button class="btn pr" type="button" data-save="brief">Сохранить бриф</button>';
+}
+function isPaid(x){ return /^(paid|получено|оплачено)$/i.test(String(x.status || '')); }
+function secPay(){
+  if(!ED.payplan) ED.payplan = JSON.parse(JSON.stringify(CUR.payplan || []));
+  var pp = ED.payplan;
+  return '<h3>График платежей</h3><p class="sm mu" style="margin-top:-4px">Пара видит этот график во вкладке «Оплаты».</p><div class="elist">' + pp.map(function(x, i){
+    return '<div class="erow pp" data-i="' + i + '"><input class="full" aria-label="Платёж" data-f="name" value="' + esc(x.name) + '" placeholder="Платёж"><input aria-label="Сумма" data-f="amount" type="number" inputmode="numeric" value="' + esc(x.amount) + '" placeholder="Сумма"><input aria-label="Когда" data-f="due" value="' + esc(x.due) + '" placeholder="2026-12-01 или текст">' +
+      '<select aria-label="Статус" data-f="status"><option value="wait"' + (!isPaid(x) ? ' selected' : '') + '>ожидаем</option><option value="paid"' + (isPaid(x) ? ' selected' : '') + '>получено</option></select><button class="xbtn" type="button" data-delrow="payplan" data-i="' + i + '" aria-label="Удалить платёж">✕</button></div>';
+  }).join('') + '</div>' + (pp.length ? '' : '<p class="sm mu">Платежей нет.</p>') + '<div class="row wrapf"><button class="btn sm" type="button" data-addrow="payplan">＋ Платёж</button><button class="btn pr" type="button" data-save="payplan">Сохранить график</button></div>';
+}
+function secDocs(){
+  if(!ED.docs) ED.docs = JSON.parse(JSON.stringify(CUR.docs || []));
+  var d = ED.docs;
+  return '<h3>Документы</h3><p class="sm mu" style="margin-top:-4px">Ссылки на договор, сметы, расписки - пара видит во вкладке «Документы».</p><div class="elist">' + d.map(function(x, i){
+    return '<div class="erow dc" data-i="' + i + '"><input aria-label="Название" data-f="name" value="' + esc(x.name) + '" placeholder="Название"><input aria-label="Ссылка" data-f="url" value="' + esc(x.url) + '" placeholder="https://..."><button class="xbtn" type="button" data-delrow="docs" data-i="' + i + '" aria-label="Удалить документ">✕</button></div>';
+  }).join('') + '</div>' + (d.length ? '' : '<p class="sm mu">Документов нет.</p>') + '<div class="row wrapf"><button class="btn sm" type="button" data-addrow="docs">＋ Документ</button><button class="btn pr" type="button" data-save="docs">Сохранить документы</button></div>';
+}
+function secMoney(){
+  var s = CUR.smeta || {};
+  if(!s.found) return '<h3>Смета и деньги</h3><p class="sm mu" style="margin:0">Карточка «' + esc(CUR.pair) + '» в таблице реализации не найдена - смета появится, когда пару передадут в реализацию (название в поле «pair» должно совпадать с таблицей).</p>';
+  var k = [['Смета клиенту', K.rub(s.total)], ['Внесено парой', K.rub(s.paid)], ['Осталось от пары', K.rub(s.left)], ['Факт подрядчиков', K.rub(s.fact)], ['Комиссии', K.rub(s.commission)], ['Маржа', K.rub(s.margin) + ' · ' + (s.margin_pct || 0) + '%'], ['Оплачено подрядчикам', K.rub(s.vendor_paid)]];
+  var rows = s.rows || [], cat = null, t = '';
+  rows.forEach(function(r){ if(r.cat !== cat){ cat = r.cat; t += '<tr class="cat"><td colspan="6">' + esc(cat || 'Прочее') + '</td></tr>'; } t += '<tr><td>' + esc(r.name) + '</td><td>' + K.fmt(r.price) + '</td><td>' + K.fmt(r.fact) + '</td><td>' + K.fmt(r.commission) + '</td><td>' + K.fmt(r.vendor_paid) + '</td><td>' + K.fmt(r.vendor_left) + '</td></tr>'; });
+  return '<h3>Смета и деньги <span class="pill p-mu">только команда</span></h3><div class="kpi2">' + k.map(function(x){ return '<div><b>' + esc(x[1]) + '</b><span>' + esc(x[0]) + '</span></div>'; }).join('') + '</div>' +
+    '<details><summary>Строки сметы (' + rows.length + ')' + (s.sheet ? ' · лист «' + esc(s.sheet) + '»' : '') + '</summary><div class="scroll"><table><tr><th>Позиция</th><th>Клиенту</th><th>Факт</th><th>Комис.</th><th>Оплач.</th><th>Остал.</th></tr>' + t + '</table></div></details>';
+}
+function secInfo(){
+  var p = CUR, a = p.anketa || {};
+  function inp(id, label, v, type, ph){ return '<div class="field"><label for="' + id + '">' + esc(label) + '</label><input id="' + id + '" ' + (type ? 'type="' + type + '" ' : '') + 'value="' + esc(v == null ? '' : v) + '"' + (ph ? ' placeholder="' + esc(ph) + '"' : '') + '></div>'; }
+  return '<h3>Основное</h3><div class="ed">' + inp('iNames', 'Имена (видит пара)', p.names) + inp('iDate', 'Дата', /^\d{4}-\d{2}-\d{2}$/.test(p.date || '') ? p.date : '', 'date') + inp('iGuests', 'Гостей', p.guests, 'number') + inp('iVenue', 'Площадка', p.venue) +
+    inp('iReal', 'Реализатор', p.realizer) + inp('iRealTg', 'Telegram ID реализатора', p.realizer_tg, '', 'для уведомлений, цифрами') + inp('iMgr', 'Менеджер', p.manager) + inp('iAmo', 'Сделка amoCRM (номер)', p.amo_lead, '', 'например 12345678') +
+    inp('iAnkP', 'Анкета, %', a.percent || 0, 'number') + inp('iAnkL', 'Ссылка на анкету', a.link) + '</div>' +
+    '<label class="row sm" style="margin:6px 0 10px"><input type="checkbox" id="iArch"' + (p.archived ? ' checked' : '') + '> В архив (скрыть из списка)</label><button class="btn pr" type="button" data-save="info">Сохранить</button>';
+}
+function secNotes(){
+  var n = CUR.notes; if(Array.isArray(n)) n = n.map(function(x){ return typeof x === 'string' ? x : JSON.stringify(x); }).join('\n');
+  else if(n && typeof n === 'object') n = JSON.stringify(n, null, 1);
+  return '<h3>Заметки команды</h3><p class="sm mu" style="margin-top:-4px">Видит только команда. Сюда же пишут ИИ-агенты.</p>' + ta('nNotes', 'Заметки', n || '', 5) + '<button class="btn pr" type="button" data-save="notes">Сохранить заметки</button>';
+}
+function secHist(){ var e = CUR.events || []; return '<h3>История проекта</h3><div class="feed">' + (e.length ? e.slice(0, 30).map(function(x){ return evHtml(x); }).join('') : '<p class="sm mu" style="margin:0">Пусто</p>') + '</div>'; }
+
+// редактирование строк (слоты, платежи, документы)
+document.addEventListener('input', function(e){
+  var f = e.target.dataset && e.target.dataset.f, row = e.target.closest('.erow'); if(!f || !row) return;
+  var sec = row.closest('[id^="sec-"]').id.slice(4), key = sec === 'pay' ? 'payplan' : sec;
+  var arr = ED[key]; if(!arr) return; var v = e.target.value;
+  if(f === 'amount') v = v === '' ? '' : Number(v);
+  arr[+row.dataset.i][f] = v;
+});
+document.addEventListener('change', function(e){ if(e.target.tagName === 'SELECT') e.target.dispatchEvent(new Event('input', {bubbles:true})); });
+function secOf(key){ return key === 'payplan' ? 'pay' : key; }
+function markDirty(s){ DIRTY[s] = true; var el = $('#sec-' + s); if(el) el.classList.add('dirty'); }
+function repaintKeep(s){ var d = DIRTY[s]; paint(s); if(d) markDirty(s); }
+
+function patch(body, okMsg, sec){
+  return api('/api/kab/projects/' + encodeURIComponent(CUR.id), {method:'PATCH', body:body}).then(function(){
+    K.toast(okMsg || 'Сохранено');
+    if(sec){ DIRTY[sec] = false; if(sec === 'slots') ED.slots = null; if(sec === 'pay') ED.payplan = null; if(sec === 'docs') ED.docs = null; }
+    refreshSide(); return openProject(CUR.id);
+  }, function(e){ K.toast(e.message); throw e; });
+}
+function val(id){ var el = $('#' + id); return el ? el.value : ''; }
+function save(what, btn){
+  var body;
+  if(what === 'slots'){ body = {slots: ED.slots.filter(function(s){ return String(s.key || '').trim(); }).map(function(s){ return {key:String(s.key).trim(), status:s.status || 'search', who:s.who || '', note:s.note || '', cands:s.cands || [], picked:s.picked || null}; })}; }
+  if(what === 'payplan'){ body = {payplan: ED.payplan.filter(function(x){ return String(x.name || '').trim() || x.amount; }).map(function(x){ return {name:String(x.name || '').trim(), amount:x.amount === '' || x.amount == null ? 0 : Number(x.amount), due:x.due || '', status:x.status === 'paid' ? 'paid' : 'wait'}; })}; }
+  if(what === 'docs'){ body = {docs: ED.docs.filter(function(x){ return String(x.name || '').trim() || String(x.url || '').trim(); }).map(function(x){ return {name:String(x.name || '').trim() || 'Документ', url:String(x.url || '').trim()}; })}; }
+  if(what === 'brief'){ var b = Object.assign({}, CUR.brief || {}); BRIEF_F.concat(BRIEF_X).forEach(function(f){ b[f[0]] = val('bf_' + f[0]); }); body = {brief:b, timing:val('bTiming'), venue_address:val('bAddr')}; }
+  if(what === 'notes'){ body = {notes: val('nNotes')}; }
+  if(what === 'info'){
+    var g = val('iGuests'), ap = Math.max(0, Math.min(100, parseInt(val('iAnkP'), 10) || 0));
+    if(!val('iNames').trim()){ K.toast('Имена не могут быть пустыми'); return; }
+    body = {names:val('iNames').trim(), date:val('iDate'), guests: g === '' ? '' : Number(g), venue:val('iVenue'), realizer:val('iReal'), realizer_tg:val('iRealTg').trim(), manager:val('iMgr'), amo_lead:val('iAmo').trim(),
+      anketa: Object.assign({}, CUR.anketa || {}, {percent:ap, link:val('iAnkL').trim()}), archived: $('#iArch').checked};
+  }
+  btn.disabled = true;
+  patch(body, 'Сохранено', secOf(what)).catch(function(){}).then(function(){ btn.disabled = false; if(what === 'info' && body.archived){ location.hash = ''; } });
+}
+
+function mkBrief(role, btn){
+  var who = val('bWho').trim(); btn.disabled = true;
+  api('/api/kab/projects/' + encodeURIComponent(CUR.id) + '/brief', {method:'POST', body:{role:role, who:who}}).then(function(r){
+    var msg = briefMsg(role, who, r.url);
+    return openProject(CUR.id).then(function(){
+      var el = $('#briefRes'); if(el) el.innerHTML = '<div class="res"><b>Бриф: ' + esc((HELP.brief_roles || {})[role] || role) + '</b><input readonly value="' + esc(r.url) + '" style="margin:6px 0" data-nodirty><div class="row wrapf"><button class="btn sm pr" type="button" data-copy="' + esc(r.url) + '">Скопировать ссылку</button><button class="btn sm" type="button" data-copy="' + esc(msg) + '">Сообщение подрядчику</button></div></div>';
+      K.toast('Ссылка на бриф готова - скопируйте ниже');
+    });
+  }, function(e){ K.toast(e.message); }).then(function(){ btn.disabled = false; });
+}
+function mkSel(btn){
+  var items = $$('input[name=selItem]:checked').map(function(x){ return x.value; });
+  if(!items.length){ K.toast('Отметьте хотя бы одну позицию'); return; }
+  var body = {items:items, slot:val('sSlot'), title:val('sTitle').trim() || 'Подборка для вас'};
+  btn.disabled = true;
+  api('/api/kab/projects/' + encodeURIComponent(CUR.id) + '/selection', {method:'POST', body:body}).then(function(r){
+    ED.slots = null; DIRTY.slots = false;
+    return openProject(CUR.id).then(function(){
+      paint('sel');
+      var el = $('#sec-sel'); if(el){ var d = document.createElement('div'); d.className = 'res'; d.innerHTML = '<b>Подборка готова</b><textarea readonly rows="3" style="margin:6px 0" data-nodirty>' + esc(r.text) + '</textarea><div class="row wrapf"><button class="btn sm pr" type="button" data-copy="' + esc(r.text) + '">Скопировать текст для Telegram</button><button class="btn sm" type="button" data-copy="' + esc(r.url) + '">Только ссылку</button></div>'; el.insertBefore(d, el.children[1] || null); }
+      K.toast('Подборка готова - скопируйте текст ниже');
+    });
+  }, function(e){ K.toast(e.message); }).then(function(){ btn.disabled = false; });
+}
+
+// ───── создание кабинета ─────
+var REG = null;
+function openCreate(){
+  var m = document.createElement('div'); m.className = 'modal'; m.id = 'cmodal';
+  m.innerHTML = '<div class="card" role="dialog" aria-modal="true" aria-labelledby="cmT"><div class="row sb"><h2 id="cmT" style="margin:0">Кабинет для пары</h2><button class="xbtn" type="button" data-close aria-label="Закрыть">✕</button></div>' +
+    '<div class="mtabs" role="tablist"><button class="tab" role="tab" type="button" aria-selected="true" data-mt="reg">Из таблицы реализации</button><button class="tab" role="tab" type="button" aria-selected="false" data-mt="man">Вручную</button></div><div id="cmBody"></div></div>';
+  document.body.appendChild(m);
+  m.addEventListener('click', function(e){ if(e.target === m || e.target.closest('[data-close]')) m.remove(); var t = e.target.closest('[data-mt]'); if(t){ $$('[data-mt]', m).forEach(function(b){ b.setAttribute('aria-selected', b === t); }); t.dataset.mt === 'reg' ? regView() : manView(); } });
+  regView();
+}
+function regView(){
+  var b = $('#cmBody');
+  b.innerHTML = '<input id="regQ" type="search" placeholder="Поиск по имени пары" aria-label="Поиск"><div class="reglist" id="regL">' + K.skeleton() + '</div>';
+  var draw = function(){
+    var q = ($('#regQ').value || '').trim().toLowerCase(), today = new Date().toISOString().slice(0, 10);
+    var l = (REG || []).filter(function(r){ return r.pair && (!q || r.pair.toLowerCase().indexOf(q) >= 0); });
+    l.sort(function(a, c){ var af = (a.date || '') >= today, cf = (c.date || '') >= today; if(af !== cf) return af ? -1 : 1; return af ? String(a.date).localeCompare(c.date) : String(c.date).localeCompare(a.date); });
+    $('#regL').innerHTML = l.length ? l.map(function(r){
+      return '<div class="regit"><div style="min-width:0"><b>' + esc(r.pair) + '</b><div class="sm mu">' + [K.shortDate((r.date || '').slice(0, 10)), ({done:'проведена', active:'в работе', wait:'ждёт'})[r.status] || r.status, r.budget ? 'бюджет ' + K.rub(r.budget) : ''].filter(Boolean).map(esc).join(' · ') + '</div></div>' +
+        (r.kabinet ? '<a class="btn sm" href="#' + esc(r.kabinet) + '" data-close>Открыть</a>' : '<button class="btn sm pr" type="button" data-reg="' + esc(r.pair) + '" data-date="' + esc((r.date || '').slice(0, 10)) + '">Создать</button>') + '</div>';
+    }).join('') : '<p class="mu sm">Ничего не нашлось. Можно создать вручную.</p>';
+  };
+  $('#regQ').oninput = draw;
+  if(REG) draw(); else api('/api/kab/registry').then(function(d){ REG = d.projects || []; if($('#regL')) draw(); }, function(e){ if($('#regL')) $('#regL').innerHTML = '<div class="note">' + esc(e.message) + '</div>'; });
+  b.onclick = function(e){ var t = e.target.closest('[data-reg]'); if(!t) return;
+    if(!confirm('Создать кабинет для «' + t.dataset.reg + '»? Паре ничего не отправится - ссылку отправите сами.')) return;
+    create({pair:t.dataset.reg, date:t.dataset.date}, t); };
+}
+function manView(){
+  var b = $('#cmBody'); b.onclick = null;
+  b.innerHTML = '<form id="manF"><div class="ed"><div class="field"><label for="mPair">Пара как в таблице реализации *</label><input id="mPair" required placeholder="Миша и Лиза"></div><div class="field"><label for="mNames">Имена для пары</label><input id="mNames" placeholder="если отличается"></div>' +
+    '<div class="field"><label for="mDate">Дата</label><input id="mDate" type="date"></div><div class="field"><label for="mGuests">Гостей</label><input id="mGuests" type="number"></div><div class="field"><label for="mVenue">Площадка</label><input id="mVenue"></div>' +
+    '<div class="field"><label for="mReal">Реализатор</label><input id="mReal" value="Настя"></div><div class="field"><label for="mRealTg">Telegram ID реализатора</label><input id="mRealTg"></div><div class="field"><label for="mAmo">Сделка amoCRM</label><input id="mAmo"></div></div>' +
+    '<button class="btn pr" type="submit" style="margin-top:6px">Создать кабинет</button></form>';
+  $('#manF').onsubmit = function(e){ e.preventDefault();
+    var body = {pair:val('mPair').trim(), names:val('mNames').trim(), date:val('mDate'), guests:val('mGuests') ? Number(val('mGuests')) : '', venue:val('mVenue').trim(), realizer:val('mReal').trim(), realizer_tg:val('mRealTg').trim(), amo_lead:val('mAmo').trim()};
+    if(!body.pair){ K.toast('Нужно название пары'); return; }
+    Object.keys(body).forEach(function(k){ if(body[k] === '') delete body[k]; });
+    create(body, e.target.querySelector('button[type=submit]'));
+  };
+}
+function create(body, btn){
+  btn.disabled = true;
+  api('/api/kab/projects', {method:'POST', body:body}).then(function(r){
+    REG = null;
+    return api('/api/kab/projects/' + encodeURIComponent(r.id)).then(function(p){ return [r, p]; }, function(){ return [r, null]; });
+  }).then(function(x){
+    var r = x[0], p = x[1], link = (r.links || {}).pair, names = (p && p.names) || body.names || body.pair, msg = pairMsg(names, link);
+    $('#cmBody').innerHTML = '<div class="res"><b>' + (r.existing ? 'Кабинет уже был' : 'Кабинет создан') + ': ' + esc(names) + '</b><p class="sm mu" style="margin:4px 0 6px">Паре ничего не отправлено. Скопируйте сообщение и отправьте сами.</p><input readonly value="' + esc(link) + '"><textarea readonly rows="3" style="margin-top:6px">' + esc(msg) + '</textarea>' +
+      '<div class="row wrapf" style="margin-top:8px"><button class="btn sm pr" type="button" data-copy="' + esc(msg) + '">Скопировать сообщение паре</button><button class="btn sm" type="button" data-copy="' + esc(link) + '">Только ссылку</button><a class="btn sm" href="#' + esc(r.id) + '" data-close>Открыть проект</a></div></div>';
+    refreshSide();
+  }, function(e){ K.toast(e.message); btn.disabled = false; });
+}
+
+// ───── каталог ─────
+var CEDIT = null;
+function loadCat(){ return K.api('/api/kab/catalog').then(function(d){ CAT = d.items || []; }, function(){}); }
+function showCatalog(){
+  var m = $('#main'); m.innerHTML = K.skeleton();
+  loadCat().then(drawCatalog);
+}
+function lines(v){ return String(v || '').split('\n').map(function(s){ return s.trim(); }).filter(Boolean); }
+function drawCatalog(){
+  var m = $('#main'), c = CEDIT || {}, cats = CAT.map(function(x){ return x.cat; }).filter(function(x, i, a){ return x && a.indexOf(x) === i; });
+  m.innerHTML = '<button class="btn sm back" type="button" onclick="location.hash=\'\'">← Все проекты</button><div class="card"><h2>Каталог: подрядчики и идеи</h2><p class="sm mu" style="margin-top:-4px">Публичная витрина - <a href="/komanda/" target="_blank" rel="noopener">navseg-da.agency/komanda/</a>. Идеи (Welcome, Шоу, Активности) пара видит в своём кабинете. Цены в каталоге видят все - пишите «от» или «по запросу».</p>' +
+    '<form id="catF"><div class="ed"><div class="field"><label for="cCat">Категория *</label><input id="cCat" list="cats" required value="' + esc(c.cat) + '"><datalist id="cats">' + cats.map(function(x){ return '<option value="' + esc(x) + '">'; }).join('') + '</datalist></div>' +
+    '<div class="field"><label for="cName">Название *</label><input id="cName" required value="' + esc(c.name) + '"></div><div class="field"><label for="cTag">Коротко</label><input id="cTag" value="' + esc(c.tag) + '"></div><div class="field"><label for="cPrice">Цена</label><input id="cPrice" value="' + esc(c.price) + '" placeholder="по запросу"></div></div>' +
+    ta('cAbout', 'Описание', c.about, 2) + '<div class="ed">' + ta('cPhotos', 'Фото (ссылка на строку)', [].concat(c.photos || []).join('\n'), 2) + ta('cLinks', 'Ссылки на примеры (по строке)', [].concat(c.links || []).join('\n'), 2) + '</div>' +
+    '<div class="row wrapf"><button class="btn pr" type="submit">' + (c.id ? 'Сохранить «' + esc(c.name) + '»' : '＋ Добавить в каталог') + '</button>' + (c.id ? '<button class="btn" type="button" data-cnew>Отмена</button><span class="sm mu">id: ' + esc(c.id) + '</span>' : '') + '</div></form></div>' +
+    '<div class="card"><h3>Позиции · ' + CAT.length + '</h3><div class="stack" style="gap:8px">' + CAT.map(function(x){
+      return '<div class="ev" style="justify-content:space-between;flex-wrap:wrap"><span style="min-width:0;flex:1 1 220px"><span class="pill p-mu">' + esc(x.cat) + '</span> <b>' + esc(x.name) + '</b><br><span class="sm mu">' + esc([x.tag, x.price].filter(Boolean).join(' · ')) + '</span></span><span class="row"><button class="btn sm" type="button" data-cedit="' + esc(x.id) + '">Изменить</button><button class="btn sm gh" type="button" data-cdel="' + esc(x.id) + '">Удалить</button></span></div>';
+    }).join('') + '</div></div>';
+  $('#catF').onsubmit = function(e){
+    e.preventDefault();
+    var body = {cat:val('cCat').trim(), name:val('cName').trim(), tag:val('cTag').trim(), price:val('cPrice').trim(), about:val('cAbout').trim(), photos:lines(val('cPhotos')), links:lines(val('cLinks'))};
+    if(c.id) body.id = c.id;
+    var b = e.target.querySelector('button[type=submit]'); b.disabled = true;
+    api('/api/kab/catalog', {method:'POST', body:body}).then(function(){ K.toast('Каталог обновлён'); CEDIT = null; return loadCat().then(drawCatalog); }, function(err){ K.toast(err.message); b.disabled = false; });
+  };
+}
+
+// ───── клики ─────
+document.addEventListener('click', function(e){
+  var t = e.target.closest('button,a'); if(!t) return;
+  var d = t.dataset;
+  if(d.open){ e.preventDefault(); if(location.hash.slice(1) === d.open) openProject(d.open); else location.hash = d.open; return; }
+  if(d.copy !== undefined){ K.copy(d.copy); return; }
+  if(d.close !== undefined && t.tagName === 'A'){ var mm = $('#cmodal'); if(mm) mm.remove(); return; }
+  if(d.cnew !== undefined){ CEDIT = null; drawCatalog(); return; }
+  if(d.cedit){ CEDIT = CAT.filter(function(x){ return x.id === d.cedit; })[0] || null; drawCatalog(); window.scrollTo({top:0}); return; }
+  if(d.cdel){ var it = CAT.filter(function(x){ return x.id === d.cdel; })[0]; if(!confirm('Удалить из каталога «' + (it ? it.name : d.cdel) + '»?')) return; t.disabled = true;
+    api('/api/kab/catalog/' + encodeURIComponent(d.cdel), {method:'DELETE'}).then(function(){ K.toast('Удалено'); return loadCat().then(drawCatalog); }, function(err){ K.toast(err.message); t.disabled = false; }); return; }
+  if(!CUR) return;
+  if(d.act === 'copyLink'){ K.copy(pairLink(), 'Ссылка кабинета скопирована'); return; }
+  if(d.act === 'copyMsg'){ K.copy(pairMsg(CUR.names, pairLink()), 'Сообщение паре скопировано'); return; }
+  if(d.act === 'mkSel'){ mkSel(t); return; }
+  if(d.stage !== undefined){ var st = +d.stage; if(st === (CUR.stage || 0)) return; t.disabled = true; patch({stage:st}, 'Этап: ' + stages()[st]).catch(function(){ t.disabled = false; }); return; }
+  if(d.save){ save(d.save, t); return; }
+  if(d.brief){ mkBrief(d.brief, t); return; }
+  if(d.addrow){ var key = d.addrow; ED[key] = ED[key] || []; ED[key].push(key === 'slots' ? {key:'', status:'search', who:'', note:'', cands:[], picked:null} : key === 'payplan' ? {name:'', amount:'', due:'', status:'wait'} : {name:'', url:''}); repaintKeep(secOf(key)); markDirty(secOf(key)); var rows = $$('#sec-' + secOf(key) + ' .erow'); if(rows.length) rows[rows.length - 1].querySelector('input').focus(); return; }
+  if(d.delrow){ ED[d.delrow].splice(+d.i, 1); repaintKeep(secOf(d.delrow)); markDirty(secOf(d.delrow)); return; }
+  if(d.delcand){ var ij = d.delcand.split(':'); ED.slots[+ij[0]].cands.splice(+ij[1], 1); repaintKeep('slots'); markDirty('slots'); return; }
+  if(d.unpick){ ED.slots[+d.unpick].picked = null; repaintKeep('slots'); markDirty('slots'); return; }
+});
+window.addEventListener('beforeunload', function(e){ if(Object.keys(DIRTY).some(function(k){ return DIRTY[k]; })){ e.preventDefault(); e.returnValue = ''; } });
+
+if(!KEY) gate(); else start();
+})();
+</script>
+</body>
+</html>
