@@ -35,6 +35,8 @@
     var box = document.createElement('div');
     box.className = 'nsg-heard';
     box.style.cssText = 'margin:10px 0 12px;text-align:left';
+    var ref = after.tagName === 'INPUT' ? after : after.querySelector && after.querySelector('input');
+    if (ref) { var cs = getComputedStyle(ref); box.style.fontFamily = cs.fontFamily; box.style.color = cs.color; }
     var cur = guess();
     box.innerHTML = '<div style="font-size:13px;opacity:.75;margin-bottom:6px">Откуда вы о нас узнали?</div><input type="hidden" name="heard" value="' + cur + '"><div style="display:flex;flex-wrap:wrap;gap:6px">' +
       HEARD.map(function (h) { return '<button type="button" data-heard="' + h + '" aria-pressed="' + (h === cur) + '" style="font:inherit;font-size:13px;line-height:1;padding:7px 11px;border-radius:999px;cursor:pointer;border:1px solid currentColor;background:' + (h === cur ? 'rgba(186,138,72,.35)' : 'transparent') + ';color:inherit;opacity:' + (h === cur ? '1' : '.7') + '">' + h + '</button>'; }).join('') + '</div>';
@@ -81,7 +83,39 @@
     heardBox(form, clone);
   }
 
-  function scan(root) { [].forEach.call((root || document).querySelectorAll('form'), enhance); }
+  // Tilda Zero-блок: у формы фиксированная высота, а соседние тексты стоят по координатам.
+  // Наши поля делают форму выше - сдвигаем то, на что она наезжает, ниже формы и растим блок.
+  function fixZero() {
+    [].forEach.call(document.querySelectorAll('.t396__artboard form'), function (form) {
+      var el = form.closest('.t396__elem'), ab = form.closest('.t396__artboard');
+      if (!el || !ab || !form.offsetParent) return;
+      var f = form.getBoundingClientRect(), fb = f.bottom;   // у формы Tilda высота фиксированная - низ считаем по содержимому
+      [].forEach.call(form.querySelectorAll('input,button,textarea,select,label,.t-submit,.nsg-heard'), function (c) { var cr = c.getBoundingClientRect(); if (cr.height) fb = Math.max(fb, cr.bottom); });
+      var blocks = [{top: f.top + 40, bottom: fb, left: f.left, right: f.right}];
+      var els = [].filter.call(ab.querySelectorAll('.t396__elem'), function (x) { return x !== el && !x.contains(form) && !el.contains(x) && x.offsetHeight; })
+        .map(function (x) { return {x: x, r: x.getBoundingClientRect()}; }).sort(function (a, b) { return a.r.top - b.r.top; });
+      els.forEach(function (o) {   // по цепочке: что сдвинули, то тоже сдвигает нижних соседей
+        var r = {top: o.r.top, bottom: o.r.bottom, left: o.r.left, right: o.r.right}, shift = 0;
+        blocks.forEach(function (bl) {
+          if (r.left < bl.right && r.right > bl.left && r.top + shift < bl.bottom && r.bottom + shift > bl.top) shift = bl.bottom - r.top + 14;
+        });
+        if (shift > 0) { o.x.style.top = (o.x.offsetTop + shift) + 'px'; blocks.push({top: r.top + shift, bottom: r.bottom + shift, left: r.left, right: r.right}); }
+      });
+      var maxB = 0;
+      [].forEach.call(ab.querySelectorAll('.t396__elem'), function (x) { if (x.offsetHeight) maxB = Math.max(maxB, x.offsetTop + Math.max(x.offsetHeight, x === el ? form.offsetHeight : 0)); });
+      if (maxB + 24 > ab.offsetHeight) {
+        var h = (maxB + 24) + 'px';
+        ab.style.height = h;
+        [].forEach.call(ab.querySelectorAll('.t396__carrier,.t396__filter'), function (c) { c.style.height = h; });
+      }
+    });
+  }
+  var fzT;
+  function fixZeroSoon() { clearTimeout(fzT); fzT = setTimeout(fixZero, 350); }
+  window.addEventListener('resize', fixZeroSoon);
+  window.addEventListener('load', function () { fixZeroSoon(); setTimeout(fixZero, 1500); setTimeout(fixZero, 3500); });
+
+  function scan(root) { [].forEach.call((root || document).querySelectorAll('form'), enhance); fixZeroSoon(); }
 
   function remember(form) {
     if (!form) return;
