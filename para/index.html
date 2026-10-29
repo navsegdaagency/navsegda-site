@@ -370,7 +370,7 @@ function smetaLink(){
 }
 function smeta(){
   var sm = D.smeta || {}, top = smetaLink();
-  if(!sm.found) return top || '<div class="card"><h3>Смета</h3><p class="mu" style="margin:0">Смета появится здесь, как только менеджер её пришлёт.</p></div>';
+  if(!sm.found || !sm.total || !(sm.rows || []).length) return top || '<div class="card"><h3>Смета</h3><p class="mu" style="margin:0">Смета появится здесь, как только менеджер её пришлёт.</p></div>';
   var rows = sm.rows || [], h = '', cat = null;
   rows.forEach(function(r){ if(r.cat !== cat){ cat = r.cat; h += '<tr class="cat"><td colspan="2">' + esc(cat || 'Прочее') + '</td></tr>'; } h += '<tr><td>' + esc(r.name) + '</td><td>' + K.fmt(r.price) + '</td></tr>'; });
   return top + '<div class="card"' + (top ? ' style="margin-top:14px"' : '') + '><h3>Смета по позициям</h3><div class="scroll"><table><tr><th>Позиция</th><th>Стоимость, ₽</th></tr>' + h + '<tr class="tot"><td>Итого</td><td>' + K.rub(sm.total) + '</td></tr></table></div>' +
