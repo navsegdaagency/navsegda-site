@@ -7,7 +7,7 @@
 (function () {
   if (window.__nsgTg) return; window.__nsgTg = 1;
   var lastTg = '', lastAt = 0, lastHeard = '';
-  var HEARD = ['Threads', 'Instagram', 'Авито', 'Яндекс / Google', 'Рекомендация', 'Другое'];
+  var HEARD = ['ChatGPT / нейросеть', 'Яндекс / Google', 'Threads', 'Instagram', 'Авито', 'Рекомендация', 'Другое'];
 
   function ls(k, v) { try { if (v === undefined) return localStorage.getItem(k) || ''; localStorage.setItem(k, v); } catch (x) {} return ''; }
   // откуда пришли впервые: utm_source или чужой сайт в referrer
@@ -26,6 +26,7 @@
     if (/threads/.test(s)) return 'Threads';
     if (/instagram/.test(s)) return 'Instagram';
     if (/avito/.test(s)) return 'Авито';
+    if (/chatgpt|openai|perplexity|gemini|copilot|deepseek|claude/.test(s)) return 'ChatGPT / нейросеть';
     if (/yandex|google|bing/.test(s)) return 'Яндекс / Google';
     return '';
   }
