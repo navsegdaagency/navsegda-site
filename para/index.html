@@ -135,6 +135,9 @@ button.stg{cursor:pointer;font:inherit;font-size:12px;font-weight:600}
 .gal figcaption{font-size:12px;opacity:.75;margin-top:4px}
 .cph{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:10px;display:block;margin-bottom:6px}
 @media (max-width:700px){.gal{grid-template-columns:repeat(2,1fr)}}
+.offer{border:1px solid var(--line);border-radius:14px;padding:12px 14px;background:var(--surface2);min-width:0}
+.otext{font-size:14px;margin-top:6px;line-height:1.55}
+.otext a{font-weight:600}
 </style>
 </head>
 <body>
@@ -224,7 +227,8 @@ var KAB = (function(){
 var K = KAB, esc = K.esc, $ = K.$;
 var T = K.hideToken('t', 'nsg-kab-t'), D = null, TAB = (location.hash || '').slice(1) || 'main', app = $('#app');
 var SK = 'nsg-kab-s:' + T, S = K.ls(SK);
-var TABS = [['main','Главное'],['prep','Подготовка'],['team','Команда'],['smeta','Смета'],['pay','Оплаты'],['anketa','Анкета'],['ideas','Идеи'],['docs','Документы']];
+var TABS = [['main','Главное'],['interview','Интервью'],['team','Команда'],['prep','Подготовка'],['smeta','Смета'],['pay','Оплаты'],['ideas','Идеи'],['docs','Документы']];
+var OSLOT = {host:'Ведущий', photo:'Фотограф', video:'Видеограф', beauty:'Визажист'};
 // Фото с наших свадеб 2026 (реальные проекты НАВСЕГДА)
 var IMG = 'https://navseg-da.agency/assets/img/pairs/';
 var HERO_PH = IMG + 'ruslan-darya/17.webp';   // выездная церемония без людей
@@ -272,10 +276,11 @@ function hero(){
     else k.push(['∞', 'свадьба уже была']);
   }
   k.push([teamPct() + '%', 'команды собрано']);
-  k.push([((D.anketa || {}).percent || 0) + '%', 'анкеты заполнено']);
-  var sub = [D.date ? K.fmtDate(D.date) : '', D.guests ? D.guests + ' ' + K.plural(+D.guests || 0, 'гость', 'гостя', 'гостей') : '', D.venue || ''].filter(Boolean);
+  k.push([ivPct() + '%', 'интервью заполнено']);
+  var sub = [D.date ? esc(K.fmtDate(D.date)) : '', D.guests ? esc(D.guests + ' ' + K.plural(+D.guests || 0, 'гость', 'гостя', 'гостей')) : '',
+    D.venue ? (D.map_url ? '<a href="' + esc(D.map_url) + '" target="_blank" rel="noopener" style="color:#FFE7C6">📍 ' + esc(D.venue) + '</a>' : esc(D.venue)) : ''].filter(Boolean);
   return '<div class="hero" style="background:linear-gradient(180deg,rgba(40,0,2,.55) 0%,rgba(78,0,2,.78) 70%,rgba(78,0,2,.9)),url(\'' + HERO_PH + '\') center 40%/cover"><div class="sm" style="color:#f0d6cc">🔒 Личный кабинет · только для вас</div><h1 style="margin:4px 0 6px">' + esc(D.names) + '</h1>' +
-    '<div class="mu">' + sub.map(esc).join(' · ') + '</div>' +
+    '<div class="mu">' + sub.join(' · ') + '</div>' +
     '<div class="kpis">' + k.map(function(x){ return '<div class="kpi"><b>' + esc(x[0]) + '</b><span>' + esc(x[1]) + '</span></div>'; }).join('') + '</div></div>';
 }
 function tabs(){
@@ -297,18 +302,94 @@ function teamCard(){
   h += '<p class="sm mu" style="margin:8px 0 0">Телефон: ' + esc(t.phone || K.PHONE) + '</p></div>';
   return h;
 }
+function ivPct(){ return ((D.interview || {}).percent) || 0; }
+// Текст подборки из Telegram: ссылки [текст](url) и голые https:// становятся кликабельными
+function rich(t){
+  var out = '', re = /\[([^\]\n]{1,200})\]\((https?:\/\/[^\s)]+)\)|(https?:\/\/[^\s<>()]+[^\s<>().,!?;:»"'])/g, last = 0, m;
+  t = String(t || '');
+  while((m = re.exec(t))){
+    out += esc(t.slice(last, m.index));
+    out += m[1] ? '<a href="' + esc(m[2]) + '" target="_blank" rel="noopener">' + esc(m[1]) + '</a>' : '<a href="' + esc(m[3]) + '" target="_blank" rel="noopener">' + esc(m[3].replace(/^https?:\/\/(www\.)?/, '').slice(0, 48)) + '</a>';
+    last = re.lastIndex;
+  }
+  return out + esc(t.slice(last));
+}
+function projectCard(){
+  var L = [];
+  if(D.budget) L.push(['💰', 'Бюджет свадьбы', K.rub(D.budget), '']);
+  if(D.smeta_link && D.smeta_link.url) L.push(['📊', 'Смета', 'открыть - только просмотр', D.smeta_link.url]);
+  if(D.venue) L.push(['📍', 'Площадка', D.venue + (D.venue_address ? ', ' + D.venue_address : ''), D.map_url]);
+  if(D.invite_url) L.push(['💌', 'Сайт-приглашение', 'открыть сайт', D.invite_url]);
+  if(D.rsvp_url) L.push(['📋', 'Ответы гостей', 'таблица с ответами на приглашение', D.rsvp_url]);
+  if(!L.length) return '';
+  return '<div class="card"><h3>Ваш проект</h3>' + L.map(function(x){
+    var v = x[3] ? '<a href="' + esc(x[3]) + '" target="_blank" rel="noopener">' + esc(x[2]) + '</a>' : '<b>' + esc(x[2]) + '</b>';
+    return '<div class="todo"><div class="ic" aria-hidden="true">' + x[0] + '</div><div style="flex:1;min-width:0"><div class="sm mu">' + esc(x[1]) + '</div>' + v + '</div></div>';
+  }).join('') + '</div>';
+}
+function offerCard(o){
+  return '<div class="offer"><div class="row sb wrapf"><b>' + esc(o.cat_name) + (o.tier ? ' · ' + esc(o.tier) : '') + '</b>' + (o.at ? '<span class="sm mu">' + esc(String(o.at).slice(0, 10).split('-').reverse().join('.')) + '</span>' : '') + '</div>' +
+    '<div class="pre otext">' + rich(o.text) + '</div>' +
+    (o.reply ? '<div class="note" style="margin-top:8px"><b>Ваш ответ:</b> ' + esc(o.reply) + '<br><span class="sm">Реализатор получил и свяжется с подрядчиком.</span></div>' :
+      '<form class="oform" data-offer="' + esc(o.id) + '" style="margin-top:10px"><div class="field"><label for="or_' + esc(o.id) + '">Кто понравился?</label><textarea id="or_' + esc(o.id) + '" rows="2" maxlength="1000" placeholder="Например: понравились Алексей и Мария, хотим созвониться с обоими"></textarea></div><button class="btn pr sm" type="submit">Отправить реализатору</button></form>') + '</div>';
+}
+function interview(){
+  var iv = D.interview || {}, A = iv.answers || {}, sch = iv.schema || [], ap = ivPct();
+  var known = [['Имена', D.names], ['Дата', D.date ? K.fmtDate(D.date) : ''], ['Площадка', D.venue], ['Гостей', D.guests]].filter(function(x){ return x[1]; });
+  var h = '<div class="card"><h3>Интервью пары · ' + ap + '%</h3><div class="prog" style="margin-bottom:10px"><i style="width:' + Math.min(100, ap) + '%"></i></div>' +
+    '<p class="sm mu" style="margin:0">Заполните один раз - ответы получат ведущий, фотограф, видеограф и вся команда. Сохраняется само, можно заполнять частями.</p>' +
+    (known.length ? '<div class="kv" style="margin-top:10px">' + known.map(function(x){ return '<b>' + esc(x[0]) + '</b><span>' + esc(x[1]) + '</span>'; }).join('') + '</div><p class="sm mu" style="margin:6px 0 0">Это мы уже знаем - заново писать не нужно. Если что-то не так, напишите реализатору.</p>' : '') +
+    '<p class="sm" id="ivState" style="margin:8px 0 0" aria-live="polite"></p></div>';
+  sch.forEach(function(s){
+    h += '<div class="card" style="margin-top:12px"><h3>' + esc(s.t) + '</h3><p class="sm mu" style="margin:-4px 0 10px">' + esc(s.sub) + '</p>' + s.q.map(function(q){
+      var v = A[q.id], id = 'iv_' + q.id;
+      if(q.ty === 'chips' || q.ty === 'radio'){
+        var sel = q.ty === 'chips' ? [].concat(v || []) : [v];
+        return '<div class="field"><span class="lbl" id="' + id + '">' + esc(q.l) + '</span><div class="chips" role="group" aria-labelledby="' + id + '">' + (q.o || []).map(function(o){
+          return '<button class="chip" type="button" data-iv="' + esc(q.id) + '" data-ty="' + q.ty + '" data-v="' + esc(o) + '" aria-pressed="' + (sel.indexOf(o) >= 0) + '">' + esc(o) + '</button>'; }).join('') + '</div></div>';
+      }
+      var tag = q.ty === 'area' ? '<textarea id="' + id + '" rows="3" maxlength="3000" data-iv="' + esc(q.id) + '"' + (q.hint ? ' placeholder="' + esc(q.hint) + '"' : '') + '>' + esc(v || '') + '</textarea>'
+        : '<input id="' + id + '" maxlength="300" data-iv="' + esc(q.id) + '" value="' + esc(v || '') + '"' + (q.hint ? ' placeholder="' + esc(q.hint) + '"' : '') + '>';
+      return '<div class="field"><label for="' + id + '">' + esc(q.l) + '</label>' + tag + '</div>';
+    }).join('') + '</div>';
+  });
+  var w = D.wishes || [];
+  h += '<div class="card" style="margin-top:12px"><h3>Пожелания и изменения</h3><p class="sm mu">Всё, что напишете здесь, сразу видит реализатор.</p><div class="feed">' +
+    (w.length ? w.slice().reverse().map(function(x){ return '<div class="ev"><span aria-hidden="true">💬</span><span style="min-width:0"><span class="pre">' + esc(x.text) + '</span>' + (x.at ? '<br><time>' + esc(x.at) + '</time>' : '') + '</span></div>'; }).join('') : '<p class="mu sm" style="margin:0">Пока ничего не написали.</p>') + '</div>' +
+    '<form id="wishForm" style="margin-top:12px"><div class="field"><label for="wish">Новое пожелание</label><textarea id="wish" rows="3" maxlength="1000" placeholder="Например: хотим холодные фонтаны на первый танец"></textarea></div><button class="btn pr" type="submit">Отправить</button></form></div>';
+  return h;
+}
+// автосохранение интервью: копим изменения и отправляем через секунду тишины
+var IVQ = {}, IVT = null;
+function ivSet(id, v){
+  ((D.interview = D.interview || {}).answers = D.interview.answers || {})[id] = v;
+  IVQ[id] = v; clearTimeout(IVT); var st = $('#ivState'); if(st) st.textContent = 'Сохраняем...';
+  IVT = setTimeout(ivFlush, 1000);
+}
+function ivFlush(){
+  var body = IVQ; IVQ = {}; if(!Object.keys(body).length) return;
+  call('/interview', {method:'POST', body:{answers:body}}).then(function(r){
+    D.interview.percent = r.percent; var st = $('#ivState'); if(st) st.textContent = '✓ Сохранено · заполнено ' + r.percent + '%';
+    var pr = $('#tabBody .prog i'); if(pr) pr.style.width = r.percent + '%';
+  }, function(e){ Object.assign(IVQ, body); var st = $('#ivState'); if(st) st.textContent = 'Не сохранилось: ' + e.message; });
+}
+window.addEventListener('pagehide', ivFlush);
 function main(){
   var todo = [];
   (D.slots || []).forEach(function(s){ if(s.status === 'choose' && !s.picked) todo.push(['👆', 'Выберите: ' + String(s.key).toLowerCase(), s.note || ((s.cands || []).length ? 'варианты уже ждут вас' : 'варианты скоро появятся'), 'team']); });
   var nx = nextChecks()[0];
   if(nx) todo.push(['✅', nx.title, nx.left < 0 ? 'пора сделать - срок прошёл' : 'лучше успеть за ' + nx.due_days + ' ' + K.plural(nx.due_days, 'день', 'дня', 'дней') + ' до свадьбы', 'prep']);
-  var ap = (D.anketa || {}).percent || 0;
-  if(ap < 100) todo.push(['📝', ap ? 'Дозаполните анкету' : 'Заполните анкету', 'заполнено ' + ap + '% - это нужно ведущему, фотографу и декору', 'anketa']);
+  (D.offers || []).forEach(function(o){ if(!o.reply) todo.unshift(['👆', 'Подборка: ' + String(o.cat_name).toLowerCase(), (o.tier ? o.tier + ' · ' : '') + 'посмотрите варианты и напишите, кто понравился', 'team']); });
+  var ap = ivPct();
+  if(ap < 100) todo.unshift(['📝', ap ? 'Дозаполните интервью' : 'Заполните интервью', 'заполнено ' + ap + '% - по нему готовятся ведущий, фотограф и вся команда', 'interview']);
   var u = unpaid()[0];
   if(u) todo.push(['💳', u.name || 'Платёж', [u.amount ? K.rub(u.amount) : '', u.due ? 'до ' + (K.parseDate(u.due) ? K.shortDate(u.due) : u.due) : ''].filter(Boolean).join(' · '), 'pay']);
+  var bk = D.booked || [];
   var h = '<div class="grid2"><div class="stack"><div class="card"><h3>Что нужно от вас</h3>' +
     (todo.map(function(t){ return '<div class="todo"><div class="ic" aria-hidden="true">' + t[0] + '</div><div style="flex:1;min-width:0"><b>' + esc(t[1]) + '</b><div class="sm mu">' + esc(t[2]) + '</div></div><button class="btn sm" type="button" data-tab="' + t[3] + '">Открыть</button></div>'; }).join('') || '<p class="mu" style="margin:0">Сейчас ничего не нужно - всё в работе 🤍</p>') + '</div>' +
-    '<div class="card"><h3>Этап подготовки</h3>' + stagesHtml() + '</div></div><div class="stack">' + teamCard();
+    projectCard() +
+    '<div class="card"><h3>Этап подготовки</h3>' + stagesHtml() +
+    '<div class="lbl" style="margin:12px 0 4px">Уже забронировали</div>' + (bk.length ? bk.map(function(b){ return '<div class="row sm" style="padding:3px 0"><span class="pill p-ok">✓</span><span><b>' + esc(b.key) + ':</b> ' + esc(b.who) + '</span></div>'; }).join('') : '<p class="sm mu" style="margin:0">Здесь появятся имена команды, как только мы их забронируем.</p>') + '</div></div><div class="stack">' + teamCard();
   var sm = D.smeta || {};
   if(sm.found && sm.total){
     var pct = Math.min(100, Math.round((sm.paid || 0) / sm.total * 100));
@@ -338,13 +419,18 @@ function prep(){
   return h + '</div></div>';
 }
 function team(){
-  var sl = D.slots || [];
-  if(!sl.length) return '<div class="card mu">Команду реализатор добавит после брифа.</div>';
-  return '<div class="card">' + sl.map(function(s, i){
+  var sl = D.slots || [], offs = D.offers || [], keys = sl.map(function(s){ return s.key; });
+  if(!sl.length && !offs.length) return '<div class="card mu">Команду реализатор добавит после брифа.</div>';
+  var loose = offs.filter(function(o){ return keys.indexOf(OSLOT[o.cat]) < 0; });
+  var dc = D.decor || {};
+  return (loose.length ? '<div class="card stack" style="margin-bottom:12px">' + loose.map(offerCard).join('') + '</div>' : '') + '<div class="card">' + sl.map(function(s, i){
     var st = K.stLabel(s.status), cls = st[0], lbl = s.status_text || st[1];
     if(s.picked && s.status === 'choose'){ cls = 'p-ok'; lbl = 'выбор отправлен'; }
     var info = [s.who, s.note].filter(Boolean).map(esc).join(' · ');
     var body = info ? '<div class="sm mu">' + info + '</div>' : '';
+    var mine = offs.filter(function(o){ return OSLOT[o.cat] === s.key; });
+    if(mine.length) body += '<div class="stack" style="gap:10px;margin-top:8px">' + mine.map(offerCard).join('') + '</div>';
+    if(s.key === 'Декор' && (dc.visual || dc.smeta)) body += '<div class="row wrapf" style="margin-top:8px">' + (dc.visual ? '<a class="btn sm pr" href="' + esc(dc.visual) + '" target="_blank" rel="noopener">Визуал декора</a>' : '') + (dc.smeta ? '<a class="btn sm" href="' + esc(dc.smeta) + '" target="_blank" rel="noopener">Смета декора</a>' : '') + '</div>';
     if(s.status === 'choose'){
       if((s.cands || []).length){
         body += '<div class="cands">' + s.cands.map(function(c){
@@ -366,16 +452,14 @@ function linksHtml(c){
 function smetaLink(){
   var l = D.smeta_link;
   if(!l || !l.url) return '';
-  return '<div class="card"><h3>Ваша смета</h3><p class="sm mu" style="margin:0 0 10px">Актуальная версия, которую мы вам отправляли' + (l.at ? ' ' + esc(l.at) : '') + '. Открывается в новой вкладке.</p><a class="btn pr" href="' + esc(l.url) + '" target="_blank" rel="noopener">Открыть смету</a></div>';
+  return '<div class="card"><h3>Ваша смета</h3><p class="sm mu" style="margin:0 0 10px">Актуальная версия' + (l.at ? ' от ' + esc(l.at) : '') + ' в Google Таблице. Вы видите её в режиме просмотра, правки вносит команда - если что-то поменять, напишите реализатору.</p><a class="btn pr" href="' + esc(l.url) + '" target="_blank" rel="noopener">Открыть смету</a></div>';
 }
 function smeta(){
-  var sm = D.smeta || {}, top = smetaLink();
-  if(!sm.found || !sm.total || !(sm.rows || []).length) return top || '<div class="card"><h3>Смета</h3><p class="mu" style="margin:0">Смета появится здесь, как только менеджер её пришлёт.</p></div>';
-  var rows = sm.rows || [], h = '', cat = null;
-  rows.forEach(function(r){ if(r.cat !== cat){ cat = r.cat; h += '<tr class="cat"><td colspan="2">' + esc(cat || 'Прочее') + '</td></tr>'; } h += '<tr><td>' + esc(r.name) + '</td><td>' + K.fmt(r.price) + '</td></tr>'; });
-  return top + '<div class="card"' + (top ? ' style="margin-top:14px"' : '') + '><h3>Смета по позициям</h3><div class="scroll"><table><tr><th>Позиция</th><th>Стоимость, ₽</th></tr>' + h + '<tr class="tot"><td>Итого</td><td>' + K.rub(sm.total) + '</td></tr></table></div>' +
-    '<div class="row sb" style="margin-top:12px"><span>Внесено</span><b>' + K.rub(sm.paid) + '</b></div><div class="row sb"><span>Осталось</span><b>' + K.rub(sm.left) + '</b></div>' +
-    '<p class="sm mu" style="margin:10px 0 0">Смета обновляется автоматически, когда реализатор вносит изменения.</p></div>';
+  var sm = D.smeta || {}, top = smetaLink() || '<div class="card"><h3>Смета</h3><p class="mu" style="margin:0">Ссылка на смету появится здесь, как только менеджер её пришлёт.</p></div>';
+  var dc = D.decor || {};
+  if(dc.smeta) top += '<div class="card" style="margin-top:14px"><h3>Смета декора</h3><p class="sm mu" style="margin:0 0 10px">От студии Floral for People.</p><a class="btn" href="' + esc(dc.smeta) + '" target="_blank" rel="noopener">Открыть смету декора</a></div>';
+  if(!sm.found || !sm.total) return top;
+  return top + '<div class="card" style="margin-top:14px"><h3>Деньги</h3><div class="row sb"><span>Смета сейчас</span><b>' + K.rub(sm.total) + '</b></div><div class="row sb"><span>Внесено</span><b>' + K.rub(sm.paid) + '</b></div><div class="row sb"><span>Осталось</span><b>' + K.rub(sm.left) + '</b></div></div>';
 }
 function pay(){
   var p = D.payplan || [], inn = p.filter(function(x){ return x.dir !== 'out'; }), out = p.filter(function(x){ return x.dir === 'out'; });
@@ -388,17 +472,6 @@ function pay(){
   if(out.length) h += '<div class="card" style="margin-top:14px"><h3>Оплаты подрядчикам</h3><p class="sm mu" style="margin:-4px 0 10px">Из ваших средств мы платим подрядчикам сами - здесь реестр.</p><div class="scroll"><table><tr><th>Кому</th><th>За что</th><th>Сумма, ₽</th><th>Статус</th></tr>' + out.map(function(x){
     return '<tr><td>' + esc(x.to || '') + '</td><td>' + esc(x.name) + '</td><td>' + (x.amount ? K.fmt(x.amount) : '') + '</td><td>' + (isPaid(x) ? '<span class="pill p-ok">оплачено' + (x.paid_date ? ' ' + esc(x.paid_date) : '') + '</span>' : '<span class="pill p-mu">запланировано</span>') + '</td></tr>';
   }).join('') + '</table></div></div>';
-  return h;
-}
-function anketa(){
-  var a = D.anketa || {}, ap = a.percent || 0;
-  var h = '<div class="grid2"><div class="card"><h3>Анкета пары · ' + ap + '%</h3><div class="prog" style="margin-bottom:12px"><i style="width:' + Math.min(100, ap) + '%"></i></div>' +
-    '<p class="sm mu">Анкета помогает ведущему, фотографу и декору понять вас: история, атмосфера, музыка, важные люди.</p>' +
-    (a.link ? '<a class="btn pr" href="' + esc(a.link) + '" target="_blank" rel="noopener">' + (ap ? 'Дополнить анкету' : 'Заполнить анкету') + '</a>' : '<p class="mu sm" style="margin:0">Ссылку на анкету пришлёт реализатор.</p>') + '</div>';
-  var w = D.wishes || [];
-  h += '<div class="card"><h3>Пожелания и изменения</h3><p class="sm mu">Всё, что напишете здесь, сразу видит реализатор.</p><div class="feed">' +
-    (w.length ? w.slice().reverse().map(function(x){ return '<div class="ev"><span aria-hidden="true">💬</span><span style="min-width:0"><span class="pre">' + esc(x.text) + '</span>' + (x.at ? '<br><time>' + esc(x.at) + '</time>' : '') + '</span></div>'; }).join('') : '<p class="mu sm" style="margin:0">Пока ничего не написали.</p>') + '</div>' +
-    '<form id="wishForm" style="margin-top:12px"><div class="field"><label for="wish">Новое пожелание</label><textarea id="wish" rows="3" maxlength="1000" placeholder="Например: хотим холодные фонтаны на первый танец"></textarea></div><button class="btn pr" type="submit">Отправить</button></form></div></div>';
   return h;
 }
 function ideas(){
@@ -416,36 +489,55 @@ function docs(){
   return '<div class="card"><h3>Документы</h3>' + d.map(function(x){ return '<div class="todo"><div class="ic" aria-hidden="true">📄</div><div style="flex:1;min-width:0">' + (x.url ? '<a href="' + esc(x.url) + '" target="_blank" rel="noopener">' + esc(x.name || x.url) + '</a>' : esc(x.name)) + '</div></div>'; }).join('') + '</div>';
 }
 function render(){
+  if(TAB === 'anketa') TAB = 'interview';   // старые ссылки #anketa
   if(TAB === 'docs' && !(D.docs || []).length) TAB = 'main';
   if(!TABS.some(function(t){ return t[0] === TAB; })) TAB = 'main';
   document.title = (D.names || 'Кабинет') + ' · НАВСЕГДА';
-  var body = ({main:main, prep:prep, team:team, smeta:smeta, pay:pay, anketa:anketa, ideas:ideas, docs:docs})[TAB]();
-  var keep = $('#wish') ? $('#wish').value : '';
+  ivFlush();
+  var body = ({main:main, interview:interview, prep:prep, team:team, smeta:smeta, pay:pay, ideas:ideas, docs:docs})[TAB]();
+  var keep = {}; K.$$('textarea[id]').forEach(function(x){ if(x.value && !x.dataset.iv) keep[x.id] = x.value; });
   app.innerHTML = hero() + tabs() + '<div id="tabBody">' + body + '</div>';
-  if(keep && $('#wish')) $('#wish').value = keep;
+  Object.keys(keep).forEach(function(k){ var el = $('#' + k); if(el) el.value = keep[k]; });
   var f = $('#wishForm'); if(f) f.addEventListener('submit', sendWish);
+  K.$$('form.oform').forEach(function(x){ x.addEventListener('submit', sendOffer); });
 }
 function sendWish(e){
   e.preventDefault();
   var ta = $('#wish'), v = ta.value.trim(), b = e.target.querySelector('button');
   if(!v){ K.toast('Напишите пожелание'); ta.focus(); return; }
   b.disabled = true; b.textContent = 'Отправляем...';
-  K.api('/api/kab/pair/' + encodeURIComponent(T) + '/wish', {method:'POST', body:{text:v}}).then(function(){
+  call('/wish', {method:'POST', body:{text:v}}).then(function(){
     ta.value = ''; K.toast('Отправлено реализатору'); return load(true);
   }, function(err){ K.toast(err.message); b.disabled = false; b.textContent = 'Отправить'; });
 }
+function sendOffer(e){
+  e.preventDefault();
+  var f = e.target, sid = f.dataset.offer, ta = f.querySelector('textarea'), v = ta.value.trim(), b = f.querySelector('button');
+  if(!v){ K.toast('Напишите, кто понравился'); ta.focus(); return; }
+  b.disabled = true; b.textContent = 'Отправляем...';
+  call('/offer/' + encodeURIComponent(sid), {method:'POST', body:{text:v}}).then(function(){
+    ta.value = ''; K.toast('Отправлено реализатору'); return load(true);
+  }, function(err){ K.toast(err.message); b.disabled = false; b.textContent = 'Отправить реализатору'; });
+}
+document.addEventListener('input', function(e){ var t = e.target; if(D && t.dataset && t.dataset.iv && /INPUT|TEXTAREA/.test(t.tagName)) ivSet(t.dataset.iv, t.value); });
 document.addEventListener('click', function(e){
   var t = e.target.closest('button'); if(!t || !D) return;
   if(t.dataset.tab){ TAB = t.dataset.tab; history.replaceState(null, '', '#' + TAB); render(); if(t.classList.contains('sm')) window.scrollTo({top: $('.tabs').offsetTop - 70}); return; }
+  if(t.dataset.iv){
+    var qid = t.dataset.iv, on = t.getAttribute('aria-pressed') !== 'true', A = (D.interview || {}).answers || {};
+    if(t.dataset.ty === 'radio'){ K.$$('[data-iv="' + qid + '"]').forEach(function(x){ x.setAttribute('aria-pressed', 'false'); }); t.setAttribute('aria-pressed', String(on)); ivSet(qid, on ? t.dataset.v : ''); }
+    else { var cur = [].concat(A[qid] || []).filter(function(x){ return x !== t.dataset.v; }); if(on) cur.push(t.dataset.v); t.setAttribute('aria-pressed', String(on)); ivSet(qid, cur); }
+    return;
+  }
   if(t.dataset.pick){
     t.disabled = true; t.textContent = 'Отправляем...';
-    K.api('/api/kab/pair/' + encodeURIComponent(T) + '/pick', {method:'POST', body:{slot:t.dataset.pick, item:t.dataset.item}}).then(function(){ K.toast('Выбор отправлен реализатору'); return load(true); }, function(err){ K.toast(err.message); t.disabled = false; t.textContent = 'Выбрать'; });
+    call('/pick', {method:'POST', body:{slot:t.dataset.pick, item:t.dataset.item}}).then(function(){ K.toast('Выбор отправлен реализатору'); return load(true); }, function(err){ K.toast(err.message); t.disabled = false; t.textContent = 'Выбрать'; });
     return;
   }
   if(t.dataset.like){
     var id = t.dataset.like, on = (D.likes || []).indexOf(id) < 0;
     t.disabled = true;
-    K.api('/api/kab/pair/' + encodeURIComponent(T) + '/like', {method:'POST', body:{item:id, on:on}}).then(function(){
+    call('/like', {method:'POST', body:{item:id, on:on}}).then(function(){
       D.likes = on ? (D.likes || []).concat([id]) : (D.likes || []).filter(function(x){ return x !== id; });
       K.toast(on ? 'Отметили - реализатор увидит' : 'Отметка снята'); render();
     }, function(err){ K.toast(err.message); t.disabled = false; });

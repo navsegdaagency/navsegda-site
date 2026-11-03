@@ -139,6 +139,8 @@ button.stg{cursor:pointer;font:inherit;font-size:12px;font-weight:600}
 .nav{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .nav .btn[aria-current="page"]{background:var(--surface2)}
 .ed{display:grid;gap:8px;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))}
+.ocats{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr))}
+.ocat{border:1px solid var(--line);border-radius:12px;padding:10px 12px;min-width:0}
 .ed .field{margin:0}
 .erow{border:1px solid var(--line);border-radius:12px;padding:10px;display:grid;gap:8px;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) minmax(0,1.3fr) minmax(0,1.6fr) auto;align-items:start;background:var(--surface)}
 .erow.pp{grid-template-columns:minmax(0,2fr) minmax(0,1fr) minmax(0,1.2fr) minmax(0,1fr) auto}
@@ -166,7 +168,7 @@ details summary{cursor:pointer;font-weight:600;font-size:13.5px;margin:6px 0}
 </head>
 <body>
 <div class="top"><div class="top-in"><a class="logo" href="/proekty/"><img src="/assets/brand/mark-gold.svg" alt="">НАВСЕГДА <small>рабочий стол</small></a>
-<nav class="nav" id="nav" hidden><a class="btn sm" href="#" id="navP">Проекты</a><a class="btn sm" href="#catalog" id="navC">Каталог</a><a class="btn sm gh" href="/proekty/api/">API</a><button class="btn sm gh" type="button" id="logout">Выйти</button></nav></div></div>
+<nav class="nav" id="nav" hidden><a class="btn sm" href="#" id="navP">Проекты</a><a class="btn sm" href="#offers" id="navO">Подборки</a><a class="btn sm" href="#catalog" id="navC">Каталог</a><a class="btn sm gh" href="/proekty/api/">API</a><button class="btn sm gh" type="button" id="logout">Выйти</button></nav></div></div>
 <main id="app"></main>
 <div class="toast" id="toast" role="status"></div>
 <script>
@@ -318,11 +320,13 @@ function paintFeed(){ var el = $('#feed'); if(el) el.innerHTML = FEED.length ? F
 function route(){
   var h = decodeURIComponent((location.hash || '').slice(1));
   $('#navC').setAttribute('aria-current', h === 'catalog' ? 'page' : 'false');
-  $('#navP').setAttribute('aria-current', h !== 'catalog' ? 'page' : 'false');
+  $('#navO').setAttribute('aria-current', h === 'offers' ? 'page' : 'false');
+  $('#navP').setAttribute('aria-current', h !== 'catalog' && h !== 'offers' ? 'page' : 'false');
   if(h === 'catalog'){ CUR = null; document.body.classList.add('has-cur'); paintList(); return showCatalog(); }
+  if(h === 'offers'){ CUR = null; document.body.classList.add('has-cur'); paintList(); return showOffers(); }
   if(h){ return openProject(h); }
   CUR = null; document.body.classList.remove('has-cur'); paintList();
-  $('#main').innerHTML = '<div class="card"><h2>Выберите проект слева</h2><p class="mu" style="margin:0">Или создайте кабинет для новой пары кнопкой «＋ Кабинет для пары». Всё, что делает пара и подрядчики, появляется в ленте.</p></div>';
+  $('#main').innerHTML = '<div class="card"><h2>Выберите проект слева</h2><p class="mu" style="margin:0">Кабинет создаётся сам, когда свадьба в amoCRM переходит на «Аванс получен» или в воронку реализации: ссылка и код придут в «Контроль», задача - в сделку. Вручную - кнопкой «＋ Кабинет для пары». Всё, что делает пара и подрядчики, появляется в ленте.</p></div>';
 }
 window.addEventListener('hashchange', function(){ if(KEY) route(); });
 
@@ -336,12 +340,12 @@ function openProject(id){
     paintList();
   }, function(e){ $('#main').innerHTML = '<div class="card"><h2>Проект не открылся</h2><p class="mu">' + esc(e.status === 404 ? 'Такого проекта нет (возможно, ссылка старая).' : e.message) + '</p><a class="btn" href="#">К списку</a></div>'; });
 }
-var SECS = ['head','slots','pair','briefs','sel','brief','pay','docs','money','info','notes','hist'];
+var SECS = ['head','offers','slots','pair','briefs','sel','brief','pay','docs','money','info','notes','hist'];
 function paintAll(keepDirty){
   var m = $('#main');
   if(!$('#sec-head')){
     m.innerHTML = '<button class="btn sm back" type="button" onclick="location.hash=\'\'">← Все проекты</button>' +
-      '<div class="card" id="sec-head"></div><div class="card" id="sec-slots"></div>' +
+      '<div class="card" id="sec-head"></div><div class="card" id="sec-offers"></div><div class="card" id="sec-slots"></div>' +
       '<div class="grid2"><div class="stack"><div class="card" id="sec-briefs"></div><div class="card" id="sec-sel"></div><div class="card" id="sec-brief"></div></div>' +
       '<div class="stack"><div class="card" id="sec-pair"></div><div class="card" id="sec-money"></div><div class="card" id="sec-pay"></div><div class="card" id="sec-docs"></div><div class="card" id="sec-info"></div><div class="card" id="sec-notes"></div><div class="card" id="sec-hist"></div></div></div>';
   }
@@ -349,7 +353,7 @@ function paintAll(keepDirty){
 }
 function paint(s){
   var el = $('#sec-' + s); if(!el) return;
-  var fn = {head:secHead, slots:secSlots, pair:secPair, briefs:secBriefs, sel:secSel, brief:secBrief, pay:secPay, docs:secDocs, money:secMoney, info:secInfo, notes:secNotes, hist:secHist}[s];
+  var fn = {head:secHead, offers:secOffers, slots:secSlots, pair:secPair, briefs:secBriefs, sel:secSel, brief:secBrief, pay:secPay, docs:secDocs, money:secMoney, info:secInfo, notes:secNotes, hist:secHist}[s];
   el.innerHTML = fn(); el.classList.remove('dirty'); DIRTY[s] = false;
 }
 document.addEventListener('input', function(e){
@@ -390,7 +394,13 @@ function secPair(){
   var w = CUR.wishes || [], l = CUR.likes || [];
   return '<h3>От пары</h3>' + (w.length ? '<div class="feed">' + w.slice().reverse().map(function(x){ return '<div class="ev"><span aria-hidden="true">💬</span><span style="min-width:0"><span class="pre">' + esc(x.text) + '</span><br><time>' + esc(x.at) + '</time></span></div>'; }).join('') + '</div>' : '<p class="mu sm" style="margin:0">Пожеланий пока нет</p>') +
     (l.length ? '<p class="sm" style="margin:8px 0 0">♥ Отметили идеи: ' + l.map(function(id){ return esc(catName(id)); }).join(', ') + '</p>' : '') +
-    '<p class="sm mu" style="margin:8px 0 0">Анкета: ' + ((CUR.anketa || {}).percent || 0) + '%</p>';
+    ivHtml();
+}
+function ivHtml(){
+  var v = CUR.interview_view || [], pc = CUR.interview_percent || 0;
+  return '<details style="margin-top:10px"' + (v.length ? '' : '') + '><summary><b>Интервью пары · ' + pc + '%</b></summary>' + (v.length ? v.map(function(s){
+    return '<div class="lbl" style="margin:10px 0 4px">' + esc(s.t) + '</div>' + s.rows.map(function(r){ return '<div class="sm" style="margin:2px 0"><span class="mu">' + esc(r.q) + ':</span> <span class="pre">' + esc(r.a) + '</span></div>'; }).join('');
+  }).join('') : '<p class="sm mu" style="margin:6px 0 0">Пара ещё не заполняла. Ответы сами попадут в брифы подрядчиков по их ссылкам.</p>') + '</details>';
 }
 function briefUrl(t){ return SITE + '/brief/?t=' + t; }
 function briefMsg(role, who, url){ return 'Здравствуйте' + (who ? ', ' + who.split(' ').slice(-1)[0] : '') + '! Это бриф НАВСЕГДА по свадьбе ' + (CUR.names || '') + (CUR.date ? ' (' + K.shortDate(CUR.date) + ')' : '') + ': ' + url + ' - посмотрите и нажмите «Ознакомился», там же можно указать удобное время созвона.'; }
@@ -431,7 +441,7 @@ function ta(id, label, v, rows){ return '<div class="field"><label for="' + id +
 function secBrief(){
   var b = CUR.brief || {};
   return '<h3>Содержание брифа</h3><p class="sm mu" style="margin-top:-4px">Это видят все подрядчики по своим ссылкам. «Для роли» - видит только эта роль.</p>' +
-    ta('bTiming', 'Тайминг дня (пара видит за 30 дней до свадьбы)', CUR.timing, 4) + '<div class="field"><label for="bAddr">Адрес площадки</label><input id="bAddr" value="' + esc(CUR.venue_address) + '"></div>' +
+    '<p class="sm mu" style="margin:0 0 8px">Интервью пары подставляется в брифы само (по ролям) - здесь только то, что добавляет команда.</p>' + ta('bTiming', 'Тайминг дня (пара видит за 30 дней до свадьбы)', CUR.timing, 4) +
     BRIEF_F.map(function(f){ return ta('bf_' + f[0], f[1], b[f[0]]); }).join('') +
     '<details' + (BRIEF_X.some(function(f){ return b[f[0]]; }) ? ' open' : '') + '><summary>Пожелания для других ролей</summary>' + BRIEF_X.map(function(f){ return ta('bf_' + f[0], f[1], b[f[0]], 2); }).join('') + '</details>' +
     '<button class="btn pr" type="button" data-save="brief">Сохранить бриф</button>';
@@ -475,7 +485,10 @@ function secInfo(){
   function inp(id, label, v, type, ph){ return '<div class="field"><label for="' + id + '">' + esc(label) + '</label><input id="' + id + '" ' + (type ? 'type="' + type + '" ' : '') + 'value="' + esc(v == null ? '' : v) + '"' + (ph ? ' placeholder="' + esc(ph) + '"' : '') + '></div>'; }
   return '<h3>Основное</h3><div class="ed">' + inp('iNames', 'Имена (видит пара)', p.names) + inp('iDate', 'Дата', /^\d{4}-\d{2}-\d{2}$/.test(p.date || '') ? p.date : '', 'date') + inp('iGuests', 'Гостей', p.guests, 'number') + inp('iVenue', 'Площадка', p.venue) +
     inp('iReal', 'Реализатор', p.realizer) + inp('iRealTg', 'Telegram реализатора', p.realizer_tg, '', '@ник или ID - для уведомлений') + inp('iMgr', 'Менеджер', p.manager) + inp('iAmo', 'Сделка amoCRM (номер)', p.amo_lead, '', 'например 12345678') +
-    inp('iAnkP', 'Анкета, %', a.percent || 0, 'number') + inp('iAnkL', 'Ссылка на анкету', a.link) + '</div>' +
+    inp('iBudget', 'Бюджет свадьбы, ₽ (видит пара)', p.budget || '', 'number') + inp('iAddr', 'Адрес площадки (ссылка на карту у пары)', p.venue_address) +
+    inp('iInv', 'Сайт-приглашение', p.invite_url, 'url', 'https://...') + inp('iRsvp', 'Таблица с ответами гостей', p.rsvp_url, 'url', 'https://docs.google.com/...') +
+    inp('iDecV', 'Декор: визуал', p.decor_visual, 'url', 'ссылка, когда получим') + inp('iDecS', 'Декор: смета', p.decor_smeta, 'url', 'ссылка, когда получим') + '</div>' +
+    '<p class="sm mu" style="margin:0 0 8px">Ссылки появляются у пары сразу после сохранения, пара получает уведомление в Telegram. Смету давайте ссылкой Google с доступом «только просмотр».</p>' +
     '<label class="row sm" style="margin:6px 0 10px"><input type="checkbox" id="iArch"' + (p.archived ? ' checked' : '') + '> В архив (скрыть из списка)</label><button class="btn pr" type="button" data-save="info">Сохранить</button>';
 }
 function secNotes(){
@@ -511,13 +524,15 @@ function save(what, btn){
   if(what === 'slots'){ body = {slots: ED.slots.filter(function(s){ return String(s.key || '').trim(); }).map(function(s){ return {key:String(s.key).trim(), status:s.status || 'search', who:s.who || '', note:s.note || '', contact:String(s.contact || '').trim(), cands:s.cands || [], picked:s.picked || null}; })}; }
   if(what === 'payplan'){ body = {payplan: ED.payplan.filter(function(x){ return isPaid(x) || String(x.name || '').trim() || x.amount; }).map(function(x){ return isPaid(x) ? x : {id:x.id, dir:x.dir === 'out' ? 'out' : 'in', to:String(x.to || '').trim(), name:String(x.name || '').trim(), amount:x.amount === '' || x.amount == null ? 0 : Number(x.amount), due:x.due || ''}; })}; }
   if(what === 'docs'){ body = {docs: ED.docs.filter(function(x){ return String(x.name || '').trim() || String(x.url || '').trim(); }).map(function(x){ return {name:String(x.name || '').trim() || 'Документ', url:String(x.url || '').trim()}; })}; }
-  if(what === 'brief'){ var b = Object.assign({}, CUR.brief || {}); BRIEF_F.concat(BRIEF_X).forEach(function(f){ b[f[0]] = val('bf_' + f[0]); }); body = {brief:b, timing:val('bTiming'), venue_address:val('bAddr')}; }
+  if(what === 'brief'){ var b = Object.assign({}, CUR.brief || {}); BRIEF_F.concat(BRIEF_X).forEach(function(f){ b[f[0]] = val('bf_' + f[0]); }); body = {brief:b, timing:val('bTiming')}; if($('#bAddr')) body.venue_address = val('bAddr'); }
   if(what === 'notes'){ body = {notes: val('nNotes')}; }
   if(what === 'info'){
-    var g = val('iGuests'), ap = Math.max(0, Math.min(100, parseInt(val('iAnkP'), 10) || 0));
+    var g = val('iGuests');
     if(!val('iNames').trim()){ K.toast('Имена не могут быть пустыми'); return; }
+    var bad = ['iInv','iRsvp','iDecV','iDecS'].filter(function(i){ var v = val(i).trim(); return v && !/^https?:\/\//.test(v); });
+    if(bad.length){ K.toast('Ссылки должны начинаться с https://'); $('#' + bad[0]).focus(); return; }
     body = {names:val('iNames').trim(), date:val('iDate'), guests: g === '' ? '' : Number(g), venue:val('iVenue'), realizer:val('iReal'), realizer_tg:val('iRealTg').trim(), manager:val('iMgr'), amo_lead:val('iAmo').trim(),
-      anketa: Object.assign({}, CUR.anketa || {}, {percent:ap, link:val('iAnkL').trim()}), archived: $('#iArch').checked};
+      budget: Number(val('iBudget')) || 0, venue_address: val('iAddr').trim(), invite_url: val('iInv').trim(), rsvp_url: val('iRsvp').trim(), decor_visual: val('iDecV').trim(), decor_smeta: val('iDecS').trim(), archived: $('#iArch').checked};
   }
   btn.disabled = true;
   patch(body, 'Сохранено', secOf(what)).catch(function(){}).then(function(){ btn.disabled = false; if(what === 'info' && body.archived){ location.hash = ''; } });
@@ -602,6 +617,67 @@ function create(body, btn){
   }, function(e){ K.toast(e.message); btn.disabled = false; });
 }
 
+// ───── подборки подрядчиков: готовые сообщения на сезон ─────
+var OFF = null, OCATS = null, OEDIT = null;
+function loadOffers(){ return api('/api/kab/offers').then(function(d){ OFF = d.items || []; OCATS = d.cats || {}; }); }
+function secOffers(){
+  var cats = CUR.offer_cats || OCATS || {}, sent = CUR.offers_sent || [];
+  if(!OFF){ loadOffers().then(function(){ if(CUR) repaintKeep('offers'); }, function(){}); }
+  return '<div class="row sb wrapf"><h3 style="margin:0">Подборки паре</h3><a class="btn sm gh" href="#offers">Библиотека подборок</a></div>' +
+    '<p class="sm mu" style="margin:4px 0 10px">Выберите готовую подборку - сообщение со ссылками и суммами появится у пары во вкладке «Команда», пара получит уведомление и ответит, кто понравился.</p>' +
+    '<div class="ocats">' + Object.keys(cats).map(function(c){
+      var mine = sent.filter(function(o){ return o.cat === c; }), lib = (OFF || []).filter(function(o){ return o.cat === c; });
+      return '<div class="ocat"><b>' + esc(cats[c].name) + '</b>' + mine.map(function(o){
+        return '<div class="sm" style="margin-top:6px"><span class="pill ' + (o.reply ? 'p-ok' : 'p-warn') + '">' + esc(o.tier || 'подборка') + '</span> ' + esc(String(o.at || '').slice(0, 10)) +
+          (o.reply ? '<div style="margin-top:3px"><b>Пара:</b> ' + esc(o.reply) + '</div>' : '<span class="mu"> - ждём ответ пары</span>') +
+          ' <button class="btn sm gh" type="button" data-odel="' + esc(o.id) + '" aria-label="Убрать подборку у пары">убрать</button></div>'; }).join('') +
+        '<div class="row wrapf" style="margin-top:8px">' + (lib.length ? lib.map(function(o){ return '<button class="btn sm" type="button" data-osend="' + esc(o.id) + '">' + esc(o.tier) + ' · ' + esc(o.season) + '</button>'; }).join('') :
+          (OFF ? '<span class="sm mu">В библиотеке нет подборок - <a href="#offers">добавить</a></span>' : '<span class="sm mu">Загружаем...</span>')) + '</div></div>';
+    }).join('') + '</div>';
+}
+function showOffers(){ var m = $('#main'); m.innerHTML = K.skeleton(); loadOffers().then(drawOffers, function(e){ m.innerHTML = '<div class="card">' + esc(e.message) + '</div>'; }); }
+// Вставка из Telegram: ссылки, спрятанные под текстом, сохраняем как [текст](ссылка)
+function pasteLinks(e){
+  var h = e.clipboardData && e.clipboardData.getData('text/html'); if(!h || !/<a\s/i.test(h)) return;
+  e.preventDefault();
+  var box = document.createElement('div'); box.innerHTML = h;
+  box.querySelectorAll('a[href]').forEach(function(a){ var u = a.getAttribute('href'), tx = a.textContent.trim(); a.replaceWith(/^https?:/.test(u) && tx && tx !== u ? '[' + tx + '](' + u + ')' : u); });
+  box.querySelectorAll('br').forEach(function(b){ b.replaceWith('\n'); });
+  box.querySelectorAll('p,div,li').forEach(function(p){ p.append('\n'); });
+  var txt = box.textContent.replace(/\n{3,}/g, '\n\n').trim(), ta = e.target, s = ta.selectionStart, en = ta.selectionEnd;
+  ta.value = ta.value.slice(0, s) + txt + ta.value.slice(en); ta.selectionStart = ta.selectionEnd = s + txt.length;
+}
+function drawOffers(){
+  var m = $('#main'), c = OEDIT || {}, cats = OCATS || {}, cur = c.cat || Object.keys(cats)[0] || 'host';
+  var year = new Date().getFullYear() + (new Date().getMonth() >= 8 ? 1 : 0);
+  m.innerHTML = '<button class="btn sm back" type="button" onclick="location.hash=\'\'">← Все проекты</button><div class="card"><h2>Библиотека подборок</h2>' +
+    '<p class="sm mu" style="margin-top:-4px">Раз в сезон вставьте сюда готовые сообщения из Telegram с суммами и ссылками на подрядчиков. Ссылки под текстом сохраняются сами. Потом в проекте пары - одна кнопка, и подборка у пары в кабинете.</p>' +
+    '<form id="offF"><div class="ed"><div class="field"><label for="oCat">Категория</label><select id="oCat">' + Object.keys(cats).map(function(k){ return '<option value="' + k + '"' + (k === cur ? ' selected' : '') + '>' + esc(cats[k].name) + '</option>'; }).join('') + '</select></div>' +
+    '<div class="field"><label for="oTier">Ценовая категория</label><input id="oTier" list="oTiers" required value="' + esc(c.tier || '') + '" placeholder="например, до 130 000 ₽"><datalist id="oTiers">' + ((cats[cur] || {}).tiers || []).map(function(x){ return '<option value="' + esc(x) + '">'; }).join('') + '</datalist></div>' +
+    '<div class="field"><label for="oSeason">Сезон</label><input id="oSeason" value="' + esc(c.season || year) + '"></div></div>' +
+    '<div class="field"><label for="oText">Сообщение для пары</label><textarea id="oText" rows="10" required placeholder="Вставьте сообщение из Telegram целиком: имена, суммы, ссылки на аккаунты">' + esc(c.text || '') + '</textarea></div>' +
+    '<div class="row wrapf"><button class="btn pr" type="submit">' + (c.id ? 'Сохранить изменения' : '＋ Добавить подборку') + '</button>' + (c.id ? '<button class="btn" type="button" data-onew>Отмена</button>' : '') + '</div></form></div>' +
+    Object.keys(cats).map(function(k){
+      var l = (OFF || []).filter(function(o){ return o.cat === k; });
+      return '<div class="card"><h3>' + esc(cats[k].name) + ' · ' + l.length + '</h3><p class="sm mu" style="margin:-4px 0 8px">Категории: ' + esc((cats[k].tiers || []).join(' / ')) + '</p>' + (l.length ? l.map(function(o){
+        return '<div class="ev" style="flex-direction:column;gap:4px"><div class="row sb wrapf"><b>' + esc(o.tier) + ' · сезон ' + esc(o.season) + '</b><span class="row"><button class="btn sm" type="button" data-oedit="' + esc(o.id) + '">Изменить</button><button class="btn sm gh" type="button" data-olib-del="' + esc(o.id) + '">Удалить</button></span></div><div class="sm pre" style="max-height:140px;overflow:auto">' + esc(o.text) + '</div><div class="sm mu">обновлено ' + esc(o.updated || '') + (o.by ? ' · ' + esc(o.by) : '') + '</div></div>';
+      }).join('') : '<p class="sm mu" style="margin:0">Пока пусто.</p>') + '</div>';
+    }).join('');
+  $('#oText').addEventListener('paste', pasteLinks);
+  $('#oCat').onchange = function(){ OEDIT = Object.assign({}, OEDIT || {}, {cat:this.value, tier:val('oTier'), season:val('oSeason'), text:val('oText')}); drawOffers(); };
+  $('#offF').onsubmit = function(e){
+    e.preventDefault();
+    var body = {cat:val('oCat'), tier:val('oTier').trim(), season:val('oSeason').trim(), text:val('oText').trim()};
+    if(c.id && c.cat === body.cat && c.tier === body.tier && c.season === body.season) body.id = c.id;
+    if(!body.tier || !body.text){ K.toast('Нужны ценовая категория и текст'); return; }
+    var b = e.target.querySelector('button[type=submit]'); b.disabled = true;
+    api('/api/kab/offers', {method:'POST', body:body}).then(function(){
+      var old = c.id && !body.id ? c.id : null;
+      return (old ? api('/api/kab/offers/' + encodeURIComponent(old), {method:'DELETE'}) : Promise.resolve()).then(function(){ K.toast('Подборка сохранена'); OEDIT = null; return loadOffers().then(drawOffers); });
+    }, function(err){ K.toast(err.message); b.disabled = false; });
+  };
+}
+
 // ───── каталог ─────
 var CEDIT = null;
 function loadCat(){ return K.api('/api/kab/catalog').then(function(d){ CAT = d.items || []; }, function(){}); }
@@ -640,7 +716,16 @@ document.addEventListener('click', function(e){
   if(d.cedit){ CEDIT = CAT.filter(function(x){ return x.id === d.cedit; })[0] || null; drawCatalog(); window.scrollTo({top:0}); return; }
   if(d.cdel){ var it = CAT.filter(function(x){ return x.id === d.cdel; })[0]; if(!confirm('Удалить из каталога «' + (it ? it.name : d.cdel) + '»?')) return; t.disabled = true;
     api('/api/kab/catalog/' + encodeURIComponent(d.cdel), {method:'DELETE'}).then(function(){ K.toast('Удалено'); return loadCat().then(drawCatalog); }, function(err){ K.toast(err.message); t.disabled = false; }); return; }
+  if(d.onew !== undefined){ OEDIT = null; drawOffers(); return; }
+  if(d.oedit){ OEDIT = (OFF || []).filter(function(x){ return x.id === d.oedit; })[0] || null; drawOffers(); window.scrollTo({top:0}); return; }
+  if(d.olibDel){ if(!confirm('Удалить подборку из библиотеки? У пар, которым её уже отправили, она останется.')) return; t.disabled = true;
+    api('/api/kab/offers/' + encodeURIComponent(d.olibDel), {method:'DELETE'}).then(function(){ K.toast('Удалено'); return loadOffers().then(drawOffers); }, function(err){ K.toast(err.message); t.disabled = false; }); return; }
   if(!CUR) return;
+  if(d.osend){ var oo = (OFF || []).filter(function(x){ return x.id === d.osend; })[0]; if(!oo) return;
+    if(!confirm('Отправить паре подборку «' + ((CUR.offer_cats || {})[oo.cat] || {}).name + ' · ' + oo.tier + '»?\nОна появится в кабинете, пара получит уведомление.')) return; t.disabled = true;
+    api('/api/kab/projects/' + encodeURIComponent(CUR.id) + '/offer', {method:'POST', body:{offer_id:oo.id}}).then(function(){ K.toast('Подборка у пары в кабинете'); ED.slots = null; DIRTY.slots = false; return openProject(CUR.id); }, function(err){ K.toast(err.message); t.disabled = false; }); return; }
+  if(d.odel){ if(!confirm('Убрать эту подборку из кабинета пары?')) return; t.disabled = true;
+    api('/api/kab/projects/' + encodeURIComponent(CUR.id) + '/offer/' + encodeURIComponent(d.odel), {method:'DELETE'}).then(function(){ K.toast('Убрали'); return openProject(CUR.id); }, function(err){ K.toast(err.message); t.disabled = false; }); return; }
   if(d.act === 'copyLink'){ K.copy(pairLink(), 'Ссылка кабинета скопирована'); return; }
   if(d.act === 'copyMsg'){ K.copy(pairMsg(CUR.names, pairLink()), 'Сообщение паре скопировано'); return; }
   if(d.act === 'mkSel'){ mkSel(t); return; }

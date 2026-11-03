@@ -249,14 +249,18 @@ function render(){
     '<div class="mu">' + [D.date ? K.fmtDate(D.date, true) : '', D.guests ? D.guests + ' ' + K.plural(+D.guests || 0, 'гость', 'гостя', 'гостей') : ''].filter(Boolean).map(esc).join(' · ') + '</div>' +
     '<p class="sm mu no-print" style="margin:8px 0 0">Бриф обновляется сам - откройте ссылку ещё раз перед созвоном и в день свадьбы.</p>' +
     '<div class="sec kv"><b>Ваша роль</b><span>' + esc(D.role_name) + (D.who ? ' - ' + esc(D.who) : '') + '</span>' +
-    '<b>Площадка</b><span>' + (place ? esc(place) : '<span class="empty">уточняется</span>') + '</span>' +
+    '<b>Площадка</b><span>' + (place ? (D.map_url ? '<a href="' + esc(D.map_url) + '" target="_blank" rel="noopener">' + esc(place) + '</a>' : esc(place)) : '<span class="empty">уточняется</span>') + '</span>' +
     '<b>Реализатор</b><span>' + esc(D.realizer || 'команда НАВСЕГДА') + ' · вопросы в <a href="' + K.TG + '" target="_blank" rel="noopener">Telegram</a> или по телефону ' + K.PHONE + '</span></div>';
   if(D.for_role) h += '<div class="sec"><h3>Что важно для вас</h3>' + txt(D.for_role) + '</div>';
-  h += '<div class="sec"><h3>Тайминг</h3>' + txt(D.timing) + '</div>' +
-    '<div class="sec"><h3>История пары</h3>' + txt(D.story) + '</div>' +
-    '<div class="sec"><h3>Важные люди</h3>' + txt(D.people) + '</div>' +
-    '<div class="sec"><h3>Музыка</h3>' + txt(D.music) + '</div>' +
-    '<div class="sec"><h3>Стоп-лист</h3>' + txt(D.stop) + '</div>' +
+  var iv = D.interview || [];
+  h += '<div class="sec"><h3>Тайминг</h3>' + txt(D.timing) + '</div>';
+  // интервью пары - главное: пара заполняет сама, сюда попадают разделы для вашей роли
+  h += iv.length ? iv.map(function(s){ return '<div class="sec"><h3>' + esc(s.t) + ' <span class="sm mu" style="font-weight:400">· из интервью пары</span></h3><div class="kv">' + s.rows.map(function(r){ return '<b>' + esc(r.q) + '</b><span class="pre">' + esc(r.a) + '</span>'; }).join('') + '</div></div>'; }).join('')
+    : '<div class="sec"><h3>Интервью пары</h3><div class="empty">Пара ещё заполняет интервью - ответы появятся здесь сами</div></div>';
+  [['История пары', D.story], ['Важные люди', D.people], ['Музыка', D.music], ['Стоп-лист', D.stop]].forEach(function(x){
+    if(x[1] && String(x[1]).trim()) h += '<div class="sec"><h3>' + x[0] + ' <span class="sm mu" style="font-weight:400">· от реализатора</span></h3>' + txt(x[1]) + '</div>';
+  });
+  h +=
     '<div class="sec"><h3>Пожелания пары</h3>' + (w.length ? '<div class="feed">' + w.map(function(x){ return '<div class="ev"><span aria-hidden="true">💬</span><span class="pre">' + esc(x) + '</span></div>'; }).join('') + '</div>' : '<div class="empty">Пока нет</div>') + '</div>' +
     '<div class="sec"><h3>Команда на свадьбе</h3>' + (tk.length ? '<div class="kv">' + tk.map(function(k){ return '<b>' + esc(k) + '</b><span>' + esc(team[k]) + '</span>'; }).join('') + '</div>' : '<div class="empty">Команда собирается</div>') + '</div>';
   h += '<div class="sec actions" id="act">';
