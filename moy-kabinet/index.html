@@ -145,7 +145,6 @@ function paint(){
     if(!gh) return;
     any = true;
     out += '<section class="sec" id="s-' + esc(s.id) + '"><div class="sec-h"><h2>' + esc(s.title) + '</h2>' +
-      ((s['for'] || []).indexOf('base') >= 0 ? '' : '<span class="who">' + esc((s['for'] || []).map(function(r){ return (DATA.role_names || {})[r] || r; }).join(', ')) + '</span>') +
       '</div>' + (s.intro ? '<p class="sec-intro">' + esc(s.intro) + '</p>' : '') + '<div class="groups">' + gh + '</div></section>';
   });
   document.getElementById('list').innerHTML = any ? out : '<p class="empty">Ничего не нашлось. Попробуйте другое слово.</p>';
