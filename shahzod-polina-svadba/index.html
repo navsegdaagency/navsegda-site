@@ -239,7 +239,29 @@ header.hero+section{padding-top:230px;background:linear-gradient(180deg,#320406 
 </div></section>
 
 <section class="cta"><div class="wrap">
- <div class="sc rev">навсегда</div>
+ <div class="eyebrow rev" style="margin-top:8px">Калькулятор</div>
+ <h2 class="stitle rev">Сколько нужно <em>алкоголя</em></h2>
+ <p class="lead rev">Ориентир на свадьбу в 6–7 часов. Поменяйте число гостей и доли — расчёт обновится сам. Запас 10% уже заложен.</p>
+ <div class="est rev" style="margin-top:20px;padding:20px">
+  <div id="alc" style="display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
+   <label>Гостей<br><input type="number" id="a_g" value="75" min="1" style="width:100%;padding:8px;border-radius:10px;border:1px solid rgba(128,128,128,.4);font:inherit"></label>
+   <label>Пьют вино, %<br><input type="number" id="a_w" value="50" min="0" max="100" style="width:100%;padding:8px;border-radius:10px;border:1px solid rgba(128,128,128,.4);font:inherit"></label>
+   <label>Пьют крепкое, %<br><input type="number" id="a_s" value="35" min="0" max="100" style="width:100%;padding:8px;border-radius:10px;border:1px solid rgba(128,128,128,.4);font:inherit"></label>
+   <label>Часов праздника<br><input type="number" id="a_h" value="7" min="1" max="12" style="width:100%;padding:8px;border-radius:10px;border:1px solid rgba(128,128,128,.4);font:inherit"></label>
+  </div>
+  <div class="es" style="margin-top:16px"><table><tbody id="a_out"></tbody></table></div>
+  <p class="note" style="margin-top:10px">Нормы на гостя за 7 часов: шампанское — бутылка на четверых (велком и тосты), вино — бутылка на двоих пьющих, крепкое — бутылка 0,5 л на троих пьющих, безалкогольное — литр, вода — пол-литра. Цены за бутылку — средние, поменяйте под свой выбор.</p>
+ </div>
+<script>(function(){
+function v(id){var x=parseFloat(document.getElementById(id).value);return isNaN(x)?0:x}
+var P={ch:1200,wi:1000,st:1500,sf:150,wa:80};
+function r(){var g=v('a_g'),k=v('a_h')/7*1.1,w=g*v('a_w')/100,s=g*v('a_s')/100;
+var it=[['Шампанское 0,75 л',Math.ceil(g/4*k),P.ch,'бут.'],['Вино 0,75 л',Math.ceil(w/2*k),P.wi,'бут.'],['Крепкое 0,5 л',Math.ceil(s/3*k),P.st,'бут.'],['Соки и морсы',Math.ceil(g*1*k),P.sf,'л'],['Вода',Math.ceil(g*0.5*k),P.wa,'л']];
+var h='',t=0;it.forEach(function(a){var c=a[1]*a[2];t+=c;h+='<tr class="ri"><td class="nm">'+a[0]+'</td><td class="pr">'+a[1]+' '+a[3]+'</td><td class="pr">≈ '+c.toLocaleString('ru-RU')+' ₽</td></tr>'});
+h+='<tr class="ri"><td class="nm"><b>Итого, ориентир</b></td><td></td><td class="pr"><b>≈ '+t.toLocaleString('ru-RU')+' ₽</b></td></tr>';
+document.getElementById('a_out').innerHTML=h}
+['a_g','a_w','a_s','a_h'].forEach(function(id){document.getElementById(id).addEventListener('input',r)});r();})();</script>
+ <div style="height:56px"></div> <div class="sc rev">навсегда</div>
  <h2 class="stitle rev">Лес или вода?</h2>
  <p class="note rev" style="max-width:540px;margin:14px auto 0">Июньские субботы разбирают первыми. Напишите, какая площадка ближе, — покажем её вживую и подтвердим 19 июня.</p>
  <div class="btns rev"><a class="btn w1" href="tel:+79585410041">Позвонить · +7 958 541-00-41</a><a class="btn g" href="https://wa.me/79150907290">WhatsApp</a><a class="btn o" href="https://t.me/navsegda_agency">Telegram</a></div>
