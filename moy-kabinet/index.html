@@ -86,6 +86,18 @@ ol,ul{list-style:none;margin:0;padding:0}
 .vn{background:var(--surface2);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
 .vn b{font-size:15.5px}
 .vn .n a{text-decoration:underline;text-underline-offset:3px}
+.wk{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:14px}
+.wk .grp{padding-bottom:10px}
+.tk{display:flex;flex-direction:column;gap:1px;padding:8px 0;border-top:1px solid var(--line)}
+.grp li:first-child .tk{border-top:0}
+.tk .d{font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.tk.late .d{color:#B42318;font-weight:600}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tk.late .d{color:#F08A80}}
+:root[data-theme="dark"] .tk.late .d{color:#F08A80}
+.tk:hover .t{color:var(--wine);text-decoration:underline;text-underline-offset:3px}
+.cnt{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 6px}
+.cnt span{background:var(--surface2);border-radius:999px;padding:4px 10px;font-size:12.5px;font-variant-numeric:tabular-nums}
+.more{font-size:13px;color:var(--muted);padding-top:6px}
 .sub-h{margin:18px 0 0;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .skel{height:120px;border-radius:16px;background:var(--surface2);margin-top:14px}
 @media (prefers-reduced-motion: no-preference){.grp{transition:border-color .15s}}
@@ -101,7 +113,7 @@ var LS = 'nsg-kab-key';
 var app = document.getElementById('app'), outBtn = document.getElementById('out');
 var KINDS = {doc:'Док', sheet:'Таблица', folder:'Папка', file:'Файл', site:'Сайт', bot:'Бот', app:'Сервис'};
 var MARKS = {doc:'Д', sheet:'Т', folder:'П', file:'Ф', site:'С', bot:'@', app:'↗'};
-var DATA = null, ROLE = 'all', QUERY = '', PICKS = null, KEY = '';
+var DATA = null, ROLE = 'all', QUERY = '', PICKS = null, KEY = '', ME = null;
 
 function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 function ls(k, v){ try{ if(v === undefined) return localStorage.getItem(k) || ''; if(v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); }catch(e){} return ''; }
@@ -164,6 +176,8 @@ function paint(){
   });
   var ph = picksHtml();
   if(ph){ out += ph; any = true; }
+  var wh = workHtml();
+  if(wh){ out = wh + out; any = true; }
   document.getElementById('list').innerHTML = any ? out : '<p class="empty">Ничего не нашлось. Попробуйте другое слово.</p>';
 }
 
@@ -204,6 +218,45 @@ function picksHtml(){
   return h + '</section>';
 }
 
+function wMatch(t){ return !QUERY || String(t || '').toLowerCase().indexOf(QUERY) >= 0; }
+function workHtml(){
+  if(!ME || (ROLE !== 'all' && ROLE !== 'work')) return '';
+  var tasks = ME.tasks.filter(function(t){ return wMatch(t.text); });
+  var prs = ME.projects.filter(function(p){ return wMatch(p.names + ' ' + p.venue); });
+  var deals = ME.deals.filter(function(d){ return wMatch(d.name + ' ' + d.stage); });
+  if(QUERY && !tasks.length && !prs.length && !deals.length) return '';
+  var late = ME.tasks.filter(function(t){ return t.late; }).length;
+  var h = '<section class="sec" id="s-work"><div class="sec-h"><h2>Моя работа</h2></div><p class="sec-intro">Задачи и сделки из amoCRM и ваши пары в работе. Обновляется при каждом открытии страницы.</p><div class="wk">';
+  if(ME.amo){
+    h += '<div class="grp"><h3>Задачи на сегодня' + (late ? ' · просрочено ' + late : '') + '</h3><ul>' +
+      (tasks.length ? tasks.slice(0, 15).map(function(t){
+        return '<li><a class="tk' + (t.late ? ' late' : '') + '" href="' + esc(t.url) + '" target="_blank" rel="noopener"><span class="d">' + (t.late ? 'просрочено · ' : 'до ') + esc(t.due) + '</span><span class="t">' + esc(t.text) + '</span></a></li>';
+      }).join('') : '<li class="n" style="padding:8px 0">На сегодня задач нет</li>') + '</ul>' +
+      (tasks.length > 15 ? '<p class="more">Ещё ' + (tasks.length - 15) + ' - в amoCRM</p>' : '') + '</div>';
+    h += '<div class="grp"><h3>Мои сделки</h3><div class="cnt">' + ME.stages.slice(0, 8).map(function(x){ return '<span>' + esc(x.stage) + ' · ' + x.n + '</span>'; }).join('') + '</div><ul>' +
+      deals.slice(0, 10).map(function(d){
+        return '<li><a class="tk" href="' + esc(d.url) + '" target="_blank" rel="noopener"><span class="d">' + esc(d.stage) + ' · ' + esc(d.updated) + '</span><span class="t">' + esc(d.name) + (d.price ? ' · ' + money(d.price) : '') + '</span></a></li>';
+      }).join('') + '</ul></div>';
+  }
+  h += '<div class="grp"><h3>Мои пары в работе</h3><ul>' + (prs.length ? prs.map(function(p){
+    return '<li><a class="tk" href="' + esc(p.url) + '" target="_blank" rel="noopener"><span class="d">' + esc(p.date) + ' · ' + esc(p.stage) + '</span><span class="t">' + esc(p.names) + (p.venue ? ' · ' + esc(p.venue) : '') + '</span></a></li>';
+  }).join('') : '<li class="n" style="padding:8px 0">Пока нет пар, где вы реализатор или менеджер</li>') + '</ul></div>';
+  return h + '</div></section>';
+}
+
+function loadMe(){
+  fetch(API + '/api/kab/me', {headers:{'X-Kab-Key':KEY}, cache:'no-store'}).then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
+    if(!d) return;
+    ME = d;
+    var chips = app.querySelector('.chips');
+    if(chips){
+      var b = document.createElement('button'); b.className = 'chip'; b.type = 'button'; b.setAttribute('data-r', 'work'); b.setAttribute('aria-pressed', 'false'); b.textContent = 'Моя работа';
+      chips.insertBefore(b, chips.children[1] || null); bindChips();
+    }
+    paint();
+  }, function(){});
+}
+
 function loadPicks(){
   fetch(API + '/api/kab/picks', {headers:{'X-Kab-Key':KEY}, cache:'no-store'}).then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
     if(!d) return;
@@ -237,6 +290,7 @@ function show(d){
     else prompt('Скопируйте ссылку', t);
   };
   paint();
+  loadMe();
   loadPicks();
 }
 
