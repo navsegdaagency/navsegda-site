@@ -131,8 +131,32 @@
     if (b && b.form) remember(b.form); else if (b) remember(b.closest('form'));
   }, true);
 
+  // 10.11.2026: одна заявка уходила дважды (Валуево 06.11 — два POST с разницей 3,7 с, две сделки).
+  // Пока та же заявка в пути или уже принята (2 минуты) — повторно не шлём, отдаём форме «ок».
+  // Если отправка не удалась, метку снимаем, чтобы человек мог отправить ещё раз.
+  var inflight = {};
+  function dupKey(b) { var s = String(b || ''), h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return 'nsg-lead-' + h; }
+  function sentAt(k) { try { return +sessionStorage.getItem(k) || 0; } catch (x) { return 0; } }
+  function markSent(k) { try { sessionStorage.setItem(k, String(Date.now())); } catch (x) {} }
+  function fakeOk() { return Promise.resolve(new Response('{"ok":true,"dup":true}', { status: 200, headers: { 'Content-Type': 'application/json' } })); }
+
   var of = window.fetch;
   if (of) window.fetch = function (u, o) {
+    var lead = String(u).indexOf('site-lead') > -1 && o && typeof o.body === 'string' && window.Response;
+    if (lead) {
+      var dk = dupKey(o.body);
+      if (inflight[dk] || Date.now() - sentAt(dk) < 120000) return fakeOk();
+      inflight[dk] = 1;
+      return send(u, o).then(function (r) {
+        delete inflight[dk];
+        if (r && r.ok) markSent(dk);
+        return r;
+      }, function (e) { delete inflight[dk]; throw e; });
+    }
+    return send(u, o);
+  };
+
+  function send(u, o) {
     try {
       if (String(u).indexOf('site-lead') > -1 && o && typeof o.body === 'string') {
         var b = JSON.parse(o.body), fresh = Date.now() - lastAt < 60000;
@@ -149,8 +173,8 @@
         }
       }
     } catch (x) {}
-    return of.call(this, u, o);
-  };
+    return of.call(window, u, o);
+  }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { scan(); }); else scan();
   // формы, которые появляются позже (модальные окна, шторки)
