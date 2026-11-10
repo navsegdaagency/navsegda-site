@@ -72,6 +72,21 @@ ol,ul{list-style:none;margin:0;padding:0}
 .btn{border:0;border-radius:12px;background:var(--bordo);color:var(--cream);padding:12px 16px;font-weight:600;cursor:pointer}
 .err{color:#B42318;font-size:14px}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .err{color:#F08A80}}
+.pk{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.pk-h{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+.pk-h b{font-size:17px}
+.pk-m{font-size:13.5px;color:var(--muted);font-variant-numeric:tabular-nums}
+.pk-v{display:flex;flex-direction:column;gap:3px;font-size:14px;border-top:1px solid var(--line);padding-top:8px}
+.pk-v span small{color:var(--muted)}
+.pk-v .hit{background:var(--cream);border-radius:4px;padding:0 3px}
+.heart{color:var(--wine);font-weight:700}
+.pk-a{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
+.pk-a a,.pk-a button{border:1px solid var(--line);background:var(--surface2);border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer}
+.pk-a a:first-child{background:var(--bordo);color:var(--cream);border-color:var(--bordo)}
+.vn{background:var(--surface2);border-radius:14px;padding:12px 14px;display:flex;flex-direction:column;gap:4px}
+.vn b{font-size:15.5px}
+.vn .n a{text-decoration:underline;text-underline-offset:3px}
+.sub-h{margin:18px 0 0;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
 .skel{height:120px;border-radius:16px;background:var(--surface2);margin-top:14px}
 @media (prefers-reduced-motion: no-preference){.grp{transition:border-color .15s}}
 </style>
@@ -86,7 +101,7 @@ var LS = 'nsg-kab-key';
 var app = document.getElementById('app'), outBtn = document.getElementById('out');
 var KINDS = {doc:'Док', sheet:'Таблица', folder:'Папка', file:'Файл', site:'Сайт', bot:'Бот', app:'Сервис'};
 var MARKS = {doc:'Д', sheet:'Т', folder:'П', file:'Ф', site:'С', bot:'@', app:'↗'};
-var DATA = null, ROLE = 'all', QUERY = '';
+var DATA = null, ROLE = 'all', QUERY = '', PICKS = null, KEY = '';
 
 function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 function ls(k, v){ try{ if(v === undefined) return localStorage.getItem(k) || ''; if(v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); }catch(e){} return ''; }
@@ -113,7 +128,7 @@ function gate(msg){
   document.getElementById('g').onsubmit = function(e){
     e.preventDefault(); var v = document.getElementById('k').value.trim(); if(!v) return;
     var b = e.target.querySelector('button'); b.disabled = true; b.textContent = 'Проверяем...';
-    load(v).then(function(d){ ls(LS, v); show(d); }, function(err){ gate(err.message); });
+    load(v).then(function(d){ ls(LS, v); KEY = v; show(d); }, function(err){ gate(err.message); });
   };
 }
 
@@ -147,7 +162,59 @@ function paint(){
     out += '<section class="sec" id="s-' + esc(s.id) + '"><div class="sec-h"><h2>' + esc(s.title) + '</h2>' +
       '</div>' + (s.intro ? '<p class="sec-intro">' + esc(s.intro) + '</p>' : '') + '<div class="groups">' + gh + '</div></section>';
   });
+  var ph = picksHtml();
+  if(ph){ out += ph; any = true; }
   document.getElementById('list').innerHTML = any ? out : '<p class="empty">Ничего не нашлось. Попробуйте другое слово.</p>';
+}
+
+function money(n){ n = +n || 0; if(!n) return ''; return n >= 1e6 ? (Math.round(n / 1e5) / 10 + ' млн').replace('.', ',') : Math.round(n / 1000) + ' тыс.'; }
+function pickText(p){
+  return [p.client, p.lead_id, p.date, p.mgr].concat(p.venues.map(function(v){ return v.real + ' ' + v.code; })).join(' ').toLowerCase();
+}
+function venueHit(v){ return QUERY && (v.real + ' ' + v.code).toLowerCase().indexOf(QUERY) >= 0; }
+function picksHtml(){
+  if(!PICKS || (ROLE !== 'all' && ROLE !== 'picks')) return '';
+  var list = PICKS.picks.filter(function(p){ return !QUERY || pickText(p).indexOf(QUERY) >= 0; });
+  var vs = QUERY.length >= 2 ? PICKS.venues.filter(function(v){ return (v.real + ' ' + v.code + ' ' + v.area + ' ' + v.loc).toLowerCase().indexOf(QUERY) >= 0; }).slice(0, 24) : [];
+  if(QUERY && !list.length && !vs.length) return '';
+  var h = '<section class="sec" id="s-picks"><div class="sec-h"><h2>Подборки площадок</h2></div>' +
+    '<p class="sec-intro">Все подборки, которые ушли клиентам в Telegram. Ищите по имени клиента, номеру сделки или названию площадки. ' +
+    '<a href="' + esc(PICKS.admin) + '" target="_blank" rel="noopener" style="color:var(--wine);text-decoration:underline">Создать новую подборку</a></p>';
+  if(vs.length){
+    h += '<p class="sub-h">Площадки по запросу</p><div class="groups">' + vs.map(function(v){
+      var inp = PICKS.picks.filter(function(p){ return p.venues.some(function(x){ return x.id === v.id; }); });
+      return '<div class="vn"><b>' + esc(v.real) + '</b><span class="n">' + esc([v.kind, v.area, v.cap ? 'до ' + v.cap + ' гостей' : ''].filter(Boolean).join(' · ')) + '</span>' +
+        (v.loc ? '<span class="n">' + esc(v.loc) + '</span>' : '') +
+        '<span class="n">В подборках: ' + (inp.length ? inp.map(function(p){ return '<a href="' + esc(p.web) + '" target="_blank" rel="noopener">' + esc(p.client) + '</a>'; }).join(', ') : 'пока нет') + '</span></div>';
+    }).join('') + '</div>';
+  }
+  if(list.length){
+    h += (vs.length ? '<p class="sub-h">Подборки клиентам</p>' : '') + '<div class="groups">' + list.map(function(p){
+      var meta = [p.date, p.guests ? p.guests + ' гостей' : '', money(p.budget)].filter(Boolean).join(' · ');
+      return '<div class="pk"><div class="pk-h"><b>' + esc(p.client) + '</b><span class="pk-m">от ' + esc(p.created) + '</span></div>' +
+        (meta ? '<span class="pk-m">' + esc(meta) + '</span>' : '') +
+        '<div class="pk-v">' + p.venues.map(function(v){
+          return '<span' + (venueHit(v) ? ' class="hit"' : '') + '>' + (v.like ? '<span class="heart" title="Понравилась клиенту">♥ </span>' : '') + esc(v.real) + (v.area ? ' <small>' + esc(v.area) + '</small>' : '') + '</span>';
+        }).join('') + '</div>' +
+        '<div class="pk-a"><a href="' + esc(p.web) + '" target="_blank" rel="noopener">Открыть подборку</a>' +
+        '<button type="button" data-copy="' + esc(p.tg) + '">Ссылка клиенту</button>' +
+        (p.amo ? '<a href="' + esc(p.amo) + '" target="_blank" rel="noopener">Сделка ' + esc(p.lead_id) + '</a>' : '') + '</div></div>';
+    }).join('') + '</div>';
+  }
+  return h + '</section>';
+}
+
+function loadPicks(){
+  fetch(API + '/api/kab/picks', {headers:{'X-Kab-Key':KEY}, cache:'no-store'}).then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
+    if(!d) return;
+    PICKS = d;
+    var chips = app.querySelector('.chips');
+    if(chips){
+      var b = document.createElement('button'); b.className = 'chip'; b.type = 'button'; b.setAttribute('data-r', 'picks'); b.setAttribute('aria-pressed', 'false'); b.textContent = 'Подборки площадок';
+      chips.appendChild(b); bindChips();
+    }
+    paint();
+  }, function(){});
 }
 
 function show(d){
@@ -157,10 +224,23 @@ function show(d){
     secs.map(function(s){ return '<button class="chip" type="button" data-r="' + esc(s.id) + '" aria-pressed="false">' + esc(s.title) + '</button>'; }).join('');
   var hello = d.name ? esc(d.name) + ', ваш кабинет' : 'Ваш кабинет';
   app.innerHTML = '<h1>' + hello + '</h1><p class="lead">Ссылки, таблицы и обучение по направлениям. «Обучение» читать по порядку - сверху вниз.</p>' +
-    '<div class="tools">' + (secs.length > 1 ? '<div class="chips" role="group" aria-label="Направления">' + chips + '</div>' : '') +
-    '<input class="search" id="q" type="search" placeholder="Найти: смета, договор, площадки..." aria-label="Поиск по ссылкам"></div>' +
+    '<div class="tools"><div class="chips" role="group" aria-label="Направления">' + chips + '</div>' +
+    '<input class="search" id="q" type="search" placeholder="Найти: смета, договор, клиент, площадка..." aria-label="Поиск по ссылкам"></div>' +
     '<div id="list"></div>' +
     '<p class="foot">Если документ не открывается - нажмите в Google «Запросить доступ», Денис откроет. Нужна новая ссылка или раздел - напишите Денису.' + (d.updated ? ' Обновлено ' + esc(d.updated) + '.' : '') + '</p>';
+  bindChips();
+  document.getElementById('q').oninput = function(){ QUERY = this.value.trim().toLowerCase(); paint(); };
+  document.getElementById('list').onclick = function(e){
+    var b = e.target.closest('[data-copy]'); if(!b) return;
+    var t = b.getAttribute('data-copy'), done = function(){ b.textContent = 'Скопировано'; setTimeout(function(){ b.textContent = 'Ссылка клиенту'; }, 1600); };
+    if(navigator.clipboard) navigator.clipboard.writeText(t).then(done, function(){ prompt('Скопируйте ссылку', t); });
+    else prompt('Скопируйте ссылку', t);
+  };
+  paint();
+  loadPicks();
+}
+
+function bindChips(){
   var cs = app.querySelectorAll('.chip');
   for(var i = 0; i < cs.length; i++){
     cs[i].onclick = function(){
@@ -169,15 +249,13 @@ function show(d){
       paint(); window.scrollTo(0, 0);
     };
   }
-  document.getElementById('q').oninput = function(){ QUERY = this.value.trim().toLowerCase(); paint(); };
-  paint();
 }
 
 outBtn.onclick = function(){ ls(LS, null); gate(); };
 
 var key = ls(LS);
 if(!key) gate();
-else load(key).then(show, function(err){ if(err.status === 403) ls(LS, null); gate(err.status === 403 ? 'Ключ не подошёл или устарел - введите заново' : err.message); });
+else { KEY = key; load(key).then(show, function(err){ if(err.status === 403) ls(LS, null); gate(err.status === 403 ? 'Ключ не подошёл или устарел - введите заново' : err.message); }); }
 })();
 </script>
 </body>
