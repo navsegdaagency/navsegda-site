@@ -68,7 +68,8 @@ ol,ul{list-style:none;margin:0;padding:0}
 .gate{max-width:420px;margin:8vh auto 0;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:12px}
 .gate h1{font-size:34px}
 .gate label{font-size:13px;color:var(--muted)}
-.gate input{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:11px 12px;font-size:16px;width:100%}
+.gate input,#pwf input{border:1px solid var(--line);background:var(--bg);color:inherit;border-radius:10px;padding:11px 12px;font-size:16px;width:100%}
+#pwf{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px}
 .btn{border:0;border-radius:12px;background:var(--bordo);color:var(--cream);padding:12px 16px;font-weight:600;cursor:pointer}
 .err{color:#B42318;font-size:14px}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .err{color:#F08A80}}
@@ -118,11 +119,57 @@ var DATA = null, ROLE = 'all', QUERY = '', PICKS = null, KEY = '', ME = null;
 function esc(s){ return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
 function ls(k, v){ try{ if(v === undefined) return localStorage.getItem(k) || ''; if(v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); }catch(e){} return ''; }
 
-// ключ из ссылки #k=... сохраняем на этом устройстве и убираем из адреса
+// ключ из ссылки #k=... убираем из адреса. Если на устройстве уже вход под другим человеком -
+// не заменяем молча (11.11: ссылка Ольги, открытая у Дениса, подменила его вход), а спрашиваем.
+var PENDING = '';
 (function(){
   var m = /[#&]k=([^&]+)/.exec(location.hash || '');
-  if(m){ ls(LS, decodeURIComponent(m[1])); try{ history.replaceState(null, '', location.pathname); }catch(e){} }
+  if(!m) return;
+  var k = decodeURIComponent(m[1]);
+  try{ history.replaceState(null, '', location.pathname); }catch(e){}
+  var cur = ls(LS);
+  if(!cur || cur === k) ls(LS, k); else PENDING = k;
 })();
+
+function choose(curKey, newKey){
+  Promise.all([load(curKey).then(function(d){ return d.name || 'текущий пользователь'; }, function(){ return ''; }),
+               load(newKey).then(function(d){ return d.name || 'другой пользователь'; }, function(){ return ''; })]).then(function(n){
+    if(!n[1]){ PENDING = ''; start(); return; }            // ключ из ссылки не подошёл - остаёмся как были
+    if(!n[0]){ ls(LS, newKey); PENDING = ''; start(); return; }
+    app.innerHTML = '<div class="gate"><h1>Чей это кабинет?</h1><p class="lead" style="margin:0">На этом устройстве уже вход: <b>' + esc(n[0]) + '</b>. Ссылка, которую вы открыли, - для <b>' + esc(n[1]) + '</b>.</p>' +
+      '<button class="btn" type="button" id="stay">Остаться: ' + esc(n[0]) + '</button>' +
+      '<button class="btn" type="button" id="swap" style="background:transparent;color:inherit;box-shadow:inset 0 0 0 1px currentColor">Войти как ' + esc(n[1]) + '</button>' +
+      '<p class="lead" style="margin:0;font-size:13px">Ссылку для входа сотрудника открывайте только на его телефоне.</p></div>';
+    document.getElementById('stay').onclick = function(){ PENDING = ''; start(); };
+    document.getElementById('swap').onclick = function(){ ls(LS, newKey); PENDING = ''; start(); };
+  });
+}
+
+function login(pw){
+  return fetch(API + '/api/kab/login', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({password:pw}), cache:'no-store'}).then(function(r){
+    return r.json().then(function(j){ if(!r.ok){ var e = new Error((j && j.detail) || ('Ошибка ' + r.status)); e.status = r.status; throw e; } return j.key; });
+  }, function(){ throw new Error('Нет связи с сервером. Если включён VPN - выключите его и обновите страницу.'); });
+}
+
+function pwForm(){
+  var box = document.getElementById('pwbox'); if(!box) return;
+  if(box.innerHTML){ box.innerHTML = ''; return; }
+  box.innerHTML = '<form id="pwf" style="display:grid;gap:8px;max-width:360px;margin:6px 0 14px">' +
+    '<input id="pw1" type="password" autocomplete="new-password" placeholder="Новый пароль, от 8 символов" required>' +
+    '<input id="pw2" type="password" autocomplete="new-password" placeholder="Повторите пароль" required>' +
+    '<button class="btn" type="submit">Сохранить пароль</button><div id="pwmsg" class="lead" style="margin:0;font-size:13px"></div></form>';
+  document.getElementById('pwf').onsubmit = function(e){
+    e.preventDefault();
+    var a = document.getElementById('pw1').value, b2 = document.getElementById('pw2').value, msg = document.getElementById('pwmsg');
+    if(a.length < 8){ msg.textContent = 'Пароль - от 8 символов'; return; }
+    if(a !== b2){ msg.textContent = 'Пароли не совпадают'; return; }
+    var btn = e.target.querySelector('button'); btn.disabled = true;
+    fetch(API + '/api/kab/keys/me/password', {method:'POST', headers:{'Content-Type':'application/json', 'X-Kab-Key':KEY}, body:JSON.stringify({password:a}), cache:'no-store'})
+      .then(function(r){ return r.json().then(function(j){ if(!r.ok) throw new Error((j && j.detail) || ('Ошибка ' + r.status)); return j; }); })
+      .then(function(j){ box.innerHTML = '<p class="lead" style="margin:6px 0 14px">✅ Пароль сохранён. Теперь на любом устройстве входите этим паролем.</p>'; },
+            function(err){ msg.textContent = err.message === 'Failed to fetch' ? 'Нет связи с сервером' : err.message; btn.disabled = false; });
+  };
+}
 
 function load(key){
   return fetch(API + '/api/kab/hub', {headers:{'X-Kab-Key':key}, cache:'no-store'}).then(function(r){
@@ -136,11 +183,15 @@ function gate(msg){
   outBtn.hidden = true;
   app.innerHTML = '<form class="gate" id="g"><h1>Мой кабинет</h1><p class="lead" style="margin:0">Все важные ссылки, таблицы и обучение по вашему направлению. Ключ выдаёт Денис, он сохранится на этом устройстве.</p>' +
     (msg ? '<div class="err">' + esc(msg) + '</div>' : '') +
-    '<label for="k">Личный ключ</label><input id="k" type="password" autocomplete="current-password" required><button class="btn" type="submit">Войти</button></form>';
+    '<label for="k">Пароль или ключ</label><input id="k" type="password" autocomplete="current-password" required><button class="btn" type="submit">Войти</button>' +
+    '<p class="lead" style="margin:0;font-size:13px">Первый раз - войдите по ссылке от Дениса, потом задайте свой пароль кнопкой «Сменить пароль».</p></form>';
   document.getElementById('g').onsubmit = function(e){
     e.preventDefault(); var v = document.getElementById('k').value.trim(); if(!v) return;
     var b = e.target.querySelector('button'); b.disabled = true; b.textContent = 'Проверяем...';
-    load(v).then(function(d){ ls(LS, v); KEY = v; show(d); }, function(err){ gate(err.message); });
+    var isKey = /^kp_/.test(v) || v.length > 30;
+    (isKey ? Promise.resolve(v) : login(v)).then(function(k){
+      return load(k).then(function(d){ ls(LS, k); KEY = k; show(d); });
+    }).catch(function(err){ gate(err.status === 403 ? (isKey ? 'Ключ не подошёл' : 'Неверный пароль') : err.message); });
   };
 }
 
@@ -276,12 +327,14 @@ function show(d){
   var chips = '<button class="chip" type="button" data-r="all" aria-pressed="true">Всё</button>' +
     secs.map(function(s){ return '<button class="chip" type="button" data-r="' + esc(s.id) + '" aria-pressed="false">' + esc(s.title) + '</button>'; }).join('');
   var hello = d.name ? esc(d.name) + ', ваш кабинет' : 'Ваш кабинет';
-  app.innerHTML = '<h1>' + hello + '</h1><p class="lead">Ссылки, таблицы и обучение по направлениям. «Обучение» читать по порядку - сверху вниз.</p>' +
+  app.innerHTML = '<h1>' + hello + '</h1>' + (d.name ? '<p class="lead" style="margin:-6px 0 10px;font-size:13px">Вы вошли как <b>' + esc(d.name) + '</b>. <a href="#" id="notme">Это не я - войти своим ключом</a> · <a href="#" id="pwlink">Сменить пароль</a></p><div id="pwbox"></div>' : '') + '<p class="lead">Ссылки, таблицы и обучение по направлениям. «Обучение» читать по порядку - сверху вниз.</p>' +
     '<div class="tools"><div class="chips" role="group" aria-label="Направления">' + chips + '</div>' +
     '<input class="search" id="q" type="search" placeholder="Найти: смета, договор, клиент, площадка..." aria-label="Поиск по ссылкам"></div>' +
     '<div id="list"></div>' +
     '<p class="foot">Если документ не открывается - нажмите в Google «Запросить доступ», Денис откроет. Нужна новая ссылка или раздел - напишите Денису.' + (d.updated ? ' Обновлено ' + esc(d.updated) + '.' : '') + '</p>';
   bindChips();
+  var pl = document.getElementById('pwlink'); if(pl) pl.onclick = function(e){ e.preventDefault(); pwForm(); };
+  var nm = document.getElementById('notme'); if(nm) nm.onclick = function(e){ e.preventDefault(); ls(LS, null); KEY = ''; gate('Введите свой пароль или откройте свою ссылку для входа'); };
   document.getElementById('q').oninput = function(){ QUERY = this.value.trim().toLowerCase(); paint(); };
   document.getElementById('list').onclick = function(e){
     var b = e.target.closest('[data-copy]'); if(!b) return;
@@ -307,9 +360,12 @@ function bindChips(){
 
 outBtn.onclick = function(){ ls(LS, null); gate(); };
 
-var key = ls(LS);
-if(!key) gate();
-else { KEY = key; load(key).then(show, function(err){ if(err.status === 403) ls(LS, null); gate(err.status === 403 ? 'Ключ не подошёл или устарел - введите заново' : err.message); }); }
+function start(){
+  var key = ls(LS);
+  if(!key){ gate(); return; }
+  KEY = key; load(key).then(show, function(err){ if(err.status === 403) ls(LS, null); gate(err.status === 403 ? 'Ключ не подошёл или устарел - введите заново' : err.message); });
+}
+if(PENDING) choose(ls(LS), PENDING); else start();
 })();
 </script>
 </body>
