@@ -1,6 +1,6 @@
 /* НАВСЕГДА · бриф сайта-приглашения (свадьба / корпоратив).
    Вид брифа: <body data-kind="svadba|korporativ">. Ответы → /api/kab/invite-brief → Google Таблица «Брифы сайтов-приглашений» (без amoCRM).
-   Префилл: ?name=&groom=&company=&date=&guests=&lead=<id сделки> */
+   Префилл: ?name=&groom=&company=&date=&guests=&lead=<id сделки>&p=<проект кабинета> */
 (function(){
 var KIND=document.body.getAttribute('data-kind')==='korporativ'?'korporativ':'svadba';
 var ENDPOINT='https://109-68-213-160.sslip.io/api/kab/invite-brief'; // → Google Таблица, не amoCRM
@@ -105,7 +105,7 @@ var A={},cur=-1;
 try{A=JSON.parse(localStorage.getItem(KEY)||'{}')||{}}catch(e){A={}}
 var HAD=Object.keys(A).length>0;
 var P=new URLSearchParams(location.search);
-['name','groom','company','date','guests','lead'].forEach(function(k){if(P.get(k)&&!A[k])A[k]=P.get(k).slice(0,120)});
+['name','groom','company','date','guests','lead','p'].forEach(function(k){if(P.get(k)&&!A[k])A[k]=P.get(k).slice(0,120)});
 var $=function(i){return document.getElementById(i)};
 function save(){try{localStorage.setItem(KEY,JSON.stringify(A));$('saved').textContent='Ответы сохраняются на этом устройстве'}catch(e){}}
 function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
@@ -170,7 +170,7 @@ function submit(){
  if(!$('ok').checked){$('okL').classList.add('bad');$('okL').scrollIntoView({block:'center',behavior:'smooth'});return}
  var btn=$('next');btn.disabled=true;btn.textContent='Отправляем…';
  var text=summary();
- var body={kind:KIND,answers:answers(),lead:A.lead||'',_hp:$('hp').value||''};
+ var body={kind:KIND,answers:answers(),lead:A.lead||'',p:A.p||'',_hp:$('hp').value||''};
  var wa='https://wa.me/79150907290?text='+encodeURIComponent(text.slice(0,3500));
  function fin(ok){$('steps').style.display='none';$('nav').style.display='none';$('done').style.display='';$('bar').style.width='100%';$('stepLbl').textContent='Готово';
   if(!ok){$('doneTxt').textContent='Сервер не подтвердил получение. Чтобы ответы точно дошли, отправьте их нам в WhatsApp одной кнопкой: текст уже собран.';var a=document.querySelector('#done .btns a');a.href=wa;a.textContent='Отправить ответы в WhatsApp'}
