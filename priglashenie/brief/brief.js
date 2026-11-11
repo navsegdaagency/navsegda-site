@@ -1,9 +1,9 @@
 /* НАВСЕГДА · бриф сайта-приглашения (свадьба / корпоратив).
-   Вид брифа: <body data-kind="svadba|korporativ">. Ответы → /site-lead (amoCRM + Telegram).
+   Вид брифа: <body data-kind="svadba|korporativ">. Ответы → /api/kab/invite-brief → Google Таблица «Брифы сайтов-приглашений» (без amoCRM).
    Префилл: ?name=&groom=&company=&date=&guests=&lead=<id сделки> */
 (function(){
 var KIND=document.body.getAttribute('data-kind')==='korporativ'?'korporativ':'svadba';
-var ENDPOINT='https://109-68-213-160.sslip.io/site-lead';
+var ENDPOINT='https://109-68-213-160.sslip.io/api/kab/invite-brief'; // → Google Таблица, не amoCRM
 var KEY='nsg_invite_brief_'+KIND+'_v1';
 var COLORS=[['Белый и айвори','#f6f1e6'],['Пудровый','#e8c4bf'],['Персик','#f2c7a5'],['Шампань и золото','#d6b07b'],['Зелень и шалфей','#8fa58a'],['Оливка','#6b7046'],['Голубой и синий','#7f9fc0'],['Бордо и марсала','#7a1c22'],['Терракота','#b5643f'],['Лиловый','#a593bd'],['Графит и чёрный','#222222'],['Серебро','#c9ccd1']];
 // стиль: [название, описание, фон превью, цвет, шрифт, образец]
@@ -161,13 +161,16 @@ function summary(){
  S.forEach(function(s){var lines=[];s.q.forEach(function(q){var v=A[q.id];if(q.ty=='colors'&&A.colors_own)v=arr(v).concat([A.colors_own]);if(v==null||v===''||(Array.isArray(v)&&!v.length))return;lines.push('• '+q.l+': '+fmt(v))});if(lines.length){out.push('');out.push('【'+s.t.toUpperCase()+'】');out=out.concat(lines)}});
  return out.join('\n');
 }
+function answers(){
+ var r=[];
+ S.forEach(function(s){s.q.forEach(function(q){var v=A[q.id];if(q.ty=='colors'&&A.colors_own)v=arr(v).concat([A.colors_own]);r.push([q.l,v==null?'':fmt(v)])})});
+ return r;
+}
 function submit(){
  if(!$('ok').checked){$('okL').classList.add('bad');$('okL').scrollIntoView({block:'center',behavior:'smooth'});return}
  var btn=$('next');btn.disabled=true;btn.textContent='Отправляем…';
  var text=summary();
- var body={form:KIND==='korporativ'?'Бриф приглашения: корпоратив':'Бриф приглашения: свадьба',name:A.name||'',phone:A.phone||'',contact:A.phone||A.tg||'',date:A.date||'',guests:A.guests||'',message:text,_hp:$('hp').value||''};
- if(KIND==='korporativ'){body.company=A.company||'';body.event_type='Корпоратив'}else{body.partner_name=A.groom||''}
- ['utm_source','utm_medium','utm_campaign'].forEach(function(k){if(P.get(k))body[k]=P.get(k)});
+ var body={kind:KIND,answers:answers(),lead:A.lead||'',_hp:$('hp').value||''};
  var wa='https://wa.me/79150907290?text='+encodeURIComponent(text.slice(0,3500));
  function fin(ok){$('steps').style.display='none';$('nav').style.display='none';$('done').style.display='';$('bar').style.width='100%';$('stepLbl').textContent='Готово';
   if(!ok){$('doneTxt').textContent='Сервер не подтвердил получение. Чтобы ответы точно дошли, отправьте их нам в WhatsApp одной кнопкой: текст уже собран.';var a=document.querySelector('#done .btns a');a.href=wa;a.textContent='Отправить ответы в WhatsApp'}
