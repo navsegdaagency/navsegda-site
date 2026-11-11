@@ -137,6 +137,35 @@ section{padding:clamp(72px,12vw,130px) 0;position:relative}
 .foot{padding:40px 20px 60px;text-align:center;font:400 12.5px/1.6 var(--body);color:rgba(238,242,248,.42);border-top:1px solid var(--line)}
 .foot b{font:600 15px/1.4 var(--sans);letter-spacing:.24em;color:rgba(238,242,248,.8);display:block;margin-bottom:8px}
 
+/* ── новогоднее: северное сияние на обложке ── */
+.aur{position:absolute;inset:-20%;z-index:0;pointer-events:none;opacity:.55}
+.aur i{position:absolute;border-radius:50%;will-change:transform}
+.aur i:nth-child(1){left:5%;top:8%;width:70%;height:38%;background:radial-gradient(closest-side,rgba(64,170,255,.42),rgba(64,170,255,0));animation:aur1 18s ease-in-out infinite alternate}
+.aur i:nth-child(2){left:35%;top:2%;width:60%;height:34%;background:radial-gradient(closest-side,rgba(120,255,220,.22),rgba(120,255,220,0));animation:aur2 22s ease-in-out infinite alternate}
+.aur i:nth-child(3){left:-5%;top:22%;width:55%;height:30%;background:radial-gradient(closest-side,rgba(157,120,255,.24),rgba(157,120,255,0));animation:aur3 26s ease-in-out infinite alternate}
+@keyframes aur1{to{transform:translate3d(12%,6%,0) scale(1.15)}}
+@keyframes aur2{to{transform:translate3d(-14%,8%,0) scale(.9)}}
+@keyframes aur3{to{transform:translate3d(18%,-4%,0) scale(1.2)}}
+#gl{z-index:1}.fallback{z-index:1}
+/* ── гирлянда ── */
+.garl{position:absolute;z-index:2;left:0;right:0;top:calc(max(18px,env(safe-area-inset-top)) + 26px);height:46px;pointer-events:none}
+.garl svg{width:100%;height:100%;overflow:visible}
+.garl .wire{fill:none;stroke:rgba(201,209,220,.28);stroke-width:1}
+.garl .b{animation:blink 2.6s ease-in-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes blink{0%,100%{opacity:.35}50%{opacity:1}}
+/* ── снег ── */
+#snow{position:fixed;inset:0;width:100%;height:100%;z-index:40;pointer-events:none}
+/* ── снежинка у подписей разделов ── */
+.k::before{content:"";display:inline-block;width:12px;height:12px;margin:0 9px -1px 0;background:currentColor;opacity:.9;
+ -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M12 2v20M3.3 7l17.4 10M3.3 17L20.7 7M12 2l-2.5 2.5M12 2l2.5 2.5M12 22l-2.5-2.5M12 22l2.5-2.5M3.3 7l3.4.9M3.3 7l.9 3.4M20.7 17l-3.4-.9M20.7 17l-.9-3.4M3.3 17l.9-3.4M3.3 17l3.4-.9M20.7 7l-3.4.9M20.7 7l-.9 3.4'/%3E%3C/svg%3E") center/contain no-repeat;
+ mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.6' stroke-linecap='round'%3E%3Cpath d='M12 2v20M3.3 7l17.4 10M3.3 17L20.7 7M12 2l-2.5 2.5M12 2l2.5 2.5M12 22l-2.5-2.5M12 22l2.5-2.5M3.3 7l3.4.9M3.3 7l.9 3.4M20.7 17l-3.4-.9M20.7 17l-.9-3.4M3.3 17l.9-3.4M3.3 17l3.4-.9M20.7 7l-3.4.9M20.7 7l-.9 3.4'/%3E%3C/svg%3E") center/contain no-repeat}
+/* ── иней на карточках и сугроб внизу ── */
+.cd div,.facts div,.teaser,.coord{position:relative;overflow:hidden}
+.cd div::after,.teaser::after,.coord::after{content:"";position:absolute;left:0;right:0;top:0;height:10px;pointer-events:none;
+ background:radial-gradient(6px 5px at 8% 0,rgba(255,255,255,.55),transparent 70%),radial-gradient(9px 6px at 26% 0,rgba(255,255,255,.4),transparent 70%),radial-gradient(7px 5px at 47% 0,rgba(255,255,255,.5),transparent 70%),radial-gradient(10px 6px at 68% 0,rgba(255,255,255,.38),transparent 70%),radial-gradient(6px 5px at 88% 0,rgba(255,255,255,.5),transparent 70%)}
+.drift{display:block;width:100%;height:70px;margin-bottom:-1px}
+.foot{position:relative}
+@media (prefers-reduced-motion:reduce){.aur i,.garl .b{animation:none!important}#snow{display:none}}
 @media (min-width:860px){
  .hero-top{padding:0 40px}
  .split{display:grid;grid-template-columns:.85fr 1.15fr;gap:60px;align-items:start}
@@ -153,7 +182,9 @@ section{padding:clamp(72px,12vw,130px) 0;position:relative}
 
 <header class="hero" id="top">
  <div class="stick">
+  <div class="aur" aria-hidden="true"><i></i><i></i><i></i></div>
   <canvas id="gl" aria-hidden="true"></canvas>
+  <div class="garl" aria-hidden="true"><svg viewBox="0 0 100 46" preserveAspectRatio="none" style="position:absolute;inset:0"><polyline class="wire" vector-effect="non-scaling-stroke" points="0,10.0 1,10.0 2,10.0 3,10.0 4,11.5 5,13.0 6,14.5 7,15.9 8,17.3 9,18.7 10,19.9 11,21.2 12,22.3 13,23.3 14,24.3 15,25.2 16,25.9 17,26.6 18,27.1 19,27.5 20,27.8 21,28.0 22,28.0 23,27.9 24,27.7 25,27.4 26,26.9 27,26.3 28,25.6 29,24.8 30,23.9 31,22.9 32,21.8 33,20.7 34,19.4 35,18.1 36,16.7 37,15.3 38,13.9 39,12.4 40,10.9 41,10.6 42,12.1 43,13.6 44,15.0 45,16.5 46,17.8 47,19.2 48,20.4 49,21.6 50,22.7 51,23.7 52,24.7 53,25.5 54,26.2 55,26.8 56,27.3 57,27.6 58,27.9 59,28.0 60,28.0 61,27.8 62,27.6 63,27.2 64,26.7 65,26.1 66,25.3 67,24.5 68,23.5 69,22.5 70,21.4 71,20.2 72,18.9 73,17.6 74,16.2 75,14.8 76,13.3 77,11.8 78,10.3 79,11.2 80,12.7 81,14.2 82,15.6 83,17.0 84,18.4 85,19.7 86,20.9 87,22.1 88,23.1 89,24.1 90,25.0 91,25.8 92,26.5 93,27.0 94,27.4 95,27.7 96,27.9 97,28.0 98,28.0 99,28.0 100,28.0"/></svg><svg style="position:absolute;inset:0;width:100%;height:100%;overflow:visible"><g class="b" style="animation-delay:-0.0s"><circle cx="3.0%" cy="10.0" r="7" fill="#FFFFFF" opacity=".18"/><circle cx="3.0%" cy="10.0" r="2.6" fill="#FFFFFF"/></g><g class="b" style="animation-delay:-0.4s"><circle cx="9.7%" cy="19.6" r="7" fill="#9DBBFF" opacity=".18"/><circle cx="9.7%" cy="19.6" r="2.6" fill="#9DBBFF"/></g><g class="b" style="animation-delay:-0.7s"><circle cx="16.4%" cy="26.2" r="7" fill="#4D7CFF" opacity=".18"/><circle cx="16.4%" cy="26.2" r="2.6" fill="#4D7CFF"/></g><g class="b" style="animation-delay:-1.1s"><circle cx="23.1%" cy="27.9" r="7" fill="#C9D1DC" opacity=".18"/><circle cx="23.1%" cy="27.9" r="2.6" fill="#C9D1DC"/></g><g class="b" style="animation-delay:-1.5s"><circle cx="29.9%" cy="24.1" r="7" fill="#7FE8FF" opacity=".18"/><circle cx="29.9%" cy="24.1" r="2.6" fill="#7FE8FF"/></g><g class="b" style="animation-delay:-1.9s"><circle cx="36.6%" cy="15.9" r="7" fill="#FFFFFF" opacity=".18"/><circle cx="36.6%" cy="15.9" r="2.6" fill="#FFFFFF"/></g><g class="b" style="animation-delay:-2.2s"><circle cx="43.3%" cy="14.0" r="7" fill="#9DBBFF" opacity=".18"/><circle cx="43.3%" cy="14.0" r="2.6" fill="#9DBBFF"/></g><g class="b" style="animation-delay:-2.6s"><circle cx="50.0%" cy="22.7" r="7" fill="#4D7CFF" opacity=".18"/><circle cx="50.0%" cy="22.7" r="2.6" fill="#4D7CFF"/></g><g class="b" style="animation-delay:-0.4s"><circle cx="56.7%" cy="27.5" r="7" fill="#C9D1DC" opacity=".18"/><circle cx="56.7%" cy="27.5" r="2.6" fill="#C9D1DC"/></g><g class="b" style="animation-delay:-0.7s"><circle cx="63.4%" cy="27.0" r="7" fill="#7FE8FF" opacity=".18"/><circle cx="63.4%" cy="27.0" r="2.6" fill="#7FE8FF"/></g><g class="b" style="animation-delay:-1.1s"><circle cx="70.1%" cy="21.2" r="7" fill="#FFFFFF" opacity=".18"/><circle cx="70.1%" cy="21.2" r="2.6" fill="#FFFFFF"/></g><g class="b" style="animation-delay:-1.5s"><circle cx="76.9%" cy="12.0" r="7" fill="#9DBBFF" opacity=".18"/><circle cx="76.9%" cy="12.0" r="2.6" fill="#9DBBFF"/></g><g class="b" style="animation-delay:-1.8s"><circle cx="83.6%" cy="17.8" r="7" fill="#4D7CFF" opacity=".18"/><circle cx="83.6%" cy="17.8" r="2.6" fill="#4D7CFF"/></g><g class="b" style="animation-delay:-2.2s"><circle cx="90.3%" cy="25.2" r="7" fill="#C9D1DC" opacity=".18"/><circle cx="90.3%" cy="25.2" r="2.6" fill="#C9D1DC"/></g><g class="b" style="animation-delay:-2.6s"><circle cx="97.0%" cy="28.0" r="7" fill="#7FE8FF" opacity=".18"/><circle cx="97.0%" cy="28.0" r="2.6" fill="#7FE8FF"/></g></svg></div>
   <div class="fallback" aria-hidden="true"><svg viewBox="0 0 600 160"><defs><linearGradient id="fg" x1="0" x2="1"><stop offset="0" stop-color="#fff"/><stop offset=".6" stop-color="#9DBBFF"/><stop offset="1" stop-color="#C9D1DC"/></linearGradient></defs><text x="300" y="118" text-anchor="middle" font-family="SF Pro Display,system-ui,sans-serif" font-weight="700" font-size="132" letter-spacing="10" fill="url(#fg)">ONE DV</text></svg></div>
   <div class="hero-top"><b>DV Consulting</b><span>18 · 12 · 2026</span></div>
   <div class="cap" id="cap1">Разные города.</div>
@@ -252,6 +283,7 @@ section{padding:clamp(72px,12vw,130px) 0;position:relative}
 </div></section>
 </main>
 
+<svg class="drift" viewBox="0 0 1200 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70V38c60-14 120-20 190-8s120 18 200 4 150-26 240-16 140 22 220 10 170-24 250-6v48z" fill="rgba(238,242,248,.06)"/><path d="M0 70V50c80-10 150-12 230-2s160 8 250-2 170-14 260-4 160 10 240 2 140-8 220 0v26z" fill="rgba(238,242,248,.1)"/></svg>
 <footer class="foot"><b>ONE TEAM · ONE STORY · ONE DV</b>Приглашение подготовило агентство <a href="https://navseg-da.agency/event/" target="_blank" rel="noopener">НАВСЕГДА</a></footer>
 
 <script>
@@ -430,6 +462,59 @@ function frame(now, force){
 window.__ivFrame = function(sec){ start = performance.now() - sec * 1000; frame(performance.now(), true); };
 requestAnimationFrame(frame);
 }
+})();
+</script>
+<canvas id="snow" aria-hidden="true"></canvas>
+<script>
+(function(){
+'use strict';
+if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+var cv = document.getElementById('snow'), x = cv.getContext && cv.getContext('2d'); if(!x) return;
+var DPR = Math.min(window.devicePixelRatio || 1, 1.5), W = 0, H = 0, flakes = [], sprites = [];
+function sprite(sz, arms){
+ var c = document.createElement('canvas'), r = sz * DPR; c.width = c.height = Math.ceil(r * 2 + 4);
+ var g = c.getContext('2d'); g.translate(c.width / 2, c.height / 2);
+ var grad = g.createRadialGradient(0, 0, 0, 0, 0, r); grad.addColorStop(0, 'rgba(255,255,255,.95)'); grad.addColorStop(1, 'rgba(200,220,255,.0)');
+ if(!arms){ g.fillStyle = grad; g.beginPath(); g.arc(0, 0, r, 0, 6.283); g.fill(); return c; }
+ g.strokeStyle = 'rgba(240,246,255,.95)'; g.lineWidth = Math.max(1, r * .14); g.lineCap = 'round';
+ for(var i = 0; i < 6; i++){ g.save(); g.rotate(i * Math.PI / 3); g.beginPath(); g.moveTo(0, 0); g.lineTo(0, -r);
+  g.moveTo(0, -r * .55); g.lineTo(-r * .26, -r * .78); g.moveTo(0, -r * .55); g.lineTo(r * .26, -r * .78);
+  g.moveTo(0, -r * .3); g.lineTo(-r * .18, -r * .44); g.moveTo(0, -r * .3); g.lineTo(r * .18, -r * .44); g.stroke(); g.restore(); }
+ return c;
+}
+sprites = [sprite(2.2, false), sprite(3.2, false), sprite(6, true), sprite(8.5, true), sprite(11, true)];
+function edgeX(){ // крупные снежинки - только в полосах по краям (по 15% ширины, не меньше 46 px)
+ var band = Math.max(46, W * .15);
+ return Math.random() < .5 ? Math.random() * band : W - Math.random() * band;
+}
+function make(top){
+ var edge = Math.random() < .75, kind = edge ? (Math.random() < .55 ? 2 + ((Math.random() * 3) | 0) : (Math.random() < .5 ? 0 : 1)) : (Math.random() < .7 ? 0 : 1);
+ var px = edge ? edgeX() : Math.random() * W;
+ if(!edge && px > W * .2 && px < W * .8) kind = Math.random() < .8 ? 0 : 1;
+ return {x: px, y: top ? -20 - Math.random() * H * .2 : Math.random() * H, k: kind, v: (kind >= 2 ? .35 : .55) + Math.random() * .6,
+  a: (kind >= 2 ? .65 : .45) + Math.random() * .35, sw: Math.random() * 6.283, sp: .4 + Math.random() * .9, rot: Math.random() * 6.283, vr: (Math.random() - .5) * .01};
+}
+function size(){ W = innerWidth; H = innerHeight; cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR);
+ var want = W < 700 ? 46 : 90; while(flakes.length < want) flakes.push(make(false)); flakes.length = want; }
+size(); addEventListener('resize', size);
+var last = performance.now(), run = true;
+document.addEventListener('visibilitychange', function(){ run = !document.hidden; if(run){ last = performance.now(); requestAnimationFrame(loop); } });
+function loop(now){
+ if(!run) return;
+ var dt = Math.min(50, now - last) / 16.7; last = now;
+ x.setTransform(1, 0, 0, 1, 0, 0); x.clearRect(0, 0, cv.width, cv.height);
+ for(var i = 0; i < flakes.length; i++){
+  var f = flakes[i]; f.y += f.v * dt; f.sw += .012 * f.sp * dt; f.x += Math.sin(f.sw) * (f.k >= 2 ? .12 : .25) * dt; f.rot += f.vr * dt;
+  if(f.y > H + 20){ flakes[i] = make(true); continue; }
+  var sp = sprites[f.k], hw = sp.width / 2;
+  var mid = f.x > W * .2 && f.x < W * .8; x.globalAlpha = mid && f.k >= 2 ? f.a * .25 : f.a;
+  if(f.k >= 2){ x.setTransform(1, 0, 0, 1, 0, 0); x.translate(f.x * DPR, f.y * DPR); x.rotate(f.rot); x.drawImage(sp, -hw, -hw); }
+  else { x.setTransform(1, 0, 0, 1, 0, 0); x.drawImage(sp, f.x * DPR - hw, f.y * DPR - hw); }
+ }
+ requestAnimationFrame(loop);
+}
+requestAnimationFrame(loop);
+window.__ivSnow = function(n){ for(var i = 0; i < (n || 1); i++) loop(performance.now() + 16); };
 })();
 </script>
 <!-- Yandex.Metrika -->
