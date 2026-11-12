@@ -12,10 +12,13 @@
 <meta property="og:image" content="https://navseg-da.agency/i/dv-one-team-x7q4/img/og.jpg">
 <meta name="theme-color" content="#060A18">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/manrope-cyrillic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/fonts/fonts.css">
 <style>
+@font-face{font-family:'Manrope';font-style:normal;font-weight:300 700;font-display:swap;src:url(fonts/manrope-cyrillic.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
+@font-face{font-family:'Manrope';font-style:normal;font-weight:300 700;font-display:swap;src:url(fonts/manrope-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
 :root{--bg:#060A18;--bg2:#0A1124;--ink:#EEF2F8;--mut:rgba(238,242,248,.66);--blue:#4D7CFF;--ice:#9DBBFF;--silver:#C9D1DC;--line:rgba(201,209,220,.16);--ivory:#F4F1EA;--graphite:#1C1F26;
- --sans:'SF Pro Display',system-ui,-apple-system,'Helvetica Neue',sans-serif;--body:'TildaSans',system-ui,-apple-system,sans-serif}
+ --sans:'SF Pro Display',system-ui,-apple-system,'Helvetica Neue',sans-serif;--body:'Manrope',system-ui,-apple-system,sans-serif}
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;background:var(--bg)}
 body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
@@ -56,9 +59,9 @@ section{padding:clamp(72px,12vw,130px) 0;position:relative}
 @keyframes drip{0%{transform:translateX(-50%) scaleY(0);transform-origin:top}50%{transform:translateX(-50%) scaleY(1);transform-origin:top}100%{transform:translateX(-50%) scaleY(0);transform-origin:bottom}}
 
 /* ── письмо ── */
-.letter p.t{font:300 clamp(20px,5vw,28px)/1.5 var(--sans);color:rgba(238,242,248,.9);max-width:820px;margin:0 0 22px}
-.letter p.t:first-of-type{color:#fff;font-weight:400}
-.letter .sig{font:600 clamp(20px,5vw,26px)/1.3 var(--sans);letter-spacing:.04em;margin:30px 0 0}
+.letter p.t{font:500 clamp(19px,4.8vw,27px)/1.45 var(--body);letter-spacing:-.015em;color:rgba(238,242,248,.86);max-width:820px;margin:0 0 22px}
+.letter .k + p.t{color:#fff;font-weight:700;letter-spacing:-.02em}
+.letter .sig{font:700 clamp(20px,5vw,26px)/1.3 var(--body);letter-spacing:-.01em;margin:30px 0 0}
 .letter .sig span{color:var(--ice)}
 
 /* ── отсчёт ── */
@@ -203,9 +206,9 @@ section{padding:clamp(72px,12vw,130px) 0;position:relative}
 <main>
 <section class="letter" id="hello"><div class="w">
  <p class="k">DV Consulting приглашает тебя на Новый год</p>
- <p class="t rv">Мы - больше, чем просто коллеги. Мы - одна команда, объединённая общими целями, идеями и людьми.</p>
+ <p class="t rv">Мы&nbsp;- больше, чем просто коллеги. Мы&nbsp;- одна команда, объединённая общими целями, идеями и людьми.</p>
  <p class="t rv">В этот раз хочется немного больше, чем просто встретиться за пределами офиса. Хочется познакомиться ближе, обменяться историями, провести время вместе и почувствовать, что за каждым рабочим процессом стоят настоящие люди.</p>
- <p class="t rv">Неважно, где находится твой офис - в Москве или за тысячи километров от неё. В этот день мы все будем частью одной большой команды DV Consulting.</p>
+ <p class="t rv">Неважно, где находится твой офис&nbsp;- в Москве или за тысячи километров от неё. В этот день мы все будем частью одной большой команды DV&nbsp;Consulting.</p>
  <p class="sig rv">Разные города. Разные истории. <span>Одна команда.</span> 💙</p>
 </div></section>
 
@@ -216,7 +219,7 @@ section{padding:clamp(72px,12vw,130px) 0;position:relative}
 </div></section>
 
 <section id="programma" style="padding-top:0"><div class="w split">
- <div><p class="k">Программа</p><h2 class="h">Вечер <b>18 декабря</b></h2><p class="lead">Подробный тайминг пришлём ближе к дате - он появится здесь же, по этой ссылке.</p></div>
+ <div><p class="k">Программа</p><h2 class="h">Вечер <b>18 декабря</b></h2><p class="lead">Подробный тайминг пришлём ближе к дате&nbsp;- он появится здесь же, по этой ссылке.</p></div>
  <ol class="tl">
   <li class="rv"><time>17:00</time><b>Сбор гостей</b><p>Welcome, знакомство и первые общие фото.</p></li>
   <li class="rv"><time>18:00</time><b>Начало корпоратива</b><p>Ужин, программа вечера и танцы.</p></li>
@@ -241,14 +244,14 @@ section{padding:clamp(72px,12vw,130px) 0;position:relative}
 </div></section>
 
 <section id="dress" style="padding-top:0"><div class="w split">
- <div><p class="k">Dress code</p><h2 class="h">Evening / <b>Вечерний стиль</b></h2><p class="lead">Предлагаем выбрать элегантные вечерние образы, чтобы создать атмосферу особенного события. Вечерние платья, костюмы и эффектные детали - приветствуются! ✨</p></div>
+ <div><p class="k">Dress code</p><h2 class="h">Evening / <b>Вечерний стиль</b></h2><p class="lead">Предлагаем выбрать элегантные вечерние образы, чтобы создать атмосферу особенного события. Вечерние платья, костюмы и эффектные детали&nbsp;- приветствуются! ✨</p></div>
  <div class="facts dc">
   <div class="rv"><b>На второй день</b><p>Обязательно возьми удобную и тёплую одежду.</p></div>
  </div>
 </div></section>
 
 <section class="rs" id="anketa"><div class="w split">
- <div><p class="k">Анкета гостя</p><h2 class="h">Ответь <b>до 20 ноября</b></h2><p class="lead">Две минуты - и мы будем знать, кого ждать, кого везти из Москвы и где всех разместить. Изменить ответ можно в любой момент по этой же ссылке.</p></div>
+ <div><p class="k">Анкета гостя</p><h2 class="h">Ответь <b>до 20 ноября</b></h2><p class="lead">Две минуты&nbsp;- и мы будем знать, кого ждать, кого везти из Москвы и где всех разместить. Изменить ответ можно в любой момент по этой же ссылке.</p></div>
  <div class="card rv" id="box">
   <form class="f" id="f" novalidate>
    <label class="l">Имя и фамилия<input type="text" name="name" autocomplete="name" required placeholder="Анна Смирнова"></label>
