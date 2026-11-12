@@ -163,6 +163,7 @@ section{padding:clamp(72px,12vw,130px) 0;position:relative}
 .cd div,.facts div,.teaser,.coord{position:relative;overflow:hidden}
 .cd div::after,.teaser::after,.coord::after{content:"";position:absolute;left:0;right:0;top:0;height:10px;pointer-events:none;
  background:radial-gradient(6px 5px at 8% 0,rgba(255,255,255,.55),transparent 70%),radial-gradient(9px 6px at 26% 0,rgba(255,255,255,.4),transparent 70%),radial-gradient(7px 5px at 47% 0,rgba(255,255,255,.5),transparent 70%),radial-gradient(10px 6px at 68% 0,rgba(255,255,255,.38),transparent 70%),radial-gradient(6px 5px at 88% 0,rgba(255,255,255,.5),transparent 70%)}
+.facts.dc{margin-top:0;grid-template-columns:1fr!important}
 .drift{display:block;width:100%;height:70px;margin-bottom:-1px}
 .foot{position:relative}
 @media (prefers-reduced-motion:reduce){.aur i,.garl .b{animation:none!important}#snow{display:none}}
@@ -170,7 +171,7 @@ section{padding:clamp(72px,12vw,130px) 0;position:relative}
  .hero-top{padding:0 40px}
  .split{display:grid;grid-template-columns:.85fr 1.15fr;gap:60px;align-items:start}
  .gal{grid-template-columns:repeat(3,1fr)}.gal figure:first-child{grid-row:span 2}.gal figure:first-child img{aspect-ratio:auto}
- .facts{grid-template-columns:repeat(3,1fr)}
+ .facts{grid-template-columns:repeat(2,1fr)}
  .card{padding:34px 32px}
  .coord{grid-template-columns:1.3fr .7fr;align-items:center;padding:36px}
 }
@@ -218,7 +219,7 @@ section{padding:clamp(72px,12vw,130px) 0;position:relative}
  <div><p class="k">Программа</p><h2 class="h">Вечер <b>18 декабря</b></h2><p class="lead">Подробный тайминг пришлём ближе к дате - он появится здесь же, по этой ссылке.</p></div>
  <ol class="tl">
   <li class="rv"><time>17:00</time><b>Сбор гостей</b><p>Welcome, знакомство и первые общие фото.</p></li>
-  <li class="rv"><time>18:00</time><b>Начало корпоратива</b><p>Ужин, номинации вечера и танцы.</p></li>
+  <li class="rv"><time>18:00</time><b>Начало корпоратива</b><p>Ужин, программа вечера и танцы.</p></li>
   <li class="rv soft"><time>Второй день</time><b>Для тех, кто остаётся с ночёвкой</b><p>Подробности пришлём отдельно. Отметь в анкете, если остаёшься.</p></li>
  </ol>
 </div></section>
@@ -236,17 +237,14 @@ section{padding:clamp(72px,12vw,130px) 0;position:relative}
  <div class="facts">
   <div class="rv"><b>Трансфер</b><p>Из Москвы до площадки и обратно. Отметь в анкете, если поедешь с нами: время и место сбора пришлём ближе к дате.</p></div>
   <div class="rv"><b>Ночёвка</b><p>Проживание и второй день компания берёт на себя. Напиши в анкете, если остаёшься, - разместим всех.</p></div>
-  <div class="rv"><b>Из другого города</b><p>Укажи свой город в анкете - так мы поймём, кого встречать и где всех разместить.</p></div>
  </div>
 </div></section>
 
-<section id="nominacii" style="padding-top:0"><div class="w">
- <div class="teaser rv"><p class="k">Номинации вечера</p><h2 class="h">Скоро <b>голосование</b></h2><p class="lead" style="margin:0">Готовим номинации для команды. Голосование откроем на этом сайте ближе к празднику - следи за ссылкой.</p></div>
-</div></section>
-
 <section id="dress" style="padding-top:0"><div class="w split">
- <div><p class="k">Дресс-код</p><h2 class="h">Цвета <b>вечера</b></h2><p class="lead">Будем рады, если поддержишь палитру DV: в кадре это будет одна большая история.</p></div>
- <div class="sw rv"><div><i style="background:#1F3FAF"></i>синий</div><div><i style="background:#9DBBFF"></i>голубой</div><div><i style="background:linear-gradient(135deg,#E9EDF2,#AEB7C4)"></i>серебро</div><div><i style="background:#F4F1EA"></i>белый</div><div><i style="background:#1C1F26"></i>графит</div></div>
+ <div><p class="k">Dress code</p><h2 class="h">Evening / <b>Вечерний стиль</b></h2><p class="lead">Предлагаем выбрать элегантные вечерние образы, чтобы создать атмосферу особенного события. Вечерние платья, костюмы и эффектные детали - приветствуются! ✨</p></div>
+ <div class="facts dc">
+  <div class="rv"><b>На второй день</b><p>Обязательно возьми удобную и тёплую одежду.</p></div>
+ </div>
 </div></section>
 
 <section class="rs" id="anketa"><div class="w split">
@@ -256,13 +254,11 @@ section{padding:clamp(72px,12vw,130px) 0;position:relative}
    <label class="l">Имя и фамилия<input type="text" name="name" autocomplete="name" required placeholder="Анна Смирнова"></label>
    <div><span class="l">Будешь на корпоративе 18 декабря?</span><div class="ch two"><label><input type="radio" name="go" value="Буду" checked><span>Буду</span></label><label><input type="radio" name="go" value="Не смогу"><span>Не смогу</span></label></div></div>
    <div class="yes">
-    <div><span class="l">Из какого ты города?</span><div class="ch"><label><input type="radio" name="city" value="Москва и область" checked><span>Москва и область</span></label><label><input type="radio" name="city" value="other"><span>Другой город</span></label></div>
+    <div><span class="l">Из какого ты города?</span><div class="ch"><label><input type="radio" name="city" value="Москва" checked><span>Москва</span></label><label><input type="radio" name="city" value="Курск"><span>Курск</span></label><label><input type="radio" name="city" value="other"><span>Другой город</span></label></div>
      <input type="text" name="cityName" class="hide" id="cityName" placeholder="Например, Казань" style="margin-top:10px"></div>
     <div><span class="l">Останешься с ночёвкой на второй день?</span><div class="ch two"><label><input type="radio" name="stay" value="Да, останусь"><span>Да, останусь</span></label><label><input type="radio" name="stay" value="Нет"><span>Нет</span></label></div></div>
-    <div><span class="l">Нужен трансфер из Москвы?</span><div class="ch two"><label><input type="radio" name="transfer" value="Да, нужен"><span>Да, нужен</span></label><label><input type="radio" name="transfer" value="Нет, доберусь сам(а)"><span>Доберусь сам(а)</span></label></div></div>
-    <div><span class="l">Что будешь пить?<small>можно несколько</small></span><div class="ch"><label><input type="checkbox" name="drink" value="Игристое"><span>Игристое</span></label><label><input type="checkbox" name="drink" value="Белое вино"><span>Белое вино</span></label><label><input type="checkbox" name="drink" value="Красное вино"><span>Красное вино</span></label><label><input type="checkbox" name="drink" value="Крепкое"><span>Крепкое</span></label><label><input type="checkbox" name="drink" value="Коктейли"><span>Коктейли</span></label><label><input type="checkbox" name="drink" value="Не пью алкоголь"><span>Не пью алкоголь</span></label></div></div>
-    <div><span class="l">Особенности питания<small>если есть</small></span><div class="ch"><label><input type="checkbox" name="diet" value="Вегетарианец"><span>Вегетарианец</span></label><label><input type="checkbox" name="diet" value="Не ем свинину"><span>Не ем свинину</span></label><label><input type="checkbox" name="diet" value="Без глютена"><span>Без глютена</span></label><label><input type="checkbox" name="diet" value="Без лактозы"><span>Без лактозы</span></label></div>
-     <input type="text" name="allergy" placeholder="Аллергия: например, орехи" style="margin-top:10px"></div>
+    <div><span class="l">Нужен трансфер из Москвы?</span><div class="ch two"><label><input type="radio" name="transfer" value="Да, нужен"><span>Да, нужен</span></label><label><input type="radio" name="transfer" value="Доберусь сам"><span>Доберусь сам</span></label></div><p class="note" style="margin-top:8px">* Парковочные места есть!</p></div>
+    <div><span class="l">Что будешь пить?<small>можно несколько</small></span><div class="ch"><label><input type="checkbox" name="drink" value="Игристое"><span>Игристое</span></label><label><input type="checkbox" name="drink" value="Белое вино"><span>Белое вино</span></label><label><input type="checkbox" name="drink" value="Красное вино"><span>Красное вино</span></label><label><input type="checkbox" name="drink" value="Виски"><span>Виски</span></label><label><input type="checkbox" name="drink" value="Водка"><span>Водка</span></label><label><input type="checkbox" name="drink" value="Джин"><span>Джин</span></label><label><input type="checkbox" name="drink" value="Текила"><span>Текила</span></label><label><input type="checkbox" name="drink" value="Не пью алкоголь"><span>Не пью алкоголь</span></label></div></div>
    </div>
    <label class="l">Телефон<small>по желанию: для трансфера и связи в день праздника</small><input type="tel" name="phone" inputmode="tel" autocomplete="tel" placeholder="+7"></label>
    <label class="l">Вопрос или пожелание<textarea name="wish" rows="3" placeholder="По желанию"></textarea></label>
@@ -332,8 +328,7 @@ sync();
 function vals(name){ return [].map.call(f.querySelectorAll('input[name=' + name + ']:checked'), function(x){ return x.value; }); }
 function collect(){
  var go = f.go.value, yes = go === 'Буду';
- var city = f.city.value === 'other' ? (f.cityName.value.trim() || 'Другой город') : 'Москва и область';
- var diet = vals('diet'); if(f.allergy.value.trim()) diet.push('аллергия: ' + f.allergy.value.trim());
+ var city = f.city.value === 'other' ? (f.cityName.value.trim() || 'Другой город') : f.city.value;
  return [
   ['Имя и фамилия', f.elements['name'].value.trim().replace(/\s+/g, ' ')],
   ['Будешь на корпоративе?', go],
@@ -341,7 +336,6 @@ function collect(){
   ['Ночёвка и второй день', yes ? (vals('stay')[0] || '') : ''],
   ['Трансфер из Москвы', yes ? (vals('transfer')[0] || '') : ''],
   ['Алкоголь', yes ? vals('drink').join(', ') : ''],
-  ['Особенности питания', yes ? diet.join(', ') : ''],
   ['Телефон', f.phone.value.trim()],
   ['Вопрос или пожелание', f.wish.value.trim()]
  ];
