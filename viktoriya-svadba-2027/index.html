@@ -6,11 +6,11 @@
 <link rel="modulepreload" href="/event/assets/vendor/three.module.min.js">
 <meta property="og:title" content="Артём и Виктория · 12 августа 2027 · НАВСЕГДА"><meta property="og:image" content="img/hero.jpg?v=eb01c1f4">
 <style>
-@font-face{font-family:'SF Pro Display';src:url('fonts/SFProDisplay-Light.woff') format('woff');font-weight:300;font-display:swap}
-@font-face{font-family:'SF Pro Display';src:url('fonts/SFProDisplay-Regular.woff') format('woff');font-weight:400;font-display:swap}
-@font-face{font-family:'SF Pro Display';src:url('fonts/SFProDisplay-Semibold.woff') format('woff');font-weight:600;font-display:swap}
-@font-face{font-family:'Hello January';src:url('fonts/HelloJanuary.woff') format('woff');font-display:swap}
-@font-face{font-family:'TildaSans';src:url('fonts/TildaSans-VF.woff2') format('woff2');font-weight:300 700;font-display:swap}
+@font-face{font-family:'SF Pro Display';src:url('/assets/fonts/SFProDisplay-Light.woff') format('woff');font-weight:300;font-display:swap}
+@font-face{font-family:'SF Pro Display';src:url('/assets/fonts/SFProDisplay-Regular.woff') format('woff');font-weight:400;font-display:swap}
+@font-face{font-family:'SF Pro Display';src:url('/assets/fonts/SFProDisplay-Semibold.woff') format('woff');font-weight:600;font-display:swap}
+@font-face{font-family:'Hello January';src:url('/assets/fonts/HelloJanuary.woff') format('woff');font-display:swap}
+@font-face{font-family:'TildaSans';src:url('/assets/fonts/TildaSans-VF.woff2') format('woff2');font-weight:300 700;font-display:swap}
 :root{--bg:#fbf3e6;--bg2:#f4e6d0;--card:#fffaf2;--ink:#2a1414;--muted:#7a6656;--line:rgba(78,0,2,.13);
 --deep:#4e0002;--bordo:#7a1c22;--gold:#ba8a48;--gold2:#d6b07b;--cream:#ffe7c6;--water:#5e7f86}
 *{box-sizing:border-box;margin:0;padding:0} html{scroll-behavior:smooth}
@@ -145,13 +145,13 @@ header.hero+section{padding-top:230px;background:linear-gradient(180deg,#320406 
 @media(max-width:760px){.vfull>summary{width:100%;justify-content:space-between}}
 @media(max-width:760px){.hero .in{padding-bottom:92px!important}}
 @media(max-width:760px){.cmp td:nth-child(2){display:none}.cmp td{white-space:normal!important;font-size:13px}.cmp td.pr{white-space:nowrap!important;padding-left:6px}.venue .est td.pr{white-space:nowrap;padding-left:10px}.venue .est td.nm{white-space:normal}.dts .dt{min-width:0;padding:8px 10px}.dts .dt b{font-size:14px}}
-</style></head><body>
+.hero h1 span{font-family:inherit;font-size:1em;font-weight:inherit;padding:0}.hlogo{display:block;width:clamp(170px,30vw,250px);height:auto;margin:0 0 22px;filter:drop-shadow(0 2px 14px rgba(0,0,0,.35))}.cta .hlogo{margin:0 auto 20px;filter:none}</style></head><body>
 <script>document.documentElement.className='js'</script>
 <div class="top" id="top"><div class="lg"><img src="/assets/brand/logo-h-cream.svg" alt="НАВСЕГДА"></div><a href="https://wa.me/79150907290">Обсудить в WhatsApp</a></div>
 <header class="hero scrolly"><div class="stk"><div class="bg"></div><canvas id="gl" aria-hidden="true"></canvas><div class="in">
 
- <div class="sc">навсегда</div>
- <h1>Артём <span>и Виктория</span></h1>
+ <img class="hlogo" src="/assets/brand/logo-h-gold.svg" alt="НАВСЕГДА">
+ <h1>Артём <span>и</span> Виктория</h1>
  <p>Роспись в ЗАГСе в 15:00, прогулка вдвоём - и сразу к самым близким: стекло, лес и тёплый летний вечер совсем рядом с Митино.</p>
  <div class="chips"><span>12 августа 2027 · четверг</span><span>38 гостей</span></div>
 </div><div class="scr" id="scr" aria-hidden="true">листайте<i></i></div></div></header>
@@ -319,7 +319,7 @@ var h='',t=0;it.forEach(function(a){var c=a[1]*a[2];t+=c;h+='<tr class="ri"><td 
 h+='<tr class="ri"><td class="nm"><b>Итого, ориентир</b></td><td></td><td class="pr"><b>≈ '+t.toLocaleString('ru-RU')+' ₽</b></td></tr>';
 document.getElementById('a_out').innerHTML=h}
 ['a_g','a_w','a_s','a_h'].forEach(function(id){document.getElementById(id).addEventListener('input',r)});r();})();</script>
- <div style="height:56px"></div> <div class="sc rev">навсегда</div>
+ <div style="height:56px"></div> <img class="hlogo rev" src="/assets/brand/logo-h-bordo.svg" alt="НАВСЕГДА">
  <h2 class="stitle rev">Какая откликается?</h2>
  <p class="note rev" style="max-width:540px;margin:14px auto 0">Августовские даты разбирают первыми. Напишите номер площадки - проверим 12 августа и покажем её вживую.</p>
  <div class="btns rev"><a class="btn w1" href="tel:+79585410041">Позвонить · +7 958 541-00-41</a><a class="btn g" href="https://wa.me/79150907290">WhatsApp</a><a class="btn o" href="https://t.me/navsegda_agency">Telegram</a></div>
