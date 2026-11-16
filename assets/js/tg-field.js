@@ -11,16 +11,35 @@
 
   function ls(k, v) { try { if (v === undefined) return localStorage.getItem(k) || ''; localStorage.setItem(k, v); } catch (x) {} return ''; }
   // откуда пришли впервые: utm_source или чужой сайт в referrer
+  var attribution = null, attributionKey = 'nsg-attribution-v1', attributionTtl = 90 * 864e5;
+  function shortValue(value) { return String(value || '').replace(/[\x00-\x1f\x7f]/g, '').slice(0, 160); }
+  function publicPage() {
+    var robots = document.querySelector('meta[name="robots"]');
+    if ((robots && /noindex/i.test(robots.content)) || /^\/(?:event\/kp|prezentaciya|para|brief|proekty|moy-kabinet|komanda)(?:\/|$)/.test(location.pathname)) return '';
+    return location.origin + location.pathname;
+  }
   (function firstTouch() {
-    var src = '';
-    try { src = new URLSearchParams(location.search).get('utm_source') || ''; } catch (x) {}
-    if (!src && document.referrer) {
-      try { var h = new URL(document.referrer).hostname.replace(/^www\./, ''); if (!/navseg-da\.agency$/.test(h)) src = h; } catch (x) {}
+    var now = Date.now(), params = new URLSearchParams(location.search), source = shortValue(params.get('utm_source')), referrer = '';
+    try {
+      var referring = new URL(document.referrer), hostname = referring.hostname.toLowerCase();
+      if (hostname !== 'navseg-da.agency' && !hostname.endsWith('.navseg-da.agency')) {
+        referrer = referring.origin;
+        if (!source) source = hostname.replace(/^www\./, '');
+      }
+    } catch (error) {}
+    try { attribution = JSON.parse(ls(attributionKey)); } catch (error) {}
+    if (!attribution || typeof attribution !== 'object' || !attribution.at || now - attribution.at >= attributionTtl || attribution.at > now) attribution = null;
+    var page = publicPage();
+    if (!attribution && page) {
+      attribution = { at: now, page: page, source: source || 'direct', referrer: referrer };
+      ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (field) { attribution[field] = shortValue(params.get(field)); });
+      ls(attributionKey, JSON.stringify(attribution));
     }
     var old = ls('nsg-first-src'), at = +ls('nsg-first-src-at') || 0;
-    if (src && (!old || Date.now() - at > 90 * 864e5)) { ls('nsg-first-src', src.slice(0, 60)); ls('nsg-first-src-at', String(Date.now())); }
+    if (old && now - at >= attributionTtl) { ls('nsg-first-src', ''); ls('nsg-first-src-at', ''); old = ''; }
+    if (source && !old) { ls('nsg-first-src', source); ls('nsg-first-src-at', String(now)); }
   })();
-  function firstSrc() { return ls('nsg-first-src'); }
+  function firstSrc() { return attribution ? attribution.source : ls('nsg-first-src'); }
   function guess() {
     var s = firstSrc().toLowerCase();
     if (/threads/.test(s)) return 'Threads';
@@ -136,29 +155,48 @@
   // Если отправка не удалась, метку снимаем, чтобы человек мог отправить ещё раз.
   var inflight = {};
   function dupKey(b) { var s = String(b || ''), h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return 'nsg-lead-' + h; }
-  function sentAt(k) { try { return +sessionStorage.getItem(k) || 0; } catch (x) { return 0; } }
-  function markSent(k) { try { sessionStorage.setItem(k, String(Date.now())); } catch (x) {} }
-  function fakeOk() { return Promise.resolve(new Response('{"ok":true,"dup":true}', { status: 200, headers: { 'Content-Type': 'application/json' } })); }
+  function sentResponse(key) {
+    try {
+      var cached = JSON.parse(sessionStorage.getItem(key));
+      if (cached && cached.lead_id && Date.now() - cached.at < 120000) return cached;
+    } catch (error) {}
+    return null;
+  }
+  function markSent(key, data) { try { sessionStorage.setItem(key, JSON.stringify({at: Date.now(), lead_id: data.lead_id})); } catch (error) {} }
+  function confirmedResponse(data) { return new Response(JSON.stringify({ok: true, lead_id: data.lead_id, dup: true}), {status: 200, headers: {'Content-Type': 'application/json'}}); }
+  function isLeadRequest(url) {
+    try { return new URL(typeof url === 'string' ? url : url.url, location.href).href === 'https://109-68-213-160.sslip.io/site-lead'; } catch (error) { return false; }
+  }
 
   var of = window.fetch;
   if (of) window.fetch = function (u, o) {
-    var lead = String(u).indexOf('site-lead') > -1 && o && typeof o.body === 'string' && window.Response;
+    var lead = isLeadRequest(u) && o && typeof o.body === 'string' && window.Response;
     if (lead) {
-      var dk = dupKey(o.body);
-      if (inflight[dk] || Date.now() - sentAt(dk) < 120000) return fakeOk();
-      inflight[dk] = 1;
-      return send(u, o).then(function (r) {
-        delete inflight[dk];
-        if (r && r.ok) markSent(dk);
-        return r;
-      }, function (e) { delete inflight[dk]; throw e; });
+      var dk = dupKey(o.body), cached = sentResponse(dk);
+      if (cached) return Promise.resolve(confirmedResponse(cached));
+      if (inflight[dk]) return inflight[dk].then(function (response) { return response.clone(); });
+      var pending = send(u, o).then(function (response) {
+        if (!response || !response.ok) throw new Error('Заявка не подтверждена сервером');
+        return response.clone().json().then(function (data) {
+          if (!data || data.ok !== true || !data.lead_id) throw new Error('Сохранение заявки не подтверждено');
+          markSent(dk, data);
+          var test = false;
+          try { var payload = JSON.parse(o.body); test = /codex[_-]?test|technical_test/i.test([payload.form, payload.utm_source, payload.utm_medium].join(' ')); } catch (error) {}
+          if (!test && window.ym) {
+            try { window.ym(112491690, 'reachGoal', 'lead_confirmed', {page: location.pathname, source: firstSrc()}); } catch (error) {}
+          }
+          return response;
+        });
+      });
+      inflight[dk] = pending;
+      return pending.then(function (response) { delete inflight[dk]; return response; }, function (error) { delete inflight[dk]; throw error; });
     }
     return send(u, o);
   };
 
   function send(u, o) {
     try {
-      if (String(u).indexOf('site-lead') > -1 && o && typeof o.body === 'string') {
+      if (isLeadRequest(u) && o && typeof o.body === 'string') {
         var b = JSON.parse(o.body), fresh = Date.now() - lastAt < 60000;
         if (b && typeof b === 'object') {
           if (lastTg && fresh) {
@@ -168,8 +206,27 @@
           }
           if (lastHeard && fresh && !b.heard) b.heard = lastHeard;
           if (firstSrc() && !b.first_src) b.first_src = firstSrc();
-          if (!b.utm_source) { try { var us = new URLSearchParams(location.search).get('utm_source'); if (us) b.utm_source = us; } catch (x) {} }
-          o = Object.assign({}, o, { body: JSON.stringify(b) });
+          if (attribution) {
+            b.g_first_page = attribution.page;
+            b.g_first_source = attribution.source;
+            b.g_first_referrer = attribution.referrer;
+            b.g_first_at = new Date(attribution.at).toISOString();
+            ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (field) {
+              if (attribution[field]) b['g_first_' + field] = attribution[field];
+            });
+            if (attribution.source !== 'direct' && (!b.utm_source || /^(?:catalog|blog|site|glavnaya)$/.test(b.utm_source))) {
+              if (b.utm_source) b.g_form_source = b.utm_source;
+              b.utm_source = attribution.source;
+            }
+            var attributionText = 'Первый вход: ' + attribution.page + '\nПервый источник: ' + attribution.source;
+            if (String(b.message || '').indexOf('Первый вход: ') < 0) b.message = (b.message ? b.message + '\n' : '') + attributionText;
+          }
+          var currentParams = new URLSearchParams(location.search);
+          ['utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'utm_term'].forEach(function (field) {
+            var currentValue = shortValue(currentParams.get(field));
+            if (currentValue && (!b[field] || field === 'utm_source')) b[field] = currentValue;
+          });
+          o = Object.assign({}, o, { mode: 'cors', body: JSON.stringify(b) });
         }
       }
     } catch (x) {}
