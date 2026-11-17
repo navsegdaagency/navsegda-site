@@ -19,7 +19,7 @@
     document.head.appendChild(style);
     var card = document.createElement('aside'); card.id = 'nsg-context-offer'; card.className = 'nsg-context-offer'; card.style.scrollMarginTop = '160px';
     var corporate = location.pathname.indexOf('/event/') === 0;
-    card.innerHTML = '<h2>' + offer[0] + '</h2><p>' + offer[1] + '</p><div><a href="' + (corporate ? '#zayavka' : '#smeta') + '"' + (corporate ? '' : ' data-smeta="1"') + '>' + offer[2] + '</a><a href="' + offer[3] + '">' + offer[4] + '</a></div>';
+    card.innerHTML = '<h2 style="opacity:1!important;transform:none!important;visibility:visible!important">' + offer[0] + '</h2><p>' + offer[1] + '</p><div><a href="' + (corporate ? '#zayavka' : '#smeta') + '"' + (corporate ? '' : ' data-smeta="1"') + '>' + offer[2] + '</a><a href="' + offer[3] + '">' + offer[4] + '</a></div>';
     if (anchor.matches('article')) anchor.insertBefore(card, anchor.firstChild); else anchor.parentNode.insertBefore(card, anchor.nextSibling);
   }
   function goal(name) {
