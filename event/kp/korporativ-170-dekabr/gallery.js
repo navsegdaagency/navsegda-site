@@ -1,18 +1,20 @@
 const lightbox = document.getElementById('lightbox');
-const photoButtons = [...document.querySelectorAll('[data-photo]')];
+const allPhotos = [...document.querySelectorAll('[data-photo]')];
 const fullPhoto = lightbox.querySelector('img');
+let activePhotos = [];
 let currentPhoto = 0;
 let lastFocused;
 function showPhoto(index) {
-  currentPhoto = (index + photoButtons.length) % photoButtons.length;
-  const thumbnail = photoButtons[currentPhoto].querySelector('img');
+  currentPhoto = (index + activePhotos.length) % activePhotos.length;
+  const thumbnail = activePhotos[currentPhoto].querySelector('img');
   fullPhoto.src = thumbnail.src;
   fullPhoto.alt = thumbnail.alt;
-  lightbox.querySelector('.counter').textContent = `${currentPhoto + 1} / ${photoButtons.length}`;
+  lightbox.querySelector('.counter').textContent = `${thumbnail.alt} · ${currentPhoto + 1} / ${activePhotos.length}`;
 }
-photoButtons.forEach((button, index) => button.addEventListener('click', () => {
+allPhotos.forEach(button => button.addEventListener('click', () => {
   lastFocused = button;
-  showPhoto(index);
+  activePhotos = allPhotos.filter(photo => photo.closest('section') === button.closest('section'));
+  showPhoto(activePhotos.indexOf(button));
   lightbox.showModal();
 }));
 lightbox.querySelector('.close').addEventListener('click', () => lightbox.close());
