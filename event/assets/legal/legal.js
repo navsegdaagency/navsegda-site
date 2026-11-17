@@ -1,5 +1,7 @@
 /* НАВСЕГДА · 152-ФЗ: cookie-уведомление + обязательное согласие в любой форме с персональными данными */
 (function(){
+  function leadScripts(){var s=document.createElement('script');s.src='/assets/js/lead-forms.js?v=conversion20261118';document.head.appendChild(s);}
+  leadScripts();
   var ev=location.pathname.indexOf('/event/')===0;
   var POL=ev?'/event/politika-konfidencialnosti/':'/privacy/', SOG=ev?'/event/soglasie/':'/soglasie/';
   function ls(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v);}catch(e){return null;}}

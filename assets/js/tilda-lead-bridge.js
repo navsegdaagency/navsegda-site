@@ -72,8 +72,10 @@
       [].forEach.call(f.querySelectorAll('input:not([type=hidden]):not([type=checkbox]),textarea'), function (i) { i.value = ''; });
     };
     try {
-      fetch(URL, { method: 'POST', mode: 'no-cors', keepalive: true, headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: JSON.stringify(payload) })
-        .then(done, function () { f.__nsgBusy = 0; say(f, 'Не получилось отправить. Напишите нам в Telegram @navsegda_agency или позвоните +7 958 541-00-41', false); });
+      fetch(URL, { method: 'POST', mode: 'cors', headers: { 'Content-Type': 'text/plain;charset=UTF-8' }, body: JSON.stringify(payload) })
+        .then(function(r){if(!r.ok)throw new Error('HTTP');return r.json();})
+        .then(function(j){if(!j||j.ok!==true||!j.lead_id)throw new Error('Unconfirmed');done();})
+        .catch(function () { f.__nsgBusy = 0; say(f, 'Не получили подтверждение сохранения. Данные остались в форме. Уточните получение в Telegram @navsegda_agency или по телефону +7 958 541-00-41', false); });
     } catch (x) { f.__nsgBusy = 0; }
   }
 

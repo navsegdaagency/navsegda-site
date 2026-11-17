@@ -307,9 +307,9 @@
         opts.body = JSON.stringify(o); opts.headers['Content-Type'] = 'application/json';
       } else opts.body = new FormData(f);
       fetch(url, opts)
-        .then(function (r) { return r.json(); })
+        .then(function (r) { if (!r.ok) throw new Error('HTTP'); return r.json(); })
         .then(function (j) {
-          if (!(j && j.ok)) throw 0;
+          if (!(j && j.ok === true) || (window.NSG_LEAD_URL && !j.lead_id)) throw new Error('Unconfirmed');
           f.classList.add('out'); setTimeout(function () { f.classList.add('sent'); }, reduce ? 0 : 280);
           if (window.ym && window.YM_ID) ym(window.YM_ID, 'reachGoal', 'lead');
         })

@@ -81,6 +81,9 @@
     var c = form.querySelector('input[name="contact"],input[name="phone"],input[type="tel"]');
     if (!c) return;
     form.__nsgTg = 1;
+    // A combined contact field already accepts Telegram: avoid a duplicate contact
+    // field and seven source buttons before a visitor can submit the short form.
+    if (c.name === 'contact' || /telegram|телеграм|@/i.test(c.placeholder || '')) return;
     var src = c, wrap = c.parentElement;
     if (wrap && wrap !== form && wrap.querySelectorAll('input,textarea,select').length === 1) src = wrap;
     var clone = src.cloneNode(true);
@@ -182,7 +185,9 @@
           markSent(dk, data);
           var test = false;
           try { var payload = JSON.parse(o.body); test = /codex[_-]?test|technical_test/i.test([payload.form, payload.utm_source, payload.utm_medium].join(' ')); } catch (error) {}
-          if (!test && window.ym) {
+          var goalIds = window.__nsgLeadGoalIds = window.__nsgLeadGoalIds || {};
+          if (!test && window.ym && !goalIds[data.lead_id]) {
+            goalIds[data.lead_id] = true;
             try { window.ym(112491690, 'reachGoal', 'lead_confirmed', {page: location.pathname, source: firstSrc()}); } catch (error) {}
           }
           return response;
