@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>ONE TEAM. ONE STORY. ONE DV. · Новый год DV Consulting</title>
-<meta name="description" content="Приглашение на новогодний корпоратив DV Consulting 18 декабря 2026, Шервуд. Ответь на анкету до 20 ноября.">
+<meta name="description" content="Приглашение на новогодний корпоратив DV Consulting 18 декабря 2026, Шервуд. Ответь на анкету до 22 ноября.">
 <meta name="robots" content="noindex,nofollow">
 <meta name="referrer" content="no-referrer">
 <meta property="og:title" content="ONE TEAM. ONE STORY. ONE DV.">
-<meta property="og:description" content="Новый год DV Consulting · 18 декабря · Шервуд. Ответь до 20 ноября.">
+<meta property="og:description" content="Новый год DV Consulting · 18 декабря · Шервуд. Ответь до 22 ноября.">
 <meta property="og:image" content="https://navseg-da.agency/i/dv-one-team-x7q4/img/og.jpg">
 <meta name="theme-color" content="#060A18">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
@@ -197,7 +197,7 @@ section{padding:clamp(72px,12vw,130px) 0;position:relative}
   <div class="hero-txt">
    <h1><span>ONE TEAM.</span><span>ONE STORY.</span><span>ONE DV.</span></h1>
    <p>Новый год · 18 декабря · Шервуд</p>
-   <a class="btn" href="#anketa">Ответить до 20 ноября</a>
+   <a class="btn" href="#anketa">Ответить до 22 ноября</a>
   </div>
   <div class="scrollhint" aria-hidden="true"></div>
  </div>
@@ -223,8 +223,15 @@ section{padding:clamp(72px,12vw,130px) 0;position:relative}
  <ol class="tl">
   <li class="rv"><time>17:00</time><b>Сбор гостей</b><p>Welcome, знакомство и первые общие фото.</p></li>
   <li class="rv"><time>18:00</time><b>Начало корпоратива</b><p>Ужин, программа вечера и танцы.</p></li>
-  <li class="rv soft"><time>Второй день</time><b>Для тех, кто остаётся с ночёвкой</b><p>Подробности пришлём отдельно. Отметь в анкете, если остаёшься.</p></li>
+  <li class="rv soft"><time datetime="2026-12-19">19 декабря</time><b>Продолжение корпоративной программы до вечера</b><p>Активности, общение и отдых. Отметь в анкете, если остаёшься с ночёвкой на второй день.</p></li>
  </ol>
+</div></section>
+
+<section class="letter" id="second-day" style="padding-top:0"><div class="w">
+ <p class="k">Второй день · 19 декабря</p>
+ <h2 class="h">События не заканчиваются <b>одним вечером!</b></h2>
+ <p class="t rv">На следующий день нас ждёт продолжение корпоративной программы прямо до самого вечера — отдельный день, наполненный активностями, общением, отдыхом.</p>
+ <p class="t rv">Мы хотим дать каждому возможность не спешить прощаться, провести больше времени вместе и стать частью общей истории нашей команды.</p>
 </div></section>
 
 <section id="mesto" style="padding-top:0"><div class="w">
@@ -251,7 +258,7 @@ section{padding:clamp(72px,12vw,130px) 0;position:relative}
 </div></section>
 
 <section class="rs" id="anketa"><div class="w split">
- <div><p class="k">Анкета гостя</p><h2 class="h">Ответь <b>до 20 ноября</b></h2><p class="lead">Две минуты&nbsp;- и мы будем знать, кого ждать, кого везти из Москвы и где всех разместить. Изменить ответ можно в любой момент по этой же ссылке.</p></div>
+ <div><p class="k">Анкета гостя</p><h2 class="h">Ответь <b>до 22 ноября</b></h2><p class="lead">Ждём информацию до 22 ноября. Две минуты&nbsp;- и мы будем знать, кого ждать, кого везти из Москвы и где всех разместить. Изменить ответ можно в любой момент по этой же ссылке.</p></div>
  <div class="card rv" id="box">
   <form class="f" id="f" novalidate>
    <label class="l">Имя и фамилия<input type="text" name="name" autocomplete="name" required placeholder="Анна Смирнова"></label>
@@ -289,7 +296,7 @@ section{padding:clamp(72px,12vw,130px) 0;position:relative}
 (function(){
 'use strict';
 var API = 'https://109-68-213-160.sslip.io/api/kab/inv/dv-one-team-x7q4';
-var KEY = 'inv-dv-one-team-x7q4';
+var KEY = 'inv-dv-one-team-x7q4-sheet-confirmed';
 var EVENT = new Date('2026-12-18T17:00:00+03:00').getTime();
 var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
 function $(i){ return document.getElementById(i); }
@@ -363,13 +370,12 @@ f.addEventListener('submit', function(e){
  if(Date.now() - t0 < 2500){ showErr('Секунду, проверяем...'); return; }
  var btn = f.querySelector('.send'); btn.disabled = true; btn.textContent = 'Отправляем...';
  fetch(API + '/rsvp', {method:'POST', headers:{'Content-Type':'text/plain;charset=UTF-8'}, body:JSON.stringify({answers:ans, consent:true, _hp:''})})
-  .then(function(r){ return r.json().then(function(j){ if(!r.ok || !j.ok) throw new Error((j && j.detail) || 'Ошибка ' + r.status); return j; }); })
+  .then(function(r){ return r.json().then(function(j){ if(!r.ok || !j.ok || j.sheet_saved !== true) throw new Error((j && j.detail) || 'Запись в таблицу пока не подтверждена. Попробуй отправить ответ ещё раз.'); return j; }); })
   .then(function(){ try{ localStorage.setItem(KEY, JSON.stringify(ans)); }catch(x){} done(ans); try{ if(window.ym) ym(112491690, 'reachGoal', 'inv_dv_rsvp'); }catch(x){} })
   .catch(function(err){
    btn.disabled = false; btn.textContent = 'Отправить ответ';
-   var txt = encodeURIComponent('Анкета DV Consulting 18.12\n' + ans.filter(function(a){ return a[1]; }).map(function(a){ return a[0] + ': ' + a[1]; }).join('\n'));
    showErr((err && err.message && !/Failed|NetworkError|Load failed/i.test(err.message) ? esc(err.message) + '<br>' : 'Не получилось отправить. Если включён VPN - выключи его и нажми ещё раз.<br>') +
-    'Или <a href="https://wa.me/79876094967?text=' + txt + '" target="_blank" rel="noopener">отправь ответ координатору в WhatsApp</a> - текст уже собран.');
+    'Ответы остались в форме. Повтори отправку, чтобы регистрация попала в таблицу. Если не получается, <a href="tel:+79876094967">позвони координатору</a>.');
   });
 });
 try{ var prev = JSON.parse(localStorage.getItem(KEY) || 'null'); if(prev && prev.length) done(prev, true); }catch(e){}
@@ -518,3 +524,4 @@ window.__ivSnow = function(n){ for(var i = 0; i < (n || 1); i++) loop(performanc
 <script>(function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})(window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");ym(112491690,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true});</script>
 </body>
 </html>
+
