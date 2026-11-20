@@ -185,16 +185,15 @@ function answers(){
 function submit(){
  if(!$('ok').checked){$('okL').classList.add('bad');$('okL').scrollIntoView({block:'center',behavior:'smooth'});return}
  var btn=$('next');btn.disabled=true;btn.textContent='Отправляем…';
- var text=summary();
  var body={kind:KIND,answers:answers(),lead:A.lead||'',p:A.p||'',_hp:$('hp').value||''};
- var wa='https://wa.me/79150907290?text='+encodeURIComponent(text.slice(0,3500));
- function fin(ok){$('steps').style.display='none';$('nav').style.display='none';$('done').style.display='';$('bar').style.width='100%';$('stepLbl').textContent='Готово';
-  if(!ok){$('doneTxt').textContent='Сервер не подтвердил получение. Чтобы ответы точно дошли, отправьте их нам в WhatsApp одной кнопкой: текст уже собран.';var a=document.querySelector('#done .btns a');a.href=wa;a.textContent='Отправить ответы в WhatsApp'}
-  else{try{localStorage.removeItem(KEY)}catch(e){}}
+ function fin(ok){
+  if(!ok){btn.disabled=false;btn.textContent='Отправить бриф';var err=document.querySelector('.st[data-i="'+(S.length-1)+'"] .err');if(err){err.textContent='Не удалось подтвердить запись в Google-таблицу. Ответы остались в анкете. Нажмите «Отправить бриф» ещё раз.';err.style.display='block'}return}
+  $('steps').style.display='none';$('nav').style.display='none';$('done').style.display='';$('bar').style.width='100%';$('stepLbl').textContent='Готово';
+  try{localStorage.removeItem(KEY)}catch(e){}
   if(window.ym)try{ym(112491690,'reachGoal',KIND==='korporativ'?'invite_brief_korp':'invite_brief_svadba')}catch(e){}
   window.scrollTo({top:0})}
  fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify(body)})
-  .then(function(r){return r.json()}).then(function(j){fin(!!(j&&j.ok))}).catch(function(){fin(false)});
+  .then(function(r){return r.json().then(function(j){return !!(r.ok&&j&&j.ok&&j.sheet_saved===true)})}).then(fin).catch(function(){fin(false)});
 }
 document.addEventListener('change',function(e){if(e.target.id==='ok')$('okL').classList.remove('bad')});
 $('next').onclick=function(){if(cur<0){go(0);return}if(!valid(cur))return;if(cur<S.length-1)go(cur+1);else submit()};
@@ -202,4 +201,5 @@ $('back').onclick=function(){go(cur-1)};
 render();go(-1);
 if(HAD)$('saved').textContent='Есть сохранённые ответы: продолжим с того же места';
 })();
+
 
