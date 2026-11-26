@@ -1,0 +1,1 @@
+(()=>{const p=new URLSearchParams(location.search);const b=Number(p.get('budget'));const f=document.querySelector('[data-turnkey-example] form');if(f&&Number.isFinite(b)&&b>0&&b<=100000000){f.elements.budget.value=String(b);}})();
