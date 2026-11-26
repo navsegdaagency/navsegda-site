@@ -1,0 +1,16 @@
+{
+  "updated": "2026-11-26",
+  "offer_venues": [
+    "mys-rivera-solnechny-bereg",
+    "sherwood",
+    "kristall-kolomenskoe",
+    "babin-dvor",
+    "usadba-grebnevo-pushkin",
+    "usadba-grebnevo-lermontov",
+    "vodnik-veranda-briz"
+  ],
+  "excluded_venues": [
+    "forest-dew"
+  ],
+  "note": "Offer rollout is restricted to frequently used venues. Forest Dew and Due to Love share the excluded catalog page. Other catalog entries remain reference material."
+}

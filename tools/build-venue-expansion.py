@@ -8,6 +8,8 @@ from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = json.loads((ROOT / 'tools/venue-expansion.json').read_text())
+POLICY = json.loads((ROOT / 'tools/wedding-offer-policy.json').read_text())
+DATA = [v for v in DATA if v['slug'] not in POLICY['excluded_venues']]
 spec = importlib.util.spec_from_file_location('growth', ROOT / 'tools/build-growth-batch.py')
 growth = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(growth)
