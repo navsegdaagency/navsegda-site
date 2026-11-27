@@ -24,7 +24,12 @@
 <link rel="stylesheet" href="/assets/fonts/fonts.css">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Organization", "@id": "https://navseg-da.agency/#organization", "name": "НАВСЕГДА", "alternateName": "Агентство НАВСЕГДА", "url": "https://navseg-da.agency/", "logo": "https://navseg-da.agency/assets/brand/logo-h-bordo.svg", "image": "https://navseg-da.agency/assets/logo-navsegda.png", "description": "Ивент-агентство: свадьбы под ключ, корпоративы, конференции, форумы и премии, флористический декор в Москве и Подмосковье. 4 года на рынке, услуги агентства — 11% сметы.", "telephone": "+79585410041", "address": {"@type": "PostalAddress", "streetAddress": "ул. Лобачика, 11", "addressLocality": "Москва", "addressCountry": "RU"}, "areaServed": ["Москва", "Московская область", "Россия"], "contactPoint": [{"@type": "ContactPoint", "telephone": "+79585410041", "contactType": "customer service", "availableLanguage": "ru"}, {"@type": "ContactPoint", "telephone": "+79150907290", "contactType": "customer service", "contactOption": "WhatsApp, Telegram", "availableLanguage": "ru"}], "sameAs": ["https://www.instagram.com/navsegda_agency/", "https://t.me/navsegda_agency"], "founder": {"@type": "Person", "name": "Денис Коняев", "jobTitle": "Основатель агентства НАВСЕГДА", "url": "https://navseg-da.agency/denis-konyaev/"}, "knowsAbout": ["организация свадьбы под ключ", "свадебное агентство", "новогодний корпоратив", "организация корпоративов", "конференции и форумы", "свадебный декор и флористика", "подбор площадок для свадьбы и корпоратива"], "hasOfferCatalog": {"@type": "OfferCatalog", "name": "Направления агентства НАВСЕГДА", "itemListElement": [{"@type": "OfferCatalog", "name": "Корпоративный отдел: корпоративы, новогодние вечера, конференции, форумы и премии", "url": "https://navseg-da.agency/event/"}, {"@type": "OfferCatalog", "name": "Частные мероприятия: свадьбы под ключ в Москве и Подмосковье", "url": "https://navseg-da.agency/svadby/"}, {"@type": "OfferCatalog", "name": "Декор: флористический декор FFP — Floral for People", "url": "https://navseg-da.agency/decor/"}]}, "email": "history.navsegda@gmail.com"}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://navseg-da.agency/#website","name":"НАВСЕГДА","url":"https://navseg-da.agency/","inLanguage":"ru-RU","publisher":{"@id":"https://navseg-da.agency/#organization"}}</script>
-<script>document.documentElement.className+=' js'</script>
+<script>document.documentElement.className+=' js';
+(function(){
+  function moved(){document.documentElement.setAttribute('data-user-scroll-started','')}
+  window.addEventListener('touchmove',moved,{passive:true,once:true});
+  window.addEventListener('wheel',moved,{passive:true,once:true});
+})();</script>
 <style>
 @font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 900;font-display:swap;src:url(/assets/fonts/playfair/pf-cyr.woff2) format('woff2');unicode-range:U+0301,U+0400-045F,U+0490-0491,U+04B0-04B1,U+2116}
 @font-face{font-family:'Playfair Display';font-style:normal;font-weight:400 900;font-display:swap;src:url(/assets/fonts/playfair/pf-lat.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
@@ -306,19 +311,8 @@ html.rv:not(.book) .pg:not(.seen) .sp-photo img{transform:scale(1.1)}
   *,*:before,*:after{transition:none!important;animation:none!important}
 }
 
-/* Phone rendering: retain the journal and cover turn, without fading/tilting
-   entire long spreads or animating every cover glyph on separate layers. */
-@media (max-width:999px){
-  html.rv:not(.book) .pg:not(.pg-cover),
-  html.rv:not(.book) .pg:not(.pg-cover):not(.seen){
-    transform:none;opacity:1;transition:none;
-  }
-  html.rv:not(.book) .pg:not(.seen) .sp-photo img{transform:none}
-  .intro .mast i,.intro .mag-issue,.intro .mag-sub,.intro .lines li,
-  .intro .mag-big,.intro .mag-years,.intro .mag-bar,.intro .mag-img{animation:none!important}
-  .intro .cleaf{will-change:transform}
-  .intro .cleaf .face *{-webkit-backface-visibility:visible;backface-visibility:visible}
-}
+/* Keep mobile scroll position stable while journal reveals change visual bounds. */
+@media (max-width:999px){html,body{overflow-anchor:none}}
 </style>
 </head>
 <body>
@@ -718,14 +712,22 @@ html.rv:not(.book) .pg:not(.seen) .sp-photo img{transform:scale(1.1)}
 
   /* старт */
   setMode();
-  var hi=idxFor(location.hash.slice(1));
+  var hi=idxFor(location.hash.slice(1)),navType='';
+  try{
+    var navigation=w.performance&&w.performance.getEntriesByType('navigation')[0];
+    navType=navigation?navigation.type:'';
+    if(!navType&&w.performance&&w.performance.navigation){navType=w.performance.navigation.type===2?'back_forward':w.performance.navigation.type===1?'reload':''}
+  }catch(e){}
+  // In phone scroll mode, never fight native history restoration or an active gesture.
+  var keepScroll=mode==='scroll'&&(w.pageYOffset>1||root.hasAttribute('data-user-scroll-started')||navType==='reload'||navType==='back_forward');
   if(hi>=0){if(mode==='book')show(hi,true);markSeen()}
+  else if(keepScroll){markSeen();theme(visibleIdx())}
   else if(!mqReduce.matches&&anim&&!seen()){
     if(mode==='scroll')pages[1].classList.add('seen');
     openCover(1,true);
   }
-  else if(seen()){if(mode==='book')show(1);else{pages[1].classList.add('seen');w.scrollTo(0,pages[1].getBoundingClientRect().top+w.pageYOffset)}}
-  w.addEventListener('load',function(){setTimeout(function(){pages.forEach(eager)},1200)});
+  else if(seen()){if(mode==='book')show(1);else{pages[1].classList.add('seen');theme(visibleIdx())}}
+  w.addEventListener('load',function(){if(mode==='book')setTimeout(function(){pages.forEach(eager)},1200)});
 })();
 </script>
 <!-- Yandex.Metrika counter -->
