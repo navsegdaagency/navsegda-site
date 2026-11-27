@@ -25,13 +25,15 @@
   /* ---------------- метрики и высота секции ---------------- */
   function measure() {
     var W = innerWidth, H = innerHeight;
+    var sameMobileWidth = W < 1000 && W === M.W;
+    if (sameMobileWidth && M.H) H = M.H;
     M.mob = W < 1000;
     M.vpW = track.clientWidth || W;
     M.centers = cards.map(function (c) { return c.offsetLeft + c.offsetWidth / 2; });
     M.cw = cards[0].offsetWidth;
     M.step = n > 1 ? (M.centers[n - 1] - M.centers[0]) / (n - 1) : M.cw;
     if (on) {
-      M.stH = st.offsetHeight || H;
+      M.stH = sameMobileWidth && M.stH ? M.stH : (st.offsetHeight || H);
       // путь прокрутки на одну карточку: короче = лента едет быстрее
       var per = M.mob ? clamp(M.step * 1.5, H * .56, H * .72) : clamp(M.step * 1.25, H * .5, H * .68);
       M.hold = H * (M.mob ? .08 : .1);
@@ -185,7 +187,7 @@
     near = r.top < H * 2 && r.bottom > -H * 1.2;
     if (!near) {                                                 // вне зоны - никакой работы
       // iOS: держим кадры в памяти только рядом с секцией, иначе вкладка падает
-      if (portrait && hasFrames && FR.started && (r.top > H * 4 || r.bottom < -H * 2)) {
+      if (innerHeight > innerWidth * 1.05 && hasFrames && FR.started && (r.top > H * 4 || r.bottom < -H * 2)) {
         FR.imgs.forEach(function (im) { if (im) { im.onload = im.onerror = null; im.src = ''; } });
         FR.gen++; FR.imgs = new Array(FR.n); FR.inflight = 0; FR.qi = 0; FR.drawn = -1; FR.src = -1; FR.dir = ''; FR.started = false;
       }
@@ -263,6 +265,9 @@
   addEventListener('resize', function () {
     cancelAnimationFrame(rz);
     rz = requestAnimationFrame(function () {
+      // Mobile browser chrome/keyboard changes height while scrolling. Keep the
+      // section geometry stable until width/orientation changes.
+      if (M.mob && innerWidth === M.W) { onScroll(); return; }
       if (wantPin() !== on) { setMode(); return; }
       // адресная строка телефона меняет высоту на ходу: при той же ширине не сбрасываем сглаживание, иначе лента дёргается
       var wChanged = innerWidth !== M.W;

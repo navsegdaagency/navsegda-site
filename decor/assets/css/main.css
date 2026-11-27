@@ -1021,3 +1021,6 @@ button.btn-link { background: none; border: 0; border-bottom: 1px solid currentC
 .has-cbar main { padding-bottom: 96px; }
 @media (min-width: 1024px) { .citem__info { top: 96px; } .has-cbar .citem__info { padding-bottom: 72px; } }
 @media (min-width: 1024px) { .cbar { justify-content: flex-start; padding-left: var(--gutter); } .cbar__btn { width: 420px; } }
+
+/* Contain decorative entrances and 100vw layers within the viewport. */
+html{overflow-x:clip;scrollbar-gutter:stable}
